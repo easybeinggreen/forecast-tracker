@@ -28,6 +28,7 @@ def collect(cfg, s):
     """Fetch everything. Returns (results, errors)."""
     res = {"snapshots": [], "filings": [], "news": []}
     errors = []
+    soft = []  # news volume is nice-to-have: warn, but don't fail the run
     token = os.environ.get("METACULUS_TOKEN")
 
     for q in cfg["questions"]:
@@ -61,8 +62,8 @@ def collect(cfg, s):
         try:
             res["news"] += src.gdelt_volume(s, qy, gd.get("timespan", "14d"))
         except Exception as e:  # noqa: BLE001
-            errors.append(f"gdelt '{qy}' -> {e}")
-    return res, errors
+            soft.append(f"gdelt '{qy}' -> {e}")
+    return res, errors, soft
 
 
 def sync_and_write(cfg, res):
@@ -103,24 +104,24 @@ def main():
     args = ap.parse_args()
 
     cfg = load_config()
-    res, errors = collect(cfg, session())
+    res, errors, soft = collect(cfg, session())
     dry = args.dry_run or not os.environ.get("DATABASE_URL")
 
     out = ROOT / "out"
     out.mkdir(exist_ok=True)
-    (out / "run.json").write_text(json.dumps({"results": res, "errors": errors}, indent=2, default=str), encoding="utf-8")
+    (out / "run.json").write_text(json.dumps({"results": res, "errors": errors, "soft": soft}, indent=2, default=str), encoding="utf-8")
 
     new = [] if dry else sync_and_write(cfg, res)
     (out / "new_filings.json").write_text(json.dumps(new, indent=2), encoding="utf-8")
 
     lines = [f"Mode: {'DRY RUN (nothing written)' if dry else 'Postgres'}",
              f"Crowd readings: {len(res['snapshots'])}", f"EDGAR filings matched: {len(res['filings'])} (new: {len(new)})",
-             f"News-volume days: {len(res['news'])}", f"Errors: {len(errors)}"] + [f"  - {e}" for e in errors]
+             f"News-volume days: {len(res['news'])}", f"Errors: {len(errors)}"] + [f"  - {e}" for e in errors] + [f"Soft warnings: {len(soft)}"] + [f"  - {e}" for e in soft]
     print("\n".join(lines))
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fh:
             fh.write("### Forecast tracker run\n\n" + "\n".join(f"- {l}" for l in lines) + "\n")
-    for e in errors:
+    for e in errors + soft:
         print(f"::warning::{e}")
     sys.exit(1 if errors else 0)
 

@@ -7,6 +7,10 @@ on:
         description: "Topic to search on Polymarket and Manifold"
         default: "anthropic ipo"
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   find:
     runs-on: ubuntu-latest
@@ -16,4 +20,12 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - run: python -m collector.find_markets "${{ inputs.query }}" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Search
+        run: python -m collector.find_markets "${{ inputs.query }}" | tee results.txt
+      - name: Post results as an issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo '```'; cat results.txt; echo '```'; echo; echo 'Add a slug under a question'"'"'s `sources` in config.yaml, then close this issue.'; } > body.md
+          gh issue create --title "Market search: ${{ inputs.query }}" --body-file body.md --label "market-search" 2>/dev/null \
+            || gh issue create --title "Market search: ${{ inputs.query }}" --body-file body.md

@@ -1,6 +1,8 @@
 """Fetchers. Each returns plain dicts; nothing here touches the database."""
 import json
 import re
+
+import requests
 from datetime import date, datetime, timedelta, timezone
 
 from .http import get_json
@@ -20,14 +22,15 @@ def manifold(s, slug):
     base = {"volume": m.get("volume"), "traders": m.get("uniqueBettorCount")}
     if kind == "BINARY":
         return [{"outcome": "YES", "probability": m["probability"], **base}]
-    if kind == "MULTIPLE_CHOICE":
-        out = []
-        for a in m.get("answers", []):
-            p = a.get("probability", a.get("prob"))
-            if p is not None:
-                out.append({"outcome": a["text"].strip(), "probability": p, **base})
+    # MULTIPLE_CHOICE, DATE and MULTI_NUMERIC markets all expose buckets as answers
+    out = []
+    for a in m.get("answers") or []:
+        p = a.get("probability", a.get("prob"))
+        if p is not None:
+            out.append({"outcome": a["text"].strip(), "probability": p, **base})
+    if out:
         return out
-    raise ValueError(f"manifold market {slug}: outcomeType {kind} not supported yet")
+    raise ValueError(f"manifold market {slug}: outcomeType {kind} has no answer probabilities")
 
 
 def polymarket(s, event_slug):
@@ -96,7 +99,18 @@ def edgar_filings(s, companies: dict, forms: list, days_back=120):
 # ---------- GDELT: -> list of {query, day, value}
 
 def gdelt_volume(s, query, timespan="14d"):
-    data = get_json(s, GDELT, params={"query": query, "mode": "timelinevol", "format": "json", "timespan": timespan}, pause=6)
+    # GDELT allows ~1 request per 5 s per IP and shared CI IPs hit 429 often: wait, then retry slowly.
+    import time
+    for attempt in range(4):
+        # plain request (no auto-retry adapter) so we control the 429 back-off ourselves
+        r = requests.get(GDELT, params={"query": query, "mode": "timelinevol", "format": "json", "timespan": timespan},
+                         headers=dict(s.headers), timeout=30)
+        if r.status_code != 429:
+            break
+        time.sleep(15 * (attempt + 1))
+    r.raise_for_status()
+    data = r.json()
+    time.sleep(8)
     series = (data.get("timeline") or [{}])[0].get("data", [])
     by_day = {}
     for pt in series:
