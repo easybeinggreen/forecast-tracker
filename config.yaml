@@ -1,0 +1,67 @@
+# What the tracker watches. Edit this file and push; the next run picks it up.
+#
+# questions: each has crowd sources (where a market price lives) and your own dated forecasts.
+# Outcome labels in my_forecasts should match the labels the sources use, so the
+# dashboard can draw your forecast against the crowd.
+
+questions:
+  - id: anthropic-ipo-month
+    title: In which month does Anthropic complete its IPO?
+    kind: multiple_choice
+    outcomes: [October 2026, November 2026, December 2026, Does not IPO in 2026]
+    resolution: First trade on a public exchange with shares sold (not an announcement).
+    close_date: 2026-12-31
+    sources:
+      - platform: manifold
+        id: what-month-in-2026-will-anthropic-i
+        url: https://manifold.markets/Jack1/what-month-in-2026-will-anthropic-i
+      - platform: manifold
+        id: when-will-anthropic-ipo
+        url: https://manifold.markets/JonasVollmer/when-will-anthropic-ipo
+    my_forecasts:
+      - date: 2026-09-30
+        rationale: No public S-1 yet; midterms 3 Nov; mid-December cut-off.
+        probabilities: {October 2026: 0.03, November 2026: 0.55, December 2026: 0.20, Does not IPO in 2026: 0.22}
+      - date: 2026-10-06
+        rationale: Another week with no public S-1; November window narrowing.
+        probabilities: {October 2026: 0.01, November 2026: 0.52, December 2026: 0.22, Does not IPO in 2026: 0.25}
+
+  - id: openai-ipo-year
+    title: In which year does OpenAI complete its IPO?
+    kind: multiple_choice
+    outcomes: ["2026", "2027", "2028 or later"]
+    resolution: First trade on a public exchange.
+    sources:
+      - platform: manifold
+        id: will-anthropic-or-openai-ipo-first
+        url: https://manifold.markets/Pjfkh/will-anthropic-or-openai-ipo-first
+        note: Proxy question (who lists first), stored under this question for context.
+    my_forecasts:
+      - date: 2026-09-30
+        rationale: Altman says now is ill-advised; a private round may substitute.
+        probabilities: {"2026": 0.07, "2027": 0.65, "2028 or later": 0.28}
+      - date: 2026-10-06
+        rationale: Altman confirmed no 2026 IPO (5 Oct); ~$30B bridge round at ~$1.4T.
+        probabilities: {"2026": 0.02, "2027": 0.63, "2028 or later": 0.35}
+
+# Polymarket: add event slugs once found. Run `python -m collector.find_markets "anthropic ipo"`
+# (or the "Find markets" workflow) to list candidates, then add e.g.
+#   - platform: polymarket
+#     id: <event-slug>
+# under the right question.
+
+edgar:
+  # Filer-name keywords; a hit counts only when the FILER matches, not just a mention.
+  companies:
+    Anthropic: ["anthropic"]
+    OpenAI: ["openai"]
+  forms: [S-1, S-1/A, F-1, F-1/A, 424B4, FWP]
+
+gdelt:
+  # GDELT DOC 2.0 query syntax; daily volume = % of monitored articles.
+  queries:
+    - '"Anthropic" IPO'
+    - '"OpenAI" IPO'
+    - '"Anthropic" (donation OR philanthropy OR pledge)'
+    - '"OpenAI Foundation"'
+  timespan: 14d
