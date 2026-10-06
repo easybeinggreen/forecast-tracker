@@ -30,7 +30,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
-          TRACKER_USER_AGENT: ${{ vars.TRACKER_USER_AGENT || 'forecast-tracker (github actions)' }}
+          TRACKER_USER_AGENT: ${{ vars.TRACKER_USER_AGENT || 'forecast-tracker Paul Green green.paul.p@gmail.com' }}
         run: python -m collector.main ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: Keep the raw run
