@@ -1,0 +1,15 @@
+{
+  "name": "vic2026-count-room",
+  "private": true,
+  "type": "module",
+  "description": "Victorian election 2026 forecast: seat calculator and prediction ledger",
+  "scripts": {
+    "dev": "node dev/server.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

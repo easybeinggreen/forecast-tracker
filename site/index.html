@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Count Room</title>
+  <meta name="description" content="Victorian election 2026: seat-by-seat forecast, preference calculator and prediction ledger.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 26a13 13 0 0 1 26 0' fill='none' stroke='%231D232B' stroke-width='4'/%3E%3Ccircle cx='16' cy='26' r='3' fill='%23D72638'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><path d="M3 18a13 13 0 0 1 26 0"/><circle cx="16" cy="18" r="2.6"/></svg>
+      <div>
+        <h1>Count Room</h1>
+        <p class="sub">Victorian election, Saturday 28 November 2026</p>
+      </div>
+    </div>
+    <p class="countdown" id="countdown"></p>
+    <div class="budget" id="budget" aria-live="polite"></div>
+    <button class="btn btn-quiet" id="unlock" type="button">Unlock ledger</button>
+  </header>
+
+  <main>
+    <section class="overview" aria-labelledby="chamber-title">
+      <div class="chamber-panel">
+        <div class="panel-head">
+          <h2 id="chamber-title">The Legislative Assembly, 88 seats</h2>
+          <div class="seg" role="group" aria-label="Colour seats by">
+            <button type="button" data-mode="held" aria-pressed="false">2022 result</button>
+            <button type="button" data-mode="model" aria-pressed="true">Model favourite</button>
+            <button type="button" data-mode="mine" aria-pressed="false">My calls</button>
+          </div>
+        </div>
+        <div class="chamber-wrap">
+          <svg id="chamber" role="img" aria-labelledby="chamber-desc"></svg>
+          <div class="tip" id="tip" hidden></div>
+        </div>
+        <p class="caption" id="chamber-desc"></p>
+        <ul class="legend" id="legend"></ul>
+      </div>
+
+      <div class="outcome-panel">
+        <div class="panel-head"><h2>Who governs</h2><button class="btn btn-ghost" id="open-statewide" type="button">Make a call</button></div>
+        <div class="odds" id="odds"></div>
+        <div class="ranges" id="ranges"></div>
+        <figure class="dist">
+          <div id="dist"></div>
+          <figcaption id="dist-cap"></figcaption>
+        </figure>
+        <div class="markets" id="markets"></div>
+      </div>
+    </section>
+
+    <section class="seats" aria-labelledby="seats-title">
+      <div class="panel-head">
+        <h2 id="seats-title">Every seat</h2>
+        <div class="toolbar">
+          <div class="chips" role="group" aria-label="Show">
+            <button type="button" data-filter="all" aria-pressed="true">All 88</button>
+            <button type="button" data-filter="close" aria-pressed="false">Close contests</button>
+            <button type="button" data-filter="change" aria-pressed="false">Likely to change hands</button>
+            <button type="button" data-filter="mine" aria-pressed="false">My calls</button>
+          </div>
+          <label class="search"><span class="sr">Find a seat</span><input id="search" type="search" placeholder="Find a seat or MP"></label>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="seat-table">
+          <thead>
+            <tr>
+              <th scope="col"><button type="button" data-sort="name">Seat</button></th>
+              <th scope="col">Sitting MP</th>
+              <th scope="col" class="num"><button type="button" data-sort="margin">Margin</button></th>
+              <th scope="col"><button type="button" data-sort="close" aria-sort="ascending">Model</button></th>
+              <th scope="col" class="num">Market</th>
+              <th scope="col" class="num">My call</th>
+              <th scope="col" class="num">Edge</th>
+              <th scope="col" class="num">Stake</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ledger" id="ledger" aria-labelledby="ledger-title">
+      <div class="panel-head"><h2 id="ledger-title">My ledger</h2></div>
+      <div id="ledger-body"></div>
+    </section>
+
+    <footer class="foot">
+      <p id="foot-model"></p>
+      <p>Sources: Victorian Electoral Commission 2022 results and preference distributions, Election Tracker poll average, The Tally Room pendulum. Market prices are read only; this site places no bets.</p>
+    </footer>
+  </main>
+
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="d-title" tabindex="-1"></aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <dialog id="pass-dialog">
+    <form method="dialog" id="pass-form">
+      <h2>Unlock your ledger</h2>
+      <p>Enter the passcode you set in Vercel as <code>LEDGER_PASSCODE</code>. It stays in this browser.</p>
+      <label>Passcode <input id="pass-input" type="password" autocomplete="current-password" required></label>
+      <p class="err" id="pass-err" role="alert"></p>
+      <div class="row-end">
+        <button class="btn btn-quiet" value="cancel" type="button" id="pass-cancel">Cancel</button>
+        <button class="btn" type="submit">Unlock</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

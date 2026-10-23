@@ -17,7 +17,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from vic2026.model.count import run_count
+from vic2026.model.count import run_count, trace_count
 from vic2026.model.flows import G, GROUP_OF, GROUPS
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -76,6 +76,32 @@ def baselines(D, cfg):
             "note": d.get("note"),
         })
     return B, meta
+
+
+def make_W(W0, cfg, vals, S):
+    """Preference weight table per simulation: 2022 fitted base + One Nation / Nationals drivers."""
+    K = W0.shape[0]
+    W = np.broadcast_to(W0, (S, K, K)).copy()
+    odds = lambda q: q / (1 - q)
+    c = cfg["flows"]["coalition_internal"]
+    W[:, G["LIB"], G["NAT"]] = W[:, G["LIB"], G["ALP"]] * odds(c)
+    W[:, G["NAT"], :] = W[:, G["LIB"], :]
+    W[:, G["NAT"], G["LIB"]] = W[:, G["NAT"], G["ALP"]] * odds(c)
+    W[:, G["LIB"], G["GRN"]] = W[:, G["LIB"], G["ALP"]] * odds(vals["lib_to_grn_vs_alp"])
+    W[:, G["NAT"], G["GRN"]] = W[:, G["LIB"], G["GRN"]]
+    for f, ref, k in ON_FLOWS:
+        W[:, G[f], G["ON"]] = W[:, G[f], G[ref]] * odds(vals[k])
+    W[:, G["ON"], :] = W[:, G["RMIN"], :]
+    W[:, G["ON"], G["LIB"]] = W[:, G["ON"], G["ALP"]] * odds(vals["on_to_lib_vs_alp"])
+    W[:, G["ON"], G["NAT"]] = W[:, G["ON"], G["LIB"]]
+    W[:, G["ON"], G["GRN"]] = W[:, G["ON"], G["ALP"]] * 0.3
+    return W
+
+
+ON_FLOWS = [("LIB", "ALP", "lib_to_on_vs_alp"), ("NAT", "ALP", "nat_to_on_vs_alp"),
+            ("ALP", "LIB", "alp_to_on_vs_lib"), ("GRN", "ALP", "grn_to_on_vs_alp"),
+            ("RMIN", "LIB", "rmin_to_on_vs_lib"), ("PROG", "ALP", "prog_to_on_vs_alp"),
+            ("IND", "ALP", "ind_to_on_vs_alp"), ("OTH", "ALP", "oth_to_on_vs_alp")]
 
 
 def on_propensity(B):
@@ -151,24 +177,10 @@ def simulate(S=10000, seed=7, scenario=None):
 
     # 5. preference flows (one draw per simulation, shared by every seat) ------------------------
     fl = cfg["flows"]
-    draw = lambda k: np.clip(fl[k]["mean"] + fl[k]["sd"] * rng.standard_normal(S), 0.02, 0.98)
-    W = np.broadcast_to(W0, (S, K, K)).copy()
-    odds = lambda q: q / (1 - q)
-    c = cfg["flows"]["coalition_internal"]
-    W[:, G["LIB"], G["NAT"]] = W[:, G["LIB"], G["ALP"]] * odds(c)
-    W[:, G["NAT"], :] = W[:, G["LIB"], :]
-    W[:, G["NAT"], G["LIB"]] = W[:, G["NAT"], G["ALP"]] * odds(c)
-    W[:, G["LIB"], G["GRN"]] = W[:, G["LIB"], G["ALP"]] * odds(draw("lib_to_grn_vs_alp"))
-    W[:, G["NAT"], G["GRN"]] = W[:, G["LIB"], G["GRN"]]
-    for f, ref, k in [("LIB", "ALP", "lib_to_on_vs_alp"), ("NAT", "ALP", "nat_to_on_vs_alp"),
-                      ("ALP", "LIB", "alp_to_on_vs_lib"), ("GRN", "ALP", "grn_to_on_vs_alp"),
-                      ("RMIN", "LIB", "rmin_to_on_vs_lib"), ("PROG", "ALP", "prog_to_on_vs_alp"),
-                      ("IND", "ALP", "ind_to_on_vs_alp"), ("OTH", "ALP", "oth_to_on_vs_alp")]:
-        W[:, G[f], G["ON"]] = W[:, G[f], G[ref]] * odds(draw(k))
-    W[:, G["ON"], :] = W[:, G["RMIN"], :]
-    W[:, G["ON"], G["LIB"]] = W[:, G["ON"], G["ALP"]] * odds(draw("on_to_lib_vs_alp"))
-    W[:, G["ON"], G["NAT"]] = W[:, G["ON"], G["LIB"]]
-    W[:, G["ON"], G["GRN"]] = W[:, G["ON"], G["ALP"]] * 0.3
+    vals = {k: np.clip(v["mean"] + v["sd"] * rng.standard_normal(S), 0.02, 0.98)
+            for k, v in fl.items() if isinstance(v, dict)}
+    W = make_W(W0, cfg, vals, S)
+    Wmean = make_W(W0, cfg, {k: np.array([v["mean"]]) for k, v in fl.items() if isinstance(v, dict)}, 1)[0]
 
     # 6. count every seat ------------------------------------------------------------------------
     win = np.zeros((S, N), int)
@@ -190,7 +202,13 @@ def simulate(S=10000, seed=7, scenario=None):
                        "median_share_first": round(float(np.median(np.where(cand[r.winner[sel]] == a, r.final_share[sel], 1 - r.final_share[sel]))), 4)})
         probs = {SLOTS[s]: round(float((w_slot == s).mean()), 4) for s in cand}
         prim = x[:, i, :]
+        mu = prim[:, cand].mean(0)
+        tr = trace_count(mu, cand, Wmean)
         seats.append({**m,
+                      "sim": {"slots": [SLOTS[s] for s in cand], "mean": [round(float(v), 5) for v in mu],
+                              "logsd": [round(float(np.log(prim[:, s]).std()), 4) for s in cand]},
+                      "trace": [{"excluded": None if r["excluded"] is None else SLOTS[cand[r["excluded"]]],
+                                 "totals": [None if v is None else round(100 * v, 2) for v in r["totals"]]} for r in tr],
                       "win_prob": dict(sorted(probs.items(), key=lambda kv: -kv[1])),
                       "outright_prob": round(float(r.outright.mean()), 4),
                       "final_pairs": fp,
@@ -210,7 +228,7 @@ def simulate(S=10000, seed=7, scenario=None):
                   for g, v in {**counts, "LNP": lnp}.items() if v.max() > 0},
     }
     return {"generated": date.today().isoformat(), "simulations": S, "statewide_inputs": p,
-            "drivers": cfg, "summary": summary, "seat_distribution": seat_dist, "seats": seats, "party_names": NICE}
+            "drivers": cfg, "flows_base": {"groups": SLOTS, "W0": W0.round(5).tolist()}, "summary": summary, "seat_distribution": seat_dist, "seats": seats, "party_names": NICE}
 
 
 def main():

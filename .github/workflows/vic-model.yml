@@ -1,0 +1,37 @@
+name: Victorian model
+
+# Nightly: refresh polls and the pendulum, re-run the 10,000-election simulation, rebuild the
+# dashboard data and commit it. Vercel redeploys the site from the new commit.
+on:
+  schedule:
+    - cron: "31 19 * * *"   # 05:31 Brisbane, daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install requests numpy scipy pandas lxml html5lib pyyaml
+      - name: Refresh polls and pendulum
+        run: python vic2026/fetch/fetch_polls.py
+      - name: Run model and rebuild dashboard data
+        run: |
+          python -m vic2026.model.model2026
+          python -m vic2026.build.export_site
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw/polls data/vic2026/forecast.json site/data/forecast.json
+          git diff --cached --quiet || git commit -m "Victorian model: nightly run $(date -u +%F)"
+          git pull --rebase -q origin main
+          git push

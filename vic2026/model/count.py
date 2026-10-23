@@ -77,3 +77,26 @@ def _selftest():
 
 if __name__ == "__main__":
     _selftest()
+
+
+def trace_count(primaries, parties, weights):
+    """Single deterministic count that records every round, for display.
+    primaries: (C,) votes; parties: (C,) group index; weights: (P, P).
+    Returns list of rounds: {"excluded": idx or None, "totals": [C floats, nan once excluded]}."""
+    C = len(primaries)
+    w_cc = weights[parties][:, parties]
+    bundles = np.diag(np.asarray(primaries, float))
+    active = np.ones(C, bool)
+    rounds = [{"excluded": None, "totals": bundles.sum(1).tolist()}]
+    for _ in range(C - 2):
+        t = np.where(active, bundles.sum(1), np.inf)
+        ex = int(t.argmin())
+        active[ex] = False
+        moving = bundles[ex].copy()
+        bundles[ex] = 0
+        w = w_cc * active[None, :]
+        share = w / w.sum(1, keepdims=True)
+        bundles += (moving[:, None] * share).T
+        tot = bundles.sum(1)
+        rounds.append({"excluded": ex, "totals": [float(v) if active[i] else None for i, v in enumerate(tot)]})
+    return rounds
