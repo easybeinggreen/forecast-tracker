@@ -1,0 +1,59 @@
+# Drivers for the 2026 Victorian model. Every number here is an assumption you can change.
+# Statewide primaries come from the Election Tracker poll average unless overridden.
+
+statewide:
+  source: data/raw/polls/et_poll-average.json      # alp / lnp / onp / grn / others
+  override: {}                                     # e.g. {alp: 25.0} to test a scenario
+  # election-day uncertainty per party (percentage points, 1 sd): poll error + late swing
+  sd: {ALP: 2.5, LNP: 2.5, "ON": 3.5, GRN: 2.0, OTHERS: 1.5}   # "ON" quoted: bare ON means true in YAML
+
+one_nation:
+  # Where One Nation's vote lands. Propensity index per seat from 2022:
+  #   z = a * z(right-minor parties' vote) - b * z(Greens vote)
+  # concentration = how strongly the vote piles into high-propensity seats (0 = uniform).
+  right_minor_weight: 0.6
+  greens_weight: 0.4
+  concentration: {mean: 0.35, sd: 0.10}
+  # Extra One Nation strength outside Melbourne (regional cities and country), in index units.
+  regional_bonus: 0.6
+  regional_seats: [bass, bellarine, benambra, bendigo-east, bendigo-west, eildon, eureka, euroa, geelong,
+                   gippsland-east, gippsland-south, lara, lowan, macedon, mildura, morwell, murray-plains,
+                   narracan, ovens-valley, polwarth, ripon, shepparton, south-barwon, south-west-coast, wendouree]
+
+seat_noise_sd: 0.15        # random seat-level deviation (proportional), per party per seat
+
+retirement_penalty: 1.5    # primary points lost by a party whose sitting MP retires
+
+# Preference flows. Base table is fitted from 2022 counts (data/vic2026/flows2022.json).
+# These set the flows involving One Nation and the Nationals, which 2022 can't tell us.
+# Each is "share to the first-named of the two", with uncertainty shared across all seats.
+flows:
+  lib_to_on_vs_alp:   {mean: 0.60, sd: 0.08}   # Liberal voters choosing between ON and Labor
+  nat_to_on_vs_alp:   {mean: 0.65, sd: 0.08}
+  on_to_lib_vs_alp:   {mean: 0.78, sd: 0.06}   # calibrated: published 2PPs (ALP 44-47) imply ~80% of ON preferences to the Coalition
+  alp_to_on_vs_lib:   {mean: 0.25, sd: 0.07}   # Labor voters choosing ON over Liberal
+  grn_to_on_vs_alp:   {mean: 0.08, sd: 0.03}
+  rmin_to_on_vs_lib:  {mean: 0.55, sd: 0.08}   # other right minors choosing ON over Liberal
+  prog_to_on_vs_alp:  {mean: 0.15, sd: 0.05}
+  ind_to_on_vs_alp:   {mean: 0.35, sd: 0.08}
+  oth_to_on_vs_alp:   {mean: 0.40, sd: 0.08}
+  lib_to_grn_vs_alp:  {mean: 0.65, sd: 0.08}   # 2022 fitted value; depends on the Liberal how-to-vote
+  coalition_internal: 0.80                     # Liberal <-> National over Labor
+
+# Sitting MPs retiring (party loses its personal vote)
+retiring:
+  ALP: [bass, bayswater, bendigo-east, bendigo-west, essendon, macedon, melton, mill-park, pakenham, sydenham]
+  LIB: [benambra, croydon, malvern, rowville]
+  NAT: [gippsland-east, murray-plains, shepparton]
+
+independents:
+  carry_threshold: 0.10    # a 2022 independent with >= 10% is assumed to have a successor of similar strength
+  carry_factor: 0.8
+
+seat_overrides:
+  prahran:
+    note: Liberal Rachel Westaway won the 2025 by-election; new-member incumbency on top of 2022 baseline.
+    shift: {LIB: 4.0, GRN: -4.0}
+  narracan:
+    note: Labor did not run at the 2023 supplementary election; impute a Labor vote.
+    impute: {ALP: 0.25}

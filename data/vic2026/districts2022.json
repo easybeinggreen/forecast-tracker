@@ -7120,6 +7120,187 @@
   "distribution": []
  },
  {
+  "slug": "narracan",
+  "district": "Narracan",
+  "enrolment": 50506,
+  "formal": 37205,
+  "informal": 2619,
+  "candidates": [
+   {
+    "name": "ABELMAN, Michael",
+    "party_raw": "Liberal Democrats",
+    "party": "LDP",
+    "votes": 1325
+   },
+   {
+    "name": "WOLFE, Tony",
+    "party_raw": "",
+    "party": "IND",
+    "votes": 4110
+   },
+   {
+    "name": "WEAVER, Alyssa",
+    "party_raw": "Australian Greens",
+    "party": "GRN",
+    "votes": 4132
+   },
+   {
+    "name": "CRAM, Austin",
+    "party_raw": "Animal Justice Party",
+    "party": "AJP",
+    "votes": 849
+   },
+   {
+    "name": "DE WIT, Sophia Camille",
+    "party_raw": "Labour DLP",
+    "party": "DLP",
+    "votes": 2641
+   },
+   {
+    "name": "MURPHY, Casey",
+    "party_raw": "Pauline Hanson's One Nation",
+    "party": "ON",
+    "votes": 2246
+   },
+   {
+    "name": "HONEY, Ian",
+    "party_raw": "",
+    "party": "IND",
+    "votes": 381
+   },
+   {
+    "name": "CLARKE, Brendan",
+    "party_raw": "Family First Victoria",
+    "party": "FF",
+    "votes": 1089
+   },
+   {
+    "name": "BLACKWELL, Leonie",
+    "party_raw": "Freedom Party of Victoria",
+    "party": "FPV",
+    "votes": 2254
+   },
+   {
+    "name": "FARNHAM, Wayne",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "votes": 16741
+   },
+   {
+    "name": "McCABE, Annemarie",
+    "party_raw": "",
+    "party": "IND",
+    "votes": 1437
+   }
+  ],
+  "final_two": [
+   {
+    "name": "FARNHAM, Wayne",
+    "votes": 19230
+   },
+   {
+    "name": "WOLFE, Tony",
+    "votes": 6891
+   }
+  ],
+  "count_stopped_early": true,
+  "tpp": [],
+  "distribution": [
+   {
+    "excluded": "HONEY, Ian",
+    "papers": 381,
+    "to": {
+     "ABELMAN, Michael": 25,
+     "WOLFE, Tony": 97,
+     "WEAVER, Alyssa": 17,
+     "CRAM, Austin": 12,
+     "DE WIT, Sophia Camille": 22,
+     "MURPHY, Casey": 40,
+     "CLARKE, Brendan": 20,
+     "BLACKWELL, Leonie": 20,
+     "FARNHAM, Wayne": 51,
+     "McCABE, Annemarie": 77
+    }
+   },
+   {
+    "excluded": "CRAM, Austin",
+    "papers": 861,
+    "to": {
+     "ABELMAN, Michael": 32,
+     "WOLFE, Tony": 126,
+     "WEAVER, Alyssa": 256,
+     "DE WIT, Sophia Camille": 80,
+     "MURPHY, Casey": 87,
+     "CLARKE, Brendan": 137,
+     "BLACKWELL, Leonie": 62,
+     "FARNHAM, Wayne": 45,
+     "McCABE, Annemarie": 36
+    }
+   },
+   {
+    "excluded": "CLARKE, Brendan",
+    "papers": 1246,
+    "to": {
+     "ABELMAN, Michael": 72,
+     "WOLFE, Tony": 58,
+     "WEAVER, Alyssa": 75,
+     "DE WIT, Sophia Camille": 95,
+     "MURPHY, Casey": 208,
+     "BLACKWELL, Leonie": 486,
+     "FARNHAM, Wayne": 193,
+     "McCABE, Annemarie": 59
+    }
+   },
+   {
+    "excluded": "ABELMAN, Michael",
+    "papers": 1454,
+    "to": {
+     "WOLFE, Tony": 429,
+     "WEAVER, Alyssa": 122,
+     "DE WIT, Sophia Camille": 74,
+     "MURPHY, Casey": 324,
+     "BLACKWELL, Leonie": 95,
+     "FARNHAM, Wayne": 374,
+     "McCABE, Annemarie": 36
+    }
+   },
+   {
+    "excluded": "McCABE, Annemarie",
+    "papers": 1645,
+    "to": {
+     "WOLFE, Tony": 931,
+     "WEAVER, Alyssa": 188,
+     "DE WIT, Sophia Camille": 98,
+     "MURPHY, Casey": 68,
+     "BLACKWELL, Leonie": 138,
+     "FARNHAM, Wayne": 222
+    }
+   },
+   {
+    "excluded": "MURPHY, Casey",
+    "papers": 2973,
+    "to": {
+     "WOLFE, Tony": 455,
+     "WEAVER, Alyssa": 121,
+     "DE WIT, Sophia Camille": 341,
+     "BLACKWELL, Leonie": 1175,
+     "FARNHAM, Wayne": 881
+    }
+   },
+   {
+    "excluded": "DE WIT, Sophia Camille",
+    "papers": 3351,
+    "to": {
+     "WOLFE, Tony": 685,
+     "WEAVER, Alyssa": 1162,
+     "BLACKWELL, Leonie": 781,
+     "FARNHAM, Wayne": 723
+    }
+   }
+  ],
+  "note": "2023 supplementary election (2022 poll cancelled)"
+ },
+ {
   "slug": "narre-warren-north",
   "district": "Narre Warren North",
   "enrolment": 51900,

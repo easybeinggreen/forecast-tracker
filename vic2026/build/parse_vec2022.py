@@ -31,8 +31,8 @@ def num(x):
     return int(float(str(x).replace(",", "")))
 
 
-def parse_district(slug):
-    d = RAW / slug
+def parse_district(slug, d=None):
+    d = d or RAW / slug
     res = pd.read_html(io.StringIO((d / "results.html").read_text(encoding="utf-8")))
     html = (d / "results.html").read_text(encoding="utf-8")
     cands = []
@@ -80,6 +80,11 @@ def main():
     out = []
     for d in sorted(p for p in RAW.iterdir() if p.is_dir() and (p / "results.html").exists()):
         out.append(parse_district(d.name))
+    # Narracan: the 2022 poll was cancelled (candidate death); the 2023 supplementary election is the baseline
+    nar = parse_district("narracan", Path("data/raw/byelections/narracan-district-supplementary-election-results"))
+    nar["district"], nar["note"] = "Narracan", "2023 supplementary election (2022 poll cancelled)"
+    out.append(nar)
+    out.sort(key=lambda x: x["slug"])
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(f"{len(out)} districts -> {OUT}")
