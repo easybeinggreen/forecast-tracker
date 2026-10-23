@@ -41,7 +41,7 @@ def main():
     if not index:
         sys.exit("could not load district index")
     (OUT / "index.html").write_text(index, encoding="utf-8")
-    slugs = sorted(set(re.findall(r"/results-by-district/([a-z0-9\-]+)-district-results(?=[\"/?#])", index)))
+    slugs = sorted(set(re.findall(r"/results-by-district/([a-z0-9\-]+)-district-results(?=['\"/?#])", index)) | {"narracan"})
     print(f"{len(slugs)} districts found")
     missing = []
     for slug in slugs:
@@ -55,7 +55,7 @@ def main():
         (d / "results.html").write_text(html, encoding="utf-8")
         # follow links found on the page rather than guessing names
         links = dict()
-        for href in re.findall(r'href="([^"]+)"', html):
+        for href in re.findall(r"""href=["']([^"']+)["']""", html):
             h = href.replace("&amp;", "&")
             if "distribution" in h and slug in h:
                 links["distribution.html"] = urljoin(BASE, h)
