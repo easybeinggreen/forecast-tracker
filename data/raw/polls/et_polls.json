@@ -1,0 +1,1022 @@
+{
+  "generated": "2026-10-22T09:26:53.491Z",
+  "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
+  "methodology": "docs/poll-methodology.md",
+  "polls": [
+    {
+      "id": "demosau-2026-06",
+      "pollster": "demosau",
+      "commissioner": "premier-national",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-06-07",
+      "fieldwork_end": "2026-06-11",
+      "sample_size": 1056,
+      "design_effect": 1.615,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "DemosAU/Premier National Victoria state poll. Design effect from published effective n 654. Remaining undecided after leaner excluded from totals.",
+      "primaries": {
+        "alp": 21,
+        "lnp": 30,
+        "onp": 23,
+        "grn": 15,
+        "others": 11
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://demosau.com/wp-content/uploads/2026/06/DemosAU-Vic-Poll-June-2026.pdf",
+          "publisher": "DemosAU",
+          "title": "DemosAU/Premier National Victoria Poll (June 2026)",
+          "published": "2026-06-12",
+          "accessed": "2026-07-30"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/06/12/demosau-labor-21-coalition-30-one-nation-23-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "DemosAU: Labor 21, Coalition 30, One Nation 23 in Victoria",
+          "published": "2026-06-12",
+          "accessed": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "id": "demosau-2026-08",
+      "pollster": "demosau",
+      "commissioner": "premier-national",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-08-06",
+      "fieldwork_end": "2026-08-11",
+      "sample_size": 1007,
+      "design_effect": 1.801,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "DemosAU/Premier National Victoria state poll after Ben Carroll became Premier. Design effect from published effective n 559. Others residual after ALP+LNP+GRN+ONP.",
+      "primaries": {
+        "alp": 23,
+        "lnp": 32,
+        "onp": 22,
+        "grn": 13,
+        "others": 10
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://demosau.com/news/coalition-holds-election-winning-lead-in-latest-victoria-poll/",
+          "publisher": "DemosAU",
+          "title": "Coalition Holds Election-Winning Lead in Latest Victoria Poll",
+          "published": "2026-08-16",
+          "accessed": "2026-08-19"
+        },
+        {
+          "url": "https://demosau.com/wp-content/uploads/2026/08/DemosAU-Report-Victoria-Poll-August-2026.pdf",
+          "publisher": "DemosAU",
+          "title": "DemosAU/Premier National Victoria Poll (August 2026)",
+          "published": "2026-08-16",
+          "accessed": "2026-08-19"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/08/17/demosau-labor-23-coalition-32-one-nation-22-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "DemosAU: Labor 23, Coalition 32, One Nation 22 in Victoria",
+          "published": "2026-08-17",
+          "accessed": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "demosau-2026-09",
+      "pollster": "demosau",
+      "commissioner": "premier-national",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-09-10",
+      "fieldwork_end": "2026-09-20",
+      "sample_size": 1020,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "DemosAU/Premier National Victoria state poll as reported by the Herald Sun (2PP Coalition 52–48). Others residual after ALP+LNP+GRN+ONP (11). DemosAU had not posted its own release or effective n at encode time, so design_effect is left at default; update with the DemosAU report URL when published. Supersedes demosau-2026-08 in the average via one-poll-per-pollster de-dupe. Note (2026-10-16): DemosAU published its own release and report on 14 Oct 2026 confirming fieldwork 10–20 Sep, n 1,020, internet panels, primaries as encoded, and an effective sample size after weighting of 572 (effective MoE ±4.1%, implied design effect ≈1.783); design_effect left unchanged pending maintainer review.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 30,
+        "onp": 20,
+        "grn": 14,
+        "others": 11
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.pollbludger.net/2026/09/29/victorian-election-demosau-poll-election-guide-and-seat-projection-model/",
+          "publisher": "The Poll Bludger",
+          "title": "Victorian election: DemosAU poll, election guide and seat projection model",
+          "published": "2026-09-29",
+          "accessed": "2026-10-04"
+        },
+        {
+          "url": "https://acestrategies.au/victoria-election-2026/poll-accuracy/",
+          "publisher": "Ace Strategies",
+          "title": "Victorian Election Polls 2026: Accuracy Scorecard (DemosAU 10–20 Sep entry)",
+          "published": "2026-09-29",
+          "accessed": "2026-10-04"
+        },
+        {
+          "url": "https://demosau.com/news/coalition-lead-narrows-as-labor-rises-in-latest-victorian-poll/",
+          "publisher": "DemosAU",
+          "title": "Coalition lead narrows as Labor rises in latest Victorian poll",
+          "published": "2026-10-14",
+          "accessed": "2026-10-16"
+        },
+        {
+          "url": "https://demosau.com/wp-content/uploads/2026/10/DemosAU-Report-Victoria-Poll-September-2026.pdf",
+          "publisher": "DemosAU",
+          "title": "DemosAU/PremierNational Victoria Poll (September 2026)",
+          "published": "2026-10-14",
+          "accessed": "2026-10-16"
+        }
+      ]
+    },
+    {
+      "id": "freshwater-2026-02",
+      "pollster": "freshwater",
+      "commissioner": "herald-sun",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-02-19",
+      "fieldwork_end": "2026-02-23",
+      "sample_size": 1030,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Herald Sun–Freshwater Strategy Vic polling. Primaries from published data tables (squeezed & valid); one decimal from table percentages.",
+      "primaries": {
+        "alp": 27.6,
+        "lnp": 26.8,
+        "onp": 22.6,
+        "grn": 13.1,
+        "others": 9.9
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://freshwaterstrategy.com/wp-content/uploads/Data-Tables-Herald-Sun-Freshwater-Strategy-Vic-Polling-230226.xlsx",
+          "publisher": "Freshwater Strategy",
+          "title": "Herald Sun–Freshwater Strategy Vic Polling data tables (19–23 February 2026)",
+          "published": "2026-03-04",
+          "accessed": "2026-07-30",
+          "archive_url": "https://web.archive.org/web/20260311101825/https://freshwaterstrategy.com/wp-content/uploads/Data-Tables-Herald-Sun-Freshwater-Strategy-Vic-Polling-230226.xlsx"
+        },
+        {
+          "url": "https://www.heraldsun.com.au/news/victoria/jess-wilson-ahead-as-preferred-premier-amid-rejection-of-jacinta-allans-leadership-new-poll-shows/news-story/3d56d368cce42fcad760055e40a11924",
+          "publisher": "Herald Sun",
+          "title": "Jess Wilson ahead as preferred premier amid rejection of Jacinta Allan's leadership, new poll shows",
+          "published": "2026-03-04",
+          "accessed": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "id": "freshwater-2026-03",
+      "pollster": "freshwater",
+      "commissioner": "herald-sun",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-03-19",
+      "fieldwork_end": "2026-03-23",
+      "sample_size": 1062,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Herald Sun–Freshwater Strategy Vic polling. Primaries from published data tables (squeezed & valid); one decimal from table percentages.",
+      "primaries": {
+        "alp": 27.1,
+        "lnp": 29.6,
+        "onp": 20.4,
+        "grn": 13.8,
+        "others": 9.1
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://freshwaterstrategy.com/wp-content/uploads/Data-Tables-Herald-Sun-Freshwater-Strategy-Vic-Polling-230326.xlsx",
+          "publisher": "Freshwater Strategy",
+          "title": "Herald Sun–Freshwater Strategy Vic Polling data tables (19–23 March 2026)",
+          "published": "2026-03-24",
+          "accessed": "2026-07-30"
+        },
+        {
+          "url": "https://www.heraldsun.com.au/news/victoria/jacinta-allan-faces-leadership-crisis-as-new-poll-reveals-catastrophic-slump/news-story/f649d3f7132e57f78d130e4ec834fe15",
+          "publisher": "Herald Sun",
+          "title": "Jacinta Allan faces leadership crisis as new poll reveals catastrophic slump",
+          "published": "2026-03-24",
+          "accessed": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "id": "freshwater-2026-06",
+      "pollster": "freshwater",
+      "commissioner": "herald-sun",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-06-05",
+      "fieldwork_end": "2026-06-08",
+      "sample_size": 1034,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Victorian state voting intention.",
+      "primaries": {
+        "alp": 23,
+        "lnp": 27,
+        "onp": 25,
+        "grn": 14,
+        "others": 11
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.pollbludger.net/2026/06/08/freshwater-strategy-labor-23-coalition-27-one-nation-25-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "Freshwater Strategy: Labor 23, Coalition 27, One Nation 25 in Victoria",
+          "published": "2026-06-08",
+          "accessed": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "id": "freshwater-2026-08",
+      "pollster": "freshwater",
+      "commissioner": "herald-sun",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-07-31",
+      "fieldwork_end": "2026-08-03",
+      "sample_size": 1020,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Herald Sun / Freshwater Strategy Victorian state primary (squeezed & valid). Fieldwork spans leadership change (Allan→Carroll 28 Jul). Undecideds removed after leaner for published valid result.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 30,
+        "onp": 22,
+        "grn": 14,
+        "others": 9
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://freshwaterstrategy.com/2026/08/04/herald-sun-freshwater-strategy-august-polling-data/",
+          "publisher": "Freshwater Strategy",
+          "title": "Herald Sun / Freshwater Strategy August Polling Data",
+          "published": "2026-08-04",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://freshwaterstrategy.com/wp-content/uploads/Data-Tables-Herald-Sun-Freshwater-Strategy-Vic-Polling-030826-Full-Tables.xlsx",
+          "publisher": "Freshwater Strategy",
+          "title": "Data Tables — Herald Sun / Freshwater Strategy Vic Polling 030826 (fieldwork 31 Jul–3 Aug; n=1,020)",
+          "published": "2026-08-04",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://www.heraldsun.com.au/news/victoria/freshwater-strategy-poll-shows-that-on-a-twoparty-preferred-basis-the-coalition-remains-in-front-of-labor-52-to-48/news-story/28da81559b3cf762608351667fac5cb3",
+          "publisher": "Herald Sun",
+          "title": "Freshwater Strategy poll shows Coalition remains in front of Labor 52 to 48",
+          "published": "2026-08-04",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://theconversation.com/two-victorian-polls-have-the-coalition-leading-labor-with-one-nation-down-288811",
+          "publisher": "The Conversation",
+          "title": "Two Victorian polls have the Coalition leading Labor, with One Nation down",
+          "published": "2026-08-04",
+          "accessed": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "id": "freshwater-2026-09",
+      "pollster": "freshwater",
+      "commissioner": "herald-sun",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-09-24",
+      "fieldwork_end": "2026-09-28",
+      "sample_size": 1030,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Herald Sun / Freshwater Strategy Victorian state primary (squeezed & valid). 2PP Coalition 53–47. Undecideds removed after leaner for published valid result. Others residual after ALP+LNP+GRN+ONP (11). Supersedes freshwater-2026-08 in the average via one-poll-per-pollster de-dupe.",
+      "primaries": {
+        "alp": 24,
+        "lnp": 29,
+        "onp": 22,
+        "grn": 14,
+        "others": 11
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://freshwaterstrategy.com/2026/10/02/herald-sun-freshwater-strategy-september-polling-data/",
+          "publisher": "Freshwater Strategy",
+          "title": "Herald Sun / Freshwater Strategy September Polling Data",
+          "published": "2026-10-02",
+          "accessed": "2026-10-04"
+        },
+        {
+          "url": "https://www.heraldsun.com.au/news/victoria/state-election/jess-wilson-extends-lead-as-labors-primary-vote-crashes-to-24-per-cent-in-victoria/news-story/7511ab7a982b91a898db91af9d5a0377",
+          "publisher": "Herald Sun",
+          "title": "Jess Wilson extends lead as Labor’s primary vote crashes to 24 per cent in Victoria",
+          "published": "2026-10-01",
+          "accessed": "2026-10-04"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/09/29/victorian-election-demosau-poll-election-guide-and-seat-projection-model/",
+          "publisher": "The Poll Bludger",
+          "title": "Victorian election: DemosAU poll, election guide and seat projection model (1 Oct update: Freshwater)",
+          "published": "2026-10-01",
+          "accessed": "2026-10-04"
+        }
+      ]
+    },
+    {
+      "id": "newspoll-2026-07",
+      "pollster": "Newspoll / Pyxis",
+      "commissioner": "the-australian",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-07-23",
+      "fieldwork_end": "2026-07-26",
+      "sample_size": 1035,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Victorian state voting intention conducted by Pyxis Polling & Insights as Newspoll for The Australian. Fieldwork Thursday–Sunday before 27 July publication.",
+      "primaries": {
+        "alp": 28,
+        "lnp": 31,
+        "onp": 19,
+        "grn": 13,
+        "others": 9
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theaustralian.com.au/nation/newspoll-shows-victorian-coalition-with-lead-as-jacinta-allan-faces-leadership-challenge/news-story/4ac504abe32030837be16ec669cb9b94",
+          "publisher": "The Australian",
+          "title": "Faceless Ben coup: Daniel Andrews and Jacinta Allan Victorian Labor era implodes (Newspoll)",
+          "published": "2026-07-27",
+          "accessed": "2026-07-30"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/07/28/victorian-newspoll-and-labor-leadership-spill/",
+          "publisher": "The Poll Bludger",
+          "title": "Victorian Newspoll and Labor leadership spill",
+          "published": "2026-07-28",
+          "accessed": "2026-07-30"
+        },
+        {
+          "url": "https://pyxispolling.com/public-polling/",
+          "publisher": "Pyxis Polling & Insights",
+          "title": "Polling for the Public — Pyxis conducts Newspoll",
+          "accessed": "2026-08-02"
+        }
+      ]
+    },
+    {
+      "id": "redbridge-2026-07-trades-hall",
+      "pollster": "redbridge",
+      "commissioner": "victorian-trades-hall",
+      "commissioner_type": "union",
+      "fieldwork_start": "2026-07-01",
+      "fieldwork_end": "2026-07-14",
+      "sample_size": 6500,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Large-sample poll commissioned for Victorian Trades Hall. Included in the average under a documented case-by-case exception (see eligibility_exception).",
+      "primaries": {
+        "alp": 26,
+        "lnp": 26,
+        "onp": 27,
+        "grn": 12,
+        "others": 9
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "eligibility_exception": "Credible commercial pollster (RedBridge) with large public statewide sample and full five-way primaries; topline tracks the independent media-commissioned RedBridge/Accent AFR wave (26/26/27/12–13/8–9). Union commissioner still disclosed; default hard exclusion relaxed only for this record under poll-methodology.md case-by-case exception process.",
+      "sources": [
+        {
+          "url": "https://www.pollbludger.net/2026/07/14/resolve-strategic-labor-27-coalition-27-one-nation-22-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "Resolve Strategic: Labor 27, Coalition 27, One Nation 22 in Victoria (also reports Trades Hall RedBridge)",
+          "published": "2026-07-14",
+          "accessed": "2026-07-29"
+        },
+        {
+          "url": "https://theconversation.com/victorian-redbridge-poll-has-one-nation-just-ahead-of-labor-and-the-coalition-286753",
+          "publisher": "The Conversation",
+          "title": "Victorian Redbridge poll has One Nation just ahead of Labor and the Coalition",
+          "published": "2026-07-06",
+          "accessed": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "id": "redbridge-accent-2026-02-afr",
+      "pollster": "redbridge-accent",
+      "commissioner": "australian-financial-review",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-02-18",
+      "fieldwork_end": "2026-02-27",
+      "sample_size": 2165,
+      "design_effect": 1.25,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "AFR / RedBridge Group / Accent Research Victorian Public Opinion Snapshot. Design effect from published weight efficiency 80% (effective n 1741). First AFR series wave with One Nation broken out.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 28,
+        "onp": 24,
+        "grn": 13,
+        "others": 10
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://web.archive.org/web/20260308055403/https://6b72024e-077a-44e2-88f5-dc1a0ed81099.usrfiles.com/ugd/b86980_eb49b08b5fa14e63b41cd68cf9bf10ca.pdf",
+          "publisher": "RedBridge Group / Accent Research",
+          "title": "AFR, RedBridge Group and Accent Research Victorian Public Opinion Snapshot (March 2026)",
+          "published": "2026-03-04",
+          "accessed": "2026-07-30",
+          "archive_url": "https://web.archive.org/web/20260308055403/https://6b72024e-077a-44e2-88f5-dc1a0ed81099.usrfiles.com/ugd/b86980_eb49b08b5fa14e63b41cd68cf9bf10ca.pdf"
+        }
+      ]
+    },
+    {
+      "id": "redbridge-accent-2026-06-afr",
+      "pollster": "redbridge-accent",
+      "commissioner": "australian-financial-review",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-06-17",
+      "fieldwork_end": "2026-06-28",
+      "sample_size": 5516,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Victorian state voting intention for the Australian Financial Review.",
+      "primaries": {
+        "alp": 26,
+        "lnp": 26,
+        "onp": 27,
+        "grn": 13,
+        "others": 8
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.afr.com/politics/one-nation-overtakes-labor-liberals-in-victoria-allan-s-rating-dives-20260701-p60bnh",
+          "publisher": "Australian Financial Review",
+          "title": "One Nation overtakes Labor, Liberals in Victoria as Allan's rating dives",
+          "published": "2026-07-01",
+          "accessed": "2026-07-29"
+        },
+        {
+          "url": "https://theconversation.com/victorian-redbridge-poll-has-one-nation-just-ahead-of-labor-and-the-coalition-286753",
+          "publisher": "The Conversation",
+          "title": "Victorian Redbridge poll has One Nation just ahead of Labor and the Coalition",
+          "published": "2026-07-06",
+          "accessed": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "id": "redbridge-accent-2026-08-afr",
+      "pollster": "redbridge-accent",
+      "commissioner": "australian-financial-review",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-07-28",
+      "fieldwork_end": "2026-08-01",
+      "sample_size": 1014,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "AFR / RedBridge / Accent Victorian state voting intention immediately after Ben Carroll became Premier (28 Jul). Online panel; n=1,014 (effective n≈745, weight efficiency 73%). Undecided after leaner (8%) excluded from published VI.",
+      "primaries": {
+        "alp": 23,
+        "lnp": 30,
+        "onp": 22,
+        "grn": 14,
+        "others": 11
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.accent-research.com/projects/afr%2C-redbridge-group-and-accent-research-august-2026-victorian-state-poll",
+          "publisher": "Accent Research",
+          "title": "AFR, RedBridge Group and Accent Research August 2026 Victorian state poll",
+          "published": "2026-08-03",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://www.afr.com/politics/coalition-surges-ahead-of-labor-following-vic-leadership-challenge-20260803-p60kvr",
+          "publisher": "Australian Financial Review",
+          "title": "Coalition surges ahead of Labor following Vic leadership challenge",
+          "published": "2026-08-03",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/08/04/redbridge-group-coalition-30-labor-23-one-nation-22-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "RedBridge Group: Coalition 30, Labor 23, One Nation 22 in Victoria",
+          "published": "2026-08-04",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://theconversation.com/two-victorian-polls-have-the-coalition-leading-labor-with-one-nation-down-288811",
+          "publisher": "The Conversation",
+          "title": "Two Victorian polls have the Coalition leading Labor, with One Nation down",
+          "published": "2026-08-04",
+          "accessed": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "id": "redbridge-accent-2026-09-afr",
+      "pollster": "redbridge-accent",
+      "commissioner": "australian-financial-review",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-09-01",
+      "fieldwork_end": "2026-09-14",
+      "sample_size": 2371,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "AFR / RedBridge / Accent Victorian state voting intention. Online panel; n=2,371 (effective n≈2,009, weight efficiency 85%). Undecided after leaner (9%) excluded from published VI. Others residual after ALP+LNP+GRN+ONP (7).",
+      "primaries": {
+        "alp": 24,
+        "lnp": 29,
+        "onp": 25,
+        "grn": 15,
+        "others": 7
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.accent-research.com/projects/afr-redbridge-group-and-accent-research-september-2026-victorian-state-poll",
+          "publisher": "Accent Research",
+          "title": "AFR, RedBridge Group and Accent Research September 2026 Victorian state poll",
+          "published": "2026-09-15",
+          "accessed": "2026-09-28"
+        },
+        {
+          "url": "https://www.theaustraliatoday.com.au/victorian-labor-slips-to-third-on-primary-vote-as-coalition-leads-and-one-nation-surges-in-new-poll/",
+          "publisher": "The Australia Today",
+          "title": "Victorian Labor slips to third on primary vote as Coalition leads and One Nation surges in new poll",
+          "published": "2026-09-16",
+          "accessed": "2026-09-28"
+        },
+        {
+          "url": "https://www.abc.net.au/news/2026-09-23/ben-carroll-one-nation-victorian-election-jess-wilson-liberals/107186180",
+          "publisher": "ABC News",
+          "title": "Victorian Premier Ben Carroll is terrified of One Nation, his main Liberal rival is not",
+          "published": "2026-09-23",
+          "accessed": "2026-09-28"
+        },
+        {
+          "url": "https://www.onenewsaustralia.com/australian-poll-tracker/",
+          "publisher": "One News Australia",
+          "title": "Australian Poll Tracker (RedBridge Victoria 1–14 Sep entry)",
+          "published": "2026-09-16",
+          "accessed": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "id": "redbridge-accent-2026-10-afr",
+      "pollster": "redbridge-accent",
+      "commissioner": "australian-financial-review",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-10-02",
+      "fieldwork_end": "2026-10-08",
+      "sample_size": 1008,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "AFR / RedBridge / Accent Victorian state voting intention, fieldwork 2–8 Oct 2026, n=1,008. Others residual after ALP+LNP+GRN+ONP (6). Reported 2PP L/NP 56–44 vs ALP; ALP 55–45 vs ONP. Figures via AFR report as tabulated on Wikipedia; Accent project page not yet published at access.",
+      "primaries": {
+        "alp": 24,
+        "lnp": 30,
+        "onp": 24,
+        "grn": 16,
+        "others": 6
+      },
+      "undecided_handling": "excluded",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.afr.com/politics/coalition-firms-for-majority-in-victoria-as-voters-warm-to-wilson-20261011-p6146e",
+          "publisher": "Australian Financial Review",
+          "title": "Coalition firms for majority in Victoria as voters warm to Wilson",
+          "published": "2026-10-11",
+          "accessed": "2026-10-12"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Victorian_state_election",
+          "publisher": "Wikipedia",
+          "title": "Opinion polling for the 2026 Victorian state election (discovery; RedBridge/Accent 2–8 Oct row)",
+          "published": "2026-10-11",
+          "accessed": "2026-10-12"
+        }
+      ]
+    },
+    {
+      "id": "resolve-2026-04-age",
+      "pollster": "resolve",
+      "commissioner": "the-age",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-03-17",
+      "fieldwork_end": "2026-04-18",
+      "sample_size": 1047,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Resolve Political Monitor twin surveys in March and April for The Age; first full series with One Nation broken out of Others. Fieldwork span approximate. Greens/Others from secondary compilations consistent with published majors.",
+      "primaries": {
+        "alp": 27,
+        "lnp": 29,
+        "onp": 21,
+        "grn": 10,
+        "others": 13
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theage.com.au/politics/victoria/one-nation-entrenched-as-third-force-as-victorians-adopt-drain-the-swamp-mentality-20260421-p5zps9.html",
+          "publisher": "The Age",
+          "title": "One Nation entrenched as third force as Victorians adopt 'drain the swamp' mentality",
+          "published": "2026-04-21",
+          "accessed": "2026-07-30"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Victorian_state_election",
+          "publisher": "Wikipedia",
+          "title": "Opinion polling for the 2026 Victorian state election (discovery index for sample/Greens)",
+          "published": "2026-04-22",
+          "accessed": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "id": "resolve-2026-06-age",
+      "pollster": "resolve",
+      "commissioner": "the-age",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-05-12",
+      "fieldwork_end": "2026-06-12",
+      "sample_size": 1100,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Resolve Political Monitor twin surveys in May and June for The Age; published result is the average. Fieldwork span approximate from article (second wave 'last week' before 15 June). Greens 12% confirmed via July Resolve (Greens steady).",
+      "primaries": {
+        "alp": 26,
+        "lnp": 26,
+        "onp": 24,
+        "grn": 12,
+        "others": 12
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theage.com.au/politics/victoria/end-of-days-labor-s-own-supporters-say-time-s-up-for-allan-government-20260614-p606m1.html",
+          "publisher": "The Age",
+          "title": "'End of days': Labor's own supporters say time's up for Allan government",
+          "published": "2026-06-15",
+          "accessed": "2026-07-30"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/07/14/resolve-strategic-labor-27-coalition-27-one-nation-22-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "Resolve Strategic: Labor 27, Coalition 27, One Nation 22 in Victoria (prior wave context)",
+          "published": "2026-07-14",
+          "accessed": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "id": "resolve-2026-07-age",
+      "pollster": "resolve",
+      "commissioner": "the-age",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-07-08",
+      "fieldwork_end": "2026-07-12",
+      "sample_size": 1000,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Victorian state voting intention; sample padded from Resolve national fieldwork for The Age.",
+      "primaries": {
+        "alp": 27,
+        "lnp": 27,
+        "onp": 22,
+        "grn": 12,
+        "others": 12
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theage.com.au/politics/victoria/even-with-one-nation-support-dropping-state-labor-still-has-reason-to-worry-ahead-of-november-20260713-p60etg.html",
+          "publisher": "The Age",
+          "title": "Even with One Nation support dropping, state Labor still has reason to worry ahead of November",
+          "published": "2026-07-13",
+          "accessed": "2026-07-29"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/07/14/resolve-strategic-labor-27-coalition-27-one-nation-22-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "Resolve Strategic: Labor 27, Coalition 27, One Nation 22 in Victoria",
+          "published": "2026-07-14",
+          "accessed": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "id": "resolve-2026-08-age",
+      "pollster": "resolve",
+      "commissioner": "the-age",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-08-09",
+      "fieldwork_end": "2026-08-15",
+      "sample_size": 1000,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "First Resolve Victorian state VI after Ben Carroll replaced Jacinta Allan (28 Jul). Fieldwork Sunday–Saturday per Poll Bludger; sample padded from Resolve national fieldwork for The Age. Others residual after ALP+LNP+GRN+ONP.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 27,
+        "onp": 23,
+        "grn": 12,
+        "others": 13
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theage.com.au/politics/victoria/revealed-how-leadership-coup-has-changed-labor-s-electoral-fortunes-20260817-p60p2l.html",
+          "publisher": "The Age",
+          "title": "Revealed: How leadership coup has changed Labor’s electoral fortunes",
+          "published": "2026-08-19",
+          "accessed": "2026-08-19"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/08/17/demosau-labor-23-coalition-32-one-nation-22-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "DemosAU: Labor 23, Coalition 32, One Nation 22 in Victoria (Resolve update)",
+          "published": "2026-08-17",
+          "accessed": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "resolve-2026-09-age",
+      "pollster": "resolve",
+      "commissioner": "the-age",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-09-06",
+      "fieldwork_end": "2026-09-12",
+      "sample_size": 1000,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Resolve Political Monitor Victorian state VI for The Age / Nine. Fieldwork Sunday–Saturday padded from national RPM (same week as federal Resolve 6–12 Sep). Others residual after ALP+LNP+GRN+ONP (12). Age masthead confirms ALP 25 / L-NP 28 / ONP 23; Greens 12 from Nine/AAP write-ups.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 28,
+        "onp": 23,
+        "grn": 12,
+        "others": 12
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theage.com.au/politics/victoria/debt-concern-looms-large-for-voters-as-carroll-struggles-to-break-through-20260914-p60x45.html",
+          "publisher": "The Age",
+          "title": "Carroll fails to gain traction as debt fears grip Victorian voters, poll shows",
+          "published": "2026-09-14",
+          "accessed": "2026-09-28"
+        },
+        {
+          "url": "https://theqldr.com.au/politics/2026/09/15/pollvic-31/",
+          "publisher": "The Queenslander (AAP)",
+          "title": "Labor struggles to turn election tide under new premier",
+          "published": "2026-09-15",
+          "accessed": "2026-09-28"
+        },
+        {
+          "url": "https://www.onenewsaustralia.com/australian-poll-tracker/",
+          "publisher": "One News Australia",
+          "title": "Australian Poll Tracker (Resolve Victoria 6–12 Sep entry)",
+          "published": "2026-09-16",
+          "accessed": "2026-09-28"
+        },
+        {
+          "url": "https://www.theaustraliatoday.com.au/victorian-labor-slips-to-third-on-primary-vote-as-coalition-leads-and-one-nation-surges-in-new-poll/",
+          "publisher": "The Australia Today",
+          "title": "Victorian Labor slips to third on primary vote as Coalition leads and One Nation surges in new poll",
+          "published": "2026-09-16",
+          "accessed": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "id": "resolve-2026-10-age",
+      "pollster": "resolve",
+      "commissioner": "the-age",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-10-06",
+      "fieldwork_end": "2026-10-10",
+      "sample_size": 1000,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Resolve Political Monitor Victorian state VI for The Age / Nine, fieldwork 6–10 Oct 2026 (same week as federal Resolve 6–10 Oct), n=1,000. Wikipedia row lists IND 4 and Others 5; encoded as others residual after ALP+LNP+GRN+ONP (9), consistent with earlier Resolve Vic files. Greens up three to 15 per Poll Bludger; main parties unchanged on September.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 28,
+        "onp": 23,
+        "grn": 15,
+        "others": 9
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theage.com.au/politics/victoria/wilson-is-gaining-economic-traction-as-carroll-s-popularity-takes-a-further-dive-20261012-p614pi.html",
+          "publisher": "The Age",
+          "title": "Wilson is gaining economic traction as Carroll’s popularity takes a further dive",
+          "published": "2026-10-12",
+          "accessed": "2026-10-14"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/10/13/victorian-polls-redbridge-group-and-resolve-strategic-2/",
+          "publisher": "The Poll Bludger",
+          "title": "Victorian polls: RedBridge Group and Resolve Strategic",
+          "published": "2026-10-13",
+          "accessed": "2026-10-14"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Victorian_state_election",
+          "publisher": "Wikipedia",
+          "title": "Opinion polling for the 2026 Victorian state election (discovery; Resolve 6–10 Oct row)",
+          "published": "2026-10-12",
+          "accessed": "2026-10-14"
+        }
+      ]
+    },
+    {
+      "id": "roy-morgan-2026-02",
+      "pollster": "roy-morgan",
+      "commissioner": "self",
+      "commissioner_type": "self",
+      "fieldwork_start": "2026-02-13",
+      "fieldwork_end": "2026-02-16",
+      "sample_size": 2462,
+      "design_effect": null,
+      "mode": "sms",
+      "population": "victorian-electors",
+      "question_notes": "Special SMS Roy Morgan survey of Victorian state voting intention.",
+      "primaries": {
+        "alp": 25.5,
+        "lnp": 21.5,
+        "onp": 26.5,
+        "grn": 13.5,
+        "others": 13
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.roymorgan.com/findings/10133-victorian-state-voting-intention-february-2026",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention: One Nation (26.5%) now ahead of ALP (25.5%) and L-NP Coalition (21.5%) on primary vote",
+          "published": "2026-02-19",
+          "accessed": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "id": "roy-morgan-2026-04",
+      "pollster": "roy-morgan",
+      "commissioner": "self",
+      "commissioner_type": "self",
+      "fieldwork_start": "2026-04-22",
+      "fieldwork_end": "2026-04-24",
+      "sample_size": 1707,
+      "design_effect": null,
+      "mode": "sms",
+      "population": "victorian-electors",
+      "question_notes": "Special SMS Roy Morgan survey of Victorian state voting intention. Others = other parties (4%) + independents (8.5%).",
+      "primaries": {
+        "alp": 25.5,
+        "lnp": 24,
+        "onp": 24.5,
+        "grn": 13.5,
+        "others": 12.5
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.roymorgan.com/findings/10203-victorian-state-voting-intention-april-2026",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention: ALP (25.5%) holds ground and now leads One Nation (24.5%) and L-NP Coalition (24%) on primary vote in the week before the Nepean by-election",
+          "published": "2026-04-27",
+          "accessed": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "id": "roy-morgan-2026-08",
+      "pollster": "roy-morgan",
+      "commissioner": "self",
+      "commissioner_type": "self",
+      "fieldwork_start": "2026-08-05",
+      "fieldwork_end": "2026-08-07",
+      "sample_size": 2084,
+      "design_effect": null,
+      "mode": "sms",
+      "population": "victorian-electors",
+      "question_notes": "Special SMS Roy Morgan survey of Victorian state voting intention after Ben Carroll became Premier (28 Jul) and Warren Pickering became One Nation Victoria leader (3 Aug). Others = other parties (4%) + independents (8%).",
+      "primaries": {
+        "alp": 26,
+        "lnp": 26,
+        "onp": 23.5,
+        "grn": 12.5,
+        "others": 12
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.roymorgan.com/findings/10303-victorian-state-voting-intention-august-2026",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention: L-NP (26%) and ALP (26%) level on primary and ahead of One Nation (23.5%); however, L-NP narrowly leads ALP on two-party preferred basis (51% cf. 49%)",
+          "published": "2026-08-07",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://roymorgan-cms-prod.s3.ap-southeast-2.amazonaws.com/wp-content/uploads/2026/08/07043517/10303-Victorian-State-Voting-Intention-August-2026-002.pdf",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention August 2026 (PDF)",
+          "published": "2026-08-07",
+          "accessed": "2026-08-08"
+        },
+        {
+          "url": "https://www.roymorgan.com/findings/victorian-state-voting-intention-l-np-coalition-and-one-nation-set-for-a-majority-in-victorias-upper-house-in-november",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention: L-NP Coalition and One Nation set for a majority in Victoria's Upper House in November",
+          "published": "2026-08-17",
+          "accessed": "2026-08-23"
+        }
+      ]
+    }
+  ]
+}

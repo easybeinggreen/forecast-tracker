@@ -1,0 +1,161 @@
+{
+  "generated": "2026-10-22T09:26:53.490Z",
+  "methodology": "docs/poll-methodology.md",
+  "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
+  "parameters": {
+    "design_effect_default": 1.3,
+    "half_life_days": 21,
+    "window_days_default": 45,
+    "window_days_extended": 60,
+    "window_days_sparse": 90,
+    "window_days_thin_max": 400,
+    "sigma_min_pp": 1,
+    "min_polls": 2,
+    "min_pollsters": 2
+  },
+  "as_of": "2026-10-10",
+  "window_days_used": 45,
+  "thin_series": false,
+  "status": "ok",
+  "status_reason": null,
+  "included_poll_ids": [
+    "resolve-2026-10-age",
+    "redbridge-accent-2026-10-afr",
+    "freshwater-2026-09",
+    "demosau-2026-09"
+  ],
+  "excluded_from_average": [],
+  "primaries": {
+    "alp": 24.5,
+    "lnp": 29.1,
+    "onp": 22.6,
+    "grn": 14.9,
+    "others": 8.9
+  },
+  "intervals": {
+    "alp": {
+      "estimate": 24.5,
+      "se": 1.28,
+      "low": 22,
+      "high": 27,
+      "var_sampling_pp2": 0.63,
+      "var_between_pp2": 1
+    },
+    "lnp": {
+      "estimate": 29.1,
+      "se": 1.31,
+      "low": 26.5,
+      "high": 31.7,
+      "var_sampling_pp2": 0.702,
+      "var_between_pp2": 1.015
+    },
+    "onp": {
+      "estimate": 22.6,
+      "se": 1.75,
+      "low": 19.2,
+      "high": 26,
+      "var_sampling_pp2": 0.6,
+      "var_between_pp2": 2.454
+    },
+    "grn": {
+      "estimate": 14.9,
+      "se": 1.2,
+      "low": 12.6,
+      "high": 17.2,
+      "var_sampling_pp2": 0.435,
+      "var_between_pp2": 1
+    },
+    "others": {
+      "estimate": 8.9,
+      "se": 2.43,
+      "low": 4.1,
+      "high": 13.7,
+      "var_sampling_pp2": 0.265,
+      "var_between_pp2": 5.616
+    }
+  },
+  "weights": [
+    {
+      "id": "resolve-2026-10-age",
+      "pollster": "resolve",
+      "fieldwork_end": "2026-10-10",
+      "sample_size": 1000,
+      "n_eff": 769.23,
+      "age_days": 0,
+      "decay": 1,
+      "weight": 769.23
+    },
+    {
+      "id": "redbridge-accent-2026-10-afr",
+      "pollster": "redbridge-accent",
+      "fieldwork_end": "2026-10-08",
+      "sample_size": 1008,
+      "n_eff": 775.38,
+      "age_days": 2,
+      "decay": 0.9361,
+      "weight": 725.85
+    },
+    {
+      "id": "freshwater-2026-09",
+      "pollster": "freshwater",
+      "fieldwork_end": "2026-09-28",
+      "sample_size": 1030,
+      "n_eff": 792.31,
+      "age_days": 12,
+      "decay": 0.673,
+      "weight": 533.18
+    },
+    {
+      "id": "demosau-2026-09",
+      "pollster": "demosau",
+      "fieldwork_end": "2026-09-20",
+      "sample_size": 1020,
+      "n_eff": 784.62,
+      "age_days": 20,
+      "decay": 0.5168,
+      "weight": 405.47
+    }
+  ],
+  "bloc_split": {
+    "labels": {
+      "left": "Labor + Greens",
+      "right": "Coalition + One Nation",
+      "other": "Others",
+      "short_left": "Left bloc",
+      "short_right": "Right bloc"
+    },
+    "definition": {
+      "left": [
+        "alp",
+        "grn"
+      ],
+      "right": [
+        "lnp",
+        "onp"
+      ],
+      "other": [
+        "others"
+      ]
+    },
+    "caveat": "Primary-vote groupings only. Not a two-party preferred result, seat model, or preference forecast. Others are minor parties and independents combined.",
+    "core": {
+      "left": 39.4,
+      "right": 51.7,
+      "other": 8.9
+    },
+    "other_split_proportional": {
+      "method": "proportional_to_core_blocs",
+      "left": 43.2,
+      "right": 56.8,
+      "left_from_other": 3.8,
+      "right_from_other": 5.1
+    },
+    "other_split_even": {
+      "method": "even_split",
+      "left": 43.9,
+      "right": 56.2,
+      "left_from_other": 4.5,
+      "right_from_other": 4.5
+    }
+  }
+}
