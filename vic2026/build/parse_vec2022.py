@@ -51,10 +51,11 @@ def parse_district(slug):
     # the VEC stops distributing once someone has an absolute majority; then the two-candidate
     # result comes from the separate preferred-votes count
     stopped_early = len(final) > 2
-    if stopped_early and tpp_t is not None:
-        final = [{"name": r["Candidate"].strip(), "votes": num(r["Preferred votes"])} for _, r in tpp_t.iterrows()]
-    elif stopped_early:
-        final = sorted(final, key=lambda f: -f["votes"])[:2]
+    if stopped_early:
+        top2 = sorted(final, key=lambda f: -f["votes"])[:2]
+        pair = [{"name": r["Candidate"].strip(), "votes": num(r["Preferred votes"])} for _, r in tpp_t.iterrows()] if tpp_t is not None else []
+        # use the full two-candidate count only when it is between the same two candidates
+        final = pair if {f["name"] for f in pair} == {f["name"] for f in top2} else top2
 
     def grab(label):
         m = re.search(label + r"[^0-9]{0,200}?([\d,]+)", re.sub(r"<[^>]+>", " ", html))
