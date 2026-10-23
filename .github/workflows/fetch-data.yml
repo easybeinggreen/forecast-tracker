@@ -20,14 +20,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests
+      - run: pip install requests geopandas pyogrio
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - name: Fetch
         run: python vic2026/fetch/fetch_${{ inputs.job }}.py
       - name: Commit data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
+          git add data/ site/data/
           git diff --cached --quiet || git commit -m "data: ${{ inputs.job }} raw files"
           git pull --rebase -q origin main
           git push
