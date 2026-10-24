@@ -1,0 +1,3100 @@
+{
+ "source": "ABS 2021 Census GCP (SA1 level), re-cut to 2025 district boundaries",
+ "vic": {
+  "pop": 6494200,
+  "born_os": 30.0,
+  "lang": 27.6,
+  "atsi": 1.0,
+  "uni": 29.2,
+  "cert": 16.7,
+  "rent": 28.5,
+  "own": 32.2,
+  "kids": 34.3,
+  "christian": 40.9,
+  "norel": 38.8,
+  "age": 39.8,
+  "inc": 1871.1
+ },
+ "seats": {
+  "albert-park": {
+   "pop": 73999,
+   "born_os": 39.6,
+   "lang": 27.7,
+   "atsi": 0.4,
+   "uni": 50.1,
+   "cert": 9.0,
+   "rent": 53.9,
+   "own": 20.6,
+   "kids": -1.4,
+   "christian": 34.0,
+   "norel": 47.6,
+   "age": 39.5,
+   "inc": 2229.5,
+   "rent_wk": 486.3,
+   "mortgage_mo": 2553.7,
+   "top_birth": [
+    [
+     "England",
+     4.6
+    ],
+    [
+     "India",
+     3.8
+    ],
+    [
+     "China",
+     3.3
+    ],
+    [
+     "New Zealand",
+     2.7
+    ]
+   ]
+  },
+  "ashwood": {
+   "pop": 80562,
+   "born_os": 41.5,
+   "lang": 40.3,
+   "atsi": 0.2,
+   "uni": 46.5,
+   "cert": 8.9,
+   "rent": 27.6,
+   "own": 37.6,
+   "kids": 43.1,
+   "christian": 39.6,
+   "norel": 40.8,
+   "age": 39.8,
+   "inc": 2296.9,
+   "rent_wk": 495.3,
+   "mortgage_mo": 2748.7,
+   "top_birth": [
+    [
+     "China",
+     10.7
+    ],
+    [
+     "India",
+     4.7
+    ],
+    [
+     "Sri Lanka",
+     3.0
+    ],
+    [
+     "Malaysia",
+     2.6
+    ]
+   ]
+  },
+  "bass": {
+   "pop": 65809,
+   "born_os": 17.0,
+   "lang": 8.9,
+   "atsi": 1.2,
+   "uni": 16.8,
+   "cert": 24.5,
+   "rent": 18.8,
+   "own": 40.0,
+   "kids": 21.2,
+   "christian": 38.6,
+   "norel": 48.1,
+   "age": 46.0,
+   "inc": 1492.9,
+   "rent_wk": 336.8,
+   "mortgage_mo": 1698.3,
+   "top_birth": [
+    [
+     "England",
+     4.4
+    ],
+    [
+     "India",
+     2.0
+    ],
+    [
+     "New Zealand",
+     1.5
+    ],
+    [
+     "Philippines",
+     0.7
+    ]
+   ]
+  },
+  "bayswater": {
+   "pop": 73155,
+   "born_os": 31.2,
+   "lang": 26.9,
+   "atsi": 0.8,
+   "uni": 26.1,
+   "cert": 19.7,
+   "rent": 25.8,
+   "own": 32.5,
+   "kids": 33.5,
+   "christian": 38.9,
+   "norel": 44.7,
+   "age": 39.8,
+   "inc": 1751.0,
+   "rent_wk": 396.9,
+   "mortgage_mo": 1941.0,
+   "top_birth": [
+    [
+     "China",
+     5.3
+    ],
+    [
+     "England",
+     3.3
+    ],
+    [
+     "India",
+     3.2
+    ],
+    [
+     "Malaysia",
+     2.0
+    ]
+   ]
+  },
+  "bellarine": {
+   "pop": 69508,
+   "born_os": 13.3,
+   "lang": 4.7,
+   "atsi": 0.9,
+   "uni": 24.2,
+   "cert": 21.8,
+   "rent": 18.1,
+   "own": 44.0,
+   "kids": 17.9,
+   "christian": 45.5,
+   "norel": 45.9,
+   "age": 48.1,
+   "inc": 1659.1,
+   "rent_wk": 389.3,
+   "mortgage_mo": 1832.3,
+   "top_birth": [
+    [
+     "England",
+     4.5
+    ],
+    [
+     "New Zealand",
+     1.1
+    ],
+    [
+     "Scotland",
+     0.5
+    ],
+    [
+     "Netherlands",
+     0.5
+    ]
+   ]
+  },
+  "benambra": {
+   "pop": 66854,
+   "born_os": 10.4,
+   "lang": 5.3,
+   "atsi": 2.8,
+   "uni": 17.3,
+   "cert": 25.6,
+   "rent": 26.2,
+   "own": 34.7,
+   "kids": 23.1,
+   "christian": 45.4,
+   "norel": 44.4,
+   "age": 42.4,
+   "inc": 1599.8,
+   "rent_wk": 297.5,
+   "mortgage_mo": 1438.2,
+   "top_birth": [
+    [
+     "England",
+     2.2
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "India",
+     0.7
+    ],
+    [
+     "Germany",
+     0.6
+    ]
+   ]
+  },
+  "bendigo-east": {
+   "pop": 72528,
+   "born_os": 9.3,
+   "lang": 6.6,
+   "atsi": 2.1,
+   "uni": 21.3,
+   "cert": 22.5,
+   "rent": 25.1,
+   "own": 34.8,
+   "kids": 28.4,
+   "christian": 43.5,
+   "norel": 46.5,
+   "age": 40.4,
+   "inc": 1637.5,
+   "rent_wk": 311.1,
+   "mortgage_mo": 1479.3,
+   "top_birth": [
+    [
+     "England",
+     1.7
+    ],
+    [
+     "India",
+     1.0
+    ],
+    [
+     "New Zealand",
+     0.7
+    ],
+    [
+     "Thailand",
+     0.6
+    ]
+   ]
+  },
+  "bendigo-west": {
+   "pop": 63671,
+   "born_os": 10.6,
+   "lang": 5.7,
+   "atsi": 2.0,
+   "uni": 21.1,
+   "cert": 21.5,
+   "rent": 26.1,
+   "own": 37.4,
+   "kids": 19.6,
+   "christian": 37.0,
+   "norel": 50.5,
+   "age": 43.7,
+   "inc": 1404.2,
+   "rent_wk": 298.4,
+   "mortgage_mo": 1396.8,
+   "top_birth": [
+    [
+     "England",
+     2.2
+    ],
+    [
+     "India",
+     0.9
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "Myanmar",
+     0.6
+    ]
+   ]
+  },
+  "bentleigh": {
+   "pop": 76580,
+   "born_os": 35.6,
+   "lang": 32.1,
+   "atsi": 0.3,
+   "uni": 39.8,
+   "cert": 12.2,
+   "rent": 26.5,
+   "own": 33.9,
+   "kids": 44.2,
+   "christian": 40.2,
+   "norel": 39.7,
+   "age": 40.2,
+   "inc": 2218.6,
+   "rent_wk": 508.5,
+   "mortgage_mo": 2509.2,
+   "top_birth": [
+    [
+     "China",
+     5.4
+    ],
+    [
+     "India",
+     3.5
+    ],
+    [
+     "England",
+     2.9
+    ],
+    [
+     "Greece",
+     1.8
+    ]
+   ]
+  },
+  "berwick": {
+   "pop": 81671,
+   "born_os": 37.8,
+   "lang": 34.9,
+   "atsi": 0.4,
+   "uni": 28.2,
+   "cert": 18.0,
+   "rent": 20.0,
+   "own": 23.6,
+   "kids": 55.4,
+   "christian": 40.9,
+   "norel": 31.7,
+   "age": 36.9,
+   "inc": 2291.7,
+   "rent_wk": 423.4,
+   "mortgage_mo": 2149.2,
+   "top_birth": [
+    [
+     "India",
+     9.6
+    ],
+    [
+     "Sri Lanka",
+     5.1
+    ],
+    [
+     "England",
+     3.1
+    ],
+    [
+     "China",
+     2.1
+    ]
+   ]
+  },
+  "box-hill": {
+   "pop": 85303,
+   "born_os": 42.9,
+   "lang": 41.4,
+   "atsi": 0.3,
+   "uni": 43.3,
+   "cert": 9.2,
+   "rent": 33.6,
+   "own": 33.0,
+   "kids": 34.6,
+   "christian": 36.6,
+   "norel": 45.7,
+   "age": 39.1,
+   "inc": 1898.4,
+   "rent_wk": 434.0,
+   "mortgage_mo": 2333.4,
+   "top_birth": [
+    [
+     "China",
+     15.2
+    ],
+    [
+     "India",
+     3.7
+    ],
+    [
+     "Malaysia",
+     3.7
+    ],
+    [
+     "England",
+     2.0
+    ]
+   ]
+  },
+  "brighton": {
+   "pop": 66600,
+   "born_os": 27.9,
+   "lang": 16.8,
+   "atsi": 0.2,
+   "uni": 47.2,
+   "cert": 8.8,
+   "rent": 30.7,
+   "own": 36.2,
+   "kids": 35.0,
+   "christian": 40.8,
+   "norel": 45.0,
+   "age": 44.1,
+   "inc": 2683.7,
+   "rent_wk": 578.0,
+   "mortgage_mo": 3177.9,
+   "top_birth": [
+    [
+     "England",
+     5.4
+    ],
+    [
+     "China",
+     2.6
+    ],
+    [
+     "New Zealand",
+     1.8
+    ],
+    [
+     "South Africa",
+     1.2
+    ]
+   ]
+  },
+  "broadmeadows": {
+   "pop": 80570,
+   "born_os": 43.3,
+   "lang": 53.8,
+   "atsi": 0.6,
+   "uni": 24.6,
+   "cert": 12.9,
+   "rent": 35.2,
+   "own": 30.5,
+   "kids": 40.7,
+   "christian": 35.4,
+   "norel": 18.2,
+   "age": 34.7,
+   "inc": 1482.0,
+   "rent_wk": 361.3,
+   "mortgage_mo": 1750.2,
+   "top_birth": [
+    [
+     "Nepal",
+     4.2
+    ],
+    [
+     "India",
+     3.9
+    ],
+    [
+     "Pakistan",
+     3.7
+    ],
+    [
+     "Italy",
+     3.4
+    ]
+   ]
+  },
+  "brunswick": {
+   "pop": 68233,
+   "born_os": 28.2,
+   "lang": 21.4,
+   "atsi": 0.7,
+   "uni": 56.4,
+   "cert": 8.0,
+   "rent": 48.3,
+   "own": 24.3,
+   "kids": 8.4,
+   "christian": 26.4,
+   "norel": 60.8,
+   "age": 35.2,
+   "inc": 2189.6,
+   "rent_wk": 469.4,
+   "mortgage_mo": 2348.9,
+   "top_birth": [
+    [
+     "England",
+     3.8
+    ],
+    [
+     "New Zealand",
+     2.7
+    ],
+    [
+     "Italy",
+     2.5
+    ],
+    [
+     "Greece",
+     1.8
+    ]
+   ]
+  },
+  "bulleen": {
+   "pop": 74874,
+   "born_os": 46.6,
+   "lang": 51.2,
+   "atsi": 0.2,
+   "uni": 38.4,
+   "cert": 10.7,
+   "rent": 21.8,
+   "own": 43.8,
+   "kids": 33.8,
+   "christian": 47.6,
+   "norel": 35.5,
+   "age": 44.5,
+   "inc": 1921.5,
+   "rent_wk": 512.4,
+   "mortgage_mo": 2470.9,
+   "top_birth": [
+    [
+     "China",
+     12.4
+    ],
+    [
+     "Malaysia",
+     3.8
+    ],
+    [
+     "Greece",
+     3.1
+    ],
+    [
+     "Hong Kong",
+     2.9
+    ]
+   ]
+  },
+  "bundoora": {
+   "pop": 69404,
+   "born_os": 31.0,
+   "lang": 31.4,
+   "atsi": 0.8,
+   "uni": 30.6,
+   "cert": 16.1,
+   "rent": 25.1,
+   "own": 36.2,
+   "kids": 36.4,
+   "christian": 47.8,
+   "norel": 36.3,
+   "age": 39.4,
+   "inc": 1866.5,
+   "rent_wk": 401.4,
+   "mortgage_mo": 1991.0,
+   "top_birth": [
+    [
+     "China",
+     4.7
+    ],
+    [
+     "India",
+     3.0
+    ],
+    [
+     "Italy",
+     1.9
+    ],
+    [
+     "England",
+     1.8
+    ]
+   ]
+  },
+  "carrum": {
+   "pop": 74313,
+   "born_os": 27.2,
+   "lang": 19.8,
+   "atsi": 1.0,
+   "uni": 21.4,
+   "cert": 22.2,
+   "rent": 23.6,
+   "own": 26.8,
+   "kids": 38.6,
+   "christian": 39.9,
+   "norel": 44.1,
+   "age": 39.0,
+   "inc": 1961.5,
+   "rent_wk": 414.1,
+   "mortgage_mo": 1956.2,
+   "top_birth": [
+    [
+     "England",
+     4.1
+    ],
+    [
+     "India",
+     3.8
+    ],
+    [
+     "New Zealand",
+     2.3
+    ],
+    [
+     "Philippines",
+     1.4
+    ]
+   ]
+  },
+  "caulfield": {
+   "pop": 71136,
+   "born_os": 35.5,
+   "lang": 25.8,
+   "atsi": 0.2,
+   "uni": 49.6,
+   "cert": 9.2,
+   "rent": 39.7,
+   "own": 28.6,
+   "kids": 29.2,
+   "christian": 22.3,
+   "norel": 35.6,
+   "age": 38.1,
+   "inc": 2260.8,
+   "rent_wk": 455.0,
+   "mortgage_mo": 2507.8,
+   "top_birth": [
+    [
+     "India",
+     3.5
+    ],
+    [
+     "England",
+     3.2
+    ],
+    [
+     "South Africa",
+     3.2
+    ],
+    [
+     "China",
+     2.6
+    ]
+   ]
+  },
+  "clarinda": {
+   "pop": 73572,
+   "born_os": 47.3,
+   "lang": 49.6,
+   "atsi": 0.3,
+   "uni": 25.8,
+   "cert": 13.7,
+   "rent": 24.7,
+   "own": 37.8,
+   "kids": 40.1,
+   "christian": 42.2,
+   "norel": 29.0,
+   "age": 40.7,
+   "inc": 1742.7,
+   "rent_wk": 406.2,
+   "mortgage_mo": 1952.1,
+   "top_birth": [
+    [
+     "Vietnam",
+     6.7
+    ],
+    [
+     "India",
+     6.3
+    ],
+    [
+     "Cambodia",
+     5.3
+    ],
+    [
+     "China",
+     3.7
+    ]
+   ]
+  },
+  "cranbourne": {
+   "pop": 87135,
+   "born_os": 39.0,
+   "lang": 38.3,
+   "atsi": 0.9,
+   "uni": 19.8,
+   "cert": 20.9,
+   "rent": 25.5,
+   "own": 16.5,
+   "kids": 50.7,
+   "christian": 35.9,
+   "norel": 32.0,
+   "age": 33.4,
+   "inc": 1908.1,
+   "rent_wk": 388.2,
+   "mortgage_mo": 1830.8,
+   "top_birth": [
+    [
+     "India",
+     11.6
+    ],
+    [
+     "Afghanistan",
+     3.0
+    ],
+    [
+     "New Zealand",
+     2.8
+    ],
+    [
+     "Philippines",
+     2.7
+    ]
+   ]
+  },
+  "croydon": {
+   "pop": 74708,
+   "born_os": 23.0,
+   "lang": 16.7,
+   "atsi": 0.7,
+   "uni": 25.1,
+   "cert": 20.7,
+   "rent": 22.7,
+   "own": 32.1,
+   "kids": 34.5,
+   "christian": 42.8,
+   "norel": 46.3,
+   "age": 39.7,
+   "inc": 1863.2,
+   "rent_wk": 409.6,
+   "mortgage_mo": 1967.7,
+   "top_birth": [
+    [
+     "England",
+     4.0
+    ],
+    [
+     "China",
+     2.3
+    ],
+    [
+     "Myanmar",
+     2.1
+    ],
+    [
+     "India",
+     1.9
+    ]
+   ]
+  },
+  "dandenong": {
+   "pop": 89536,
+   "born_os": 57.0,
+   "lang": 61.5,
+   "atsi": 0.5,
+   "uni": 18.7,
+   "cert": 14.1,
+   "rent": 39.7,
+   "own": 27.5,
+   "kids": 39.7,
+   "christian": 33.4,
+   "norel": 17.9,
+   "age": 36.3,
+   "inc": 1385.2,
+   "rent_wk": 342.4,
+   "mortgage_mo": 1626.1,
+   "top_birth": [
+    [
+     "India",
+     7.9
+    ],
+    [
+     "Afghanistan",
+     6.5
+    ],
+    [
+     "Sri Lanka",
+     4.9
+    ],
+    [
+     "Vietnam",
+     4.6
+    ]
+   ]
+  },
+  "eildon": {
+   "pop": 66308,
+   "born_os": 12.3,
+   "lang": 3.7,
+   "atsi": 1.5,
+   "uni": 18.2,
+   "cert": 24.7,
+   "rent": 12.9,
+   "own": 42.2,
+   "kids": 22.5,
+   "christian": 34.9,
+   "norel": 53.8,
+   "age": 46.0,
+   "inc": 1607.0,
+   "rent_wk": 320.9,
+   "mortgage_mo": 1754.0,
+   "top_birth": [
+    [
+     "England",
+     4.5
+    ],
+    [
+     "New Zealand",
+     1.2
+    ],
+    [
+     "Germany",
+     0.6
+    ],
+    [
+     "Netherlands",
+     0.5
+    ]
+   ]
+  },
+  "eltham": {
+   "pop": 66316,
+   "born_os": 17.2,
+   "lang": 10.5,
+   "atsi": 0.5,
+   "uni": 33.7,
+   "cert": 18.1,
+   "rent": 11.7,
+   "own": 41.2,
+   "kids": 43.3,
+   "christian": 43.7,
+   "norel": 48.8,
+   "age": 42.5,
+   "inc": 2460.7,
+   "rent_wk": 469.9,
+   "mortgage_mo": 2259.7,
+   "top_birth": [
+    [
+     "England",
+     3.9
+    ],
+    [
+     "China",
+     1.1
+    ],
+    [
+     "New Zealand",
+     1.0
+    ],
+    [
+     "Italy",
+     0.9
+    ]
+   ]
+  },
+  "essendon": {
+   "pop": 69599,
+   "born_os": 27.3,
+   "lang": 25.4,
+   "atsi": 0.5,
+   "uni": 42.5,
+   "cert": 11.5,
+   "rent": 39.3,
+   "own": 28.5,
+   "kids": 32.4,
+   "christian": 46.5,
+   "norel": 37.3,
+   "age": 38.5,
+   "inc": 2181.9,
+   "rent_wk": 400.2,
+   "mortgage_mo": 2306.4,
+   "top_birth": [
+    [
+     "India",
+     2.5
+    ],
+    [
+     "Italy",
+     2.2
+    ],
+    [
+     "England",
+     2.1
+    ],
+    [
+     "Vietnam",
+     1.7
+    ]
+   ]
+  },
+  "eureka": {
+   "pop": 75532,
+   "born_os": 12.3,
+   "lang": 6.4,
+   "atsi": 1.6,
+   "uni": 21.1,
+   "cert": 23.1,
+   "rent": 22.0,
+   "own": 32.8,
+   "kids": 30.4,
+   "christian": 41.8,
+   "norel": 47.7,
+   "age": 40.1,
+   "inc": 1731.9,
+   "rent_wk": 322.1,
+   "mortgage_mo": 1597.8,
+   "top_birth": [
+    [
+     "England",
+     3.1
+    ],
+    [
+     "India",
+     1.5
+    ],
+    [
+     "New Zealand",
+     1.1
+    ],
+    [
+     "Scotland",
+     0.5
+    ]
+   ]
+  },
+  "euroa": {
+   "pop": 66250,
+   "born_os": 10.4,
+   "lang": 4.7,
+   "atsi": 2.1,
+   "uni": 13.4,
+   "cert": 23.3,
+   "rent": 19.5,
+   "own": 42.4,
+   "kids": 14.2,
+   "christian": 45.0,
+   "norel": 42.3,
+   "age": 47.7,
+   "inc": 1378.0,
+   "rent_wk": 272.1,
+   "mortgage_mo": 1395.1,
+   "top_birth": [
+    [
+     "England",
+     2.6
+    ],
+    [
+     "New Zealand",
+     1.0
+    ],
+    [
+     "India",
+     0.5
+    ],
+    [
+     "Germany",
+     0.4
+    ]
+   ]
+  },
+  "evelyn": {
+   "pop": 68668,
+   "born_os": 16.7,
+   "lang": 8.7,
+   "atsi": 1.0,
+   "uni": 19.6,
+   "cert": 25.7,
+   "rent": 14.2,
+   "own": 33.3,
+   "kids": 39.8,
+   "christian": 42.0,
+   "norel": 50.1,
+   "age": 39.1,
+   "inc": 2047.5,
+   "rent_wk": 394.2,
+   "mortgage_mo": 2038.0,
+   "top_birth": [
+    [
+     "England",
+     4.6
+    ],
+    [
+     "New Zealand",
+     1.0
+    ],
+    [
+     "India",
+     1.0
+    ],
+    [
+     "Netherlands",
+     0.8
+    ]
+   ]
+  },
+  "footscray": {
+   "pop": 72600,
+   "born_os": 36.3,
+   "lang": 35.2,
+   "atsi": 0.7,
+   "uni": 42.6,
+   "cert": 11.2,
+   "rent": 42.8,
+   "own": 21.1,
+   "kids": 26.3,
+   "christian": 32.0,
+   "norel": 46.4,
+   "age": 36.0,
+   "inc": 2125.7,
+   "rent_wk": 406.6,
+   "mortgage_mo": 2173.4,
+   "top_birth": [
+    [
+     "Vietnam",
+     7.4
+    ],
+    [
+     "India",
+     3.1
+    ],
+    [
+     "England",
+     2.4
+    ],
+    [
+     "New Zealand",
+     2.0
+    ]
+   ]
+  },
+  "frankston": {
+   "pop": 68379,
+   "born_os": 22.0,
+   "lang": 11.0,
+   "atsi": 1.4,
+   "uni": 20.1,
+   "cert": 21.5,
+   "rent": 33.8,
+   "own": 28.1,
+   "kids": 25.7,
+   "christian": 37.1,
+   "norel": 50.5,
+   "age": 40.9,
+   "inc": 1615.9,
+   "rent_wk": 385.4,
+   "mortgage_mo": 1817.7,
+   "top_birth": [
+    [
+     "England",
+     5.6
+    ],
+    [
+     "New Zealand",
+     2.2
+    ],
+    [
+     "China",
+     1.1
+    ],
+    [
+     "Scotland",
+     0.9
+    ]
+   ]
+  },
+  "geelong": {
+   "pop": 71820,
+   "born_os": 15.3,
+   "lang": 9.6,
+   "atsi": 1.3,
+   "uni": 27.6,
+   "cert": 20.0,
+   "rent": 33.0,
+   "own": 31.7,
+   "kids": 26.7,
+   "christian": 43.4,
+   "norel": 45.5,
+   "age": 40.1,
+   "inc": 1691.4,
+   "rent_wk": 341.5,
+   "mortgage_mo": 1778.5,
+   "top_birth": [
+    [
+     "England",
+     2.9
+    ],
+    [
+     "India",
+     1.6
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "Italy",
+     0.7
+    ]
+   ]
+  },
+  "gippsland-east": {
+   "pop": 63799,
+   "born_os": 10.9,
+   "lang": 3.6,
+   "atsi": 3.0,
+   "uni": 13.4,
+   "cert": 24.3,
+   "rent": 18.8,
+   "own": 47.5,
+   "kids": 8.5,
+   "christian": 40.8,
+   "norel": 47.6,
+   "age": 49.5,
+   "inc": 1221.1,
+   "rent_wk": 262.9,
+   "mortgage_mo": 1273.9,
+   "top_birth": [
+    [
+     "England",
+     3.5
+    ],
+    [
+     "New Zealand",
+     1.1
+    ],
+    [
+     "Philippines",
+     0.5
+    ],
+    [
+     "Netherlands",
+     0.5
+    ]
+   ]
+  },
+  "gippsland-south": {
+   "pop": 65839,
+   "born_os": 11.8,
+   "lang": 4.2,
+   "atsi": 1.6,
+   "uni": 15.6,
+   "cert": 24.0,
+   "rent": 18.2,
+   "own": 44.8,
+   "kids": 16.2,
+   "christian": 39.8,
+   "norel": 48.3,
+   "age": 46.8,
+   "inc": 1382.8,
+   "rent_wk": 264.2,
+   "mortgage_mo": 1356.3,
+   "top_birth": [
+    [
+     "England",
+     3.4
+    ],
+    [
+     "New Zealand",
+     1.2
+    ],
+    [
+     "Netherlands",
+     0.7
+    ],
+    [
+     "Germany",
+     0.5
+    ]
+   ]
+  },
+  "glen-waverley": {
+   "pop": 82374,
+   "born_os": 51.5,
+   "lang": 52.6,
+   "atsi": 0.2,
+   "uni": 41.2,
+   "cert": 9.6,
+   "rent": 22.5,
+   "own": 42.6,
+   "kids": 42.0,
+   "christian": 37.1,
+   "norel": 38.3,
+   "age": 42.9,
+   "inc": 1949.2,
+   "rent_wk": 479.5,
+   "mortgage_mo": 2475.8,
+   "top_birth": [
+    [
+     "China",
+     15.4
+    ],
+    [
+     "India",
+     6.0
+    ],
+    [
+     "Malaysia",
+     4.6
+    ],
+    [
+     "Sri Lanka",
+     3.7
+    ]
+   ]
+  },
+  "greenvale": {
+   "pop": 77336,
+   "born_os": 41.6,
+   "lang": 56.2,
+   "atsi": 0.6,
+   "uni": 18.5,
+   "cert": 15.5,
+   "rent": 21.2,
+   "own": 27.2,
+   "kids": 56.7,
+   "christian": 46.2,
+   "norel": 13.4,
+   "age": 34.7,
+   "inc": 1776.1,
+   "rent_wk": 387.3,
+   "mortgage_mo": 1778.2,
+   "top_birth": [
+    [
+     "Iraq",
+     8.8
+    ],
+    [
+     "Turkey",
+     5.2
+    ],
+    [
+     "India",
+     2.6
+    ],
+    [
+     "Lebanon",
+     2.4
+    ]
+   ]
+  },
+  "hastings": {
+   "pop": 66805,
+   "born_os": 15.3,
+   "lang": 4.5,
+   "atsi": 1.3,
+   "uni": 16.1,
+   "cert": 26.7,
+   "rent": 18.4,
+   "own": 34.0,
+   "kids": 31.2,
+   "christian": 38.3,
+   "norel": 53.5,
+   "age": 41.3,
+   "inc": 1801.6,
+   "rent_wk": 375.0,
+   "mortgage_mo": 1837.9,
+   "top_birth": [
+    [
+     "England",
+     6.1
+    ],
+    [
+     "New Zealand",
+     1.5
+    ],
+    [
+     "Scotland",
+     0.9
+    ],
+    [
+     "Netherlands",
+     0.5
+    ]
+   ]
+  },
+  "hawthorn": {
+   "pop": 70678,
+   "born_os": 29.5,
+   "lang": 22.9,
+   "atsi": 0.2,
+   "uni": 54.8,
+   "cert": 7.0,
+   "rent": 34.8,
+   "own": 34.3,
+   "kids": 31.0,
+   "christian": 39.6,
+   "norel": 46.5,
+   "age": 39.8,
+   "inc": 2549.2,
+   "rent_wk": 482.1,
+   "mortgage_mo": 2878.3,
+   "top_birth": [
+    [
+     "China",
+     5.3
+    ],
+    [
+     "England",
+     3.2
+    ],
+    [
+     "India",
+     2.6
+    ],
+    [
+     "Malaysia",
+     1.8
+    ]
+   ]
+  },
+  "ivanhoe": {
+   "pop": 66235,
+   "born_os": 27.2,
+   "lang": 25.3,
+   "atsi": 0.6,
+   "uni": 42.8,
+   "cert": 11.9,
+   "rent": 31.4,
+   "own": 34.0,
+   "kids": 36.5,
+   "christian": 42.8,
+   "norel": 42.6,
+   "age": 40.4,
+   "inc": 2173.5,
+   "rent_wk": 421.0,
+   "mortgage_mo": 2370.0,
+   "top_birth": [
+    [
+     "China",
+     3.4
+    ],
+    [
+     "England",
+     2.6
+    ],
+    [
+     "India",
+     2.4
+    ],
+    [
+     "Italy",
+     1.8
+    ]
+   ]
+  },
+  "kalkallo": {
+   "pop": 95259,
+   "born_os": 43.8,
+   "lang": 52.8,
+   "atsi": 0.8,
+   "uni": 24.0,
+   "cert": 17.3,
+   "rent": 25.4,
+   "own": 13.4,
+   "kids": 58.6,
+   "christian": 39.5,
+   "norel": 18.8,
+   "age": 31.8,
+   "inc": 1921.2,
+   "rent_wk": 391.1,
+   "mortgage_mo": 1880.7,
+   "top_birth": [
+    [
+     "India",
+     13.9
+    ],
+    [
+     "Iraq",
+     7.2
+    ],
+    [
+     "New Zealand",
+     2.2
+    ],
+    [
+     "Sri Lanka",
+     2.1
+    ]
+   ]
+  },
+  "kew": {
+   "pop": 73439,
+   "born_os": 37.2,
+   "lang": 36.7,
+   "atsi": 0.2,
+   "uni": 49.6,
+   "cert": 7.0,
+   "rent": 24.2,
+   "own": 42.6,
+   "kids": 42.9,
+   "christian": 42.7,
+   "norel": 42.9,
+   "age": 42.6,
+   "inc": 2509.3,
+   "rent_wk": 556.6,
+   "mortgage_mo": 3193.3,
+   "top_birth": [
+    [
+     "China",
+     11.4
+    ],
+    [
+     "Malaysia",
+     2.8
+    ],
+    [
+     "India",
+     2.5
+    ],
+    [
+     "England",
+     2.4
+    ]
+   ]
+  },
+  "kororoit": {
+   "pop": 87491,
+   "born_os": 47.6,
+   "lang": 55.5,
+   "atsi": 0.7,
+   "uni": 22.9,
+   "cert": 14.5,
+   "rent": 22.8,
+   "own": 25.4,
+   "kids": 53.2,
+   "christian": 47.0,
+   "norel": 18.1,
+   "age": 35.2,
+   "inc": 1838.4,
+   "rent_wk": 371.7,
+   "mortgage_mo": 1775.5,
+   "top_birth": [
+    [
+     "India",
+     7.7
+    ],
+    [
+     "Vietnam",
+     7.6
+    ],
+    [
+     "Philippines",
+     4.6
+    ],
+    [
+     "New Zealand",
+     1.9
+    ]
+   ]
+  },
+  "lara": {
+   "pop": 70518,
+   "born_os": 22.5,
+   "lang": 19.1,
+   "atsi": 2.0,
+   "uni": 15.1,
+   "cert": 21.3,
+   "rent": 32.3,
+   "own": 32.1,
+   "kids": 28.6,
+   "christian": 44.4,
+   "norel": 38.9,
+   "age": 39.0,
+   "inc": 1558.6,
+   "rent_wk": 336.4,
+   "mortgage_mo": 1545.3,
+   "top_birth": [
+    [
+     "England",
+     2.4
+    ],
+    [
+     "India",
+     2.1
+    ],
+    [
+     "Croatia",
+     1.4
+    ],
+    [
+     "Philippines",
+     1.2
+    ]
+   ]
+  },
+  "laverton": {
+   "pop": 94540,
+   "born_os": 54.4,
+   "lang": 61.6,
+   "atsi": 0.6,
+   "uni": 31.7,
+   "cert": 11.8,
+   "rent": 36.3,
+   "own": 20.4,
+   "kids": 47.1,
+   "christian": 32.2,
+   "norel": 20.4,
+   "age": 33.5,
+   "inc": 1837.2,
+   "rent_wk": 359.1,
+   "mortgage_mo": 1830.3,
+   "top_birth": [
+    [
+     "India",
+     15.3
+    ],
+    [
+     "Vietnam",
+     7.6
+    ],
+    [
+     "Philippines",
+     3.0
+    ],
+    [
+     "New Zealand",
+     2.5
+    ]
+   ]
+  },
+  "lowan": {
+   "pop": 68493,
+   "born_os": 7.9,
+   "lang": 4.1,
+   "atsi": 1.8,
+   "uni": 13.6,
+   "cert": 22.6,
+   "rent": 20.0,
+   "own": 46.9,
+   "kids": 16.1,
+   "christian": 48.3,
+   "norel": 40.9,
+   "age": 46.5,
+   "inc": 1325.6,
+   "rent_wk": 211.3,
+   "mortgage_mo": 1026.8,
+   "top_birth": [
+    [
+     "England",
+     1.8
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "India",
+     0.7
+    ],
+    [
+     "Philippines",
+     0.5
+    ]
+   ]
+  },
+  "macedon": {
+   "pop": 64417,
+   "born_os": 13.6,
+   "lang": 4.8,
+   "atsi": 0.9,
+   "uni": 27.4,
+   "cert": 20.1,
+   "rent": 13.2,
+   "own": 40.6,
+   "kids": 29.5,
+   "christian": 40.2,
+   "norel": 49.9,
+   "age": 45.2,
+   "inc": 2001.2,
+   "rent_wk": 376.1,
+   "mortgage_mo": 1944.3,
+   "top_birth": [
+    [
+     "England",
+     4.4
+    ],
+    [
+     "New Zealand",
+     1.4
+    ],
+    [
+     "Germany",
+     0.5
+    ],
+    [
+     "Scotland",
+     0.5
+    ]
+   ]
+  },
+  "malvern": {
+   "pop": 64424,
+   "born_os": 28.8,
+   "lang": 21.5,
+   "atsi": 0.2,
+   "uni": 51.9,
+   "cert": 7.0,
+   "rent": 33.3,
+   "own": 36.2,
+   "kids": 27.1,
+   "christian": 42.7,
+   "norel": 39.3,
+   "age": 41.6,
+   "inc": 2677.0,
+   "rent_wk": 488.4,
+   "mortgage_mo": 3119.1,
+   "top_birth": [
+    [
+     "China",
+     4.1
+    ],
+    [
+     "England",
+     3.0
+    ],
+    [
+     "India",
+     2.8
+    ],
+    [
+     "New Zealand",
+     1.5
+    ]
+   ]
+  },
+  "melbourne": {
+   "pop": 118386,
+   "born_os": 54.9,
+   "lang": 47.3,
+   "atsi": 0.5,
+   "uni": 53.1,
+   "cert": 6.2,
+   "rent": 68.6,
+   "own": 12.8,
+   "kids": -18.6,
+   "christian": 22.2,
+   "norel": 49.3,
+   "age": 30.9,
+   "inc": 1658.2,
+   "rent_wk": 391.9,
+   "mortgage_mo": 1896.0,
+   "top_birth": [
+    [
+     "China",
+     12.2
+    ],
+    [
+     "India",
+     6.5
+    ],
+    [
+     "Malaysia",
+     4.3
+    ],
+    [
+     "Vietnam",
+     2.2
+    ]
+   ]
+  },
+  "melton": {
+   "pop": 82478,
+   "born_os": 31.2,
+   "lang": 30.7,
+   "atsi": 1.6,
+   "uni": 16.1,
+   "cert": 21.8,
+   "rent": 28.0,
+   "own": 21.8,
+   "kids": 44.9,
+   "christian": 43.9,
+   "norel": 31.0,
+   "age": 34.0,
+   "inc": 1664.2,
+   "rent_wk": 342.6,
+   "mortgage_mo": 1609.2,
+   "top_birth": [
+    [
+     "India",
+     7.0
+    ],
+    [
+     "New Zealand",
+     2.8
+    ],
+    [
+     "Philippines",
+     2.4
+    ],
+    [
+     "England",
+     1.9
+    ]
+   ]
+  },
+  "mildura": {
+   "pop": 69740,
+   "born_os": 14.2,
+   "lang": 13.0,
+   "atsi": 4.4,
+   "uni": 12.2,
+   "cert": 21.0,
+   "rent": 28.4,
+   "own": 36.7,
+   "kids": 22.2,
+   "christian": 44.0,
+   "norel": 40.1,
+   "age": 42.2,
+   "inc": 1385.1,
+   "rent_wk": 245.2,
+   "mortgage_mo": 1154.6,
+   "top_birth": [
+    [
+     "Malaysia",
+     2.3
+    ],
+    [
+     "England",
+     1.2
+    ],
+    [
+     "India",
+     1.0
+    ],
+    [
+     "New Zealand",
+     0.8
+    ]
+   ]
+  },
+  "mill-park": {
+   "pop": 68515,
+   "born_os": 35.3,
+   "lang": 42.2,
+   "atsi": 1.0,
+   "uni": 22.4,
+   "cert": 17.9,
+   "rent": 22.8,
+   "own": 30.0,
+   "kids": 47.8,
+   "christian": 52.5,
+   "norel": 22.5,
+   "age": 38.0,
+   "inc": 1863.0,
+   "rent_wk": 378.4,
+   "mortgage_mo": 1781.3,
+   "top_birth": [
+    [
+     "India",
+     5.9
+    ],
+    [
+     "North Macedonia",
+     2.7
+    ],
+    [
+     "Italy",
+     2.6
+    ],
+    [
+     "Sri Lanka",
+     1.8
+    ]
+   ]
+  },
+  "monbulk": {
+   "pop": 65754,
+   "born_os": 17.1,
+   "lang": 7.0,
+   "atsi": 0.6,
+   "uni": 26.3,
+   "cert": 22.5,
+   "rent": 10.8,
+   "own": 35.5,
+   "kids": 37.3,
+   "christian": 32.7,
+   "norel": 57.4,
+   "age": 41.9,
+   "inc": 2067.5,
+   "rent_wk": 375.0,
+   "mortgage_mo": 1960.5,
+   "top_birth": [
+    [
+     "England",
+     5.5
+    ],
+    [
+     "New Zealand",
+     1.3
+    ],
+    [
+     "Germany",
+     0.7
+    ],
+    [
+     "Netherlands",
+     0.7
+    ]
+   ]
+  },
+  "mordialloc": {
+   "pop": 72713,
+   "born_os": 31.0,
+   "lang": 26.4,
+   "atsi": 0.4,
+   "uni": 32.2,
+   "cert": 15.9,
+   "rent": 21.5,
+   "own": 31.8,
+   "kids": 45.9,
+   "christian": 43.0,
+   "norel": 40.7,
+   "age": 40.2,
+   "inc": 2230.4,
+   "rent_wk": 456.6,
+   "mortgage_mo": 2254.2,
+   "top_birth": [
+    [
+     "England",
+     3.9
+    ],
+    [
+     "India",
+     2.9
+    ],
+    [
+     "China",
+     2.8
+    ],
+    [
+     "Vietnam",
+     1.8
+    ]
+   ]
+  },
+  "mornington": {
+   "pop": 65060,
+   "born_os": 21.1,
+   "lang": 5.6,
+   "atsi": 0.6,
+   "uni": 26.6,
+   "cert": 18.8,
+   "rent": 15.1,
+   "own": 42.5,
+   "kids": 31.5,
+   "christian": 44.8,
+   "norel": 47.5,
+   "age": 48.1,
+   "inc": 2127.6,
+   "rent_wk": 527.6,
+   "mortgage_mo": 2315.3,
+   "top_birth": [
+    [
+     "England",
+     9.0
+    ],
+    [
+     "New Zealand",
+     1.4
+    ],
+    [
+     "Scotland",
+     1.2
+    ],
+    [
+     "South Africa",
+     0.7
+    ]
+   ]
+  },
+  "morwell": {
+   "pop": 72221,
+   "born_os": 13.0,
+   "lang": 6.9,
+   "atsi": 2.1,
+   "uni": 12.3,
+   "cert": 25.5,
+   "rent": 26.4,
+   "own": 36.8,
+   "kids": 20.9,
+   "christian": 40.8,
+   "norel": 47.1,
+   "age": 42.4,
+   "inc": 1384.7,
+   "rent_wk": 262.0,
+   "mortgage_mo": 1207.6,
+   "top_birth": [
+    [
+     "England",
+     2.6
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "Philippines",
+     0.8
+    ],
+    [
+     "Netherlands",
+     0.8
+    ]
+   ]
+  },
+  "mulgrave": {
+   "pop": 77041,
+   "born_os": 54.7,
+   "lang": 59.7,
+   "atsi": 0.3,
+   "uni": 27.1,
+   "cert": 12.2,
+   "rent": 29.2,
+   "own": 35.7,
+   "kids": 36.5,
+   "christian": 40.8,
+   "norel": 24.9,
+   "age": 40.5,
+   "inc": 1616.4,
+   "rent_wk": 395.5,
+   "mortgage_mo": 1903.3,
+   "top_birth": [
+    [
+     "Vietnam",
+     8.8
+    ],
+    [
+     "India",
+     6.6
+    ],
+    [
+     "China",
+     5.6
+    ],
+    [
+     "Sri Lanka",
+     3.8
+    ]
+   ]
+  },
+  "murray-plains": {
+   "pop": 64586,
+   "born_os": 8.3,
+   "lang": 5.4,
+   "atsi": 3.1,
+   "uni": 11.5,
+   "cert": 23.1,
+   "rent": 22.8,
+   "own": 42.1,
+   "kids": 18.3,
+   "christian": 47.9,
+   "norel": 40.7,
+   "age": 45.5,
+   "inc": 1340.0,
+   "rent_wk": 241.6,
+   "mortgage_mo": 1242.6,
+   "top_birth": [
+    [
+     "England",
+     1.4
+    ],
+    [
+     "Philippines",
+     0.9
+    ],
+    [
+     "New Zealand",
+     0.7
+    ],
+    [
+     "India",
+     0.7
+    ]
+   ]
+  },
+  "narracan": {
+   "pop": 67999,
+   "born_os": 11.7,
+   "lang": 4.7,
+   "atsi": 1.2,
+   "uni": 16.2,
+   "cert": 25.7,
+   "rent": 17.7,
+   "own": 38.7,
+   "kids": 27.0,
+   "christian": 42.2,
+   "norel": 47.6,
+   "age": 42.4,
+   "inc": 1631.3,
+   "rent_wk": 314.6,
+   "mortgage_mo": 1684.7,
+   "top_birth": [
+    [
+     "England",
+     3.5
+    ],
+    [
+     "New Zealand",
+     1.2
+    ],
+    [
+     "Netherlands",
+     0.7
+    ],
+    [
+     "India",
+     0.6
+    ]
+   ]
+  },
+  "narre-warren-north": {
+   "pop": 77772,
+   "born_os": 42.6,
+   "lang": 42.8,
+   "atsi": 0.5,
+   "uni": 20.8,
+   "cert": 18.6,
+   "rent": 21.9,
+   "own": 31.4,
+   "kids": 44.5,
+   "christian": 44.0,
+   "norel": 26.9,
+   "age": 38.1,
+   "inc": 1855.0,
+   "rent_wk": 390.2,
+   "mortgage_mo": 1851.7,
+   "top_birth": [
+    [
+     "India",
+     4.3
+    ],
+    [
+     "Afghanistan",
+     4.2
+    ],
+    [
+     "Sri Lanka",
+     4.1
+    ],
+    [
+     "China",
+     2.5
+    ]
+   ]
+  },
+  "narre-warren-south": {
+   "pop": 90780,
+   "born_os": 46.6,
+   "lang": 47.3,
+   "atsi": 0.6,
+   "uni": 20.0,
+   "cert": 18.2,
+   "rent": 23.0,
+   "own": 21.0,
+   "kids": 56.9,
+   "christian": 38.3,
+   "norel": 24.3,
+   "age": 33.3,
+   "inc": 1956.9,
+   "rent_wk": 391.1,
+   "mortgage_mo": 1813.3,
+   "top_birth": [
+    [
+     "India",
+     8.5
+    ],
+    [
+     "Afghanistan",
+     6.8
+    ],
+    [
+     "Sri Lanka",
+     4.7
+    ],
+    [
+     "New Zealand",
+     2.5
+    ]
+   ]
+  },
+  "nepean": {
+   "pop": 62156,
+   "born_os": 16.0,
+   "lang": 6.4,
+   "atsi": 1.0,
+   "uni": 19.9,
+   "cert": 20.8,
+   "rent": 21.6,
+   "own": 45.3,
+   "kids": 6.0,
+   "christian": 42.4,
+   "norel": 46.3,
+   "age": 52.5,
+   "inc": 1460.6,
+   "rent_wk": 393.8,
+   "mortgage_mo": 1923.7,
+   "top_birth": [
+    [
+     "England",
+     5.1
+    ],
+    [
+     "New Zealand",
+     1.4
+    ],
+    [
+     "Italy",
+     1.2
+    ],
+    [
+     "Greece",
+     0.8
+    ]
+   ]
+  },
+  "niddrie": {
+   "pop": 69236,
+   "born_os": 28.0,
+   "lang": 31.0,
+   "atsi": 0.4,
+   "uni": 27.2,
+   "cert": 16.5,
+   "rent": 19.9,
+   "own": 43.3,
+   "kids": 39.2,
+   "christian": 63.8,
+   "norel": 24.2,
+   "age": 43.1,
+   "inc": 2003.7,
+   "rent_wk": 424.1,
+   "mortgage_mo": 2181.9,
+   "top_birth": [
+    [
+     "Italy",
+     5.1
+    ],
+    [
+     "Vietnam",
+     2.2
+    ],
+    [
+     "India",
+     1.8
+    ],
+    [
+     "Greece",
+     1.4
+    ]
+   ]
+  },
+  "northcote": {
+   "pop": 67505,
+   "born_os": 25.3,
+   "lang": 22.0,
+   "atsi": 0.6,
+   "uni": 50.3,
+   "cert": 9.3,
+   "rent": 39.3,
+   "own": 28.3,
+   "kids": 29.5,
+   "christian": 32.1,
+   "norel": 56.5,
+   "age": 37.9,
+   "inc": 2192.3,
+   "rent_wk": 439.6,
+   "mortgage_mo": 2349.1,
+   "top_birth": [
+    [
+     "Greece",
+     3.3
+    ],
+    [
+     "England",
+     3.3
+    ],
+    [
+     "New Zealand",
+     2.1
+    ],
+    [
+     "Italy",
+     2.1
+    ]
+   ]
+  },
+  "oakleigh": {
+   "pop": 89816,
+   "born_os": 47.0,
+   "lang": 46.6,
+   "atsi": 0.3,
+   "uni": 43.8,
+   "cert": 9.9,
+   "rent": 40.9,
+   "own": 27.7,
+   "kids": 28.9,
+   "christian": 37.9,
+   "norel": 36.5,
+   "age": 35.7,
+   "inc": 1905.1,
+   "rent_wk": 420.6,
+   "mortgage_mo": 2126.8,
+   "top_birth": [
+    [
+     "India",
+     8.8
+    ],
+    [
+     "China",
+     8.0
+    ],
+    [
+     "Greece",
+     3.4
+    ],
+    [
+     "Sri Lanka",
+     2.2
+    ]
+   ]
+  },
+  "ovens-valley": {
+   "pop": 63037,
+   "born_os": 10.8,
+   "lang": 6.0,
+   "atsi": 1.7,
+   "uni": 16.1,
+   "cert": 23.1,
+   "rent": 21.5,
+   "own": 43.3,
+   "kids": 14.8,
+   "christian": 47.9,
+   "norel": 41.4,
+   "age": 47.1,
+   "inc": 1344.4,
+   "rent_wk": 275.5,
+   "mortgage_mo": 1396.0,
+   "top_birth": [
+    [
+     "England",
+     2.3
+    ],
+    [
+     "Italy",
+     1.0
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "India",
+     0.5
+    ]
+   ]
+  },
+  "pakenham": {
+   "pop": 76200,
+   "born_os": 29.1,
+   "lang": 24.7,
+   "atsi": 1.0,
+   "uni": 20.5,
+   "cert": 22.8,
+   "rent": 28.9,
+   "own": 18.5,
+   "kids": 42.7,
+   "christian": 37.9,
+   "norel": 40.1,
+   "age": 33.8,
+   "inc": 1874.3,
+   "rent_wk": 370.9,
+   "mortgage_mo": 1814.6,
+   "top_birth": [
+    [
+     "India",
+     6.5
+    ],
+    [
+     "England",
+     3.2
+    ],
+    [
+     "Sri Lanka",
+     2.7
+    ],
+    [
+     "New Zealand",
+     1.8
+    ]
+   ]
+  },
+  "pascoe-vale": {
+   "pop": 68829,
+   "born_os": 29.4,
+   "lang": 31.8,
+   "atsi": 0.6,
+   "uni": 39.3,
+   "cert": 12.3,
+   "rent": 34.5,
+   "own": 29.9,
+   "kids": 34.3,
+   "christian": 41.6,
+   "norel": 41.2,
+   "age": 37.5,
+   "inc": 2053.6,
+   "rent_wk": 416.2,
+   "mortgage_mo": 2156.3,
+   "top_birth": [
+    [
+     "Italy",
+     4.2
+    ],
+    [
+     "England",
+     2.1
+    ],
+    [
+     "Greece",
+     2.0
+    ],
+    [
+     "India",
+     1.7
+    ]
+   ]
+  },
+  "point-cook": {
+   "pop": 92578,
+   "born_os": 46.9,
+   "lang": 45.9,
+   "atsi": 0.6,
+   "uni": 35.4,
+   "cert": 14.0,
+   "rent": 29.9,
+   "own": 22.1,
+   "kids": 53.7,
+   "christian": 39.9,
+   "norel": 29.1,
+   "age": 36.0,
+   "inc": 2248.6,
+   "rent_wk": 394.8,
+   "mortgage_mo": 2028.5,
+   "top_birth": [
+    [
+     "India",
+     11.8
+    ],
+    [
+     "China",
+     5.1
+    ],
+    [
+     "New Zealand",
+     3.2
+    ],
+    [
+     "England",
+     2.4
+    ]
+   ]
+  },
+  "polwarth": {
+   "pop": 70354,
+   "born_os": 10.7,
+   "lang": 4.6,
+   "atsi": 1.0,
+   "uni": 23.9,
+   "cert": 20.4,
+   "rent": 19.4,
+   "own": 42.0,
+   "kids": 25.6,
+   "christian": 41.3,
+   "norel": 49.0,
+   "age": 45.0,
+   "inc": 1740.9,
+   "rent_wk": 350.9,
+   "mortgage_mo": 1728.7,
+   "top_birth": [
+    [
+     "England",
+     2.8
+    ],
+    [
+     "New Zealand",
+     1.3
+    ],
+    [
+     "Scotland",
+     0.4
+    ],
+    [
+     "Germany",
+     0.4
+    ]
+   ]
+  },
+  "prahran": {
+   "pop": 72759,
+   "born_os": 38.6,
+   "lang": 25.5,
+   "atsi": 0.5,
+   "uni": 54.3,
+   "cert": 8.0,
+   "rent": 58.3,
+   "own": 18.0,
+   "kids": -19.5,
+   "christian": 30.1,
+   "norel": 50.6,
+   "age": 36.1,
+   "inc": 2059.1,
+   "rent_wk": 431.3,
+   "mortgage_mo": 2164.1,
+   "top_birth": [
+    [
+     "England",
+     4.4
+    ],
+    [
+     "China",
+     3.8
+    ],
+    [
+     "New Zealand",
+     3.0
+    ],
+    [
+     "India",
+     2.5
+    ]
+   ]
+  },
+  "preston": {
+   "pop": 73947,
+   "born_os": 35.1,
+   "lang": 39.5,
+   "atsi": 1.2,
+   "uni": 31.2,
+   "cert": 13.5,
+   "rent": 37.6,
+   "own": 30.3,
+   "kids": 28.6,
+   "christian": 43.1,
+   "norel": 35.8,
+   "age": 38.3,
+   "inc": 1651.3,
+   "rent_wk": 373.4,
+   "mortgage_mo": 2008.5,
+   "top_birth": [
+    [
+     "Italy",
+     4.9
+    ],
+    [
+     "India",
+     3.3
+    ],
+    [
+     "China",
+     3.2
+    ],
+    [
+     "Greece",
+     2.5
+    ]
+   ]
+  },
+  "richmond": {
+   "pop": 67380,
+   "born_os": 30.4,
+   "lang": 21.7,
+   "atsi": 0.6,
+   "uni": 55.0,
+   "cert": 8.2,
+   "rent": 55.2,
+   "own": 18.0,
+   "kids": -4.4,
+   "christian": 25.9,
+   "norel": 57.4,
+   "age": 34.5,
+   "inc": 2338.2,
+   "rent_wk": 470.7,
+   "mortgage_mo": 2324.8,
+   "top_birth": [
+    [
+     "England",
+     4.0
+    ],
+    [
+     "Vietnam",
+     3.3
+    ],
+    [
+     "New Zealand",
+     3.1
+    ],
+    [
+     "China",
+     1.6
+    ]
+   ]
+  },
+  "ringwood": {
+   "pop": 79901,
+   "born_os": 32.3,
+   "lang": 29.5,
+   "atsi": 0.4,
+   "uni": 37.9,
+   "cert": 13.7,
+   "rent": 28.8,
+   "own": 32.9,
+   "kids": 38.4,
+   "christian": 40.5,
+   "norel": 44.1,
+   "age": 39.5,
+   "inc": 1951.6,
+   "rent_wk": 406.1,
+   "mortgage_mo": 2145.9,
+   "top_birth": [
+    [
+     "China",
+     6.8
+    ],
+    [
+     "India",
+     3.3
+    ],
+    [
+     "England",
+     2.7
+    ],
+    [
+     "Malaysia",
+     2.0
+    ]
+   ]
+  },
+  "ripon": {
+   "pop": 67612,
+   "born_os": 9.8,
+   "lang": 4.2,
+   "atsi": 1.9,
+   "uni": 13.7,
+   "cert": 23.5,
+   "rent": 16.2,
+   "own": 44.5,
+   "kids": 19.8,
+   "christian": 42.3,
+   "norel": 45.6,
+   "age": 46.7,
+   "inc": 1359.6,
+   "rent_wk": 256.8,
+   "mortgage_mo": 1254.9,
+   "top_birth": [
+    [
+     "England",
+     2.7
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "India",
+     0.6
+    ],
+    [
+     "Philippines",
+     0.4
+    ]
+   ]
+  },
+  "rowville": {
+   "pop": 71149,
+   "born_os": 37.5,
+   "lang": 34.2,
+   "atsi": 0.4,
+   "uni": 30.7,
+   "cert": 16.3,
+   "rent": 16.9,
+   "own": 36.7,
+   "kids": 45.0,
+   "christian": 47.2,
+   "norel": 35.5,
+   "age": 42.4,
+   "inc": 2222.5,
+   "rent_wk": 463.3,
+   "mortgage_mo": 2084.8,
+   "top_birth": [
+    [
+     "China",
+     6.3
+    ],
+    [
+     "India",
+     3.8
+    ],
+    [
+     "Sri Lanka",
+     3.4
+    ],
+    [
+     "Malaysia",
+     3.4
+    ]
+   ]
+  },
+  "sandringham": {
+   "pop": 62565,
+   "born_os": 26.7,
+   "lang": 14.6,
+   "atsi": 0.3,
+   "uni": 41.2,
+   "cert": 11.9,
+   "rent": 25.2,
+   "own": 37.8,
+   "kids": 34.6,
+   "christian": 44.1,
+   "norel": 46.3,
+   "age": 44.9,
+   "inc": 2399.7,
+   "rent_wk": 524.9,
+   "mortgage_mo": 2698.6,
+   "top_birth": [
+    [
+     "England",
+     6.3
+    ],
+    [
+     "New Zealand",
+     1.8
+    ],
+    [
+     "China",
+     1.7
+    ],
+    [
+     "South Africa",
+     1.4
+    ]
+   ]
+  },
+  "shepparton": {
+   "pop": 74608,
+   "born_os": 16.5,
+   "lang": 16.3,
+   "atsi": 3.8,
+   "uni": 14.4,
+   "cert": 20.9,
+   "rent": 27.2,
+   "own": 35.1,
+   "kids": 27.7,
+   "christian": 45.7,
+   "norel": 35.1,
+   "age": 41.0,
+   "inc": 1484.6,
+   "rent_wk": 281.2,
+   "mortgage_mo": 1286.1,
+   "top_birth": [
+    [
+     "India",
+     2.7
+    ],
+    [
+     "England",
+     1.3
+    ],
+    [
+     "New Zealand",
+     1.0
+    ],
+    [
+     "Afghanistan",
+     1.0
+    ]
+   ]
+  },
+  "south-barwon": {
+   "pop": 72548,
+   "born_os": 17.9,
+   "lang": 12.1,
+   "atsi": 0.9,
+   "uni": 29.8,
+   "cert": 19.8,
+   "rent": 25.1,
+   "own": 30.4,
+   "kids": 35.5,
+   "christian": 43.0,
+   "norel": 45.5,
+   "age": 37.5,
+   "inc": 2010.2,
+   "rent_wk": 399.8,
+   "mortgage_mo": 1811.8,
+   "top_birth": [
+    [
+     "England",
+     3.1
+    ],
+    [
+     "India",
+     2.9
+    ],
+    [
+     "New Zealand",
+     1.1
+    ],
+    [
+     "China",
+     0.9
+    ]
+   ]
+  },
+  "south-west-coast": {
+   "pop": 70122,
+   "born_os": 8.9,
+   "lang": 3.9,
+   "atsi": 2.1,
+   "uni": 17.1,
+   "cert": 23.0,
+   "rent": 23.4,
+   "own": 40.3,
+   "kids": 21.0,
+   "christian": 46.5,
+   "norel": 43.7,
+   "age": 44.3,
+   "inc": 1482.2,
+   "rent_wk": 278.9,
+   "mortgage_mo": 1376.6,
+   "top_birth": [
+    [
+     "England",
+     1.9
+    ],
+    [
+     "New Zealand",
+     1.3
+    ],
+    [
+     "Philippines",
+     0.6
+    ],
+    [
+     "China",
+     0.3
+    ]
+   ]
+  },
+  "st-albans": {
+   "pop": 74469,
+   "born_os": 53.4,
+   "lang": 64.8,
+   "atsi": 0.4,
+   "uni": 18.1,
+   "cert": 13.4,
+   "rent": 29.2,
+   "own": 37.0,
+   "kids": 37.8,
+   "christian": 43.4,
+   "norel": 20.9,
+   "age": 38.3,
+   "inc": 1432.5,
+   "rent_wk": 348.4,
+   "mortgage_mo": 1597.6,
+   "top_birth": [
+    [
+     "Vietnam",
+     19.6
+    ],
+    [
+     "India",
+     4.2
+    ],
+    [
+     "Philippines",
+     2.8
+    ],
+    [
+     "Malta",
+     2.5
+    ]
+   ]
+  },
+  "sunbury": {
+   "pop": 63208,
+   "born_os": 21.7,
+   "lang": 17.2,
+   "atsi": 1.0,
+   "uni": 18.4,
+   "cert": 23.1,
+   "rent": 21.6,
+   "own": 32.0,
+   "kids": 35.3,
+   "christian": 51.2,
+   "norel": 36.4,
+   "age": 39.5,
+   "inc": 1870.7,
+   "rent_wk": 387.3,
+   "mortgage_mo": 1797.4,
+   "top_birth": [
+    [
+     "England",
+     2.7
+    ],
+    [
+     "India",
+     2.3
+    ],
+    [
+     "New Zealand",
+     1.6
+    ],
+    [
+     "Italy",
+     1.3
+    ]
+   ]
+  },
+  "sydenham": {
+   "pop": 77268,
+   "born_os": 37.3,
+   "lang": 44.7,
+   "atsi": 0.4,
+   "uni": 23.1,
+   "cert": 17.6,
+   "rent": 16.8,
+   "own": 30.5,
+   "kids": 55.2,
+   "christian": 58.5,
+   "norel": 17.9,
+   "age": 37.3,
+   "inc": 2152.5,
+   "rent_wk": 412.2,
+   "mortgage_mo": 1877.7,
+   "top_birth": [
+    [
+     "India",
+     6.4
+    ],
+    [
+     "Philippines",
+     3.1
+    ],
+    [
+     "Vietnam",
+     2.7
+    ],
+    [
+     "North Macedonia",
+     2.0
+    ]
+   ]
+  },
+  "tarneit": {
+   "pop": 92883,
+   "born_os": 49.5,
+   "lang": 53.6,
+   "atsi": 0.6,
+   "uni": 30.3,
+   "cert": 15.0,
+   "rent": 27.9,
+   "own": 20.7,
+   "kids": 54.6,
+   "christian": 35.1,
+   "norel": 18.1,
+   "age": 33.3,
+   "inc": 1918.8,
+   "rent_wk": 366.5,
+   "mortgage_mo": 1789.1,
+   "top_birth": [
+    [
+     "India",
+     20.5
+    ],
+    [
+     "New Zealand",
+     3.3
+    ],
+    [
+     "Philippines",
+     3.0
+    ],
+    [
+     "Pakistan",
+     1.8
+    ]
+   ]
+  },
+  "thomastown": {
+   "pop": 77707,
+   "born_os": 48.8,
+   "lang": 63.0,
+   "atsi": 0.7,
+   "uni": 22.4,
+   "cert": 14.2,
+   "rent": 27.5,
+   "own": 30.5,
+   "kids": 45.4,
+   "christian": 43.2,
+   "norel": 15.3,
+   "age": 36.3,
+   "inc": 1578.8,
+   "rent_wk": 371.9,
+   "mortgage_mo": 1794.9,
+   "top_birth": [
+    [
+     "India",
+     10.3
+    ],
+    [
+     "North Macedonia",
+     3.9
+    ],
+    [
+     "Italy",
+     3.6
+    ],
+    [
+     "Vietnam",
+     3.2
+    ]
+   ]
+  },
+  "warrandyte": {
+   "pop": 74024,
+   "born_os": 32.8,
+   "lang": 30.4,
+   "atsi": 0.3,
+   "uni": 35.6,
+   "cert": 14.1,
+   "rent": 15.8,
+   "own": 42.4,
+   "kids": 44.1,
+   "christian": 45.4,
+   "norel": 41.7,
+   "age": 43.4,
+   "inc": 2293.9,
+   "rent_wk": 505.0,
+   "mortgage_mo": 2414.3,
+   "top_birth": [
+    [
+     "China",
+     7.3
+    ],
+    [
+     "England",
+     2.9
+    ],
+    [
+     "Malaysia",
+     2.7
+    ],
+    [
+     "Hong Kong",
+     2.2
+    ]
+   ]
+  },
+  "wendouree": {
+   "pop": 68439,
+   "born_os": 11.6,
+   "lang": 7.3,
+   "atsi": 1.9,
+   "uni": 22.4,
+   "cert": 20.4,
+   "rent": 34.7,
+   "own": 32.5,
+   "kids": 22.6,
+   "christian": 42.1,
+   "norel": 46.8,
+   "age": 40.6,
+   "inc": 1482.1,
+   "rent_wk": 310.8,
+   "mortgage_mo": 1445.4,
+   "top_birth": [
+    [
+     "England",
+     1.9
+    ],
+    [
+     "India",
+     1.8
+    ],
+    [
+     "New Zealand",
+     0.9
+    ],
+    [
+     "Philippines",
+     0.6
+    ]
+   ]
+  },
+  "werribee": {
+   "pop": 84227,
+   "born_os": 38.2,
+   "lang": 36.6,
+   "atsi": 1.5,
+   "uni": 24.5,
+   "cert": 19.0,
+   "rent": 31.6,
+   "own": 20.9,
+   "kids": 44.7,
+   "christian": 41.2,
+   "norel": 29.2,
+   "age": 34.9,
+   "inc": 1834.5,
+   "rent_wk": 338.8,
+   "mortgage_mo": 1706.8,
+   "top_birth": [
+    [
+     "India",
+     11.5
+    ],
+    [
+     "New Zealand",
+     2.8
+    ],
+    [
+     "Philippines",
+     2.2
+    ],
+    [
+     "England",
+     2.0
+    ]
+   ]
+  },
+  "williamstown": {
+   "pop": 66086,
+   "born_os": 26.9,
+   "lang": 23.1,
+   "atsi": 0.6,
+   "uni": 36.0,
+   "cert": 14.2,
+   "rent": 29.5,
+   "own": 33.4,
+   "kids": 36.4,
+   "christian": 43.0,
+   "norel": 42.1,
+   "age": 40.5,
+   "inc": 2239.5,
+   "rent_wk": 440.9,
+   "mortgage_mo": 2431.9,
+   "top_birth": [
+    [
+     "England",
+     3.7
+    ],
+    [
+     "New Zealand",
+     2.1
+    ],
+    [
+     "Vietnam",
+     1.5
+    ],
+    [
+     "Italy",
+     1.5
+    ]
+   ]
+  },
+  "yan-yean": {
+   "pop": 73702,
+   "born_os": 24.5,
+   "lang": 25.0,
+   "atsi": 1.4,
+   "uni": 23.7,
+   "cert": 22.4,
+   "rent": 21.3,
+   "own": 21.4,
+   "kids": 51.5,
+   "christian": 45.7,
+   "norel": 35.5,
+   "age": 35.6,
+   "inc": 2117.7,
+   "rent_wk": 387.9,
+   "mortgage_mo": 1992.1,
+   "top_birth": [
+    [
+     "India",
+     6.1
+    ],
+    [
+     "England",
+     2.1
+    ],
+    [
+     "Sri Lanka",
+     1.3
+    ],
+    [
+     "New Zealand",
+     1.2
+    ]
+   ]
+  }
+ }
+}

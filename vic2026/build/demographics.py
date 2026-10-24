@@ -21,7 +21,7 @@ def main():
     G01, G02, G14, G29, G37, G43 = (T(t) for t in ["G01", "G02", "G14", "G29", "G37", "G43"])
     G09 = pd.concat([T(f"G09{x}") for x in "ABCDEFGH"], axis=1)
     G09 = G09.loc[:, ~G09.columns.duplicated()]
-    births = [c for c in G09.columns if c.endswith("_Tot_P") and not re.match(r"(Australia|Tot|Elsewhere|COB_NS|Born_elsewhere|Country_of_birth_not)", c, re.I)]
+    births = [c for c in G09.columns if re.match(r"^P_.*_Tot$", c) and c not in ("P_Australia_Tot", "P_Elsewhere_Tot", "P_COB_NS_Tot", "P_Tot_Tot")]
     deg = [c for c in G43.columns if re.match(r"non_sch_qual_(PostGrad|Gr_Dip|GrDip|Bchelr|Bachelor)", c, re.I) and c.endswith("_P")]
     cert = [c for c in G43.columns if c in ("non_sch_qual_CertTot_Level_P",) or re.match(r"non_sch_qual_Advnce?d?_Dip", c, re.I) and c.endswith("_P")]
     print("degree cols", deg, "cert cols", cert, "birth cols", len(births))
@@ -45,6 +45,7 @@ def main():
         }
 
     out = {}
+    names = {c: n for c, n in names.items() if not re.search(r"no usual|migratory|offshore", str(n), re.I)}
     for code, name in names.items():
         if code not in G01.index:
             continue
@@ -53,14 +54,14 @@ def main():
                   "rent_wk": float(G02.loc[code, "Median_rent_weekly"]), "mortgage_mo": float(G02.loc[code, "Median_mortgage_repay_monthly"])})
         pop = d["pop"]
         top = G09.loc[code, births].sort_values(ascending=False).head(4)
-        d["top_birth"] = [[c.replace("_Tot_P", "").replace("_", " "), round(100 * v / pop, 1)] for c, v in top.items()]
+        d["top_birth"] = [[c[2:-4].replace("_", " ").replace("Hong Kong SAR Ch", "Hong Kong").replace("Korea South", "South Korea"), round(100 * v / pop, 1)] for c, v in top.items()]
         out[slugify(name)] = {k: (round(v, 1) if isinstance(v, float) else v) for k, v in d.items()}
     codes = [c for c in names if c in G01.index]
     vic = shares(codes)
     w = G01.loc[codes, "Tot_P_P"]
     for k, col in [("age", "Median_age_persons"), ("inc", "Median_tot_hhd_inc_weekly")]:
         vic[k] = float((G02.loc[codes, col] * w).sum() / w.sum())
-    vic = {k: (round(v, 1) if isinstance(v, float) else v) for k, v in vic.items()}
+    vic = {k: (round(float(v), 1) if isinstance(v, float) else int(v)) for k, v in vic.items()}
     (ROOT / "data/vic2026/demographics.json").write_text(json.dumps({"source": "ABS 2021 Census GCP (SA1 level), re-cut to 2025 district boundaries", "vic": vic, "seats": out}, indent=1))
     print(len(out), "districts", vic)
 
