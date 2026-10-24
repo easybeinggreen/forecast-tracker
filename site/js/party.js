@@ -37,7 +37,7 @@ export function partyCards(F) {
   return PARTY_ORDER.filter((k) => F.parties[k]).map((k) => {
     const P = F.parties[k], f = P.forecast;
     return `<button class="party-card" type="button" data-party="${k}" style="--pc:${col(k)}">
-      <span class="pc-name">${esc(P.name)}</span>
+      <span class="pc-name">${F.photos?.[P.leader.name] ? `<img class="pc-img" src="${esc(F.photos[P.leader.name].img)}" alt="" referrerpolicy="no-referrer">` : ""}${esc(P.name)}</span>
       <span class="pc-leader">${esc(P.leader.name)}</span>
       <span class="pc-seats"><b>${P.seats_now}</b><span class="arrow">→</span><b style="color:${col(k)}">${f.p50}</b><small>seats now → forecast (${f.p10}–${f.p90})</small></span>
       <span class="pc-spark">${trend(P, F, { w: 200, h: 34, mini: true })}</span>
@@ -70,11 +70,12 @@ export function partyHTML(code, F, news, PARTY) {
   };
   return `
     <div class="d-head" style="border-top:5px solid ${col(code)}">
-      <div class="monogram" style="background:${col(code)}" aria-hidden="true">${esc(L.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join(""))}</div>
+      ${F.photos?.[L.name] ? `<figure class="avatar"><img src="${esc(F.photos[L.name].img)}" alt="${esc(L.name)}" style="border-color:${col(code)}" referrerpolicy="no-referrer"><figcaption><a href="${esc(F.photos[L.name].file || F.photos[L.name].page)}" target="_blank" rel="noopener" title="${esc(F.photos[L.name].credit)}">Photo: ${esc(F.photos[L.name].license)}</a></figcaption></figure>`
+        : `<div class="monogram" style="background:${col(code)}" aria-hidden="true">${esc(L.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join(""))}</div>`}
       <div><h2 id="d-title">${esc(P.name)}</h2>
         <p><b>${esc(L.name)}</b>, ${esc(L.role)}${ls ? `, ${ls.mp.name === L.name ? "MP for" : "standing in"} <button class="linkish" type="button" data-open-seat="${ls.slug}">${esc(ls.name)}</button>` : ""}. Leader since ${day(L.since)}.</p>
         ${P.others?.length ? `<p>${P.others.map((o) => `${esc(o.name)} (${esc(o.role)})`).join(" · ")}</p>` : ""}</div>
-      <button class="close" type="button" data-act="close" aria-label="Close">×</button>
+      <button class="close back" type="button" data-act="close" aria-label="Back to the count room">← Count room</button>
     </div>
 
     <section class="d-sec"><p class="lede">${esc(P.summary)}</p></section>

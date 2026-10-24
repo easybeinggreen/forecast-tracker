@@ -38,7 +38,9 @@ def nice_name(n):
     sur, given = [x.strip() for x in n.split(",", 1)]
     sur = " ".join(w[:1] + w[1:].lower() if not w.lower().startswith("mc") else "Mc" + w[2:3].upper() + w[3:].lower()
                    for w in re.split(r"(?<=[ -])", sur.title()) if w) if sur.isupper() or any(c.islower() for c in sur) else sur
-    return f"{given} {sur.title() if sur.isupper() else sur}".replace("Mcl", "McL")
+    out = f"{given} {sur.title() if sur.isupper() else sur}".replace("Mcl", "McL")
+    out = re.sub(r"\b([OD])'([a-z])", lambda m: f"{m.group(1)}'{m.group(2).upper()}", out)
+    return re.sub(r"\s+", " ", out).strip()
 
 
 def pendulum():

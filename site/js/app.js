@@ -26,6 +26,9 @@ const seatBy = (slug) => S.F.seats.find((s) => s.slug === slug);
 const callsFor = (slug) => (S.ledger?.predictions || []).filter((p) => p.seat === slug);
 const lastCall = (slug) => callsFor(slug).at(-1);
 const lastOdds = (slug) => (S.ledger?.odds || []).filter((o) => o.seat === slug).at(-1);
+// two-letter seat codes for the chamber dots (initials for two-word names)
+const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hill":"BH","gippsland-east":"GE","gippsland-south":"GS","glen-waverley":"GW","mill-park":"MP","murray-plains":"MuP","narre-warren-north":"NN","narre-warren-south":"NS","ovens-valley":"OV","pascoe-vale":"PV","point-cook":"PC","south-barwon":"SB","south-west-coast":"SW","st-albans":"SA","yan-yean":"YY","ashwood":"As","bass":"Ba","bayswater":"By","bellarine":"Bl","benambra":"Bn","bentleigh":"Bt","berwick":"Bk","brighton":"Bg","broadmeadows":"Bd","brunswick":"Br","bulleen":"Bu","bundoora":"Bo","carrum":"Ca","caulfield":"Cf","clarinda":"Cl","cranbourne":"Cr","croydon":"Cy","dandenong":"Da","eildon":"Ei","eltham":"El","essendon":"Es","eureka":"Eu","euroa":"Er","evelyn":"Ev","footscray":"Fo","frankston":"Fr","geelong":"Gl","greenvale":"Gv","hastings":"Ha","hawthorn":"Hw","ivanhoe":"Iv","kalkallo":"Ka","kew":"Ke","kororoit":"Ko","lara":"La","laverton":"Lv","lowan":"Lo","macedon":"Ma","malvern":"Mv","melbourne":"Me","melton":"Mt","mildura":"Mi","monbulk":"Mo","mordialloc":"Md","mornington":"Mn","morwell":"Mw","mulgrave":"Mu","narracan":"Na","nepean":"Ne","niddrie":"Ni","northcote":"No","oakleigh":"Oa","pakenham":"Pa","polwarth":"Po","prahran":"Pr","preston":"Ps","richmond":"Ri","ringwood":"Rw","ripon":"Rp","rowville":"Ro","sandringham":"Sd","shepparton":"Sh","sunbury":"Su","sydenham":"Sy","tarneit":"Ta","thomastown":"Th","warrandyte":"Wa","wendouree":"We","werribee":"Wr","williamstown":"Wi"};
+const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"]);
 const STATEWIDE = { slug: "statewide", name: "Statewide result" };
 const STATE_OUT = { LNP_MAJ: "Coalition majority", HUNG: "Hung parliament", ALP_MAJ: "Labor majority" };
 const outName = (k) => STATE_OUT[k] || PARTY[k] || k;
@@ -46,6 +49,10 @@ async function boot() {
     fetch("data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   S.news = news;
+  const raw = await fetch("data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  const key = (n) => n.toLowerCase().replace(/\s+/g, " ").trim();
+  const byKey = Object.fromEntries(Object.entries(raw).map(([k, v]) => [key(k), v]));
+  S.F.photos = new Proxy(byKey, { get: (o, n) => (typeof n === "string" ? o[key(n)] : undefined) });
   if (topo) S.geo = decodeTopo(topo, "districts").filter((f) => seatBy(f.props.slug));
   S.pass = store.get("countroom.pass");
   wire();
@@ -116,7 +123,12 @@ function renderChamber() {
   const circles = seats.map((x, i) => {
     const pt = layout[i];
     const fill = x.p === "unset" ? "" : `fill:${col(x.p)};opacity:${x.op.toFixed(2)}`;
-    return `<circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${(cx + pt.x * R).toFixed(1)}" cy="${(cy - pt.y * R).toFixed(1)}" r="${dot}" style="${fill}"></circle>`;
+    const X = (cx + pt.x * R).toFixed(1), Y = (cy - pt.y * R).toFixed(1), ab = ABBR[x.s.slug] || "";
+    const light = x.op > 0.6 && !DARK_TEXT.has(x.p);
+    const q = S.q.trim().toLowerCase(), isCode = q && Object.values(ABBR).some((v) => v.toLowerCase() === q);
+    const words = (n) => n.toLowerCase().split(/[\s-]+/);
+    const hit = q && (isCode ? ab.toLowerCase() === q : words(x.s.name).some((w) => w.startsWith(q)) || words(x.s.mp.name).some((w) => w.startsWith(q)));
+    return `<g class="seat-g${q ? (hit ? " hit" : " dim") : ""}"><circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${X}" cy="${Y}" r="${dot}" style="${fill}"></circle><text class="ab${light ? " light" : ""}" x="${X}" y="${Y}" dy="0.35em" text-anchor="middle" font-size="${ab.length > 2 ? 9.5 : 11.5}">${ab}</text></g>`;
   }).join("");
   const big = S.mode === "mine"
     ? `<text class="tally" x="${cx}" y="${cy - 52}" text-anchor="middle" font-size="44">${88 - (tally.unset || 0)}</text><text class="tally-sub" x="${cx}" y="${cy - 28}" text-anchor="middle">seats called, 88 to go${tally.unset ? "" : ""}</text>`
@@ -135,7 +147,8 @@ function showTip(e, slug, wrapEl = $(".chamber-wrap")) {
   const s = seatBy(slug), tip = wrapEl.querySelector(".tip");
   const top = Object.entries(s.model.win).filter(([, v]) => v >= 0.01).slice(0, 3);
   const c = lastCall(slug);
-  tip.innerHTML = `<h4>${esc(s.name)}</h4><p class="muted">${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? " (retiring)" : ""}</p>
+  const ph = S.F.photos?.[s.mp.name];
+  tip.innerHTML = `${ph ? `<img class="tip-img" src="${esc(ph.img)}" alt="" referrerpolicy="no-referrer">` : ""}<h4>${esc(s.name)}</h4><p class="muted">${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? " (retiring)" : ""}</p>
     <p class="muted">Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs}</p>
     <div style="margin-top:6px">${top.map(([p, v]) => `<div class="row"><span><span class="sw" style="background:${col(p)}"></span> ${PARTY[p]}</span><b>${pct(v)}</b></div>`).join("")}</div>
     ${c ? `<p class="muted" style="margin-top:6px">My call: ${PARTY[c.backed] || "—"} ${pct(Number(c.probs[c.backed] || 0))}</p>` : ""}`;
@@ -326,11 +339,11 @@ function renderDrawer() {
   const drivers = DRIVERS.filter(([, , need]) => need.every((p) => slots.includes(p) || (p === "LIB" && slots.includes("NAT") && false)));
   d.innerHTML = `
     <div class="d-head">
-      <div class="monogram" style="background:${col(s.mp.party)}" aria-hidden="true">${esc(initials(s.mp.name))}</div>
+      ${avatar(s.mp.name, s.mp.party)}
       <div><h2 id="d-title">${esc(s.name)}</h2>
         <p>${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? ", retiring at this election" : ""}${s.mp.note ? `. ${esc(s.mp.note)}` : ""}</p>
         <p>Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs} (2022)${s.on_federal_2025 != null ? `. One Nation polled ${(s.on_federal_2025 * 100).toFixed(1)}% here at the 2025 federal election` : ""}${s.ind_assumed ? `. Model assumes a strong independent in the mould of ${esc(s.ind_assumed)}` : ""}</p></div>
-      <button class="close" type="button" data-act="close" aria-label="Close">×</button>
+      <button class="close back" type="button" data-act="close" aria-label="Back to the count room">← Count room</button>
     </div>
 
     <section class="d-sec" aria-labelledby="h-win">
@@ -396,6 +409,13 @@ function showOnMap(slug) {
   closeSeat();
   $(".maps").scrollIntoView({ behavior: "smooth", block: "start" });
   document.querySelectorAll(`.district[data-slug="${slug}"]`).forEach((p) => { p.classList.add("flash"); setTimeout(() => p.classList.remove("flash"), 4000); });
+}
+
+function avatar(name, party) {
+  const ph = S.F.photos?.[name];
+  if (!ph) return `<div class="monogram" style="background:${col(party)}" aria-hidden="true">${esc(initials(name))}</div>`;
+  return `<figure class="avatar"><img src="${esc(ph.img)}" alt="${esc(name)}" style="border-color:${col(party)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')">
+    <figcaption><a href="${esc(ph.file || ph.page)}" target="_blank" rel="noopener" title="${esc(ph.credit)}, ${esc(ph.license)}">Photo: ${esc(ph.license)}</a></figcaption></figure>`;
 }
 
 function seatNewsHTML(s) {
@@ -522,7 +542,7 @@ function statewideHTML() {
   const model = { LNP_MAJ: sm.p_lnp_majority, HUNG: sm.p_hung, ALP_MAJ: sm.p_alp_majority };
   return `<div class="d-head"><div class="monogram" style="background:var(--ink)">88</div>
       <div><h2 id="d-title">Who governs</h2><p>Statewide call: majority or hung parliament. 45 seats needed.</p></div>
-      <button class="close" type="button" data-act="close" aria-label="Close">×</button></div>
+      <button class="close back" type="button" data-act="close" aria-label="Back to the count room">← Count room</button></div>
     <section class="d-sec"><h3>The model</h3>
       <div class="wins">${outs.map((k) => `<div class="win"><span>${outName(k)}</span><span class="bars"><i class="m" style="width:${model[k] * 100}%;background:${outCol(k)};opacity:.55"></i></span><span class="pct">${pct(model[k])}</span></div>`).join("")}</div>
       <p class="hint" style="margin-top:10px">Markets mostly ask who forms government, which in a hung parliament usually means the largest party. The model has the Coalition largest in ${pct(sm.p_lnp_largest)} of simulations.</p></section>
@@ -591,7 +611,12 @@ function bindLock() {
         await api("/api/predictions", { method: "POST", body: JSON.stringify({ seat: S.seat, probs, backed, stake, price_p: pr.p, price_source: pr.src, model_probs,
           adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows } : null, note: f.elements.note.value }) });
         await loadLedger();
-        $("#lock-err")?.insertAdjacentHTML("afterend", `<p class="ok">Locked.</p>`);
+        const sec = $("#lock-form")?.closest(".d-sec");
+        if (sec) {
+          sec.insertAdjacentHTML("afterbegin", `<div class="locked-card" role="status"><b>Locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : `Your probabilities are recorded`}. ${S.ledger.budget.remaining.toLocaleString("en-AU")} points left.
+            <div class="row-end" style="justify-content:flex-start;margin-top:8px"><button class="btn" type="button" data-act="close">← Back to the count room</button><button class="btn btn-quiet" type="button" data-act="to-ledger">See my ledger</button></div></div>`);
+          sec.scrollIntoView({ block: "start", behavior: "smooth" });
+        }
       } catch (x) { err.textContent = x.message; f.querySelector("button[type=submit]").disabled = false; }
     });
   }
@@ -624,7 +649,7 @@ function wire() {
     document.querySelectorAll("#seat-table th button").forEach((x) => (x === b ? x.setAttribute("aria-sort", "ascending") : x.removeAttribute("aria-sort")));
     renderTable();
   }));
-  $("#search").addEventListener("input", (e) => { S.q = e.target.value; renderTable(); });
+  $("#search").addEventListener("input", (e) => { S.q = e.target.value; renderTable(); renderChamber(); });
   $("#seat-table tbody").addEventListener("click", (e) => { const tr = e.target.closest("tr[data-slug]"); if (tr) openSeat(tr.dataset.slug); });
   $("#seat-table tbody").addEventListener("keydown", (e) => { const tr = e.target.closest("tr[data-slug]"); if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSeat(tr.dataset.slug); } });
 
@@ -650,6 +675,7 @@ function wire() {
     if (a === "reset") { S.shifts = {}; S.flows = {}; S.calc = null; S.central = null; renderDrawer(); }
     if (a === "unlock") openPass();
     if (a === "show-on-map") showOnMap(S.seat);
+    if (a === "to-ledger") { closeSeat(); $("#ledger").scrollIntoView({ behavior: "smooth", block: "start" }); }
     const os = e.target.closest("[data-open-seat]"); if (os) openSeat(os.dataset.openSeat);
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
