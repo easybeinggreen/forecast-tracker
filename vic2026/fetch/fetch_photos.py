@@ -20,13 +20,21 @@ FREE = re.compile(r"^(CC0|CC BY|CC-BY|Public domain|PD|Attribution|GFDL|CC BY-SA
 
 def find_page(s, name):
     q = {"action": "query", "list": "search", "format": "json", "srlimit": 5,
-         "srsearch": f'"{name}" Victorian Legislative Assembly OR Victorian politician OR Pauline Hanson'}
+         "srsearch": f'{name} Australian politician'}
     for h in s.get(API, params=q, headers=UA, timeout=30).json()["query"]["search"]:
         t = h["title"]
         last = name.split()[-1].lower()
         if last in t.lower() and "election" not in t.lower() and "district" not in t.lower():
             return t
     return None
+
+
+LOG = []
+_print = print
+
+
+def print(*a):  # noqa: A001
+    _print(*a); LOG.append(" ".join(str(x) for x in a))
 
 
 def main():
@@ -57,10 +65,11 @@ def main():
                          "license": lic, "file": (ii.get("imageinfo") or [{}])[0].get("descriptionurl")}
             print(name, "ok", lic)
         except Exception as e:  # noqa: BLE001
-            print(name, "error", e)
+            print(name, "error", repr(e))
         time.sleep(0.4)
     Path("site/data/photos.json").write_text(json.dumps(out, indent=1))
     print(len(out), "of", len(names), "with free photos")
+    Path("data/raw/photos_log.txt").write_text("\n".join(LOG))
 
 
 if __name__ == "__main__":
