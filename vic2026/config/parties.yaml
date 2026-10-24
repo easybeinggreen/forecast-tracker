@@ -1,0 +1,133 @@
+# Party profiles for the dashboard. Hand-curated: edit freely, then run export_site.py.
+# targets.kind: "stated" = the party said so on the record; "reported" = media reporting of party plans.
+# Quotes are verbatim from the linked source. Seat counts, polls and odds are computed, not typed here.
+
+ALP:
+  name: Labor
+  leader: {name: Ben Carroll, role: Premier, seat: niddrie, since: "2026-07-28"}
+  others:
+    - {name: Jacinta Allan, role: "Premier 2023–26; retiring from Bendigo East"}
+  summary: >-
+    In government since 2014 and seeking a fourth term. Carroll replaced Jacinta Allan in July 2026
+    after weeks of poor polling. Its primary vote is polling more than 10 points below 2022.
+    Ten Labor MPs are retiring, and two more (Will Fowles, Darren Cheeseman) now sit as independents.
+  record:
+    - "Won 2014, 2018 and 2022 (56 seats in 2022, 36.7% of first preferences)."
+    - "Held Mulgrave (2023) and Werribee (2025) at by-elections; didn't stand in Prahran (2025)."
+    - "Premier Andrews resigned in Sept 2023; Allan led until Carroll's challenge in July 2026."
+  stance: >-
+    Running against a Liberal–One Nation alliance. Carroll: "I will fight every day against the
+    Liberal Party and One Nation coming together."
+  targets:
+    - {slug: pakenham, kind: reported, note: "Labor expects to lose it; One Nation leader Warren Pickering is running", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: bass, kind: reported, note: "Held by a tiny margin; Labor isn't counting on it", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: hastings, kind: reported, note: "Held by a tiny margin; Labor isn't counting on it", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: melton, kind: reported, note: "Shows signs of vulnerability; MP retiring; only seat to swing against Labor in 2022", url: "https://www.abc.net.au/news/2026-09-23/ben-carroll-one-nation-victorian-election-jess-wilson-liberals/107186180"}
+    - {slug: niddrie, kind: reported, note: "The Premier's own seat, on the Coalition's hit list", url: "https://www.abc.net.au/news/2026-10-05/victorias-three-opposition-election-premier-ben-carroll/107226558"}
+  targets_label: Seats it is defending hardest
+  quotes:
+    - {text: "One Nation terrifies me", who: Ben Carroll, date: "2026-09-23", source: ABC News, url: "https://www.abc.net.au/news/2026-09-23/ben-carroll-one-nation-victorian-election-jess-wilson-liberals/107186180"}
+    - {text: "Hi, I'm Ben Carroll, the airport rail premier", who: Ben Carroll, date: "2026-10-05", source: ABC News, url: "https://www.abc.net.au/news/2026-10-05/victorias-three-opposition-election-premier-ben-carroll/107226558"}
+  news_query: '"Ben Carroll" OR "Victorian Labor"'
+
+LIB:
+  name: Liberal
+  leader: {name: Jess Wilson, role: Opposition Leader, seat: kew, since: "2025-11-18"}
+  others:
+    - {name: Brad Battin, role: "Leader Dec 2024 – Nov 2025"}
+    - {name: John Pesutto, role: "Leader 2022–24; MP for Hawthorn"}
+  summary: >-
+    Leads the Coalition with the Nationals. Wilson is the party's third leader this term. The Coalition
+    needs to hold its 29 seats and win 16 more for a majority, and hasn't won a Melbourne seat north or
+    west of the Yarra this century. Says it will repeal the treaty law within 100 days.
+  record:
+    - "Lost 2014, 2018 and 2022 (19 seats in 2022, 29.8% of first preferences)."
+    - "Gained Prahran from the Greens at the Feb 2025 by-election; held Warrandyte (2023) and Nepean (2026)."
+    - "Three leaders since 2022: Pesutto, Battin, Wilson."
+  stance: >-
+    Rules out talking to One Nation for now. Wilson: "I am running to win majority government at this election."
+  targets:
+    - {slug: bayswater, kind: reported, note: "Eastern suburbs in play; Labor MP retiring", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: ashwood, kind: reported, note: "Eastern suburbs, seen as crucial", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: glen-waverley, kind: reported, note: "Eastern suburbs, seen as crucial", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: ringwood, kind: reported, note: "Eastern suburbs; sitting MP now an independent", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: box-hill, kind: reported, note: "Eastern suburbs; $20m Box Hill Brickworks pledge", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: niddrie, kind: reported, note: "The Premier's seat, on a hit list of 30+ Labor seats", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: bass, kind: reported, note: "Labor margin 0.2%", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: hastings, kind: reported, note: "Labor margin 1.4%", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+  quotes:
+    - {text: "I am running to win majority government at this election", who: Jess Wilson, date: "2026-09-23", source: ABC News, url: "https://www.abc.net.au/news/2026-09-23/ben-carroll-one-nation-victorian-election-jess-wilson-liberals/107186180"}
+    - {text: "I'm not really interested in the other parties", who: Jess Wilson, date: "2026-09-23", source: ABC News, url: "https://www.abc.net.au/news/2026-09-23/ben-carroll-one-nation-victorian-election-jess-wilson-liberals/107186180"}
+    - {text: "The Coalition must win back Melbourne's eastern suburbs if it has any chance of retaking government", who: "Kos Samaras (Redbridge)", date: "2026-08-22", source: ABC News, url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+  news_query: '"Jess Wilson" Liberal Victoria'
+
+NAT:
+  name: Nationals
+  leader: {name: Danny O'Brien, role: Nationals leader, seat: gippsland-south, since: "2024-11-25"}
+  others:
+    - {name: Peter Walsh, role: "Leader 2014–24; retiring from Murray Plains"}
+  summary: >-
+    The Liberals' Coalition partner, holding nine regional seats. Three of its MPs are retiring
+    (Murray Plains, Gippsland East, Shepparton). One Nation is the main threat to its own seats,
+    while it chases Labor-held regional seats.
+  record:
+    - "Won 9 seats in 2022 on 4.7% statewide (it stands only in regional seats)."
+    - "Led by Peter Walsh for ten years until O'Brien took over unopposed in Nov 2024."
+  stance: "Part of the Coalition; no separate position on One Nation found."
+  targets:
+    - {slug: ripon, kind: stated, note: "Candidate Jo Armstrong, former Ararat mayor", url: "https://www.westvicnews.com.au/nationals-say-ripon-is-in-their-sights-2025-12-01"}
+    - {slug: bendigo-east, kind: stated, note: "Candidate Andrew Lethlean; Jacinta Allan retiring", url: "https://www.illawarramercury.com.au/story/9330357/allans-legacy-looms-large-over-tight-home-seat-battle/"}
+    - {slug: bendigo-west, kind: reported, note: "Could be in play; Labor MP retiring", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+  quotes:
+    - {text: "Ripon is a seat we feel we can win and need to win to change the government", who: Danny O'Brien, date: "2025-12-01", source: West Vic News, url: "https://www.westvicnews.com.au/nationals-say-ripon-is-in-their-sights-2025-12-01"}
+    - {text: "we think that regional cities are looking for an opportunity to vote differently", who: Danny O'Brien, date: "2025-05-22", source: Bendigo Advertiser, url: "https://www.bendigoadvertiser.com.au/story/8972480/nationals-eye-bendigo-surge-amid-labors-challenges/"}
+  news_query: '"Danny O''Brien" Nationals Victoria'
+
+GRN:
+  name: Greens
+  leader: {name: Ellen Sandell, role: Greens leader, seat: melbourne, since: "2024-04-23"}
+  summary: >-
+    Won a record 4 seats in 2022 but is down to 2 sitting MPs: it lost Prahran at a 2025 by-election,
+    and Brunswick MP Tim Read died in September 2026. Launched on 8 Oct with a plan for state-owned
+    supermarkets and says it aims to double its numbers.
+  record:
+    - "Won 4 seats in 2022 (Melbourne, Brunswick, Richmond, Prahran) on 11.5%."
+    - "Lost Prahran to the Liberals at the Feb 2025 by-election after its MP quit the party."
+  stance: "No formal 2026 position on a hung parliament found yet."
+  targets:
+    - {slug: northcote, kind: reported, note: "Labor margin 0.2% over the Greens", url: "https://www.aol.co.uk/articles/vegetarian-buffet-free-dental-raffle-214755000.html"}
+    - {slug: footscray, kind: reported, note: "Labor v Greens 4.2%; Climate 200 independent also running", url: "https://www.aol.co.uk/articles/vegetarian-buffet-free-dental-raffle-214755000.html"}
+    - {slug: pascoe-vale, kind: reported, note: "Labor v Greens 2.0%", url: "https://www.aol.co.uk/articles/vegetarian-buffet-free-dental-raffle-214755000.html"}
+    - {slug: preston, kind: reported, note: "Labor v Greens 2.1%", url: "https://www.aol.co.uk/articles/vegetarian-buffet-free-dental-raffle-214755000.html"}
+    - {slug: prahran, kind: reported, note: "Lost at the 2025 by-election, which Labor didn't contest", url: "https://www.aol.co.uk/articles/vegetarian-buffet-free-dental-raffle-214755000.html"}
+    - {slug: brunswick, kind: reported, note: "Defending without a sitting MP", url: "https://www.roymorgan.com/findings/10323-victorian-state-voting-intention-august-2026"}
+  quotes:
+    - {text: "In November, we are going to double our numbers or better", who: Ellen Sandell, date: "2026-10-08", source: Port News (ACM), url: "https://www.portnews.com.au/story/9365345/greens-hints-state-at-crossroads-at-party-launch/"}
+    - {text: "Honest to God … this is our moment", who: Ellen Sandell, date: "2026-10-08", source: The Guardian, url: "https://www.aol.co.uk/articles/vegetarian-buffet-free-dental-raffle-214755000.html"}
+  news_query: '"Ellen Sandell" OR "Victorian Greens"'
+
+"ON":
+  name: One Nation
+  leader: {name: Warren Pickering, role: "Victorian leader", seat: pakenham, since: "2026-08-02"}
+  others:
+    - {name: Pauline Hanson, role: Federal leader}
+    - {name: Rikkie-Lee Tyrrell, role: "Upper house MP, Northern Victoria (since 2022)"}
+  summary: >-
+    Barely stood in 2022 (5 lower house seats, 0.3%), but now polls around a fifth of the vote and is
+    running in 87 of 88 seats. Won 4 seats at the 2026 SA election, out-polling the Liberals there.
+    Army veteran Warren Pickering was named Victorian leader in August.
+  record:
+    - "No lower house seats ever in Victoria; one upper house MP since 2022."
+    - "2025 federal election: about 5.6% of polling-day votes in Victoria, peaking at 16% in the Morwell area."
+    - "2026 SA election: 4 seats, ahead of the Liberals on first preferences."
+  stance: >-
+    Says it won't seek a coalition with the Liberals. Pickering: "We can win in our own right."
+  targets:
+    - {slug: pakenham, kind: stated, note: "Leader Warren Pickering's seat", url: "https://www.abc.net.au/news/2026-08-03/one-nation-victoria-candiates-revealed/106989410"}
+    - {slug: melton, kind: reported, note: "Outer-west 'red wall' seat at risk to One Nation or Coalition", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: sunbury, kind: reported, note: "Outer north-west, at risk to One Nation or Coalition", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
+    - {slug: murray-plains, kind: reported, note: "Nationals seat, MP retiring; One Nation 'particularly' threatening the Nationals", url: "https://www.abc.net.au/news/2026-10-03/victorian-state-election-unpredictable-casey-briggs-analysis/107216078"}
+  quotes:
+    - {text: "We intend for this to be a November to remember and we are contesting to govern.", who: Warren Pickering, date: "2026-08-03", source: ABC News, url: "https://www.abc.net.au/news/2026-08-03/one-nation-victoria-candiates-revealed/106989410"}
+    - {text: "If we can get government, or even the balance of power, it's going to make one hell of a difference in this state", who: Pauline Hanson, date: "2026-08-03", source: ABC News, url: "https://www.abc.net.au/news/2026-08-03/one-nation-victoria-candiates-revealed/106989410"}
+  news_query: '"One Nation" Victoria Pickering'

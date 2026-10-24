@@ -1,5 +1,6 @@
 import { simulateSeat, centralCount } from "./sim.js";
 import { decodeTopo, projector, bboxOf, pathOf } from "./map.js";
+import { partyCards, partyHTML } from "./party.js";
 
 // ---------------------------------------------------------------- state & helpers
 const S = {
@@ -49,8 +50,8 @@ async function boot() {
   wire();
   renderAll();
   if (S.pass) await loadLedger();
-  const m = location.hash.match(/seat=([a-z-]+)/);
-  if (m) openSeat(m[1]);
+  const m = location.hash.match(/seat=([a-z-]+)/), mp = location.hash.match(/party=([A-Z]+)/);
+  if (m) openSeat(m[1]); else if (mp) openParty(mp[1]);
 }
 
 async function loadLedger() {
@@ -66,6 +67,7 @@ async function loadLedger() {
 
 function renderAll() {
   renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage();
+  if (S.F.parties) $("#party-grid").innerHTML = partyCards(S.F);
   $("#foot-model").textContent = `Model run ${S.F.generated} from ${S.F.simulations.toLocaleString("en-AU")} simulated elections, each with a full preference count in all 88 seats.`;
 }
 
@@ -124,7 +126,8 @@ function renderChamber() {
     model: "Each dot is coloured by the model's favourite. Fainter dots are less certain. Counting favourites is not the same as the expected seat total on the right.",
     mine: "Your locked calls. Empty dots are seats you haven't called yet." }[S.mode];
   $("#chamber-desc").textContent = desc;
-  $("#legend").innerHTML = ORDER.filter((p) => tally[p]).map((p) => `<li><span class="sw" style="background:${p === "unset" ? "transparent;border:1px solid var(--rule)" : col(p)}"></span>${p === "unset" ? "Not called" : PARTY[p]} ${tally[p]}</li>`).join("");
+  $("#legend").innerHTML = ORDER.filter((p) => tally[p]).map((p) => { const inner = `<span class="sw" style="background:${p === "unset" ? "transparent;border:1px solid var(--rule)" : col(p)}"></span>${p === "unset" ? "Not called" : PARTY[p]} ${tally[p]}`;
+    return `<li>${S.F.parties?.[p] ? `<button type="button" class="linkish" data-party="${p}">${inner}</button>` : inner}</li>`; }).join("");
 }
 
 function showTip(e, slug, wrapEl = $(".chamber-wrap")) {
@@ -189,7 +192,7 @@ function renderOutcome() {
   const max = 64, x = (v) => `${(100 * v) / max}%`;
   $("#ranges").innerHTML = rows.filter(([, k]) => sm.seats[k]).map(([name, k, c, maj]) => {
     const r = sm.seats[k];
-    return `<div class="range"><span class="name">${name}</span><span class="track">${maj ? `<i class="maj" style="left:${x(45)}"></i>` : ""}<i class="band" style="left:${x(r.p10)};width:calc(${x(r.p90 - r.p10)} + 2px);background:${col(c)}"></i><i class="dot" style="left:${x(r.p50)};background:${col(c)}"></i></span><span class="val">${r.p50} <small>${r.p10}–${r.p90}</small></span></div>`;
+    return `<div class="range"><span class="name">${S.F.parties?.[c] && k !== "LNP" ? `<button type="button" class="linkish" data-party="${c}">${name}</button>` : name}</span><span class="track">${maj ? `<i class="maj" style="left:${x(45)}"></i>` : ""}<i class="band" style="left:${x(r.p10)};width:calc(${x(r.p90 - r.p10)} + 2px);background:${col(c)}"></i><i class="dot" style="left:${x(r.p50)};background:${col(c)}"></i></span><span class="val">${r.p50} <small>${r.p10}–${r.p90}</small></span></div>`;
   }).join("") + `<p class="caption">Middle estimate of seats, with the range covering 80% of simulations. Dashed line: 45 seats for a majority.</p>`;
 
   // Coalition seat distribution
@@ -271,6 +274,15 @@ function renderLedger() {
 }
 
 // ---------------------------------------------------------------- drawer
+function openParty(code) {
+  if (!S.F.parties?.[code]) return;
+  S.seat = `party:${code}`;
+  history.replaceState(null, "", `#party=${code}`);
+  renderDrawer();
+  const d = $("#drawer");
+  d.setAttribute("aria-hidden", "false"); $("#scrim").hidden = false;
+  d.scrollTop = 0; d.focus();
+}
 function openSeat(slug) {
   if (slug !== "statewide" && !seatBy(slug)) return;
   S.seat = slug; S.shifts = {}; S.flows = {}; S.calc = null; S.central = null;
@@ -305,6 +317,7 @@ function currentProbs(seat) {
 function renderDrawer() {
   const d = $("#drawer");
   if (S.seat === "statewide") { d.innerHTML = statewideHTML(); bindLock(); return; }
+  if (S.seat.startsWith("party:")) { d.innerHTML = partyHTML(S.seat.slice(6), S.F, S.news, PARTY); return; }
   const s = seatBy(S.seat);
   const slots = s.model.sim.slots;
   const prim = s.model.primaries;
@@ -374,7 +387,7 @@ function seatNewsHTML(s) {
 function groupOf(code) {
   return ({ FF: "RMIN", FPV: "RMIN", DLP: "RMIN", LDP: "RMIN", SFF: "RMIN", AVP: "RMIN", HAP: "RMIN", AJP: "PROG", VS: "PROG", REA: "PROG", LCV: "PROG", DHJ: "OTH", ND: "OTH", TMP: "OTH", CPP: "OTH" })[code] || code;
 }
-const initials = (n) => n.split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+const initials = (n) => n.replace(/\(.*?\)|[^A-Za-z\s'-]/g, "").split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 const fmtShift = (v) => (v > 0 ? `+${v}` : v < 0 ? `−${Math.abs(v)}` : "0");
 const outcomesFor = (s) => Object.entries(s.model.win).filter(([, v]) => v >= 0.005).map(([k]) => k);
 
@@ -615,7 +628,9 @@ function wire() {
     if (a === "close") closeSeat();
     if (a === "reset") { S.shifts = {}; S.flows = {}; S.calc = null; S.central = null; renderDrawer(); }
     if (a === "unlock") openPass();
+    const os = e.target.closest("[data-open-seat]"); if (os) openSeat(os.dataset.openSeat);
   });
+  document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
   drawer.addEventListener("input", (e) => {
     const t = e.target;
     if (t.dataset.shift) { S.shifts[t.dataset.shift] = Number(t.value); $(`#sv-${t.dataset.shift}`).textContent = fmtShift(Number(t.value)); recompute(); }

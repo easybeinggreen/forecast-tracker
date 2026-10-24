@@ -1,6 +1,6 @@
 """Nightly: recent news per seat from Google News RSS -> site/data/news.json.
 
-Two searches per seat: the seat name with the election, and the sitting MP. Results are merged,
+Two searches per seat, plus one per party (its news_query in parties.yaml): the seat name with the election, and the sitting MP. Results are merged,
 de-duplicated and the eight most recent kept. Failures for a seat are skipped, not fatal.
 """
 import json
@@ -74,8 +74,19 @@ def main():
             keep.append(it)
         news[seat["slug"]] = keep[:8]
         print(name, len(keep))
+    parties = {}
+    for code, P in F.get("parties", {}).items():
+        items = [it for it in search(s, f'{P["news_query"]} when:14d') if not NOISE.search(it["title"])]
+        time.sleep(1.2)
+        seen, keep = set(), []
+        for it in sorted(items, key=lambda x: x["published"] or "", reverse=True):
+            k = re.sub(r"\W+", "", it["title"].lower())[:80]
+            if k not in seen:
+                seen.add(k); keep.append(it)
+        parties[code] = keep[:10]
+        print(code, len(keep))
     state = [it for it in search(s, '"Victorian election" when:7d') if not NOISE.search(it["title"])]
-    out = {"generated": datetime.now(timezone.utc).isoformat(), "statewide": state[:12], "seats": news}
+    out = {"generated": datetime.now(timezone.utc).isoformat(), "statewide": state[:12], "seats": news, "parties": parties}
     Path("site/data/news.json").write_text(json.dumps(out, separators=(",", ":")))
 
 

@@ -18,6 +18,7 @@ CURRENT_MP = {
     "nepean": ("Anthony Marsh", "LIB", "Won the May 2026 by-election"),
     "ringwood": ("Will Fowles", "IND", "Elected as Labor in 2022; now sits as an independent"),
     "south-barwon": ("Darren Cheeseman", "IND", "Elected as Labor in 2022; now sits as an independent"),
+    "brunswick": ("Vacant (Tim Read)", "GRN", "Greens MP Tim Read had announced his retirement and died in September 2026"),
 }
 
 MARKETS = [
@@ -53,6 +54,41 @@ def pendulum():
     return out
 
 
+POLL_COL = {"ALP": "alp", "LIB": "lnp", "NAT": "lnp", "GRN": "grn", "ON": "onp"}
+
+
+def party_profiles(seats, F):
+    """Hand-written profiles (config/parties.yaml) plus computed seats, polls and odds."""
+    prof = yaml.safe_load((ROOT / "vic2026/config/parties.yaml").read_text())
+    polls = pd.read_csv(ROOT / "data/raw/polls/et_polls.csv").sort_values("fieldwork_end")
+    d22 = json.loads((ROOT / "data/vic2026/districts2022.json").read_text())
+    votes, total = {}, 0
+    for d in d22:
+        for c in d["candidates"]:
+            votes[c["party"]] = votes.get(c["party"], 0) + c["votes"]; total += c["votes"]
+    out = {}
+    for code, p in prof.items():
+        col = POLL_COL[code]
+        series = [{"date": r.fieldwork_end, "v": float(r[col]), "pollster": r.pollster}
+                  for _, r in polls.iterrows() if pd.notna(r[col])]
+        now = [s for s in seats if s["mp"]["party"] == code and not s["mp"]["name"].startswith("Vacant")]
+        held = [s for s in seats if s["mp"]["party"] == code or (s["held_2022"] == code and s["mp"]["party"] == "IND" and code == "ALP")]
+        gains = sorted((s for s in seats if s not in held and s["model"]["win"].get(code, 0) >= 0.05),
+                       key=lambda s: -s["model"]["win"].get(code, 0))
+        out[code] = {**p, "code": code,
+                     "seats_2022": sum(1 for s in seats if s["held_2022"] == code),
+                     "seats_now": len(now),
+                     "primary_2022": round(100 * votes.get(code, 0) / total, 1),
+                     "coalition_2022": round(100 * (votes.get("LIB", 0) + votes.get("NAT", 0)) / total, 1),
+                     "poll_avg": F["statewide_inputs"].get("LNP" if code in ("LIB", "NAT") else code),
+                     "poll_label": "Coalition (Liberal + Nationals)" if code in ("LIB", "NAT") else p["name"],
+                     "polls": series,
+                     "forecast": F["summary"]["seats"].get(code),
+                     "held": [s["slug"] for s in held],
+                     "gains": [s["slug"] for s in gains[:12]]}
+    return out
+
+
 def main():
     F = json.loads((ROOT / "data/vic2026/forecast.json").read_text())
     cfg = yaml.safe_load((ROOT / "vic2026/config/drivers.yaml").read_text())
@@ -84,7 +120,8 @@ def main():
     out = {"generated": F["generated"], "simulations": F["simulations"], "inputs": F["statewide_inputs"],
            "summary": F["summary"], "distribution": F["seat_distribution"], "flows_base": F["flows_base"],
            "drivers": {"flows": cfg["flows"]}, "party_names": F["party_names"], "markets": MARKETS,
-           "election_date": "2026-11-28", "seats": seats}
+           "election_date": "2026-11-28", "seats": seats,
+           "parties": party_profiles(seats, F)}
     dest = ROOT / "site/data/forecast.json"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, separators=(",", ":")))

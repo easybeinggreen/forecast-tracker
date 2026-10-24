@@ -49,6 +49,7 @@ retiring:
   ALP: [bass, bayswater, bendigo-east, bendigo-west, essendon, macedon, melton, mill-park, pakenham, sydenham]
   LIB: [benambra, croydon, malvern, rowville]
   NAT: [gippsland-east, murray-plains, shepparton]
+  GRN: [brunswick]          # Tim Read retired, then died Sept 2026; seat vacant
 
 independents:
   carry_threshold: 0.10    # a 2022 independent with >= 10% is assumed to have a successor of similar strength
