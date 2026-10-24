@@ -41,7 +41,7 @@ def main():
     name = next(c for c in g.columns if c.startswith("SED_NAME"))
     vic = g[g[ste] == "Victoria"].copy()
     vic = vic[~vic[name].str.contains("No usual|Migratory|Outside", case=False, na=False)]
-    vic["name"] = vic[name]
+    vic["name"] = vic[name].str.replace(r"\s*\(.*\)$", "", regex=True)   # drop "(Southern Metropolitan)" etc.
     vic["slug"] = vic["name"].str.lower().str.replace(r"[^a-z]+", "-", regex=True).str.strip("-")
     vic = vic[["slug", "name", "geometry"]].to_crs(4326)
     print(len(vic), "Victorian districts")

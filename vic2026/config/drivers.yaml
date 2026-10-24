@@ -8,13 +8,17 @@ statewide:
   sd: {ALP: 2.5, LNP: 2.5, "ON": 3.5, GRN: 2.0, OTHERS: 1.5}   # "ON" quoted: bare ON means true in YAML
 
 one_nation:
-  # Where One Nation's vote lands. Propensity index per seat from 2022:
-  #   z = a * z(right-minor parties' vote) - b * z(Greens vote)
-  # concentration = how strongly the vote piles into high-propensity seats (0 = uniform).
+  # Where One Nation's vote lands. method "federal2025": each seat's share follows One Nation's 2025
+  # federal vote in that area (AEC polling places re-cut to state districts), raised to an elasticity:
+  #   seat share  ~  federal share ^ elasticity
+  # 1.0 = same proportional pattern as 2025; lower = flatter (a bigger party's vote spreads more evenly).
+  method: federal2025
+  federal_file: data/vic2026/on_federal2025.json
+  elasticity: {mean: 0.60, sd: 0.12}
+  # Fallback proxy (method "proxy"): 2022 right-minor and Greens votes plus a regional bonus.
   right_minor_weight: 0.6
   greens_weight: 0.4
   concentration: {mean: 0.35, sd: 0.10}
-  # Extra One Nation strength outside Melbourne (regional cities and country), in index units.
   regional_bonus: 0.6
   regional_seats: [bass, bellarine, benambra, bendigo-east, bendigo-west, eildon, eureka, euroa, geelong,
                    gippsland-east, gippsland-south, lara, lowan, macedon, mildura, morwell, murray-plains,

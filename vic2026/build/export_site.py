@@ -57,6 +57,8 @@ def main():
     F = json.loads((ROOT / "data/vic2026/forecast.json").read_text())
     cfg = yaml.safe_load((ROOT / "vic2026/config/drivers.yaml").read_text())
     pend = pendulum()
+    fedp = ROOT / "data/vic2026/on_federal2025.json"
+    fed = json.loads(fedp.read_text())["seats"] if fedp.exists() else {}
     retiring = {s: p for p, ss in cfg["retiring"].items() for s in ss}
     regional = set(cfg["one_nation"]["regional_seats"])
     seats = []
@@ -75,6 +77,7 @@ def main():
             "final_two_2022": [nice_name(s["winner_2022"]["name"]), nice_name(s["runner_up_2022"]["name"])],
             "ind_assumed": nice_name(s["ind_2026_assumed"]) if s["ind_2026_assumed"] else None,
             "note": s.get("note"),
+            "on_federal_2025": fed.get(slug, {}).get("on_share"),
             "model": {"win": s["win_prob"], "outright": s["outright_prob"], "pairs": s["final_pairs"],
                       "primaries": s["primaries_2026"], "sim": s["sim"], "trace": s["trace"]},
         })

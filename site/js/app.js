@@ -1,8 +1,9 @@
 import { simulateSeat, centralCount } from "./sim.js";
+import { decodeTopo, projector, bboxOf, pathOf } from "./map.js";
 
 // ---------------------------------------------------------------- state & helpers
 const S = {
-  F: null, mode: "model", filter: "all", sort: "close", q: "",
+  F: null, geo: null, news: null, lens: "fav", mode: "model", filter: "all", sort: "close", q: "",
   ledger: null, pass: null, seat: null, shifts: {}, flows: {}, calc: null, central: null,
 };
 const $ = (s, el = document) => el.querySelector(s);
@@ -38,6 +39,12 @@ async function api(path, opts = {}) {
 // ---------------------------------------------------------------- boot
 async function boot() {
   S.F = await (await fetch("data/forecast.json")).json();
+  const [topo, news] = await Promise.all([
+    fetch("data/vic_districts.topojson").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch("data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+  ]);
+  S.news = news;
+  if (topo) S.geo = decodeTopo(topo, "districts").filter((f) => seatBy(f.props.slug));
   S.pass = store.get("countroom.pass");
   wire();
   renderAll();
@@ -58,7 +65,7 @@ async function loadLedger() {
 }
 
 function renderAll() {
-  renderTop(); renderChamber(); renderOutcome(); renderTable(); renderLedger();
+  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage();
   $("#foot-model").textContent = `Model run ${S.F.generated} from ${S.F.simulations.toLocaleString("en-AU")} simulated elections, each with a full preference count in all 88 seats.`;
 }
 
@@ -120,8 +127,8 @@ function renderChamber() {
   $("#legend").innerHTML = ORDER.filter((p) => tally[p]).map((p) => `<li><span class="sw" style="background:${p === "unset" ? "transparent;border:1px solid var(--rule)" : col(p)}"></span>${p === "unset" ? "Not called" : PARTY[p]} ${tally[p]}</li>`).join("");
 }
 
-function showTip(e, slug) {
-  const s = seatBy(slug), tip = $("#tip");
+function showTip(e, slug, wrapEl = $(".chamber-wrap")) {
+  const s = seatBy(slug), tip = wrapEl.querySelector(".tip");
   const top = Object.entries(s.model.win).filter(([, v]) => v >= 0.01).slice(0, 3);
   const c = lastCall(slug);
   tip.innerHTML = `<h4>${esc(s.name)}</h4><p class="muted">${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? " (retiring)" : ""}</p>
@@ -129,10 +136,48 @@ function showTip(e, slug) {
     <div style="margin-top:6px">${top.map(([p, v]) => `<div class="row"><span><span class="sw" style="background:${col(p)}"></span> ${PARTY[p]}</span><b>${pct(v)}</b></div>`).join("")}</div>
     ${c ? `<p class="muted" style="margin-top:6px">My call: ${PARTY[c.backed] || "—"} ${pct(Number(c.probs[c.backed] || 0))}</p>` : ""}`;
   tip.hidden = false;
-  const wrap = $(".chamber-wrap").getBoundingClientRect();
+  const wrap = wrapEl.getBoundingClientRect();
   const x = e.clientX - wrap.left, y = e.clientY - wrap.top;
   tip.style.left = Math.min(x + 14, wrap.width - 270) + "px";
   tip.style.top = Math.max(y - 20, 0) + "px";
+}
+
+// ---------------------------------------------------------------- map
+const MEL_BBOX = [144.55, -38.33, 145.62, -37.48];
+function lensFill(s) {
+  if (S.lens === "fav") { const x = seatParty(s); return x.p === "unset" ? { fill: "var(--sheet)", op: 1, stroke: true } : { fill: col(x.p), op: x.op }; }
+  const w = s.model.win, p = S.lens === "LNP" ? (w.LIB || 0) + (w.NAT || 0) : w[S.lens] || 0;
+  return { fill: col(S.lens === "LNP" ? "LIB" : S.lens), op: Math.max(0.04, p) };
+}
+function renderMap() {
+  if (!S.geo) { $(".maps").hidden = true; return; }
+  const draw = (svg, bbox, W, H, clip) => {
+    const proj = projector(bbox, W, H, 6);
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const inBox = (f) => !clip || f.polys.some((poly) => poly[0].some(([x, y]) => x > bbox[0] && x < bbox[2] && y > bbox[1] && y < bbox[3]));
+    svg.innerHTML = S.geo.filter(inBox).map((f) => { const s = seatBy(f.props.slug), st = lensFill(s);
+      return `<path class="district${st.stroke ? " unset" : ""}" data-slug="${s.slug}" tabindex="0" role="button" aria-label="${esc(s.name)}" d="${pathOf(f, proj)}" style="fill:${st.fill};fill-opacity:${st.op.toFixed(2)}"></path>`; }).join("");
+  };
+  const vb = bboxOf(S.geo);
+  draw($("#map-vic"), vb, 640, 440, false);
+  draw($("#map-mel"), MEL_BBOX, 640, 520, true);
+  // outline where the Melbourne close-up sits on the state map
+  const pv = projector(vb, 640, 440, 6), [a, b] = [pv([MEL_BBOX[0], MEL_BBOX[3]]), pv([MEL_BBOX[2], MEL_BBOX[1]])];
+  $("#map-vic").insertAdjacentHTML("beforeend", `<rect x="${a[0].toFixed(1)}" y="${a[1].toFixed(1)}" width="${(b[0] - a[0]).toFixed(1)}" height="${(b[1] - a[1]).toFixed(1)}" fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="3 2" pointer-events="none"/>`);
+  const lc = col(S.lens === "LNP" ? "LIB" : S.lens);
+  $("#map-cap").innerHTML = S.lens === "fav"
+    ? "Colours follow the chamber's setting above. In model view, fainter means less certain. The dashed box on the state map is the Melbourne close-up."
+    : `<span class="ramp"><span>0%</span><i style="background:linear-gradient(90deg, color-mix(in srgb, ${lc} 4%, var(--sheet)), ${lc})"></i><span>100%</span></span> Stronger colour means a higher chance. Hover any district for every party's chance; click to open its calculator.`;
+}
+
+// ---------------------------------------------------------------- coverage
+const fmtDay = (iso) => (iso ? new Date(iso).toLocaleDateString("en-AU", { day: "numeric", month: "short" }) : "");
+const newsList = (items) => `<ul class="news">${items.map((n) => `<li><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a><span>${esc(n.source)}${n.published ? `, ${fmtDay(n.published)}` : ""}</span></li>`).join("")}</ul>`;
+function renderCoverage() {
+  const el = $("#coverage-body");
+  if (!S.news?.statewide?.length) { $(".coverage").hidden = true; return; }
+  $(".coverage").hidden = false;
+  el.innerHTML = newsList(S.news.statewide.slice(0, 8)) + `<p class="caption">From Google News, refreshed each morning. Open a seat for its local coverage.</p>`;
 }
 
 // ---------------------------------------------------------------- outcome panel
@@ -270,7 +315,7 @@ function renderDrawer() {
       <div class="monogram" style="background:${col(s.mp.party)}" aria-hidden="true">${esc(initials(s.mp.name))}</div>
       <div><h2 id="d-title">${esc(s.name)}</h2>
         <p>${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? ", retiring at this election" : ""}${s.mp.note ? `. ${esc(s.mp.note)}` : ""}</p>
-        <p>Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs} (2022)${s.ind_assumed ? `. Model assumes a strong independent in the mould of ${esc(s.ind_assumed)}` : ""}</p></div>
+        <p>Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs} (2022)${s.on_federal_2025 != null ? `. One Nation polled ${(s.on_federal_2025 * 100).toFixed(1)}% here at the 2025 federal election` : ""}${s.ind_assumed ? `. Model assumes a strong independent in the mould of ${esc(s.ind_assumed)}` : ""}</p></div>
       <button class="close" type="button" data-act="close" aria-label="Close">×</button>
     </div>
 
@@ -311,11 +356,19 @@ function renderDrawer() {
       </div>
     </section>
 
+    ${seatNewsHTML(s)}
     ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
   paintCalc(s, old);
   bindLock();
   if (adjusted()) recompute();
+}
+
+function seatNewsHTML(s) {
+  const items = S.news?.seats?.[s.slug] || [];
+  return `<section class="d-sec" aria-labelledby="h-news"><h3 id="h-news">In the news</h3>${items.length
+    ? `<p class="hint">Last 30 days, searching the seat and ${esc(s.mp.name)}. Log anything that should move your call in the note when you lock it.</p>${newsList(items)}`
+    : `<p class="hint">No recent coverage found for this seat${S.news ? "" : " (news refreshes each morning)"}.</p>`}</section>`;
 }
 
 function groupOf(code) {
@@ -525,7 +578,7 @@ function wire() {
   document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
     S.mode = b.dataset.mode;
     document.querySelectorAll(".seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-    renderChamber();
+    renderChamber(); renderMap();
   }));
   document.querySelectorAll(".chips button").forEach((b) => b.addEventListener("click", () => {
     S.filter = b.dataset.filter;
@@ -542,11 +595,19 @@ function wire() {
   $("#seat-table tbody").addEventListener("keydown", (e) => { const tr = e.target.closest("tr[data-slug]"); if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSeat(tr.dataset.slug); } });
 
   const ch = $("#chamber");
-  ch.addEventListener("mousemove", (e) => { const c = e.target.closest(".seat"); if (c) showTip(e, c.dataset.slug); else $("#tip").hidden = true; });
-  ch.addEventListener("mouseleave", () => ($("#tip").hidden = true));
+  ch.addEventListener("mousemove", (e) => { const c = e.target.closest(".seat"); if (c) showTip(e, c.dataset.slug); else $(".chamber-wrap .tip").hidden = true; });
+  ch.addEventListener("mouseleave", () => ($(".chamber-wrap .tip").hidden = true));
   ch.addEventListener("click", (e) => { const c = e.target.closest(".seat"); if (c) openSeat(c.dataset.slug); });
   ch.addEventListener("keydown", (e) => { const c = e.target.closest(".seat"); if (c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSeat(c.dataset.slug); } });
   $("#open-statewide").addEventListener("click", () => openSeat("statewide"));
+  for (const id of ["#wrap-vic", "#wrap-mel"]) {
+    const w = $(id);
+    w.addEventListener("mousemove", (e) => { const d = e.target.closest(".district"); if (d) showTip(e, d.dataset.slug, w); else w.querySelector(".tip").hidden = true; });
+    w.addEventListener("mouseleave", () => (w.querySelector(".tip").hidden = true));
+    w.addEventListener("click", (e) => { const d = e.target.closest(".district"); if (d) openSeat(d.dataset.slug); });
+    w.addEventListener("keydown", (e) => { const d = e.target.closest(".district"); if (d && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSeat(d.dataset.slug); } });
+  }
+  $("#lens").addEventListener("change", (e) => { S.lens = e.target.value; renderMap(); });
 
   const drawer = $("#drawer");
   drawer.addEventListener("click", (e) => {

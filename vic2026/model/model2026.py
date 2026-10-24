@@ -130,9 +130,14 @@ def simulate(S=10000, seed=7, scenario=None):
     # 2. One Nation by propensity ----------------------------------------------------------------
     zr, zg = on_propensity(B)
     oc = cfg["one_nation"]
-    regional = np.array([m["slug"] in set(oc.get("regional_seats", [])) for m in meta], float)
-    zi = oc["right_minor_weight"] * zr - oc["greens_weight"] * zg + oc.get("regional_bonus", 0.0) * regional
-    gamma = oc["concentration"]["mean"] + oc["concentration"]["sd"] * rng.standard_normal(S)
+    if oc.get("method") == "federal2025":
+        fed = json.loads((ROOT / oc["federal_file"]).read_text())["seats"]
+        zi = np.log(np.array([fed[m["slug"]]["on_share"] for m in meta]))
+        gamma = np.clip(oc["elasticity"]["mean"] + oc["elasticity"]["sd"] * rng.standard_normal(S), 0.1, 1.5)
+    else:
+        regional = np.array([m["slug"] in set(oc.get("regional_seats", [])) for m in meta], float)
+        zi = oc["right_minor_weight"] * zr - oc["greens_weight"] * zg + oc.get("regional_bonus", 0.0) * regional
+        gamma = oc["concentration"]["mean"] + oc["concentration"]["sd"] * rng.standard_normal(S)
     raw = np.exp(gamma[:, None] * zi[None, :])                                  # (S, N)
     ON = T[:, 2:3] * raw / (raw * wts).sum(1, keepdims=True)
     ON = np.clip(ON, 0.01, 0.6)

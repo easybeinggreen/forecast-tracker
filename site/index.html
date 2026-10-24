@@ -38,7 +38,7 @@
         </div>
         <div class="chamber-wrap">
           <svg id="chamber" role="img" aria-labelledby="chamber-desc"></svg>
-          <div class="tip" id="tip" hidden></div>
+          <div class="tip" hidden></div>
         </div>
         <p class="caption" id="chamber-desc"></p>
         <ul class="legend" id="legend"></ul>
@@ -54,6 +54,32 @@
         </figure>
         <div class="markets" id="markets"></div>
       </div>
+    </section>
+
+    <section class="maps" aria-labelledby="map-title">
+      <div class="panel-head">
+        <h2 id="map-title">Where the seats are</h2>
+        <label class="lens">Colour by
+          <select id="lens">
+            <option value="fav">Same as the chamber</option>
+            <option value="LNP">Chance the Coalition wins</option>
+            <option value="ALP">Chance Labor wins</option>
+            <option value="ON">Chance One Nation wins</option>
+            <option value="GRN">Chance the Greens win</option>
+            <option value="IND">Chance an independent wins</option>
+          </select>
+        </label>
+      </div>
+      <div class="map-grid">
+        <figure class="map-fig"><div class="map-wrap" id="wrap-vic"><svg id="map-vic" role="img" aria-label="Map of Victoria's 88 districts"></svg><div class="tip" hidden></div></div><figcaption>Victoria</figcaption></figure>
+        <figure class="map-fig"><div class="map-wrap" id="wrap-mel"><svg id="map-mel" role="img" aria-label="Map of Melbourne's districts"></svg><div class="tip" hidden></div></div><figcaption>Greater Melbourne</figcaption></figure>
+      </div>
+      <p class="caption" id="map-cap"></p>
+    </section>
+
+    <section class="coverage" aria-labelledby="news-title" hidden>
+      <div class="panel-head"><h2 id="news-title">Latest coverage</h2></div>
+      <div id="coverage-body"></div>
     </section>
 
     <section class="seats" aria-labelledby="seats-title">

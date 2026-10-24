@@ -17,6 +17,21 @@ import requests
 UA = {"User-Agent": "Mozilla/5.0 (vic2026-forecast personal research)"}
 RSS = "https://news.google.com/rss/search?q={q}&hl=en-AU&gl=AU&ceid=AU:en"
 
+NOISE = re.compile(r"weather report|supercoach|tipping|\bracing\b|\bcup\b|real estate|for sale|auction|obituar|horoscope|"
+                   r"recipe|\bafl\b|\bnrl\b|cricket|\bepl\b|footy|fantasy|\bsold\b|property market|traffic", re.I)
+POLITICS = re.compile(r"election|\belect|\bvot(e|er|ers|ing)\b|\bpoll|candidate|preselect|campaign|\bMPs?\b|member for|"
+                      r"labor|liberal|coalition|greens|one nation|nationals|independent|premier|opposition|carroll|"
+                      r"jess wilson|pickering|minister|government|parliament|\bseat\b|ballot|preference|pledge|promise|"
+                      r"funding|budget|policy|by-election|treaty", re.I)
+
+
+def relevant(title, mp):
+    """Keep politics stories, or any story naming the sitting MP; drop sport, weather, property."""
+    if NOISE.search(title):
+        return False
+    surname = mp.split()[-1] if mp else ""
+    return bool(POLITICS.search(title)) or (len(surname) > 3 and surname.lower() in title.lower())
+
 
 def search(s, q):
     r = s.get(RSS.format(q=quote_plus(q)), headers=UA, timeout=30)
@@ -50,6 +65,8 @@ def main():
         time.sleep(1.2)
         seen, keep = set(), []
         for it in sorted(items, key=lambda x: x["published"] or "", reverse=True):
+            if not relevant(it["title"], mp):
+                continue
             k = re.sub(r"\W+", "", it["title"].lower())[:80]
             if k in seen:
                 continue
@@ -57,7 +74,7 @@ def main():
             keep.append(it)
         news[seat["slug"]] = keep[:8]
         print(name, len(keep))
-    state = search(s, '"Victorian election" when:7d')
+    state = [it for it in search(s, '"Victorian election" when:7d') if not NOISE.search(it["title"])]
     out = {"generated": datetime.now(timezone.utc).isoformat(), "statewide": state[:12], "seats": news}
     Path("site/data/news.json").write_text(json.dumps(out, separators=(",", ":")))
 
