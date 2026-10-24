@@ -46,9 +46,11 @@ export function partyCards(F) {
   }).join("");
 }
 
-const chip = (s, p, code) => `<button class="seat-chip" type="button" data-open-seat="${s.slug}" style="--a:${(0.12 + 0.6 * p).toFixed(2)};--pc:${col(code)}">${esc(s.name)} <b>${pct(p)}</b></button>`;
+let CALLED = new Set();
+const chip = (s, p, code) => `<button class="seat-chip${CALLED.has(s.slug) ? " called" : ""}" type="button" title="${CALLED.has(s.slug) ? "You've locked a call here" : "No call yet"}" data-open-seat="${s.slug}" style="--a:${(0.12 + 0.6 * p).toFixed(2)};--pc:${col(code)}">${esc(s.name)} <b>${pct(p)}</b></button>`;
 
-export function partyHTML(code, F, news, PARTY) {
+export function partyHTML(code, F, news, PARTY, called = new Set()) {
+  CALLED = called;
   const P = F.parties[code], seat = (slug) => F.seats.find((s) => s.slug === slug);
   const f = P.forecast, L = P.leader, ls = seat(L.seat);
   const held = P.held.map(seat).map((s) => ({ s, p: s.model.win[code] || 0 })).sort((a, b) => a.p - b.p);
@@ -60,17 +62,17 @@ export function partyHTML(code, F, news, PARTY) {
     const s = seat(t.slug); if (!s) return "";
     const p = s.model.win[code] || 0;
     const [fp, fv] = Object.entries(s.model.win).sort((a, b) => b[1] - a[1])[0];
-    return `<li class="target">
+    return `<li class="target${CALLED.has(s.slug) ? " called" : ""}">
       <div class="t-top"><button class="linkish" type="button" data-open-seat="${s.slug}">${esc(s.name)}</button>
         <span class="kind ${t.kind}">${t.kind === "stated" ? "Party says" : "Reported"}</span>
-        <span class="t-held">held by ${esc(s.mp.name.startsWith("Vacant") ? "nobody (vacant)" : PARTY[s.mp.party] || s.mp.party)}, margin ${Number(s.margin.value).toFixed(1)}%</span></div>
+        ${CALLED.has(t.slug) ? '<span class="kind mine">✓ Called</span>' : ""}<span class="t-held">held by ${esc(s.mp.name.startsWith("Vacant") ? "nobody (vacant)" : PARTY[s.mp.party] || s.mp.party)}, margin ${Number(s.margin.value).toFixed(1)}%</span></div>
       <div class="t-bar"><span class="bars"><i style="width:${p * 100}%;background:${col(code)}"></i></span><b>${pct(p)}</b></div>
       <div class="t-note">${esc(t.note)}${fp !== code ? `. Model favourite: ${esc(PARTY[fp] || fp)} ${pct(fv)}` : ""}. <a href="${esc(t.url)}" target="_blank" rel="noopener">Source</a></div>
     </li>`;
   };
   return `
     <div class="d-head" style="border-top:5px solid ${col(code)}">
-      ${F.photos?.[L.name] ? `<figure class="avatar"><img src="${esc(F.photos[L.name].img)}" alt="${esc(L.name)}" style="border-color:${col(code)}" referrerpolicy="no-referrer"><figcaption><a href="${esc(F.photos[L.name].file || F.photos[L.name].page)}" target="_blank" rel="noopener" title="${esc(F.photos[L.name].credit)}">Photo: ${esc(F.photos[L.name].license)}</a></figcaption></figure>`
+      ${F.photos?.[L.name] ? `<figure class="avatar"><img src="${esc(F.photos[L.name].img)}" alt="" style="border-color:${col(code)}" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')"><figcaption><a href="${esc(F.photos[L.name].file || F.photos[L.name].page)}" target="_blank" rel="noopener" title="${esc(F.photos[L.name].credit)}">Photo: ${esc(F.photos[L.name].license)}</a></figcaption></figure>`
         : `<div class="monogram" style="background:${col(code)}" aria-hidden="true">${esc(L.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join(""))}</div>`}
       <div><h2 id="d-title">${esc(P.name)}</h2>
         <p><b>${esc(L.name)}</b>, ${esc(L.role)}${ls ? `, ${ls.mp.name === L.name ? "MP for" : "standing in"} <button class="linkish" type="button" data-open-seat="${ls.slug}">${esc(ls.name)}</button>` : ""}. Leader since ${day(L.since)}.</p>

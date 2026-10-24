@@ -74,7 +74,7 @@ async function loadLedger() {
 }
 
 function renderAll() {
-  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage();
+  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage(); renderMine();
   if (S.F.parties) $("#party-grid").innerHTML = partyCards(S.F);
   $("#foot-model").textContent = `Model run ${S.F.generated} from ${S.F.simulations.toLocaleString("en-AU")} simulated elections, each with a full preference count in all 88 seats.`;
 }
@@ -128,7 +128,8 @@ function renderChamber() {
     const q = S.q.trim().toLowerCase(), isCode = q && Object.values(ABBR).some((v) => v.toLowerCase() === q);
     const words = (n) => n.toLowerCase().split(/[\s-]+/);
     const hit = q && (isCode ? ab.toLowerCase() === q : words(x.s.name).some((w) => w.startsWith(q)) || words(x.s.mp.name).some((w) => w.startsWith(q)));
-    return `<g class="seat-g${q ? (hit ? " hit" : " dim") : ""}"><circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${X}" cy="${Y}" r="${dot}" style="${fill}"></circle><text class="ab${light ? " light" : ""}" x="${X}" y="${Y}" dy="0.35em" text-anchor="middle" font-size="${ab.length > 2 ? 9.5 : 11.5}">${ab}</text></g>`;
+    const called = !!lastCall(x.s.slug);
+    return `<g class="seat-g${q ? (hit ? " hit" : " dim") : ""}${called ? " called" : ""}"><circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${X}" cy="${Y}" r="${dot}" style="${fill}"></circle><text class="ab${light ? " light" : ""}" x="${X}" y="${Y}" dy="0.35em" text-anchor="middle" font-size="${ab.length > 2 ? 9.5 : 11.5}">${ab}</text></g>`;
   }).join("");
   const big = S.mode === "mine"
     ? `<text class="tally" x="${cx}" y="${cy - 52}" text-anchor="middle" font-size="44">${88 - (tally.unset || 0)}</text><text class="tally-sub" x="${cx}" y="${cy - 28}" text-anchor="middle">seats called, 88 to go${tally.unset ? "" : ""}</text>`
@@ -173,7 +174,7 @@ function renderMap() {
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const inBox = (f) => !clip || f.polys.some((poly) => poly[0].some(([x, y]) => x > bbox[0] && x < bbox[2] && y > bbox[1] && y < bbox[3]));
     svg.innerHTML = S.geo.filter(inBox).map((f) => { const s = seatBy(f.props.slug), st = lensFill(s);
-      return `<path class="district${st.stroke ? " unset" : ""}" data-slug="${s.slug}" tabindex="0" role="button" aria-label="${esc(s.name)}" d="${pathOf(f, proj)}" style="fill:${st.fill};fill-opacity:${st.op.toFixed(2)}"></path>`; }).join("");
+      return `<path class="district${st.stroke ? " unset" : ""}${lastCall(s.slug) ? " called" : ""}" data-slug="${s.slug}" tabindex="0" role="button" aria-label="${esc(s.name)}" d="${pathOf(f, proj)}" style="fill:${st.fill};fill-opacity:${st.op.toFixed(2)}"></path>`; }).join("");
   };
   const vb = bboxOf(S.geo);
   draw($("#map-vic"), vb, 640, 440, false);
@@ -225,6 +226,55 @@ function renderOutcome() {
     <tr><td>This model: Coalition largest party<div class="muted">Majority in ${pct(sm.p_lnp_majority)} of simulations</div></td><td class="num">${pct(sm.p_lnp_largest)}</td></tr></table>`;
 }
 
+function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => p.seat !== "statewide").map((p) => p.seat)); }
+
+// Your picture: the model with your latest call swapped in for each seat you've called.
+const PIC = [["Coalition", ["LIB", "NAT"], "LIB"], ["Labor", ["ALP"], "ALP"], ["One Nation", ["ON"], "ON"], ["Greens", ["GRN"], "GRN"], ["Independents", ["IND"], "IND"]];
+function blended(preds) {
+  const latest = {};
+  for (const r of preds) if (r.seat !== "statewide") latest[r.seat] = r;
+  const exp = Object.fromEntries(PIC.map(([n]) => [n, 0])), favs = Object.fromEntries(PIC.map(([n]) => [n, 0]));
+  let differ = 0;
+  for (const s of S.F.seats) {
+    const pr = latest[s.slug] ? Object.fromEntries(Object.entries(latest[s.slug].probs).map(([k, v]) => [k, Number(v)])) : s.model.win;
+    for (const [n, ks] of PIC) exp[n] += ks.reduce((a, k) => a + (pr[k] || 0), 0);
+    const top = Object.entries(pr).sort((a, b) => b[1] - a[1])[0][0];
+    const g = PIC.find(([, ks]) => ks.includes(top)); if (g) favs[g[0]] += 1;
+    if (latest[s.slug] && top !== fav(s.model.win)[0]) differ += 1;
+  }
+  return { exp, fav: favs, differ, n: Object.keys(latest).length };
+}
+
+function renderMine() {
+  const el = $("#mine"); if (!el) return;
+  if (!S.ledger) { el.innerHTML = `<h3>Your picture</h3><p class="hint">Unlock your ledger to see the statewide result your calls add up to.</p>`; return; }
+  const P = S.ledger.predictions.filter((r) => r.seat !== "statewide").sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  const model = blended([]), mine = blended(P);
+  const sw = S.ledger.predictions.filter((r) => r.seat === "statewide").at(-1);
+  const rows = PIC.map(([n, , c]) => { const a = model.exp[n], b = mine.exp[n], d = b - a;
+    return `<tr><td><span class="sw" style="background:${col(c)}"></span> ${n}</td><td class="num">${a.toFixed(1)}</td><td class="num"><b>${b.toFixed(1)}</b></td><td class="num ${Math.abs(d) < 0.05 ? "dim" : d > 0 ? "up" : "down"}">${Math.abs(d) < 0.05 ? "–" : (d > 0 ? "+" : "−") + Math.abs(d).toFixed(1)}</td><td class="num">${mine.fav[n]}</td></tr>`; }).join("");
+  // how your expected seats have moved, one point per lock
+  const steps = [{ t: null, ...model.exp }];
+  P.forEach((r, i) => steps.push({ t: r.created_at, ...blended(P.slice(0, i + 1)).exp }));
+  const W = 420, H = 120, pad = { l: 26, r: 92, t: 8, b: 18 };
+  const series = [["Coalition", "LIB"], ["Labor", "ALP"], ["One Nation", "ON"], ["Greens", "GRN"]];
+  const ymax = Math.max(50, ...steps.flatMap((s) => series.map(([n]) => s[n])));
+  const x = (i) => pad.l + (steps.length > 1 ? (i / (steps.length - 1)) : 0.5) * (W - pad.l - pad.r), y = (v) => pad.t + (1 - v / ymax) * (H - pad.t - pad.b);
+  const chart = P.length ? `<svg viewBox="0 0 ${W} ${H}" class="trend" role="img" aria-label="Your expected seats after each locked call">
+      <g class="axis"><line x1="${pad.l}" x2="${W - pad.r}" y1="${y(45)}" y2="${y(45)}" class="g" stroke-dasharray="3 3"/><text x="${pad.l - 4}" y="${y(45) + 3}" text-anchor="end">45</text><text x="${pad.l - 4}" y="${y(0) + 3}" text-anchor="end">0</text>
+      <text x="${x(0)}" y="${H - 4}" text-anchor="middle">model</text><text x="${x(steps.length - 1)}" y="${H - 4}" text-anchor="middle">${P.length} call${P.length > 1 ? "s" : ""}</text></g>
+      ${(() => { const ly = series.map(([n]) => ({ n, y: y(steps.at(-1)[n]) + 4 })).sort((a, b) => a.y - b.y);
+          for (let i = 1; i < ly.length; i++) ly[i].y = Math.max(ly[i].y, ly[i - 1].y + 11);
+          const at = Object.fromEntries(ly.map((l) => [l.n, l.y]));
+          return series.map(([n, c]) => `<path d="${steps.map((s, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(s[n]).toFixed(1)}`).join("")}" fill="none" stroke="${col(c)}" stroke-width="2"/><text x="${W - pad.r + 6}" y="${at[n].toFixed(1)}" class="lab" style="fill:${col(c)}">${n} ${steps.at(-1)[n].toFixed(0)}</text>`).join(""); })()}
+    </svg>` : "";
+  el.innerHTML = `<h3>Your picture <span class="dim">· ${mine.n} of 88 seats called</span></h3>
+    <p class="hint">Expected seats if your locked calls replace the model where you've made them (the model fills the rest). ${mine.differ ? `You back a different favourite from the model in <b>${mine.differ}</b> seat${mine.differ > 1 ? "s" : ""}.` : ""}</p>
+    <table class="sheet mine-t"><thead><tr><th></th><th>Model</th><th>With your calls</th><th>Change</th><th>Seats you favour</th></tr></thead><tbody>${rows}</tbody></table>
+    ${chart}
+    ${sw ? `<p class="hint" style="margin-top:6px">Your latest statewide call: ${Object.entries(sw.probs).map(([k, v]) => `${esc(outName(k))} ${pct(Number(v))}`).join(", ")}.</p>` : `<p class="hint" style="margin-top:6px">No statewide call yet. Use "Make a call" above when your seat picture settles.</p>`}`;
+}
+
 // ---------------------------------------------------------------- table
 function rows() {
   const q = S.q.toLowerCase();
@@ -252,7 +302,7 @@ function renderTable() {
     const myP = c?.backed ? Number(c.probs[c.backed]) : null;
     const edge = c?.backed && c.price_p ? myP - Number(c.price_p) : null;
     return `<tr data-slug="${s.slug}" tabindex="0">
-      <td><span class="seatname">${esc(s.name)}</span>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}</td>
+      <td><span class="seatname${c ? " called" : ""}">${esc(s.name)}</span>${c ? '<span class="tick" title="You\'ve locked a call here">✓</span>' : ""}${s.region === "regional" ? '<span class="tag">regional</span>' : ""}</td>
       <td><span class="mp"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? '<span class="tag">retiring</span>' : ""}</span></td>
       <td class="num">${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span></td>
       <td><span class="model-cell"><span class="stack" aria-hidden="true">${win.map(([p, v]) => `<i style="width:${v * 100}%;background:${col(p)}"></i>`).join("")}</span><b>${SHORT[fp]} ${pct(fv)}</b></span></td>
@@ -331,7 +381,7 @@ function currentProbs(seat) {
 function renderDrawer() {
   const d = $("#drawer");
   if (S.seat === "statewide") { d.innerHTML = statewideHTML(); bindLock(); return; }
-  if (S.seat.startsWith("party:")) { d.innerHTML = partyHTML(S.seat.slice(6), S.F, S.news, PARTY); return; }
+  if (S.seat.startsWith("party:")) { d.innerHTML = partyHTML(S.seat.slice(6), S.F, S.news, PARTY, calledSet()); return; }
   const s = seatBy(S.seat);
   const slots = s.model.sim.slots;
   const prim = s.model.primaries;
