@@ -87,10 +87,23 @@ def run():
             data = r.content
         alloc = pd.read_csv(io.BytesIO(data), dtype=str) if l.lower().endswith(".csv") else pd.read_excel(io.BytesIO(data), dtype=str)
         break
-    if alloc is None:
-        sa1_to_sed = spatial_map(s)
-    else:
-        sa1_to_sed = from_alloc(alloc)
+    sa1_to_sed = None
+    if alloc is not None and not any(c.upper().startswith("SA1_CODE") for c in alloc.columns):
+        try:
+            mb = [l for l in links(s, ALLOC_PAGE) if "MB_2021_AUST" in l.upper() and l.lower().endswith((".xlsx", ".csv", ".zip"))]
+            log("MB allocation links:", mb)
+            r = s.get(mb[0], headers=UA, timeout=600); r.raise_for_status()
+            if mb[0].lower().endswith(".zip"):
+                z = zipfile.ZipFile(io.BytesIO(r.content)); n = next(n for n in z.namelist() if n.lower().endswith((".csv", ".xlsx")))
+                raw, nm = z.read(n), n
+            else:
+                raw, nm = r.content, mb[0]
+            m = pd.read_csv(io.BytesIO(raw), dtype=str) if nm.lower().endswith(".csv") else pd.read_excel(io.BytesIO(raw), dtype=str)
+            m = m[[c for c in m.columns if c.upper() in ("MB_CODE_2021", "SA1_CODE_2021")]]
+            alloc = alloc.merge(m, on="MB_CODE_2021", how="left")
+        except Exception as e:  # noqa: BLE001
+            log("MB merge failed", repr(e)); alloc = None
+    sa1_to_sed = spatial_map(s) if alloc is None else from_alloc(alloc)
     dp_and_aggregate(s, sa1_to_sed)
 
 
