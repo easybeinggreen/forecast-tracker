@@ -15,6 +15,12 @@ API = "https://en.wikipedia.org/w/api.php"
 
 
 def wiki_title(s, name):
+    for t in (f"Electoral district of {name} (Victoria)", f"Electoral district of {name}"):
+        q = {"action": "query", "titles": t, "redirects": 1, "format": "json", "prop": "extracts", "exintro": 1, "explaintext": 1}
+        pages = s.get(API, params=q, headers=UA, timeout=30).json()["query"]["pages"]
+        for pg in pages.values():
+            if "missing" not in pg and "Victoria" in pg.get("extract", "") and "Legislative Assembly" in pg.get("extract", ""):
+                return pg["title"]
     q = {"action": "query", "list": "search", "format": "json", "srlimit": 5,
          "srsearch": f'"Electoral district of {name}" Victorian Legislative Assembly'}
     hits = s.get(API, params=q, headers=UA, timeout=30).json()["query"]["search"]
@@ -31,8 +37,13 @@ def main():
     s = requests.Session()
     wd = Path("data/raw/history/wiki"); wd.mkdir(parents=True, exist_ok=True)
     td = Path("data/raw/history/tallyroom"); td.mkdir(parents=True, exist_ok=True)
-    titles = {}
+    tp = Path("data/raw/history/wiki_titles.json")
+    titles = json.loads(tp.read_text()) if tp.exists() else {}
+    only = Path("data/raw/history/refetch.txt")
+    only = set(only.read_text().split()) if only.exists() else None
     for seat in F["seats"]:
+        if only is not None and seat["slug"] not in only:
+            continue
         slug, name = seat["slug"], seat["name"]
         try:
             t = wiki_title(s, name)
@@ -53,7 +64,7 @@ def main():
         except Exception as e:  # noqa: BLE001
             print("   tallyroom error", e)
         time.sleep(1.0)
-    (Path("data/raw/history") / "wiki_titles.json").write_text(json.dumps(titles, indent=1))
+    tp.write_text(json.dumps(titles, indent=1))
 
 
 if __name__ == "__main__":
