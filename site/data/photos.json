@@ -299,5 +299,61 @@
   "credit": "Jmwool",
   "license": "CC BY-SA 4.0",
   "file": "https://commons.wikimedia.org/wiki/File:Roma_Britnell_MP.jpg"
+ },
+ "Sarah Connolly": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Connelly_Sarah-hs_studio291117_%285_of_40%29.tif/lossless-page1-250px-Connelly_Sarah-hs_studio291117_%285_of_40%29.tif.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Sarah_Connolly_(politician)",
+  "credit": "Bottledwater2019",
+  "license": "CC BY-SA 4.0",
+  "file": "https://commons.wikimedia.org/wiki/File:Connelly_Sarah-hs_studio291117_(5_of_40).tif"
+ },
+ "Sonya Kilkenny": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Sonya_Kilkenny_%282018%29.jpg/250px-Sonya_Kilkenny_%282018%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Sonya_Kilkenny",
+  "credit": "SouthEastMelbourne",
+  "license": "CC BY-SA 4.0",
+  "file": "https://commons.wikimedia.org/wiki/File:Sonya_Kilkenny_(2018).jpg"
+ },
+ "Steve Dimopoulos": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/250518_Hughesdale_4x5-07676.jpg/250px-250518_Hughesdale_4x5-07676.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Steve_Dimopoulos",
+  "credit": "Totallybarned",
+  "license": "CC BY-SA 4.0",
+  "file": "https://commons.wikimedia.org/wiki/File:250518_Hughesdale_4x5-07676.jpg"
+ },
+ "Steve McGhie": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Steve_McGhie_at_Cobblebank_Stadium_%281%29_%28cropped%29.jpg/250px-Steve_McGhie_at_Cobblebank_Stadium_%281%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Steve_McGhie",
+  "credit": "Alison Newman",
+  "license": "CC BY-SA 4.0",
+  "file": "https://commons.wikimedia.org/wiki/File:Steve_McGhie_at_Cobblebank_Stadium_(1)_(cropped).jpg"
+ },
+ "Tim Bull": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Tim_Bull%2C_Nat.%2C_State_Member_Gipps._East%2C_jjron%2C_16.12.2010.jpg/250px-Tim_Bull%2C_Nat.%2C_State_Member_Gipps._East%2C_jjron%2C_16.12.2010.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Tim_Bull",
+  "credit": "jjron",
+  "license": "GFDL 1.2",
+  "file": "https://commons.wikimedia.org/wiki/File:Tim_Bull,_Nat.,_State_Member_Gipps._East,_jjron,_16.12.2010.jpg"
+ },
+ "Tim McCurdy": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/McCurdy_outside_Office.png/250px-McCurdy_outside_Office.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Tim_McCurdy",
+  "credit": "Barling07",
+  "license": "CC BY-SA 4.0",
+  "file": "https://commons.wikimedia.org/wiki/File:McCurdy_outside_Office.png"
+ },
+ "Warren Pickering": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Australian_Conservatism_Flags_Symbol.svg/250px-Australian_Conservatism_Flags_Symbol.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Warren_Pickering",
+  "credit": "Hstoops",
+  "license": "CC0",
+  "file": "https://commons.wikimedia.org/wiki/File:Australian_Conservatism_Flags_Symbol.svg"
+ },
+ "Will Fowles": {
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Will_Fowles_MP_Parliament_of_Victoria.jpg/250px-Will_Fowles_MP_Parliament_of_Victoria.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "page": "https://en.wikipedia.org/wiki/Will_Fowles",
+  "credit": "Politicsnerd01",
+  "license": "CC BY-SA 4.0",
+  "file": "https://commons.wikimedia.org/wiki/File:Will_Fowles_MP_Parliament_of_Victoria.jpg"
  }
 }
