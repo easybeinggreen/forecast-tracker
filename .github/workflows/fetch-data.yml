@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests geopandas pyogrio
+      - run: pip install requests geopandas pyogrio openpyxl
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
