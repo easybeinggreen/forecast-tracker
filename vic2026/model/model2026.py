@@ -110,6 +110,46 @@ def on_propensity(B):
     return z(rmin), z(grn)
 
 
+def explain(B, meta, cfg, p, wts):
+    """Deterministic walk-through of steps 2-4 at the central values, for the 'why these numbers' panel."""
+    N, K = B.shape
+    keys = ["ALP", "LNP", "ON", "GRN", "OTHERS"]
+    T = np.array([p[k] for k in keys], float); T /= T.sum()
+    oc = cfg["one_nation"]
+    fed = json.loads((ROOT / oc["federal_file"]).read_text())
+    share = np.array([fed["seats"][m["slug"]]["on_share"] for m in meta])
+    g = oc["elasticity"]["mean"]
+    raw = np.exp(g * np.log(share))
+    mult = raw / (raw * wts).sum()
+    ON = np.clip(T[2] * mult, 0.01, 0.6)
+    x = B.copy(); IND = x[:, G["IND"]].copy(); x[:, G["ON"]] = 0; x[:, G["IND"]] = 0
+    room = np.clip(1 - ON - IND, 0.05, None)
+    target = {"ALP": T[0], "LNP": T[1], "GRN": T[3], "OTHERS": max(T[4] - (IND * wts).sum(), 0.005)}
+    groups = {**SG, "OTHERS": ["RMIN", "PROG", "OTH"]}
+    for _ in range(25):
+        x *= (room / x.sum(-1))[:, None]
+        for gname, slots in groups.items():
+            idx = [G[s] for s in slots]
+            x[:, idx] *= target[gname] / max((x[:, idx].sum(-1) * wts).sum(), 1e-9)
+    x *= (room / x.sum(-1))[:, None]
+    x[:, G["ON"]] = ON; x[:, G["IND"]] = IND
+    state22 = {gname: float((B[:, [G[s] for s in slots]].sum(-1) * wts).sum()) for gname, slots in SG.items()}
+    retire = {s: party for party, ss in cfg["retiring"].items() for s in ss}
+    out = {}
+    for i, m in enumerate(meta):
+        out[m["slug"]] = {
+            "base": {s: round(100 * float(B[i, G[s]]), 1) for s in SLOTS if B[i, G[s]] > 0.0005},
+            "swung": {s: round(100 * float(x[i, G[s]]), 1) for s in SLOTS if x[i, G[s]] > 0.0005},
+            "on": {"fed": round(100 * float(share[i]), 1), "fed_vic": round(100 * float((share * wts).sum()), 1),
+                   "mult": round(float(mult[i]), 2), "state": round(100 * float(T[2]), 1), "elasticity": g},
+            "retiring": retire.get(m["slug"]), "retire_pts": cfg["retirement_penalty"],
+            "shift": (cfg.get("seat_overrides") or {}).get(m["slug"], {}).get("shift"),
+        }
+    statewide = {"2022": {k: round(100 * v, 1) for k, v in state22.items()},
+                 "2026": {k: round(100 * float(T[j]), 1) for j, k in enumerate(keys)}}
+    return out, statewide
+
+
 def simulate(S=10000, seed=7, scenario=None):
     cfg, D, W0, avg = load()
     rng = np.random.default_rng(seed)
@@ -221,6 +261,10 @@ def simulate(S=10000, seed=7, scenario=None):
                                                     "p10": round(100 * float(np.quantile(prim[:, s], 0.1)), 1),
                                                     "p90": round(100 * float(np.quantile(prim[:, s], 0.9)), 1)} for s in cand}})
 
+    why, why_state = explain(B, meta, cfg, p, wts)
+    for s in seats:
+        s["why"] = why[s["slug"]]
+
     # statewide outputs ---------------------------------------------------------------------------
     counts = {g: (win == G[g]).sum(1) for g in SLOTS}
     lnp = counts["LIB"] + counts["NAT"]
@@ -233,7 +277,7 @@ def simulate(S=10000, seed=7, scenario=None):
                   for g, v in {**counts, "LNP": lnp}.items() if v.max() > 0},
     }
     return {"generated": date.today().isoformat(), "simulations": S, "statewide_inputs": p,
-            "drivers": cfg, "flows_base": {"groups": SLOTS, "W0": W0.round(5).tolist()}, "summary": summary, "seat_distribution": seat_dist, "seats": seats, "party_names": NICE}
+            "drivers": cfg, "flows_base": {"groups": SLOTS, "W0": W0.round(5).tolist()}, "summary": summary, "why_statewide": why_state, "seat_distribution": seat_dist, "seats": seats, "party_names": NICE}
 
 
 def main():

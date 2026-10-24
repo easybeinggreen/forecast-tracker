@@ -1,6 +1,7 @@
 import { simulateSeat, centralCount } from "./sim.js";
 import { decodeTopo, projector, bboxOf, pathOf } from "./map.js";
 import { partyCards, partyHTML } from "./party.js";
+import { whyHTML, locatorSVG, insideShell, renderInside, placeHTML } from "./seatx.js";
 
 // ---------------------------------------------------------------- state & helpers
 const S = {
@@ -339,6 +340,10 @@ function renderDrawer() {
       <div class="keyline"><span><i class="k-m"></i>Model</span><span><i class="k-a"></i>With your adjustments</span><span><i class="k-me"></i>Your locked call</span></div>
     </section>
 
+    ${whyHTML(s, S.F, PARTY)}
+    ${placeHTML(s, locatorSVG(S.geo, s.slug), PARTY)}
+    ${insideShell(s.slug)}
+
     <section class="d-sec" aria-labelledby="h-prim">
       <h3 id="h-prim">First preferences <button class="btn btn-ghost reset" type="button" data-act="reset">Reset adjustments</button></h3>
       <p class="hint">Dot: model estimate for 2026, band: likely range. Grey tick: 2022 result. Slide to shift a party's vote in this seat (other parties rebalance).</p>
@@ -373,8 +378,24 @@ function renderDrawer() {
     ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
   paintCalc(s, old);
+  loadInside(s);
   bindLock();
   if (adjusted()) recompute();
+}
+
+const boothCache = {};
+async function loadInside(s) {
+  const el = $("#inside"); if (!el) return;
+  try {
+    boothCache[s.slug] ||= await (await fetch(`data/booths/${s.slug}.json`)).json();
+    if (S.seat === s.slug) renderInside($("#inside"), boothCache[s.slug], s, PARTY, groupOf);
+  } catch { el.innerHTML = '<p class="hint">Polling-place results not available for this seat.</p>'; }
+}
+
+function showOnMap(slug) {
+  closeSeat();
+  $(".maps").scrollIntoView({ behavior: "smooth", block: "start" });
+  document.querySelectorAll(`.district[data-slug="${slug}"]`).forEach((p) => { p.classList.add("flash"); setTimeout(() => p.classList.remove("flash"), 4000); });
 }
 
 function seatNewsHTML(s) {
@@ -628,6 +649,7 @@ function wire() {
     if (a === "close") closeSeat();
     if (a === "reset") { S.shifts = {}; S.flows = {}; S.calc = null; S.central = null; renderDrawer(); }
     if (a === "unlock") openPass();
+    if (a === "show-on-map") showOnMap(S.seat);
     const os = e.target.closest("[data-open-seat]"); if (os) openSeat(os.dataset.openSeat);
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });

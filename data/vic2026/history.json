@@ -1,0 +1,6491 @@
+{
+ "albert-park": {
+  "created": "1889",
+  "demographic": "Inner metropolitan",
+  "blurb": "The electoral district of Albert Park is one of the electoral districts of Victoria, Australia, for the Victorian Legislative Assembly. It covers an area of 21 square kilometres (8.1 sq mi) in inner suburban Melbourne, and includes the suburbs of Albert Park, Middle Park, Port Melbourne, St Kilda West, Southbank, South Melbourne, South Wharf, and parts of St Kilda. It lies within the Southern Metropolitan Region of the upper house, the Legislative Council.",
+  "members": [
+   {
+    "name": "Frank Crean",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Roy Schilling",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1950
+   },
+   {
+    "name": "Keith Sutton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1950,
+    "to": 1970
+   },
+   {
+    "name": "Val Doube",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1970,
+    "to": 1979
+   },
+   {
+    "name": "Bunna Walsh",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1992
+   },
+   {
+    "name": "John Thwaites",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 2007
+   },
+   {
+    "name": "Martin Foley",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2007,
+    "to": 2022
+   },
+   {
+    "name": "Nina Taylor",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Colleen Bolger",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Andrew Cook",
+     "party": "Liberal"
+    },
+    {
+     "name": "Georgie Dragwidge",
+     "party": "Independent"
+    },
+    {
+     "name": "Adrian King",
+     "party": "Independent"
+    },
+    {
+     "name": "Tammy Lindrum",
+     "party": "One Nation"
+    },
+    {
+     "name": "Daniel O'Neill",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Sonya Semmens",
+     "party": "Greens"
+    },
+    {
+     "name": "Nina Taylor",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Labor could be vulnerable here to either the Liberal Party or the Greens, with Labor's polling down significantly since 2022.",
+   "url": "https://www.tallyroom.com.au/vic2026/albertpark2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Albert_Park"
+ },
+ "ashwood": {
+  "created": "2022",
+  "demographic": "Urban",
+  "blurb": "The electoral district of Ashwood is an electorate of the Victorian Legislative Assembly in Melbourne, Australia. It was created in the redistribution of electoral boundaries in 2021, and came into effect at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Matt Fregon",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Matt Fregon",
+     "party": "Labor"
+    },
+    {
+     "name": "Hitendra Joshi",
+     "party": "Independent"
+    },
+    {
+     "name": "Steven Mitchell",
+     "party": "One Nation"
+    },
+    {
+     "name": "Tim Randall",
+     "party": "Greens"
+    },
+    {
+     "name": "Jacob van der Eynden",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Theo Zographos",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "The Liberal Party would be looking to gain this seat if current polling plays out.",
+   "url": "https://www.tallyroom.com.au/vic2026/ashwood2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Ashwood"
+ },
+ "bass": {
+  "created": "2002",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Bass is one of the electoral districts of Victoria, Australia, for the Victorian Legislative Assembly. It covers an area of 1,358 square kilometres (524 sq mi) south east of Melbourne, stretching from the satellite suburb of Clyde through rural areas to the coast at Inverloch and Phillip Island. It includes the suburbs and towns of Bass, Cape Paterson, Clyde, Corinella, Cowes, Grantville, Inverloch, Kilcunda, Koo Wee Rup, Lang Lang, Pearcedale, Rhyll, San Remo, Tooradin, Ventnor and Wonthaggi.",
+  "members": [
+   {
+    "name": "Ken Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2002,
+    "to": 2014
+   },
+   {
+    "name": "Brian Paynter",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": 2018
+   },
+   {
+    "name": "Jordan Crugnale",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Chris Buckingham",
+     "party": "Labor"
+    },
+    {
+     "name": "Rochelle Halstead",
+     "party": "Liberal"
+    },
+    {
+     "name": "Chris Jobe",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Sophie Thorn",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "Bass is an extremely marginal seat and Labor's vote has dropped dramatically since 2022. Up until 2025, this seat would have been a likely Liberal gain but could be a strong prospect for One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/bass2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bass"
+ },
+ "bayswater": {
+  "created": "1992",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Bayswater is one of the electoral districts of Victoria, Australia, for the Victorian Legislative Assembly. It covers an area of 39 square kilometres (15 sq mi) in outer eastern Melbourne, and includes the suburbs of Bayswater, Heathmont, Kilsyth South and The Basin, and parts of Bayswater North, Boronia, Ringwood and Wantirna. It lies within the Eastern Metropolitan Region of the upper house, the Legislative Council.",
+  "members": [
+   {
+    "name": "Gordon Ashley",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Peter Lockwood",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "Heidi Victoria",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": 2018
+   },
+   {
+    "name": "Jackson Taylor",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Kayte Bleakney",
+     "party": "One Nation"
+    },
+    {
+     "name": "Julie Buxton",
+     "party": "Labor"
+    },
+    {
+     "name": "Alec Ferguson",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Jess Kennedy",
+     "party": "Greens"
+    },
+    {
+     "name": "David Kitchen",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "The Liberal Party will be hoping to pick up Bayswater. It's not likely that One Nation will be in a position to win here but that's not entirely clear.",
+   "url": "https://www.tallyroom.com.au/vic2026/bayswater2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bayswater"
+ },
+ "bellarine": {
+  "created": null,
+  "demographic": "Urbanised Rural",
+  "blurb": "The electoral district of Bellarine is one of the electoral districts of Victoria, Australia, for the Victorian Legislative Assembly. It covers an area of 367 square kilometres (142 sq mi) stretching from the Bellarine Peninsula to the outer eastern suburbs of Geelong. It includes the towns of Barwon Heads, Clifton Springs, Drysdale, Indented Head, Ocean Grove, Point Lonsdale, Portarlington and Queenscliff and the Geelong suburb of Leopold.",
+  "members": [
+   {
+    "name": "Aurel Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1976
+   },
+   {
+    "name": "Graham Ernst",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1992
+   },
+   {
+    "name": "Garry Spry",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Lisa Neville",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2022
+   },
+   {
+    "name": "Alison Marchant",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Ronan Keogh",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Alison Marchant",
+     "party": "Labor"
+    },
+    {
+     "name": "Ross McRae",
+     "party": "One Nation"
+    },
+    {
+     "name": "Mitch Pope",
+     "party": "Greens"
+    },
+    {
+     "name": "Callum Whitehead",
+     "party": "Liberal"
+    },
+    {
+     "name": "Dom Williams",
+     "party": "Socialist Alliance"
+    }
+   ],
+   "assessment": "Bellarine is not a particularly safe Labor seat, and could be vulnerable to either the Liberal Party or One Nation if Labor's low primary vote polling continues.",
+   "url": "https://www.tallyroom.com.au/vic2026/bellarine2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bellarine"
+ },
+ "benambra": {
+  "created": "1877",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Benambra is one of the electoral districts of Victoria, Australia, for the Victorian Legislative Assembly. It covers an area of 10,037 square kilometres (3,875 sq mi)  in north-eastern Victoria. The largest settlement is the city of Wodonga.",
+  "members": [
+   {
+    "name": "Roy Paton",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Tom Mitchell",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1947,
+    "to": 1976
+   },
+   {
+    "name": "Tom Mitchell",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1947,
+    "to": 1976
+   },
+   {
+    "name": "Lou Lieberman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1992
+   },
+   {
+    "name": "Tony Plowman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2006
+   },
+   {
+    "name": "Bill Tilley",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Mike Fuery",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Steve Martin",
+     "party": "Liberal"
+    },
+    {
+     "name": "Lachie McKeeman",
+     "party": "Independent"
+    },
+    {
+     "name": "Graham Parton",
+     "party": "Greens"
+    },
+    {
+     "name": "Evette Pepper",
+     "party": "Family First"
+    },
+    {
+     "name": "Kellie Sheppard",
+     "party": "One Nation"
+    },
+    {
+     "name": "Alex Vangalen",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "The Liberal Party barely retained Benambra in 2022, and now doesn't have a sitting MP to defend the seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/benambra2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Benambra"
+ },
+ "bendigo-east": {
+  "created": null,
+  "demographic": "Provincial and rural",
+  "blurb": "Bendigo East is an electoral district of the Legislative Assembly in the Australian state of Victoria. It covers an area of 2,711 square kilometres (1,047 sq mi) covering the part of the city of Bendigo east of the Yungera railway line and surrounding rural areas to the north, east and south. It includes the Bendigo suburbs of East Bendigo, Epsom, Flora Hill, Junortoun, Kennington, Quarry Hill, Spring Gully, Strathdale, Strathfieldsaye and White Hills, and the surrounding towns of Axedale, Goornong, Huntly, Mandurang, Raywood and Sedgwick.",
+  "members": [
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1985\u2013present)",
+    "party": "OTH",
+    "from": 1985,
+    "to": null
+   },
+   {
+    "name": "Michael John",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1999
+   },
+   {
+    "name": "Jacinta Allan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2026
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Cheryl Hawken",
+     "party": "One Nation"
+    },
+    {
+     "name": "Andrew Lethlean",
+     "party": "Nationals"
+    },
+    {
+     "name": "Denali Norsen",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Tim Rickwood",
+     "party": "Labor"
+    },
+    {
+     "name": "Michael Tolhurst",
+     "party": "Greens"
+    },
+    {
+     "name": "Liz Wright",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "Bendigo East is definitely vulnerable, with One Nation expected to perform strongly in regional areas.",
+   "url": "https://www.tallyroom.com.au/vic2026/bendigoeast2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bendigo_East"
+ },
+ "bendigo-west": {
+  "created": null,
+  "demographic": "Provincial and rural",
+  "blurb": "Bendigo West is an electoral district of the Legislative Assembly in the Australian state of Victoria. It is a 1,524-square-kilometre (588 sq mi)  electorate, centred on the city of Bendigo west of the Yungera railway line, and includes surrounding rural towns to the west and south-west. It encompasses the localities of Bendigo City, California Gully, Castlemaine, Harcourt, Long Gully, Maldon, Marong, Newstead and West Bendigo.",
+  "members": [
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1985\u2013present)",
+    "party": "OTH",
+    "from": 1985,
+    "to": null
+   },
+   {
+    "name": "David Kennedy",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1992
+   },
+   {
+    "name": "Max Turner",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 1996
+   },
+   {
+    "name": "Bob Cameron",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1996,
+    "to": 2010
+   },
+   {
+    "name": "Maree Edwards",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2010,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Brenton Baldwin",
+     "party": "Labor"
+    },
+    {
+     "name": "David Hutchings",
+     "party": "Nationals"
+    },
+    {
+     "name": "Ellen Morgan",
+     "party": "One Nation"
+    },
+    {
+     "name": "Tayne Shalevski",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Liza Shaw",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "The Labor margin here is substantial but it could be vulnerable to the Coalition or One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/bendigowest2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bendigo_West"
+ },
+ "bentleigh": {
+  "created": "1967",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Bentleigh is an electoral district of the Victorian Legislative Assembly. It covers an area of 25 square kilometres (9.7 sq mi) in southern Melbourne, including the suburbs of Bentleigh, Hampton East, McKinnon, and Moorabbin, and parts of Cheltenham, Bentleigh East, Brighton East and Ormond. It also includes the Moorabbin campus of the Monash Medical Centre.",
+  "members": [
+   {
+    "name": "Bob Suggett",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1979
+   },
+   {
+    "name": "Gordon Hockley",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1988
+   },
+   {
+    "name": "Ann Barker",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1992
+   },
+   {
+    "name": "Inga Peulich",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Rob Hudson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2010
+   },
+   {
+    "name": "Elizabeth Miller",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": 2014
+   },
+   {
+    "name": "Nick Staikos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Liam Kruger",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Herbert Lonsing",
+     "party": "One Nation"
+    },
+    {
+     "name": "Karli McRostie",
+     "party": "Greens"
+    },
+    {
+     "name": "Tynan Putt",
+     "party": "Liberal"
+    },
+    {
+     "name": "Nick Staikos",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "The Labor margin here does not look large enough to withstand current polling, with the Liberal Party the main threat.",
+   "url": "https://www.tallyroom.com.au/vic2026/bentleigh2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bentleigh"
+ },
+ "berwick": {
+  "created": null,
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Berwick is an electoral district of the Legislative Assembly in the Australian state of Victoria.",
+  "members": [
+   {
+    "name": "Rob Maclellan",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1992
+   },
+   {
+    "name": "Robert Dean",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Brad Battin",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Nalinda Amarasiri Gunawardana",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Brad Battin",
+     "party": "Liberal"
+    },
+    {
+     "name": "Vincenzo De Paolis",
+     "party": "Family First"
+    },
+    {
+     "name": "Roshan De Silva",
+     "party": "Greens"
+    },
+    {
+     "name": "Rana Khan",
+     "party": "Labor"
+    },
+    {
+     "name": "Michael Piastrino",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Brad Battin will likely win re-election but seats on the outskirts of Melbourne like this one will probably have a high One Nation vote which could be of concern.",
+   "url": "https://www.tallyroom.com.au/vic2026/berwick2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Berwick"
+ },
+ "box-hill": {
+  "created": "1945",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Box Hill is an electoral district of the Victorian Legislative Assembly, covering an area of 29 square kilometres (11 sq mi) in eastern Melbourne. It contains the suburbs of Box Hill, Box Hill North, Box Hill South, Mont Albert, Mont Albert North, most of Blackburn, Blackburn North, and Blackburn South, and parts of Balwyn North, Burwood, Burwood East, and Surrey Hills.",
+  "members": [
+   {
+    "name": "Bob Gray",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "George Reid",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1952
+   },
+   {
+    "name": "Bob Gray",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1955
+   },
+   {
+    "name": "George Reid",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1973
+   },
+   {
+    "name": "Morris Williams",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1973,
+    "to": 1976
+   },
+   {
+    "name": "Donald Mackinnon",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1982
+   },
+   {
+    "name": "Margaret Ray",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Robert Clark",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2018
+   },
+   {
+    "name": "Paul Hamer",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Saravina Afaj",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Jamie Baker",
+     "party": "One Nation"
+    },
+    {
+     "name": "Peter Fagg",
+     "party": "Family First"
+    },
+    {
+     "name": "Paul Hamer",
+     "party": "Labor"
+    },
+    {
+     "name": "Sally Houguet",
+     "party": "Liberal"
+    },
+    {
+     "name": "Aaron Qin",
+     "party": "Greens"
+    },
+    {
+     "name": "Heena Sinha Cheung",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "Box Hill will be a key target for the Liberal Party.",
+   "url": "https://www.tallyroom.com.au/vic2026/boxhill2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Box_Hill"
+ },
+ "brighton": {
+  "created": "1856",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Brighton is an electoral district of the Victorian Legislative Assembly. It covers an area of 20 square kilometres (7.7 sq mi) in south-eastern Melbourne, including the suburbs of Brighton and Elwood, and parts of Brighton East and Hampton. It lies within the Southern Metropolitan Region of the upper house, the Legislative Council.",
+  "members": [
+   {
+    "name": "Ray Tovell",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Ray Tovell",
+    "party_raw": "Electoral Reform League",
+    "party": "OTH",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Sir John Rossiter",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1976
+   },
+   {
+    "name": "Jeannette Patrick",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1985
+   },
+   {
+    "name": "Alan Stockdale",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1999
+   },
+   {
+    "name": "Louise Asher",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1999,
+    "to": 2018
+   },
+   {
+    "name": "James Newbury",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Ebony Bain",
+     "party": "Greens"
+    },
+    {
+     "name": "Alexander Fagan",
+     "party": "One Nation"
+    },
+    {
+     "name": "Bridget Mullahy",
+     "party": "Labor"
+    },
+    {
+     "name": "James Newbury",
+     "party": "Liberal"
+    },
+    {
+     "name": "Jessica Smith",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "While James Newbury doesn't hold Brighton by a very large margin, this is not likely to be a hospitable environment for One Nation, and Labor's position will be significantly weakened compared to the last election, so he should be comfortably re-elected.",
+   "url": "https://www.tallyroom.com.au/vic2026/brighton2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Brighton"
+ },
+ "broadmeadows": {
+  "created": "1955",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Broadmeadows is an electorate of the Victorian Legislative Assembly. It covers an area of 47 square kilometres (18 sq mi) in outer northern Melbourne, and includes the suburbs of Broadmeadows, Campbellfield, Coolaroo, Dallas, Fawkner, Glenroy, Hadfield, Jacana and Oak Park. It lies within the Northern Metropolitan Region of the upper house, the Legislative Council.",
+  "members": [
+   {
+    "name": "Harry Kane",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1962
+   },
+   {
+    "name": "John Wilton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1962,
+    "to": 1985
+   },
+   {
+    "name": "Jack Culpin",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1988
+   },
+   {
+    "name": "Jim Kennan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1993
+   },
+   {
+    "name": "John Brumby",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1993,
+    "to": 2010
+   },
+   {
+    "name": "Frank McGuire",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2011,
+    "to": 2022
+   },
+   {
+    "name": "Kathleen Matthews-Ward",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Sue Bolton",
+     "party": "Socialist Alliance"
+    },
+    {
+     "name": "Baris Duzova",
+     "party": "Liberal"
+    },
+    {
+     "name": "Candace Feild",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Ethan Keirs",
+     "party": "One Nation"
+    },
+    {
+     "name": "Kathleen Matthews-Ward",
+     "party": "Labor"
+    },
+    {
+     "name": "Maryam Nasim",
+     "party": "Greens"
+    },
+    {
+     "name": "Rachel Unicomb",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Mutullah Can Yolbulan",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "Broadmeadows is the kind of seat where Labor is relatively strong and they are likely to retain the seat. One Nation may do well here but they will struggle to be strong enough to win the seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/broadmeadows2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Broadmeadows"
+ },
+ "brunswick": {
+  "created": null,
+  "demographic": "Inner metropolitan",
+  "blurb": "The electoral district of Brunswick is an electorate of the Victorian Legislative Assembly. It covers an area of 14 square kilometres (5.4 sq mi) in inner northern Melbourne, and includes the suburbs of Brunswick, Brunswick East, Carlton North, Fitzroy North, Princes Hill and parts of Brunswick West. It lies within the Northern Metropolitan Region of the upper house, the Legislative Council.",
+  "members": [
+   {
+    "name": "James Jewell",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1949
+   },
+   {
+    "name": "Peter Randles",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1949,
+    "to": 1955
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1976\u20131992)",
+    "party": "OTH",
+    "from": 1976,
+    "to": 1992
+   },
+   {
+    "name": "Tom Roper",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1976,
+    "to": 1992
+   },
+   {
+    "name": "Third incarnation",
+    "party_raw": "Third incarnation (2002\u2013present)",
+    "party": "OTH",
+    "from": 2002,
+    "to": null
+   },
+   {
+    "name": "Carlo Carli",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2010
+   },
+   {
+    "name": "Jane Garrett",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2010,
+    "to": 2018
+   },
+   {
+    "name": "Tim Read",
+    "party_raw": "Greens",
+    "party": "GRN",
+    "from": 2018,
+    "to": 2026
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Naomi Farmer",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Adam Helman",
+     "party": "One Nation"
+    },
+    {
+     "name": "Adam Pulford",
+     "party": "Greens"
+    },
+    {
+     "name": "Gabe Steger",
+     "party": "Labor"
+    },
+    {
+     "name": "Mel Yuan",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "The retirement of sitting Greens MP Tim Read will likely weaken the Greens position, but the poor polling of the ALP will make it much harder for Labor to capitalise on that loss of personal vote. If the Liberal Party were to change their 2022 decision and recommend preferences to Labor over Greens, that would also weaken the Greens' position but need not be fatal.",
+   "url": "https://www.tallyroom.com.au/vic2026/brunswick2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Brunswick"
+ },
+ "bulleen": {
+  "created": "1985",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Bulleen is an electoral district of the Victorian Legislative Assembly. It covers an area of 39 square kilometres (15 sq mi) in eastern Melbourne, including the suburbs of Bulleen, Doncaster, Templestowe Lower, and part of Templestowe. It lies within the Eastern Metropolitan Region of the upper house, the Legislative Council.",
+  "members": [
+   {
+    "name": "David Perrin",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1999
+   },
+   {
+    "name": "Nicholas Kotsiras",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1999,
+    "to": 2014
+   },
+   {
+    "name": "Matthew Guy",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Mahdi Athari",
+     "party": "One Nation"
+    },
+    {
+     "name": "Tim Dale",
+     "party": "Labor"
+    },
+    {
+     "name": "Matthew Guy",
+     "party": "Liberal"
+    },
+    {
+     "name": "Tomas Lightbody",
+     "party": "Greens"
+    },
+    {
+     "name": "Greg Rublee",
+     "party": "Independent"
+    },
+    {
+     "name": "Dimitrios Tafidis",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "The Liberal Party's position in Bulleen should be relatively solid, but One Nation may grab a significant chunk of the Liberal vote.",
+   "url": "https://www.tallyroom.com.au/vic2026/bulleen2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bulleen"
+ },
+ "bundoora": {
+  "created": "1976",
+  "demographic": "Metropolitan",
+  "blurb": "Bundoora is an electoral district of the Victorian Legislative Assembly. It covers an area of 35 square kilometres (14 sq mi) in north-eastern Melbourne, encompassing the suburbs of Bundoora, Kingsbury, Watsonia and Watsonia North, and parts of Greensborough, Macleod, Mill Park and Yallambie. It also includes the central campus of La Trobe University.",
+  "members": [
+   {
+    "name": "John Cain",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1976,
+    "to": 1992
+   },
+   {
+    "name": "Sherryl Garbutt",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 2006
+   },
+   {
+    "name": "Colin Brooks",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Colin Brooks",
+     "party": "Labor"
+    },
+    {
+     "name": "Nina Laitala",
+     "party": "Greens"
+    },
+    {
+     "name": "Melissa Murphy-Webster",
+     "party": "Independent"
+    },
+    {
+     "name": "Chloe Nicolosi",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Chris Parr",
+     "party": "Liberal"
+    },
+    {
+     "name": "Sagar Sanyal",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Bruce Whalley",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Bundoora is likely safe enough for Labor to hold on. One Nation will likely take a big chunk out of the Liberal vote but will struggle to poll enough to win.",
+   "url": "https://www.tallyroom.com.au/vic2026/bundoora2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Bundoora"
+ },
+ "carrum": {
+  "created": "1976",
+  "demographic": "Outer metropolitan and semi-rural",
+  "blurb": "The electoral district of Carrum is an electoral district of the Victorian Legislative Assembly. It lies in the south eastern suburbs of Melbourne, covering Bangholme, Bonbeach, Carrum, Carrum Downs, Lyndhurst, Patterson Lakes, Sandhurst, Seaford and Skye.",
+  "members": [
+   {
+    "name": "Ian Cathie",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1976,
+    "to": 1988
+   },
+   {
+    "name": "Mal Sandon",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1996
+   },
+   {
+    "name": "David Lean",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1996,
+    "to": 1999
+   },
+   {
+    "name": "Jenny Lindell",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2010
+   },
+   {
+    "name": "Donna Bauer",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": 2014
+   },
+   {
+    "name": "Sonya Kilkenny",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Reema Ababneh",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Sonya Kilkenny",
+     "party": "Labor"
+    },
+    {
+     "name": "Joshua Mathews",
+     "party": "One Nation"
+    },
+    {
+     "name": "Carolyn Moore",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Zoe Pegrum",
+     "party": "Greens"
+    },
+    {
+     "name": "Jeff Shelley",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "Kilkenny holds Carrum by a sizeable margin but it could be in play if Labor has a particularly poor election.",
+   "url": "https://www.tallyroom.com.au/vic2026/carrum2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Carrum"
+ },
+ "caulfield": {
+  "created": "1927",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Caulfield is an electoral district of the Victorian Legislative Assembly that has existed since 1927.",
+  "members": [
+   {
+    "name": "Alexander Dennett",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1945,
+    "to": 1953
+   },
+   {
+    "name": "Alexander Dennett",
+    "party_raw": "Electoral Reform",
+    "party": "OTH",
+    "from": 1953,
+    "to": 1955
+   },
+   {
+    "name": "Joe Rafferty",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1958
+   },
+   {
+    "name": "Alexander Fraser",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1965
+   },
+   {
+    "name": "Ian McLaren",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1965,
+    "to": 1967
+   },
+   {
+    "name": "Edgar Tanner",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1976
+   },
+   {
+    "name": "Charles Francis",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1977
+   },
+   {
+    "name": "Charles Francis",
+    "party_raw": "Independent Liberal",
+    "party": "LIB",
+    "from": 1977,
+    "to": 1979
+   },
+   {
+    "name": "Ted Tanner",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1979,
+    "to": 1996
+   },
+   {
+    "name": "Helen Shardey",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1996,
+    "to": 2010
+   },
+   {
+    "name": "David Southwick",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Malak Ababneh",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Angel Dolejs\u00ed",
+     "party": "Greens"
+    },
+    {
+     "name": "Genevi\u00e8ve Gilbert",
+     "party": "Family First"
+    },
+    {
+     "name": "David Southwick",
+     "party": "Liberal"
+    },
+    {
+     "name": "Mikaela Stafrace",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Caulfield was very close in 2022, but is likely to be a safer Liberal win in 2026.",
+   "url": "https://www.tallyroom.com.au/vic2026/caulfield2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Caulfield"
+ },
+ "clarinda": {
+  "created": "2014",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Clarinda is an electoral district of the Victorian Legislative Assembly in Australia. It was created for the 2014 state election  and is represented by Meng Heang Tak for the Labor Party.",
+  "members": [
+   {
+    "name": "Hong Lim",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": 2018
+   },
+   {
+    "name": "Meng Heang Tak",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Gavin Bain",
+     "party": "One Nation"
+    },
+    {
+     "name": "Conor Boyd-Eedle",
+     "party": "Greens"
+    },
+    {
+     "name": "Kit Message",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "John Paganis",
+     "party": "Liberal"
+    },
+    {
+     "name": "Meng Heang Tak",
+     "party": "Labor"
+    },
+    {
+     "name": "Caroline White",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "Labor are likely favourites here but large swings could produce an unpredictable result here. This seat is unlikely to be a strong area for One Nation but we don't have a lot of information.",
+   "url": "https://www.tallyroom.com.au/vic2026/clarinda2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Clarinda"
+ },
+ "cranbourne": {
+  "created": "1992; 34\u00a0years ago",
+  "demographic": "Outer metropolitan",
+  "blurb": "Cranbourne is an electoral district of the Victorian Legislative Assembly. It is located south-east of Melbourne and includes the suburbs of Botanic Ridge, Cranbourne, Cranbourne East, Cranbourne West, Junction Village, as well as parts of Clyde, Clyde North, Cranbourne South, and Devon Meadows. It was created prior to the 1992 state election.",
+  "members": [
+   {
+    "name": "Gary Rowe",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Jude Perera",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2018
+   },
+   {
+    "name": "Pauline Richards",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Shane Foreman",
+     "party": "Family First"
+    },
+    {
+     "name": "Andrew Hirst",
+     "party": "One Nation"
+    },
+    {
+     "name": "Annalise Mercer",
+     "party": "Greens"
+    },
+    {
+     "name": "Pauline Richards",
+     "party": "Labor"
+    },
+    {
+     "name": "Gino Tripodi",
+     "party": "Liberal"
+    },
+    {
+     "name": "Reem Yunis",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "This would typically be seen as a safe Labor seat but they could face a dark horse threat from Liberal or One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/cranbourne2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Cranbourne"
+ },
+ "croydon": {
+  "created": "2014",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Croydon is an electoral district of the Victorian Legislative Assembly, located in the east of Melbourne. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "David Hodgett",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Peter Malinauskas",
+     "party": "Labor"
+    },
+    {
+     "name": "Michael Santagata",
+     "party": "Liberal"
+    },
+    {
+     "name": "Ruby Dolling",
+     "party": "Greens"
+    },
+    {
+     "name": "Suzanne Pope",
+     "party": "Animal Justice"
+    }
+   ],
+   "assessment": "Croydon is a very safe Labor seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/croydon2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Croydon_(Victoria)"
+ },
+ "dandenong": {
+  "created": "1904",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Dandenong is an electoral district of the Victorian Legislative Assembly. It was first proclaimed in 1904 when the district of Dandenong and Berwick was abolished.",
+  "members": [
+   {
+    "name": "Frank Field",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "William Dawnay-Mould",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1952
+   },
+   {
+    "name": "William Dawnay-Mould",
+    "party_raw": "Electoral Reform League",
+    "party": "OTH",
+    "from": 1947,
+    "to": 1952
+   },
+   {
+    "name": "Les Coates",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1955
+   },
+   {
+    "name": "Ray Wiltshire",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1958
+   },
+   {
+    "name": "Len Reid",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1969
+   },
+   {
+    "name": "Alan Lind",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1969,
+    "to": 1979
+   },
+   {
+    "name": "Rob Jolly",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1985
+   },
+   {
+    "name": "Terry Norris",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1992
+   },
+   {
+    "name": "John Pandazopoulos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 2014
+   },
+   {
+    "name": "Gabrielle Williams",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "William Billings",
+     "party": "Liberal"
+    },
+    {
+     "name": "Catherine D'Arcy",
+     "party": "Greens"
+    },
+    {
+     "name": "Jack McMahon",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Gabrielle Williams",
+     "party": "Labor"
+    },
+    {
+     "name": "Glenda Wright",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "This is probably a safe Labor seat, although One Nation may poll strongly.",
+   "url": "https://www.tallyroom.com.au/vic2026/dandenong2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Dandenong"
+ },
+ "eildon": {
+  "created": "2014",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Eildon is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, which came into effect at the 2014 state election  and is a member of the Northern Victoria Region.",
+  "members": [
+   {
+    "name": "Cindy McLeish",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Tim Barber",
+     "party": "One Nation"
+    },
+    {
+     "name": "Chloe Bond",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Kevin Gibson",
+     "party": "Labor"
+    },
+    {
+     "name": "Talia Gulpilil",
+     "party": "Greens"
+    },
+    {
+     "name": "Dylan Little",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Cindy McLeish",
+     "party": "Liberal"
+    },
+    {
+     "name": "Tom Ward",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "One Nation could pose a serious threat to the Liberal Party here.",
+   "url": "https://www.tallyroom.com.au/vic2026/eildon2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Eildon"
+ },
+ "eltham": {
+  "created": "1992",
+  "demographic": "Outer metropolitan/semi-rural",
+  "blurb": "The electoral district of Eltham is an electoral district of the Victorian Legislative Assembly. It is an outer metropolitan electorate and contains Eltham, Lower Plenty, Montmorency, Research, St Helena, Diamond Creek, Wattleglen as well as parts of Greensborough, Briar Hill and Kangaroo Ground.",
+  "members": [
+   {
+    "name": "Wayne Phillips",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Steve Herbert",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2014
+   },
+   {
+    "name": "Vicki Ward",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Rachel Busbridge",
+     "party": "Greens"
+    },
+    {
+     "name": "Paul Byrnes",
+     "party": "Liberal"
+    },
+    {
+     "name": "Maeve Riches",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Vicki Ward",
+     "party": "Labor"
+    },
+    {
+     "name": "Jessie Weatherley",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "The Liberal Party would be hoping to threaten Labor here.",
+   "url": "https://www.tallyroom.com.au/vic2026/eltham2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Eltham"
+ },
+ "essendon": {
+  "created": null,
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Essendon is an electoral district of the Victorian Legislative Assembly. It was first created in 1904 after the abolition of the larger Essendon and Flemington electorate, and covers some of the north-western suburbs of Melbourne, including Essendon, Moonee Ponds and Ascot Vale.",
+  "members": [
+   {
+    "name": "Arthur Drakeford Jr",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Allen Bateman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1950
+   },
+   {
+    "name": "George Fewster",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1950,
+    "to": 1955
+   },
+   {
+    "name": "Sir Kenneth Wheeler",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1979
+   },
+   {
+    "name": "Barry Rowe",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1992
+   },
+   {
+    "name": "Ian Davis",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 1996
+   },
+   {
+    "name": "Judy Maddigan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1996,
+    "to": 2010
+   },
+   {
+    "name": "Justin Madden",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2010,
+    "to": 2014
+   },
+   {
+    "name": "Danny Pearson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Ava Adams",
+     "party": "Independent"
+    },
+    {
+     "name": "John Barnes",
+     "party": "One Nation"
+    },
+    {
+     "name": "Michal Kedem",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Tommy Le Deux",
+     "party": "Liberal"
+    },
+    {
+     "name": "Katerine Theodosis",
+     "party": "Labor"
+    },
+    {
+     "name": "James Williams",
+     "party": "Greens"
+    },
+    {
+     "name": "Oscar Yildiz",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "The Liberal Party and One Nation won't be much of a threat to Labor here, but if Labor does very poorly they could possibly fall behind the Greens, who could possibly win.",
+   "url": "https://www.tallyroom.com.au/vic2026/essendon2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Essendon"
+ },
+ "eureka": {
+  "created": "2022",
+  "demographic": "Regional city",
+  "blurb": "The Electoral district of Eureka is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2021, and came into effect at the 2022 Victorian state election.",
+  "members": [],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Paul Ballinger",
+     "party": "One Nation"
+    },
+    {
+     "name": "Ian Harkness",
+     "party": "Family First"
+    },
+    {
+     "name": "Sam McColl",
+     "party": "Greens"
+    },
+    {
+     "name": "Wendy Morrison",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Emma Muir",
+     "party": "Liberal"
+    },
+    {
+     "name": "Andy Raven",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Michaela Settle",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Labor is in serious danger of losing this seat to either the Coalition or One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/eureka2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Eureka"
+ },
+ "euroa": {
+  "created": "2014",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Euroa is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013.",
+  "members": [
+   {
+    "name": "Stephanie Ryan",
+    "party_raw": "The Nationals",
+    "party": "NAT",
+    "from": 2014,
+    "to": 2022
+   },
+   {
+    "name": "Annabelle Cleeland",
+    "party_raw": "The Nationals",
+    "party": "NAT",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Steve Campbell",
+     "party": "One Nation"
+    },
+    {
+     "name": "Annabelle Cleeland",
+     "party": "Nationals"
+    },
+    {
+     "name": "Karina Kelly",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Zoe Lyle",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Alysia Regan",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "One Nation will be hoping to win this seat off the Nationals.",
+   "url": "https://www.tallyroom.com.au/vic2026/euroa2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Euroa"
+ },
+ "evelyn": {
+  "created": "1859",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Evelyn is an electorate of the Victorian Legislative Assembly covering the urban fringe north east of Melbourne. It was first proclaimed in 1859.",
+  "members": [
+   {
+    "name": "William Everard",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1945,
+    "to": 1950
+   },
+   {
+    "name": "Roland Leckie",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1950,
+    "to": 1952
+   },
+   {
+    "name": "Phillip Connell",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1958
+   },
+   {
+    "name": "Russell Stokes",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1973
+   },
+   {
+    "name": "Jim Plowman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1973,
+    "to": 1982
+   },
+   {
+    "name": "Max McDonald",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1985
+   },
+   {
+    "name": "Jim Plowman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1999
+   },
+   {
+    "name": "Christine Fyffe",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1999,
+    "to": 2002
+   },
+   {
+    "name": "Heather McTaggart",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "Christine Fyffe",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": 2018
+   },
+   {
+    "name": "Bridget Vallence",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jan Heald",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Andrew Henley",
+     "party": "Greens"
+    },
+    {
+     "name": "Daniel Killey",
+     "party": "One Nation"
+    },
+    {
+     "name": "Analise Sherlock",
+     "party": "Labor"
+    },
+    {
+     "name": "Bridget Vallence",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "Labor isn't in a position to gain this seat. It's possible One Nation could poll well here, but it would be hard for them to win.",
+   "url": "https://www.tallyroom.com.au/vic2026/evelyn2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Evelyn"
+ },
+ "footscray": {
+  "created": null,
+  "demographic": "Inner metropolitan",
+  "blurb": "The electoral district of Footscray is an electoral district of the Victorian Legislative Assembly. It lies just west of Melbourne, covering the suburbs of Footscray, Maidstone, Maribyrnong, Seddon, West Footscray, and parts of Yarraville.",
+  "members": [
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1927\u2013present)",
+    "party": "OTH",
+    "from": 1927,
+    "to": null
+   },
+   {
+    "name": "Jack Holland",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Roy Schintler",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1958
+   },
+   {
+    "name": "Bill Divers",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1958,
+    "to": 1970
+   },
+   {
+    "name": "Robert Fordham",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1970,
+    "to": 1992
+   },
+   {
+    "name": "Bruce Mildenhall",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 2006
+   },
+   {
+    "name": "Marsha Thomson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": 2018
+   },
+   {
+    "name": "Katie Hall",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Tim Chang",
+     "party": "Liberal"
+    },
+    {
+     "name": "Jasmine Duff",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Katie Hall",
+     "party": "Labor"
+    },
+    {
+     "name": "Alexander Lopez",
+     "party": "One Nation"
+    },
+    {
+     "name": "Jess Marsh",
+     "party": "Independent"
+    },
+    {
+     "name": "Minh Quan Nguyen",
+     "party": "West Party"
+    },
+    {
+     "name": "Elena Pereyra",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "Labor is vulnerable to the Greens here, particularly if Liberal preferences continue to favour the Greens.",
+   "url": "https://www.tallyroom.com.au/vic2026/footscray2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Footscray"
+ },
+ "frankston": {
+  "created": null,
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Frankston is an electoral district of the Victorian Legislative Assembly. It currently includes the suburbs of Frankston and Frankston South south east of Melbourne.",
+  "members": [
+   {
+    "name": "Edward Meagher",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1976
+   },
+   {
+    "name": "Graeme Weideman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1982
+   },
+   {
+    "name": "Jane Hill",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1985
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1992\u2013present)",
+    "party": "OTH",
+    "from": 1992,
+    "to": null
+   },
+   {
+    "name": "Graeme Weideman",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 1996
+   },
+   {
+    "name": "Andrea McCall",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1996,
+    "to": 2002
+   },
+   {
+    "name": "Alistair Harkness",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2010
+   },
+   {
+    "name": "Geoff Shaw",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": 2013
+   },
+   {
+    "name": "Geoff Shaw",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2013,
+    "to": 2014
+   },
+   {
+    "name": "Paul Edbrooke",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Chrysten Abraham",
+     "party": "Independent"
+    },
+    {
+     "name": "Bree Ambry",
+     "party": "Liberal"
+    },
+    {
+     "name": "Andrew Cheeseman",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Paul Edbrooke",
+     "party": "Labor"
+    },
+    {
+     "name": "Katie Goulas",
+     "party": "Greens"
+    },
+    {
+     "name": "Julie Harman",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Paul Stafford",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "If there is a big swing to the Coalition they could gain this seat. One Nation would poll a substantial vote share, but it would be a stretch for them to win here.",
+   "url": "https://www.tallyroom.com.au/vic2026/frankston2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Frankston"
+ },
+ "geelong": {
+  "created": null,
+  "demographic": "Urban",
+  "blurb": "38\u00b009\u2032S 144\u00b021\u2032E\ufeff / \ufeff38.150\u00b0S 144.350\u00b0E\ufeff / -38.150; 144.350[[Geographic coordinate system|Coordinates]]: {{#parsoid\\u0000fragment:7}}&lt;span class=\\\"plainlinks nourlexpansion\\\">[https://geohack.toolforge.org/geohack.php?pagename=Electoral_district_of_Geelong&amp;params=38_09_S_144_21_E_type:city &lt;span class=\\\"geo-default\\\">&lt;span class=\\\"geo-dms\\\" title=\\\"Maps, aerial photos, and other data for this location\\\">&lt;span class=\\\"latitude\\\">38\u00b009\u2032S&lt;/span> &lt;span class=\\\"longitude\\\">144\u00b021\u2032E&lt;/span>&lt;/span>&lt;/span>&lt;span class=\\\"geo-multi-punct\\\">&amp;#xfeff; / &amp;#xfeff;&lt;/",
+  "members": [
+   {
+    "name": "Fanny Brownbill",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1948
+   },
+   {
+    "name": "Edward Montgomery",
+    "party_raw": "Liberal/Liberal and Country",
+    "party": "LIB",
+    "from": 1948,
+    "to": 1950
+   },
+   {
+    "name": "James Dunn",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1950,
+    "to": 1955
+   },
+   {
+    "name": "Sir Thomas Maltby",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1961
+   },
+   {
+    "name": "Hayden Birrell",
+    "party_raw": "Liberal and Country/Liberal",
+    "party": "LIB",
+    "from": 1961,
+    "to": 1976
+   },
+   {
+    "name": "Hayden Shell",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1992
+   },
+   {
+    "name": "Ann Henderson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 1999
+   },
+   {
+    "name": "Ian Trezise",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2014
+   },
+   {
+    "name": "Christine Couzens",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Christine Couzens",
+     "party": "Labor"
+    },
+    {
+     "name": "John De Lorenzo",
+     "party": "One Nation"
+    },
+    {
+     "name": "Emilie Flynn",
+     "party": "Greens"
+    },
+    {
+     "name": "Brenden Grull",
+     "party": "Socialist Alliance"
+    },
+    {
+     "name": "Andy Pobjoy",
+     "party": "Liberal"
+    },
+    {
+     "name": "Bree Vanderpol",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "Labor is probably safe here, although One Nation will definitely poll a large share of the vote.",
+   "url": "https://www.tallyroom.com.au/vic2026/geelong2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Geelong"
+ },
+ "gippsland-east": {
+  "created": "1889",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Gippsland East is an electoral district of the Victorian Legislative Assembly. It covers most of eastern Victoria and includes the towns of Bairnsdale, Lakes Entrance, Orbost, Omeo, Maffra and Heyfield. Gippsland East is the state's third largest electorate in area and covers 27,544 square kilometres.",
+  "members": [
+   {
+    "name": "Sir Albert Lind",
+    "party_raw": "Farmers Union",
+    "party": "OTH",
+    "from": 1945,
+    "to": 1961
+   },
+   {
+    "name": "Sir Albert Lind",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1945,
+    "to": 1961
+   },
+   {
+    "name": "Bruce Evans",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1961,
+    "to": 1975
+   },
+   {
+    "name": "Bruce Evans",
+    "party_raw": "National Country",
+    "party": "NAT",
+    "from": 1975,
+    "to": 1982
+   },
+   {
+    "name": "Bruce Evans",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "David Treasure",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1992,
+    "to": 1999
+   },
+   {
+    "name": "Craig Ingram",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 1999,
+    "to": 2010
+   },
+   {
+    "name": "Tim Bull",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2010,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Amy Espeseth",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Steve Goodman",
+     "party": "One Nation"
+    },
+    {
+     "name": "Ash Munro",
+     "party": "Greens"
+    },
+    {
+     "name": "Gemma Rendell",
+     "party": "Nationals"
+    },
+    {
+     "name": "Sonny Stephens",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "One Nation will be hoping to win this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/gippslandeast2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Gippsland_East"
+ },
+ "gippsland-south": {
+  "created": "1859",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Gippsland South (initially known as South Gippsland)  is a Lower House electoral district of the Victorian Parliament. It is located within the Eastern Victoria Region of the Legislative Council.",
+  "members": [
+   {
+    "name": "Sir Herbert Hyland",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1945,
+    "to": 1970
+   },
+   {
+    "name": "James Taylor",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1970,
+    "to": 1973
+   },
+   {
+    "name": "Neil McInnes",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1973,
+    "to": 1982
+   },
+   {
+    "name": "Neil McInnes",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1973,
+    "to": 1982
+   },
+   {
+    "name": "Tom Wallace",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Peter Ryan",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1992,
+    "to": 2015
+   },
+   {
+    "name": "Danny O'Brien",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2015,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Amy Barry-Macaulay",
+     "party": "Labor"
+    },
+    {
+     "name": "Zave Evans",
+     "party": "Greens"
+    },
+    {
+     "name": "Lachie McGennisken",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Danny O'Brien",
+     "party": "Nationals"
+    },
+    {
+     "name": "Bianca Wilke",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "One Nation will undoubtedly pose a strong challenge here.",
+   "url": "https://www.tallyroom.com.au/vic2026/gippslandsouth2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Gippsland_South"
+ },
+ "glen-waverley": {
+  "created": null,
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Glen Waverley is an electoral district of the Legislative Assembly in the Australian state of Victoria.",
+  "members": [
+   {
+    "name": "Ross Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 2002
+   },
+   {
+    "name": "John Mullahy",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Brad Cox",
+     "party": "One Nation"
+    },
+    {
+     "name": "John Mullahy",
+     "party": "Labor"
+    },
+    {
+     "name": "Nicholas Siow",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Jacky Sun",
+     "party": "Liberal"
+    },
+    {
+     "name": "Toyo White",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "This is a very marginal seat and the Liberal Party have a good chance of picking up the seat. This could be complicated by a strong One Nation vote.",
+   "url": "https://www.tallyroom.com.au/vic2026/glenwaverley2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Glen_Waverley"
+ },
+ "greenvale": {
+  "created": "2022",
+  "demographic": "Urban",
+  "blurb": "The electoral district of Greenvale is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2021, and came into effect at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Iwan Walters",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Rosanna Furina",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Declan McGinness",
+     "party": "Greens"
+    },
+    {
+     "name": "Chris Moore",
+     "party": "One Nation"
+    },
+    {
+     "name": "Jim Overend",
+     "party": "Liberal"
+    },
+    {
+     "name": "Kirill Smelov",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Iwan Walters",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Labor's margin is far from safe in this seat. It's quite possible that One Nation could be the beneficiary of this trend, rather than the Liberal Party.",
+   "url": "https://www.tallyroom.com.au/vic2026/greenvale2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Greenvale"
+ },
+ "hastings": {
+  "created": "2002",
+  "demographic": "Mixed rural and urban fringe",
+  "blurb": "The electoral district of Hastings is an electorate of the Victorian Legislative Assembly. It was created prior to the 2002 election due to population increases in Melbourne's outer south east. It covers Hastings, Tyabb, Somerville, Bittern and part of Langwarrin.",
+  "members": [
+   {
+    "name": "Rosy Buchanan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "Neale Burgess",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": 2022
+   },
+   {
+    "name": "Paul Mercurio",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Peter Angelico",
+     "party": "One Nation"
+    },
+    {
+     "name": "Chloe Coulson",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Michael Denman",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Paul Mercurio",
+     "party": "Labor"
+    },
+    {
+     "name": "Frank Schiefler",
+     "party": "Liberal"
+    },
+    {
+     "name": "Isaac Willoughby",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "Hastings is a very marginal seat and would be a key Liberal target.",
+   "url": "https://www.tallyroom.com.au/vic2026/hastings2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Hastings"
+ },
+ "hawthorn": {
+  "created": "1889",
+  "demographic": "Inner metropolitan",
+  "blurb": "Hawthorn is an electoral district of the Victorian Legislative Assembly. It was first proclaimed in 1888, taking effect at the 1899 election.",
+  "members": [
+   {
+    "name": "Fred Edmunds",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1945,
+    "to": 1949
+   },
+   {
+    "name": "Fred Edmunds",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1949,
+    "to": 1950
+   },
+   {
+    "name": "Fred Edmunds",
+    "party_raw": "Independent Liberal",
+    "party": "LIB",
+    "from": 1950,
+    "to": 1950
+   },
+   {
+    "name": "Fred Edmunds",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 1950,
+    "to": 1950
+   },
+   {
+    "name": "Fred Edmunds",
+    "party_raw": "Independent Liberal",
+    "party": "LIB",
+    "from": 1950,
+    "to": 1950
+   },
+   {
+    "name": "Les Tyack",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1950,
+    "to": 1952
+   },
+   {
+    "name": "Charles Murphy",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1955
+   },
+   {
+    "name": "Charles Murphy",
+    "party_raw": "Labor (Anti-Communist)",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1955
+   },
+   {
+    "name": "Jim Manson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1958
+   },
+   {
+    "name": "Peter Garrisson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1963
+   },
+   {
+    "name": "Peter Garrisson",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 1963,
+    "to": 1964
+   },
+   {
+    "name": "Walter Jona",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1964,
+    "to": 1985
+   },
+   {
+    "name": "Phil Gude",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1999
+   },
+   {
+    "name": "Ted Baillieu",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1999,
+    "to": 2014
+   },
+   {
+    "name": "John Pesutto",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": 2018
+   },
+   {
+    "name": "John Kennedy",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": 2022
+   },
+   {
+    "name": "John Pesutto",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Clive Crosby",
+     "party": "Labor"
+    },
+    {
+     "name": "Shima Ibuki",
+     "party": "Independent"
+    },
+    {
+     "name": "Tess McEnearney",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "John Pesutto",
+     "party": "Liberal"
+    },
+    {
+     "name": "Paul Pribilovics",
+     "party": "One Nation"
+    },
+    {
+     "name": "Kylie Rocha",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "This seat will be a fierce contest between the Liberal Party and the local independent movement.",
+   "url": "https://www.tallyroom.com.au/vic2026/hawthorn2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Hawthorn"
+ },
+ "ivanhoe": {
+  "created": "1945",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Ivanhoe is an electoral district of the Victorian Legislative Assembly. It is located in the north-eastern suburbs of Melbourne and includes the suburbs of Heidelberg, Heidelberg Heights, Heidelberg West, Bellfield, Ivanhoe, Ivanhoe East, Eaglemont, Rosanna, Viewbank, Yallambie and Macleod.",
+  "members": [
+   {
+    "name": "Robert Gardner",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Rupert Curnow",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1950
+   },
+   {
+    "name": "Frank Block",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1951,
+    "to": 1952
+   },
+   {
+    "name": "Michael Lucy",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1955
+   },
+   {
+    "name": "Michael Lucy",
+    "party_raw": "Labor (Anti-Communist)",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1955
+   },
+   {
+    "name": "Vernon Christie",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1973
+   },
+   {
+    "name": "Bruce Skeggs",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1973,
+    "to": 1982
+   },
+   {
+    "name": "Tony Sheehan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1985
+   },
+   {
+    "name": "Vin Heffernan",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1996
+   },
+   {
+    "name": "Craig Langdon",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1996,
+    "to": 2010
+   },
+   {
+    "name": "Anthony Carbines",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2010,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Anthony Carbines",
+     "party": "Labor"
+    },
+    {
+     "name": "Nina Crawley",
+     "party": "Greens"
+    },
+    {
+     "name": "Wayne Hutchins",
+     "party": "One Nation"
+    },
+    {
+     "name": "Michelle Kennedy",
+     "party": "Independent"
+    },
+    {
+     "name": "Oscar Lopez",
+     "party": "Liberal"
+    },
+    {
+     "name": "Ben Milne",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "Labor is in a strong position to win the seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/ivanhoe2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Ivanhoe"
+ },
+ "kalkallo": {
+  "created": "2022",
+  "demographic": "Urbanised rural",
+  "blurb": "The Electoral district of Kalkallo is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2021, and came into effect at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Ros Spence",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Eddie Dadisho",
+     "party": "Liberal"
+    },
+    {
+     "name": "Courtney Millett",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Ros Spence",
+     "party": "Labor"
+    },
+    {
+     "name": "Troy Steans",
+     "party": "One Nation"
+    },
+    {
+     "name": "Payal Tiwari",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "Labor holds Kalkallo by a substantial margin. If there is any serious threat, it would likely come from One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/kalkallo2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Kalkallo"
+ },
+ "kew": {
+  "created": null,
+  "demographic": null,
+  "blurb": "The electoral district of Kew is an electoral district of the Victorian Legislative Assembly. Located in eastern Melbourne, a few kilometres from the city centre, it is centred on the suburbs of Kew and Kew East. It also contains Balwyn, Balwyn North, Deepdene, and parts of Canterbury, Mont Albert, and Surrey Hills.",
+  "members": [
+   {
+    "name": "Wilfrid Kent Hughes",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1945,
+    "to": 1949
+   },
+   {
+    "name": "Wilfrid Kent Hughes",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1949,
+    "to": 1949
+   },
+   {
+    "name": "Arthur Rylah",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1949,
+    "to": 1964
+   },
+   {
+    "name": "Arthur Rylah",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1964,
+    "to": 1971
+   },
+   {
+    "name": "Dick Hamer",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1971,
+    "to": 1981
+   },
+   {
+    "name": "Prue Sibree",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1981,
+    "to": 1988
+   },
+   {
+    "name": "Jan Wade",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1988,
+    "to": 1999
+   },
+   {
+    "name": "Andrew McIntosh",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1999,
+    "to": 2014
+   },
+   {
+    "name": "Tim Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": 2022
+   },
+   {
+    "name": "Jess Wilson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jackie Carter",
+     "party": "Greens"
+    },
+    {
+     "name": "David Laird",
+     "party": "One Nation"
+    },
+    {
+     "name": "Samantha Lincolne",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Ann Seeley",
+     "party": "Family First"
+    },
+    {
+     "name": "David Sun",
+     "party": "Labor"
+    },
+    {
+     "name": "Sophie Torney",
+     "party": "Independent"
+    },
+    {
+     "name": "Jess Wilson",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "This seat will be a fierce contest between the Liberal Party and the independent. Wilson's position is likely strengthened by her position as party leader, but the prospect of the Liberal Party having to work with One Nation won't play well here.",
+   "url": "https://www.tallyroom.com.au/vic2026/kew2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Kew"
+ },
+ "kororoit": {
+  "created": "2002",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Kororoit is an electorate of the Victorian Legislative Assembly covering Aintree, Albanvale, Burnside, Burnside Heights, Caroline Springs, Kings Park, Ravenhall, and Rockbank as well as some parts of Deer Park and Derrimut in the western suburbs of Melbourne. The district's namesake is the Kororoit Creek. Often considered to be a very safe Labor seat, the seat has been won by Labor in every election since its creation in 2002.",
+  "members": [
+   {
+    "name": "Andre Haermeyer",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2008
+   },
+   {
+    "name": "Marlene Kairouz",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2008,
+    "to": 2022
+   },
+   {
+    "name": "Luba Grigorovitch",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jack Chakoma",
+     "party": "Liberal"
+    },
+    {
+     "name": "Luba Grigorovitch",
+     "party": "Labor"
+    },
+    {
+     "name": "Rayan Hassan",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Vasundhara Kandpal",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Joyce McDonald",
+     "party": "Greens"
+    },
+    {
+     "name": "Seva Melnikov",
+     "party": "One Nation"
+    },
+    {
+     "name": "Donna Southern",
+     "party": "West Party"
+    }
+   ],
+   "assessment": "Labor should be able to retain this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/kororoit2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Kororoit"
+ },
+ "lara": {
+  "created": "2002",
+  "demographic": "Mixed urban and rural",
+  "blurb": "Lara is a seat in the Victorian Legislative Assembly. It covers much of the area between the western suburbs of Melbourne and the regional city of Geelong. Most of the voters come from the very northern suburbs of Geelong, including Lara, Bell Post Hill and Corio.",
+  "members": [
+   {
+    "name": "Peter Loney",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "John Eren",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": 2022
+   },
+   {
+    "name": "Ella George",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Ella George",
+     "party": "Labor"
+    },
+    {
+     "name": "Sarah Hathway",
+     "party": "Socialist Alliance"
+    },
+    {
+     "name": "Oliver Randall",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Theresa Slater",
+     "party": "Greens"
+    },
+    {
+     "name": "Stephen Spyros",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Labor holds Lara by a large margin, but the area would be prime for One Nation to gain a big vote share.",
+   "url": "https://www.tallyroom.com.au/vic2026/lara2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Lara"
+ },
+ "laverton": {
+  "created": "2022",
+  "demographic": "Urban",
+  "blurb": "The Electoral district of Laverton is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2021, and came into effect at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Sarah Connolly",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Sarah Connolly",
+     "party": "Labor"
+    },
+    {
+     "name": "Shohre Mansouri",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Lucy Nguyen",
+     "party": "Greens"
+    },
+    {
+     "name": "Ghada Noune",
+     "party": "Liberal"
+    },
+    {
+     "name": "Rufo Paredes",
+     "party": "One Nation"
+    },
+    {
+     "name": "Van Thanh Rudd",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "Labor holds Laverton by a large margin and should hold safely.",
+   "url": "https://www.tallyroom.com.au/vic2026/laverton2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Laverton"
+ },
+ "lowan": {
+  "created": null,
+  "demographic": "Rural",
+  "blurb": "The electoral district of Lowan is a rural Victorian Legislative Assembly (Lower House) electoral district of the Victorian Parliament. It is located within the Western Victoria Region of the Legislative Council. It was initially created by The Electoral Act Amendment Act 1888,  taking effect at the 1889 elections.",
+  "members": [
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1955\u20131992)",
+    "party": "OTH",
+    "from": 1955,
+    "to": 1992
+   },
+   {
+    "name": "Wilfred Mibus",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1964
+   },
+   {
+    "name": "Jim McCabe",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1964,
+    "to": 1967
+   },
+   {
+    "name": "Ray Buckley",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1967,
+    "to": 1970
+   },
+   {
+    "name": "Jim McCabe",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1970,
+    "to": 1979
+   },
+   {
+    "name": "Bill McGrath",
+    "party_raw": "National Country",
+    "party": "NAT",
+    "from": 1979,
+    "to": 1982
+   },
+   {
+    "name": "Bill McGrath",
+    "party_raw": "The Nationals",
+    "party": "NAT",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Third incarnation",
+    "party_raw": "Third incarnation (2002\u2013present)",
+    "party": "OTH",
+    "from": 2002,
+    "to": null
+   },
+   {
+    "name": "Hugh Delahunty",
+    "party_raw": "The Nationals",
+    "party": "NAT",
+    "from": 2002,
+    "to": 2014
+   },
+   {
+    "name": "Emma Kealy",
+    "party_raw": "The Nationals",
+    "party": "NAT",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jos Downey",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Emma Kealy",
+     "party": "Nationals"
+    },
+    {
+     "name": "Jeff Moran",
+     "party": "Greens"
+    },
+    {
+     "name": "Andrew Partridge",
+     "party": "One Nation"
+    },
+    {
+     "name": "Sue Pavlovich",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Lowan would be a key target for One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/lowan2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Lowan"
+ },
+ "macedon": {
+  "created": "2002",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Macedon is an electoral district of the Victorian Legislative Assembly. It was created in 2002, replacing the abolished electorate of Gisborne. It was won at that election by Joanne Duncan, the former member for Gisborne.",
+  "members": [
+   {
+    "name": "Joanne Duncan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2014
+   },
+   {
+    "name": "Mary-Anne Thomas",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": 2026
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Dom Bonanno",
+     "party": "Independent"
+    },
+    {
+     "name": "Annette Death",
+     "party": "Labor"
+    },
+    {
+     "name": "Kate Kendall",
+     "party": "Liberal"
+    },
+    {
+     "name": "Natalie Korinfsky",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Marley McRae McLeod",
+     "party": "Greens"
+    },
+    {
+     "name": "Damien Parolin",
+     "party": "One Nation"
+    },
+    {
+     "name": "Michael Seton",
+     "party": "Independent"
+    },
+    {
+     "name": "Catherine Wilson",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "Labor holds Macedon by a substantial margin but poor Labor polling could open the door for either One Nation or the Liberal Party.",
+   "url": "https://www.tallyroom.com.au/vic2026/macedon2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Macedon"
+ },
+ "malvern": {
+  "created": "1945",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Malvern is an electorate of the Victorian Legislative Assembly. It contains the suburbs of Malvern, Armadale, Kooyong, Malvern East, Toorak, and parts of Glen Iris.",
+  "members": [
+   {
+    "name": "Trevor Oldham",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1945,
+    "to": 1953
+   },
+   {
+    "name": "Sir John Bloomfield",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1953,
+    "to": 1970
+   },
+   {
+    "name": "Lindsay Thompson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1970,
+    "to": 1982
+   },
+   {
+    "name": "Geoff Leigh",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Robert Doyle",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2006
+   },
+   {
+    "name": "Michael O'Brien",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Edward Bode",
+     "party": "One Nation"
+    },
+    {
+     "name": "Amelia Hamer",
+     "party": "Liberal"
+    },
+    {
+     "name": "Georgia Katsikis",
+     "party": "Greens"
+    },
+    {
+     "name": "Gavin Leonard",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Christina Zigouras",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "The Liberal Party should safely hold this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/malvern2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Malvern"
+ },
+ "melbourne": {
+  "created": null,
+  "demographic": "Central Metropolitan",
+  "blurb": "The electoral district of Melbourne is an electorate of the Victorian Legislative Assembly. It currently includes the localities of Docklands, Carlton, Melbourne, East Melbourne, West Melbourne, North Melbourne, Parkville, Newmarket, Kensington and Flemington, and includes Melbourne University. The district has been in existence since 1856 (it was abolished in 1859 and reestablished in 1889).",
+  "members": [
+   {
+    "name": "Tom Hayes",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Tom Hayes",
+    "party_raw": "Labor (Anti-Communist)",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1955
+   },
+   {
+    "name": "Arthur Clarey",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1972
+   },
+   {
+    "name": "Barry Jones",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1972,
+    "to": 1977
+   },
+   {
+    "name": "Keith Remington",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1977,
+    "to": 1988
+   },
+   {
+    "name": "Neil Cole",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1999
+   },
+   {
+    "name": "Bronwyn Pike",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2012
+   },
+   {
+    "name": "Jennifer Kanis",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2012,
+    "to": 2014
+   },
+   {
+    "name": "Ellen Sandell",
+    "party_raw": "Greens",
+    "party": "GRN",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Rafael Camillo",
+     "party": "Liberal"
+    },
+    {
+     "name": "Mathew Clarke",
+     "party": "Independent"
+    },
+    {
+     "name": "Matthew Collins",
+     "party": "One Nation"
+    },
+    {
+     "name": "Davydd Griffiths",
+     "party": "Labor"
+    },
+    {
+     "name": "Naomi Jones",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Ellen Sandell",
+     "party": "Greens"
+    },
+    {
+     "name": "Rowan Tuckfield",
+     "party": "Independent"
+    },
+    {
+     "name": "Jordan van den Lamb",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "The Greens margin in this seat would look much smaller if Liberal preferences flowed to Labor rather than the Greens, but Labor's poor polling should solidify Sandell's position.",
+   "url": "https://www.tallyroom.com.au/vic2026/melbourne2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Melbourne"
+ },
+ "melton": {
+  "created": "1992",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Melton is an electoral district of the Victorian Legislative Assembly. It contains the towns of Brookfield, Cobblebank, Exford, Harkness, Hopetoun Park, Kurunjang, Melton, Melton South, Melton West, Merrimu, Strathtulloh, Thornhill Park, Toolern Vale, Weir Views, as well as parts of Eynesbury, Grangefields, Mount Cottrell and Parwan.",
+  "members": [
+   {
+    "name": "David Cunningham",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 1999
+   },
+   {
+    "name": "Don Nardella",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2017
+   },
+   {
+    "name": "Don Nardella",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2017,
+    "to": 2018
+   },
+   {
+    "name": "Steve McGhie",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Fiona Adin-James",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Jarrod Bingham",
+     "party": "Liberal"
+    },
+    {
+     "name": "Broden Borg",
+     "party": "Labor"
+    },
+    {
+     "name": "Matthew Katselis",
+     "party": "One Nation"
+    },
+    {
+     "name": "Veronika Levchenkova",
+     "party": "Greens"
+    },
+    {
+     "name": "Marlene West",
+     "party": "Family First"
+    }
+   ],
+   "assessment": "Labor's margin is quite slim and in current circumstances they are likely to lose, possibly to the Liberal Party or One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/melton2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Melton"
+ },
+ "mildura": {
+  "created": "1927",
+  "demographic": "Rural",
+  "blurb": "Mildura is an electoral district of the Legislative Assembly in the Australian state of Victoria and sits within the Northern Victoria Region. It is a 37,529 km2 rural electorate in the far-north-west of the state, encompassing the regional towns of Hopetoun, Mildura, Ouyen, Red Cliffs and Robinvale.",
+  "members": [
+   {
+    "name": "Louis Garlick",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Nathaniel Barclay",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1947,
+    "to": 1952
+   },
+   {
+    "name": "Alan Lind",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1952,
+    "to": 1955
+   },
+   {
+    "name": "Nathaniel Barclay",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1955,
+    "to": 1962
+   },
+   {
+    "name": "Milton Whiting",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1962,
+    "to": 1975
+   },
+   {
+    "name": "Milton Whiting",
+    "party_raw": "National Country",
+    "party": "NAT",
+    "from": 1975,
+    "to": 1982
+   },
+   {
+    "name": "Milton Whiting",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1982,
+    "to": 1988
+   },
+   {
+    "name": "Craig Bildstien",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1988,
+    "to": 1996
+   },
+   {
+    "name": "Russell Savage",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 1996,
+    "to": 2006
+   },
+   {
+    "name": "Peter Crisp",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2006,
+    "to": 2018
+   },
+   {
+    "name": "Ali Cupper",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2018,
+    "to": 2022
+   },
+   {
+    "name": "Jade Benham",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jade Benham",
+     "party": "Nationals"
+    },
+    {
+     "name": "Katie Clements",
+     "party": "Greens"
+    },
+    {
+     "name": "Guy Cooper",
+     "party": "One Nation"
+    },
+    {
+     "name": "Ali Cupper",
+     "party": "Independent"
+    },
+    {
+     "name": "Renee Nayef",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "An independent or One Nation could be a serious threat to the Nationals here.",
+   "url": "https://www.tallyroom.com.au/vic2026/mildura2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Mildura"
+ },
+ "mill-park": {
+  "created": "1992",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Mill Park is an electoral district of the Victorian Legislative Assembly.",
+  "members": [
+   {
+    "name": "Alex Andrianopoulos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Lily D'Ambrosio",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2026
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Joel Drysdale",
+     "party": "Liberal"
+    },
+    {
+     "name": "Jesse Lambourn",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Eve Levens",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Elizabeth Nealy",
+     "party": "Labor"
+    },
+    {
+     "name": "Arthur Tsoutsoulis",
+     "party": "One Nation"
+    },
+    {
+     "name": "Binoy Zacharias",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "Mill Park is a traditional safe Labor seat, although a strong One Nation vote could pose a threat depending on the scale.",
+   "url": "https://www.tallyroom.com.au/vic2026/millpark2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Mill_Park"
+ },
+ "monbulk": {
+  "created": "1967",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Monbulk is an electoral district of the Victorian Legislative Assembly. It is situated in the Dandenong Ranges on the outskirts of Melbourne. It includes the towns of Monbulk, Olinda and Silvan as well as some outer suburbs such as Belgrave and Tecoma.",
+  "members": [
+   {
+    "name": "Bill Borthwick",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1982
+   },
+   {
+    "name": "Neil Pope",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Steve McArthur",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "James Merlino",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2022
+   },
+   {
+    "name": "Daniela De Martino",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Merran Blair",
+     "party": "Greens"
+    },
+    {
+     "name": "Daniela De Martino",
+     "party": "Labor"
+    },
+    {
+     "name": "Adrian Dowell",
+     "party": "One Nation"
+    },
+    {
+     "name": "Clare Fitzmaurice",
+     "party": "Liberal"
+    },
+    {
+     "name": "Craig Manners",
+     "party": "Family First"
+    },
+    {
+     "name": "Alyssa Wormald",
+     "party": "Animal Justice"
+    }
+   ],
+   "assessment": "This seat could be vulnerable to either the Liberal Party or One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/monbulk2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Monbulk"
+ },
+ "mordialloc": {
+  "created": "1992",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Mordialloc is an electorate of the Victorian Legislative Assembly  including the suburbs of Braeside, Mordialloc, Aspendale, Aspendale Gardens, Waterways, Edithvale, Chelsea, Chelsea Heights and Parkdale; and parts of Keysborough and Mentone. The current member is Tim Richardson.",
+  "members": [
+   {
+    "name": "Geoff Leigh",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Janice Munt",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2010
+   },
+   {
+    "name": "Lorraine Wreford",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": 2014
+   },
+   {
+    "name": "Tim Richardson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Alex Breskin",
+     "party": "Greens"
+    },
+    {
+     "name": "Mahee Hossain",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Paul O'Halloran",
+     "party": "Liberal"
+    },
+    {
+     "name": "Tim Richardson",
+     "party": "Labor"
+    },
+    {
+     "name": "Nadia Ticehurst",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Mordialloc used to be a more marginal seat \u2013 a Liberal or One Nation candidate could potentially win here.",
+   "url": "https://www.tallyroom.com.au/vic2026/mordialloc2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Mordialloc"
+ },
+ "mornington": {
+  "created": null,
+  "demographic": "Outer metropolitan and rural fringe",
+  "blurb": "The electoral district of Mornington is an electoral district of the Victorian Legislative Assembly. The electorate can be described as outer metropolitan and rural, including animal farming, grape production and wineries. The district is 155 square kilometres in area.",
+  "members": [
+   {
+    "name": "Alfred Kirton",
+    "party_raw": "United Australia",
+    "party": "OTH",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Alfred Kirton",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "William Leggatt",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1956
+   },
+   {
+    "name": "Roberts Dunstan",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1956,
+    "to": 1967
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1985\u2013present)",
+    "party": "OTH",
+    "from": 1985,
+    "to": null
+   },
+   {
+    "name": "Robin Cooper",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 2006
+   },
+   {
+    "name": "David Morris",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": 2022
+   },
+   {
+    "name": "Chris Crewther",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Ashli Beards",
+     "party": "One Nation"
+    },
+    {
+     "name": "Gene Brownlie",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Chris Crewther",
+     "party": "Liberal"
+    },
+    {
+     "name": "Melissa Goffin",
+     "party": "Independent"
+    },
+    {
+     "name": "Adrian Maher",
+     "party": "Independent"
+    },
+    {
+     "name": "Kai Titcher",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "The Liberal Party are likely to retain this seat, barring a strong independent challenge.",
+   "url": "https://www.tallyroom.com.au/vic2026/mornington2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Mornington"
+ },
+ "morwell": {
+  "created": "1955",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Morwell is an electoral district of the Victorian Legislative Assembly. It covers the regional centres of Moe, Morwell and Traralgon, as well as the surrounding rural areas in the middle of Gippsland.",
+  "members": [
+   {
+    "name": "Jim Balfour",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1967
+   },
+   {
+    "name": "Archie Tanner",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1970
+   },
+   {
+    "name": "Derek Amos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1970,
+    "to": 1981
+   },
+   {
+    "name": "Valerie Callister",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1981,
+    "to": 1988
+   },
+   {
+    "name": "Keith Hamilton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 2002
+   },
+   {
+    "name": "Brendan Jenkins",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "Russell Northe",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2006,
+    "to": 2017
+   },
+   {
+    "name": "Russell Northe",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2017,
+    "to": 2022
+   },
+   {
+    "name": "Martin Cameron",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Martin Cameron",
+     "party": "Nationals"
+    },
+    {
+     "name": "Rochelle Hine",
+     "party": "Greens"
+    },
+    {
+     "name": "Tracie Lund",
+     "party": "Labor"
+    },
+    {
+     "name": "Casey Murphy",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "One Nation will be hoping to take some Nationals territory here.",
+   "url": "https://www.tallyroom.com.au/vic2026/morwell2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Morwell"
+ },
+ "mulgrave": {
+  "created": null,
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Mulgrave is situated in the south-east of the Melbourne Metropolitan Region. The electorate contains the suburbs of Mulgrave and Noble Park North. It also contains parts of the suburbs of Dandenong North, Noble Park, Springvale and Wheelers Hill.",
+  "members": [
+   {
+    "name": "Ray Wiltshire",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1967
+   },
+   {
+    "name": "Ray Wiltshire",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1967
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (2002\u2013present)",
+    "party": "OTH",
+    "from": 2002,
+    "to": null
+   },
+   {
+    "name": "Daniel Andrews",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2023
+   },
+   {
+    "name": "Eden Foster",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2023,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Connor Buchanan",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Ian Cook",
+     "party": "Independent"
+    },
+    {
+     "name": "Eden Foster",
+     "party": "Labor"
+    },
+    {
+     "name": "Cody Rebbechi",
+     "party": "One Nation"
+    },
+    {
+     "name": "Paul Schofield",
+     "party": "Greens"
+    },
+    {
+     "name": "Charles Tran",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "Labor's hold on Mulgrave is likely solid.",
+   "url": "https://www.tallyroom.com.au/vic2026/mulgrave2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Mulgrave_(Victoria)"
+ },
+ "murray-plains": {
+  "created": "2014",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Murray Plains is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Peter Walsh",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Zoe Cook",
+     "party": "Greens"
+    },
+    {
+     "name": "Christine Grundy",
+     "party": "Labor"
+    },
+    {
+     "name": "Brett Hosking",
+     "party": "Nationals"
+    },
+    {
+     "name": "Garner Smith",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "This seat would be a top priority for One Nation. The Nationals would hope their remaining vote would be high enough to hold on.",
+   "url": "https://www.tallyroom.com.au/vic2026/murrayplains2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Murray_Plains"
+ },
+ "narracan": {
+  "created": "1967",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Narracan is an electoral district of the Victorian Legislative Assembly in Australia. It was first proclaimed in 1967 and has usually been held by the Liberal Party.",
+  "members": [
+   {
+    "name": "Jim Balfour",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1967,
+    "to": 1982
+   },
+   {
+    "name": "John Delzoppo",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1982,
+    "to": 1996
+   },
+   {
+    "name": "Florian Andrighetto",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1996,
+    "to": 1999
+   },
+   {
+    "name": "Ian Maxfield",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2006
+   },
+   {
+    "name": "Gary Blackwood",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": 2022
+   },
+   {
+    "name": "Wayne Farnham",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2023,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Geoff Dethlefs",
+     "party": "Family First"
+    },
+    {
+     "name": "Wayne Farnham",
+     "party": "Liberal"
+    },
+    {
+     "name": "Jannette Langley",
+     "party": "Labor"
+    },
+    {
+     "name": "Ben Lucas",
+     "party": "One Nation"
+    },
+    {
+     "name": "Moss Page",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Alyssa Weaver",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "One Nation would be a serious threat to the Liberal Party here. 2023 result Candidate Party Votes % Swing Wayne Farnham Liberal 16,741 45.0 -10.6 Alyssa Weaver Greens 4,132 11.1 +5.1 Tony Wolfe Independent 4,110 11.0 +11.0 Sophia Camille De Wit Democratic Labour 2,641 7.1 +7.1 Leonie Blackwell Freedom Party 2,254 6.1 +6.1 Casey Murphy One Nation 2,246 6.0 +6.0 Annemarie McCabe Independent 1,437 3.9 +3.9 Michael Abelman Liberal Democrats 1,325 3.6 +3.6 Brendan Clarke Family First 1,089 2.9 +2.9 Austin Cram Animal Justice 849 2.3 +2.3 Ian Honey Independent 381 1.0 +1.0 Informal 2,619 6.6 2023 two-candidate-preferred result Candidate Party Votes % Swing Wayne Farnham Liberal 23,568 62.9 Tony Wo",
+   "url": "https://www.tallyroom.com.au/vic2026/narracan2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Narracan"
+ },
+ "narre-warren-north": {
+  "created": "2002",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Narre Warren North is an electorate of the Victorian Legislative Assembly and includes the suburbs of Hallam, Narre Warren, Narre Warren North and parts of Berwick, Endeavour Hills and Harkaway.",
+  "members": [
+   {
+    "name": "Luke Donnellan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2022
+   },
+   {
+    "name": "Belinda Wilson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": null,
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Narre_Warren_North"
+ },
+ "narre-warren-south": {
+  "created": "2002",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Narre Warren South is an electorate of the Victorian Legislative Assembly, containing the suburbs of Cranbourne North, Hampton Park, Lynbrook and Narre Warren South. It has been continuously held by the Labor Party since its creation in 2002.",
+  "members": [
+   {
+    "name": "Dale Wilson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "Judith Graley",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": 2018
+   },
+   {
+    "name": "Gary Maas",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": null,
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Narre_Warren_South"
+ },
+ "nepean": {
+  "created": "2002",
+  "demographic": "Mixed rural and urban",
+  "blurb": "The electoral district of Nepean is an electorate of the Victorian Legislative Assembly covering the southernmost part of the Mornington Peninsula in Victoria, Australia. It is named after Point Nepean which is contained within the electorate.",
+  "members": [
+   {
+    "name": "Martin Dixon",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2002,
+    "to": 2018
+   },
+   {
+    "name": "Chris Brayne",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": 2022
+   },
+   {
+    "name": "Sam Groth",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2022,
+    "to": 2026
+   },
+   {
+    "name": "Anthony Marsh",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2026,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Mike Brown",
+     "party": "Family First"
+    },
+    {
+     "name": "Tamara Champion",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Sianan Healy",
+     "party": "Greens"
+    },
+    {
+     "name": "Darren Hercus",
+     "party": "One Nation"
+    },
+    {
+     "name": "Anthony Marsh",
+     "party": "Liberal"
+    },
+    {
+     "name": "Kim Robbins",
+     "party": "Independent"
+    },
+    {
+     "name": "Seth Willcocks",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "The Liberal Party are favourites to retain this seat at the November general election.",
+   "url": "https://www.tallyroom.com.au/vic2026/nepean2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Nepean"
+ },
+ "niddrie": {
+  "created": "1976",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Niddrie is a metropolitan electorate approximately 8 kilometres (5 mi) northwest of Melbourne, Australia in Victoria's Legislative Assembly.",
+  "members": [
+   {
+    "name": "Jack Simpson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1976,
+    "to": 1988
+   },
+   {
+    "name": "Bob Sercombe",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1996
+   },
+   {
+    "name": "Rob Hulls",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1996,
+    "to": 2012
+   },
+   {
+    "name": "Ben Carroll",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2012,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Samantha Byrne",
+     "party": "Liberal"
+    },
+    {
+     "name": "Ben Carroll",
+     "party": "Labor"
+    },
+    {
+     "name": "Elisabetta Celata",
+     "party": "West Party"
+    },
+    {
+     "name": "Salomae Haselgrove",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Brendan Laws",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Lana Nguyen",
+     "party": "Greens"
+    },
+    {
+     "name": "Jason Taverna",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Labor's margin may not be enough to hold on to this seat, although Carroll's new status as Premier may help him. It's unclear if One Nation would do well here, if the Liberal Party are better placed to benefit from an anti-Labor swing.",
+   "url": "https://www.tallyroom.com.au/vic2026/niddrie2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Niddrie"
+ },
+ "northcote": {
+  "created": "1927",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Northcote /\u02c8n\u0254\u02d0\u03b8k\u0259t/ is an electoral district of the Victorian Legislative Assembly. It covers the suburbs of Alphington, Fairfield, Northcote, Thornbury, and part of Preston. It lies on the northern bank of the Yarra River between the Merri and Darebin creeks.",
+  "members": [
+   {
+    "name": "John Cain",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1957
+   },
+   {
+    "name": "Frank Wilkes",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1957,
+    "to": 1988
+   },
+   {
+    "name": "Tony Sheehan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1998
+   },
+   {
+    "name": "Mary Delahunty",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1998,
+    "to": 2006
+   },
+   {
+    "name": "Fiona Richardson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": 2017
+   },
+   {
+    "name": "Lidia Thorpe",
+    "party_raw": "Greens",
+    "party": "GRN",
+    "from": 2017,
+    "to": 2018
+   },
+   {
+    "name": "Kat Theophanous",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Lynda Awad",
+     "party": "Liberal"
+    },
+    {
+     "name": "Campbell Gome",
+     "party": "Greens"
+    },
+    {
+     "name": "Kath Larkin",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Jim Penman",
+     "party": "Libertarian"
+    },
+    {
+     "name": "Kat Theophanous",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "The Greens would be hoping that a slumping Labor vote would allow them to win here.",
+   "url": "https://www.tallyroom.com.au/vic2026/northcote2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Northcote"
+ },
+ "oakleigh": {
+  "created": "1927",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Oakleigh is an electoral district of the Victorian Legislative Assembly. It covers the south-east Melbourne suburbs of Carnegie, Murrumbeena, Hughesdale, Notting Hill, Oakleigh East, Oakleigh and parts of Chadstone, Glen Waverley, Mount Waverley, Glen Huntly, Mulgrave and Ormond.",
+  "members": [
+   {
+    "name": "Squire Reid",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "John Lechte",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1950
+   },
+   {
+    "name": "Val Doube",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1950,
+    "to": 1961
+   },
+   {
+    "name": "Alan Scanlan",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1961,
+    "to": 1979
+   },
+   {
+    "name": "Race Mathews",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1992
+   },
+   {
+    "name": "Denise McGill",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 1999
+   },
+   {
+    "name": "Ann Barker",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2014
+   },
+   {
+    "name": "Steve Dimopoulos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Rowdy Bugter",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Brooke Carter",
+     "party": "One Nation"
+    },
+    {
+     "name": "Steve Dimopoulos",
+     "party": "Labor"
+    },
+    {
+     "name": "Hsiang-Han Hsieh",
+     "party": "Greens"
+    },
+    {
+     "name": "Martin Jung",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "Labor will probably hold on here, but the Liberal Party will likely make a significant impact on the margin.",
+   "url": "https://www.tallyroom.com.au/vic2026/oakleigh2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Oakleigh"
+ },
+ "ovens-valley": {
+  "created": "2014",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Ovens Valley is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Tim McCurdy",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Ben Gilbert",
+     "party": "Greens"
+    },
+    {
+     "name": "Steve Manning",
+     "party": "Independent"
+    },
+    {
+     "name": "Tim McCurdy",
+     "party": "Nationals"
+    },
+    {
+     "name": "James Rouel",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "One Nation would be hoping to pick up this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/ovensvalley2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Ovens_Valley"
+ },
+ "pakenham": {
+  "created": null,
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Pakenham is an electoral district of the Legislative Assembly in the Australian state of Victoria. Originally created for the 1992 election and abolished at the 2002 election, it was recreated in the redistribution of electoral boundaries in 2021, and was re-contested at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Rob Maclellan",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (2022\u2013present)",
+    "party": "OTH",
+    "from": 2022,
+    "to": null
+   },
+   {
+    "name": "Emma Vulin",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Radmila Dyson",
+     "party": "Liberal"
+    },
+    {
+     "name": "Raymond French",
+     "party": "Independent"
+    },
+    {
+     "name": "Stephanie Grigg",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Warren Pickering",
+     "party": "One Nation"
+    },
+    {
+     "name": "Alessandra Soliven",
+     "party": "Labor"
+    },
+    {
+     "name": "Nasser Yawari",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "This seat is extremely marginal and Labor would be doing very well if they were to hold on. One Nation would have ambitions to do well in this outer suburban electorate.",
+   "url": "https://www.tallyroom.com.au/vic2026/pakenham2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Pakenham"
+ },
+ "pascoe-vale": {
+  "created": null,
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Pascoe Vale is an electoral district of the Victorian Legislative Assembly.",
+  "members": [
+   {
+    "name": "Arthur Drakeford Jr",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1958
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (1985\u2013present)",
+    "party": "OTH",
+    "from": 1985,
+    "to": null
+   },
+   {
+    "name": "Tom Edmunds",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1988
+   },
+   {
+    "name": "Kelvin Thomson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1996
+   },
+   {
+    "name": "Christine Campbell",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1996,
+    "to": 2014
+   },
+   {
+    "name": "Lizzie Blandthorn",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": 2022
+   },
+   {
+    "name": "Anthony Cianflone",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jacob Andrewartha",
+     "party": "Socialist Alliance"
+    },
+    {
+     "name": "Kathrine Ashton",
+     "party": "Family First"
+    },
+    {
+     "name": "Anthony Cianflone",
+     "party": "Labor"
+    },
+    {
+     "name": "Andrew Forehan",
+     "party": "One Nation"
+    },
+    {
+     "name": "Angelica Panopoulos",
+     "party": "Greens"
+    },
+    {
+     "name": "Yasemin Shamsili",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "This seat is very marginal. If Labor loses ground to the Greens in the inner suburbs, this seat could change hands.",
+   "url": "https://www.tallyroom.com.au/vic2026/pascoevale2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Pascoe_Vale"
+ },
+ "point-cook": {
+  "created": "2022",
+  "demographic": "Urban",
+  "blurb": "The Electoral district of Point Cook is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2021, and came into effect at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Mathew Hilakari",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Mathew Hilakari",
+     "party": "Labor"
+    },
+    {
+     "name": "Ponraj Krishna Pandi",
+     "party": "Greens"
+    },
+    {
+     "name": "Taylor Laine",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Raja Reddy",
+     "party": "Liberal"
+    },
+    {
+     "name": "Cameron Reid",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Labor has a substantial margin here but in such an unsettled election they would be far from certain to hold the seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/pointcook2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Point_Cook"
+ },
+ "polwarth": {
+  "created": "1889",
+  "demographic": "Rural",
+  "blurb": "The electoral district of Polwarth is an electoral district of the Victorian Legislative Assembly. It is located in south-west rural Victoria, west of Geelong, and covers the Colac and Corangamite local government areas (LGA), parts of the Moyne, Golden Plains and Surf Coast LGAs, and slivers of the Ararat and Greater Geelong LGAs, running along the Great Ocean Road taking in Anglesea, Cape Otway, Peterborough, Aireys Inlet, Lorne, Wye River, Apollo Bay and Port Campbell, covering the inland towns of Winchelsea, Colac, Camperdown and Terang along the Princes Highway, and Inverleigh, Cressy, Li",
+  "members": [
+   {
+    "name": "Edward Guye",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1945,
+    "to": 1950
+   },
+   {
+    "name": "Edward Guye",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1950,
+    "to": 1958
+   },
+   {
+    "name": "Tom Darcy",
+    "party_raw": "Liberal and Country",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1959
+   },
+   {
+    "name": "Tom Darcy",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1959,
+    "to": 1970
+   },
+   {
+    "name": "Cec Burgin",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1970,
+    "to": 1985
+   },
+   {
+    "name": "Ian Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1999
+   },
+   {
+    "name": "Terry Mulder",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1999,
+    "to": 2015
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jesse Holden",
+     "party": "Greens"
+    },
+    {
+     "name": "Hutch Hussein",
+     "party": "Labor"
+    },
+    {
+     "name": "Anna Malcolm",
+     "party": "One Nation"
+    },
+    {
+     "name": "Richard Riordan",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "While Labor has come close to winning this seat in the past, this is unlikely to happen in 2026. One Nation may, however, have hopes of taking the seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/polwarth2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Polwarth"
+ },
+ "prahran": {
+  "created": "1889",
+  "demographic": "Inner metropolitan",
+  "blurb": "Prahran is an electoral district of the Legislative Assembly in the Australian state of Victoria. It was created by the Electoral Act Amendment Act 1888,  taking effect at the 1889 elections. The electorate is the state\u2019s smallest by area, covering a little under 11 km2 (4.2 sq mi) in the inner south-east of Melbourne.",
+  "members": [
+   {
+    "name": "Bill Quirk",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1948
+   },
+   {
+    "name": "Frank Crean",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1949,
+    "to": 1951
+   },
+   {
+    "name": "Robert Pettiona",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1951,
+    "to": 1955
+   },
+   {
+    "name": "Sam Loxton",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1979
+   },
+   {
+    "name": "Bob Miller",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1985
+   },
+   {
+    "name": "Don Hayward",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1996
+   },
+   {
+    "name": "Leonie Burke",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1996,
+    "to": 2002
+   },
+   {
+    "name": "Tony Lupton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2010
+   },
+   {
+    "name": "Clem Newton-Brown",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": 2014
+   },
+   {
+    "name": "Sam Hibbins",
+    "party_raw": "Greens",
+    "party": "GRN",
+    "from": 2014,
+    "to": 2024
+   },
+   {
+    "name": "Sam Hibbins",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2024,
+    "to": 2024
+   },
+   {
+    "name": "Rachel Westaway",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2025,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Angelica Di Camillo",
+     "party": "Greens"
+    },
+    {
+     "name": "Clayton Doueihi",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Meghan Hopper",
+     "party": "Labor"
+    },
+    {
+     "name": "Shaun Virsu",
+     "party": "One Nation"
+    },
+    {
+     "name": "Rachel Westaway",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "The Liberal Party's win in Prahran was very specific to the circumstances of the by-election. The Greens would have high hopes of regaining this seat at a general election when Labor is running.",
+   "url": "https://www.tallyroom.com.au/vic2026/prahran2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Prahran"
+ },
+ "preston": {
+  "created": "1945",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Preston is an electoral district of the Victorian Legislative Assembly. It currently centres on the northern Melbourne suburbs of Preston and Reservoir. It has always been a safe Labor Party seat.",
+  "members": [
+   {
+    "name": "William Ruthven",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Charlie Ring",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1970
+   },
+   {
+    "name": "Carl Kirkwood",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1970,
+    "to": 1988
+   },
+   {
+    "name": "Michael Leighton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 2006
+   },
+   {
+    "name": "Robin Scott",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": 2022
+   },
+   {
+    "name": "Nathan Lambert",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Serena Ashmore",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Zheng Chin",
+     "party": "Independent"
+    },
+    {
+     "name": "Peita Collard",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Franco Guardiani",
+     "party": "One Nation"
+    },
+    {
+     "name": "Nathan Lambert",
+     "party": "Labor"
+    },
+    {
+     "name": "Loki Sangarya",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "If Labor's vote collapses, and the Greens are doing relatively well, the Greens could win this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/preston2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Preston"
+ },
+ "richmond": {
+  "created": "1856",
+  "demographic": "Inner metropolitan",
+  "blurb": "Richmond is an electoral district of the Legislative Assembly in the Australian state of Victoria. It is currently a 13 km2 electorate in the inner east of Melbourne, encompassing the suburbs of Richmond, Cremorne, Burnley, Abbotsford, Collingwood, Clifton Hill, Fitzroy and Fitzroy North. Historically a very safe seat for the Labor Party, Richmond has in recent elections become increasingly marginal against the Greens, who eventually won the seat at the 2022 Victorian state election.",
+  "members": [
+   {
+    "name": "Stan Keon",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1949
+   },
+   {
+    "name": "Frank Scully",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1949,
+    "to": 1955
+   },
+   {
+    "name": "Frank Scully",
+    "party_raw": "Labor (Anti-Communist)",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1957
+   },
+   {
+    "name": "Frank Scully",
+    "party_raw": "Democratic Labor",
+    "party": "ALP",
+    "from": 1957,
+    "to": 1958
+   },
+   {
+    "name": "Bill Towers",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1958,
+    "to": 1962
+   },
+   {
+    "name": "Clyde Holding",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1962,
+    "to": 1977
+   },
+   {
+    "name": "Theo Sidiropoulos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1977,
+    "to": 1988
+   },
+   {
+    "name": "Demetri Dollis",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1999
+   },
+   {
+    "name": "Richard Wynne",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2022
+   },
+   {
+    "name": "Gabrielle de Vietri",
+    "party_raw": "Greens",
+    "party": "GRN",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Charles Aponso",
+     "party": "Liberal"
+    },
+    {
+     "name": "Gabrielle de Vietri",
+     "party": "Greens"
+    },
+    {
+     "name": "Chris Dite",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Sarah McKenzie",
+     "party": "Labor"
+    },
+    {
+     "name": "David Meyer",
+     "party": "Independent"
+    },
+    {
+     "name": "Harrison Rindfleish",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "In current circumstances, the Greens should retain this seat, although the loss of Liberal preferences would significantly weaken the Greens margin.",
+   "url": "https://www.tallyroom.com.au/vic2026/richmond2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Richmond_(Victoria)"
+ },
+ "ringwood": {
+  "created": null,
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Ringwood is an electoral district of the Victorian Legislative Assembly, located in the east of Melbourne. It was first proclaimed in 1958 and was abolished in 1992. Some of Ringwood was included in the new electoral district of Bayswater that year.",
+  "members": [
+   {
+    "name": "Jim Manson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1958,
+    "to": 1973
+   },
+   {
+    "name": "Norman Lacy",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1973,
+    "to": 1976
+   },
+   {
+    "name": "Peter McArthur",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1982
+   },
+   {
+    "name": "Kay Setches",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Second incarnation",
+    "party_raw": "Second incarnation (2014\u2013present)",
+    "party": "OTH",
+    "from": 2014,
+    "to": null
+   },
+   {
+    "name": "Dee Ryall",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": 2018
+   },
+   {
+    "name": "Dustin Halse",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": 2022
+   },
+   {
+    "name": "Will Fowles",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": 2023
+   },
+   {
+    "name": "Will Fowles",
+    "party_raw": "Independent Labor",
+    "party": "ALP",
+    "from": 2023,
+    "to": 2024
+   },
+   {
+    "name": "Will Fowles",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2024,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Prue Cutts",
+     "party": "Independent"
+    },
+    {
+     "name": "Jack Gardner",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Rachel Halse",
+     "party": "Labor"
+    },
+    {
+     "name": "Nick McGowan",
+     "party": "Liberal"
+    },
+    {
+     "name": "Amy Mills",
+     "party": "Greens"
+    },
+    {
+     "name": "John O'Connor",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "Labor will struggle to regain this seat in the absence of a sitting MP.",
+   "url": "https://www.tallyroom.com.au/vic2026/ringwood2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Ringwood_(Victoria)"
+ },
+ "ripon": {
+  "created": null,
+  "demographic": "Rural",
+  "blurb": "Ripon is a single member electoral district of the Victorian Legislative Assembly. It is a rural electorate based in western Victoria. In 1946 the electoral district of Ripon was first contested but then abolished in the 1955 election after being held by Labor for seven of these years.",
+  "members": [
+   {
+    "name": "Ernie Morton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1947
+   },
+   {
+    "name": "Rutherford Guthrie",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1947,
+    "to": 1950
+   },
+   {
+    "name": "Ernie Morton",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1950,
+    "to": 1955
+   },
+   {
+    "name": "Tom Austin",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1992
+   },
+   {
+    "name": "Steve Elder",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 1999
+   },
+   {
+    "name": "Joe Helper",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1999,
+    "to": 2014
+   },
+   {
+    "name": "Louise Staley",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": 2022
+   },
+   {
+    "name": "Martha Haylett",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Jo Armstrong",
+     "party": "Nationals"
+    },
+    {
+     "name": "Taylah Brennan-Jones",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Donna Buxton",
+     "party": "One Nation"
+    },
+    {
+     "name": "Tim Drylie",
+     "party": "Greens"
+    },
+    {
+     "name": "Martha Haylett",
+     "party": "Labor"
+    },
+    {
+     "name": "Megan Read",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "The Labor hold on this seat is far from solid, and they could lose to either the Nationals or One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/ripon2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Ripon"
+ },
+ "rowville": {
+  "created": "2014",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Rowville is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Kim Wells",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Lars Hiemstra",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Dave Massey",
+     "party": "Greens"
+    },
+    {
+     "name": "Muhammad Shahbaz",
+     "party": "Labor"
+    },
+    {
+     "name": "Bradley Watt",
+     "party": "One Nation"
+    },
+    {
+     "name": "Max Williams",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "The Liberal Party will probably retain this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/rowville2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Rowville"
+ },
+ "sandringham": {
+  "created": "1955",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Sandringham is one of the electoral districts of Victoria, Australia, for the Victorian Legislative Assembly. It consists of the Melbourne bayside suburbs of Beaumaris, Black Rock and Sandringham, and parts of Cheltenham, Hampton, Highett, and Mentone.",
+  "members": [
+   {
+    "name": "Murray Porter",
+    "party_raw": "LCP",
+    "party": "OTH",
+    "from": 1955,
+    "to": 1970
+   },
+   {
+    "name": "Murray Porter",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1955,
+    "to": 1970
+   },
+   {
+    "name": "Max Crellin",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1970,
+    "to": 1982
+   },
+   {
+    "name": "Graham Ihlein",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1985
+   },
+   {
+    "name": "David Lea",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1985,
+    "to": 1992
+   },
+   {
+    "name": "Murray Thompson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2018
+   },
+   {
+    "name": "Brad Rowswell",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Anthony Blight",
+     "party": "One Nation"
+    },
+    {
+     "name": "Timon Fotakis",
+     "party": "Greens"
+    },
+    {
+     "name": "Brad Rowswell",
+     "party": "Liberal"
+    },
+    {
+     "name": "Anastasia Sagris-Desmond",
+     "party": "Labor"
+    },
+    {
+     "name": "Lauren Stevenson",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "The Liberal Party should retain this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/sandringham2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Sandringham"
+ },
+ "shepparton": {
+  "created": null,
+  "demographic": "Provincial and rural",
+  "blurb": "The electoral district of Shepparton is a rural Lower House electoral district of the Victorian Parliament. It is located within the Northern Victoria Region of the Legislative Council.",
+  "members": [
+   {
+    "name": "John McDonald",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Peter Ross-Edwards",
+    "party_raw": "Country",
+    "party": "NAT",
+    "from": 1967,
+    "to": 1975
+   },
+   {
+    "name": "Peter Ross-Edwards",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1975,
+    "to": 1991
+   },
+   {
+    "name": "Don Kilgour",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 1991,
+    "to": 2002
+   },
+   {
+    "name": "Jeanette Powell",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2002,
+    "to": 2014
+   },
+   {
+    "name": "Suzanna Sheed",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 2014,
+    "to": 2022
+   },
+   {
+    "name": "Kim O'Keeffe",
+    "party_raw": "National",
+    "party": "NAT",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Phillip Bryant",
+     "party": "One Nation"
+    },
+    {
+     "name": "Lou Costa",
+     "party": "Independent"
+    },
+    {
+     "name": "Cayla Fin",
+     "party": "Labor"
+    },
+    {
+     "name": "Karen Hocking",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Shane Sali",
+     "party": "Nationals"
+    },
+    {
+     "name": "Grace Verney",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "One Nation would be hoping to unseat the Nationals here.",
+   "url": "https://www.tallyroom.com.au/vic2026/shepparton2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Shepparton"
+ },
+ "south-barwon": {
+  "created": "1976",
+  "demographic": "Urbanised rural",
+  "blurb": "South Barwon is an electoral district of the Legislative Assembly in the Australian state of Victoria. Located in a mixed urban and rural area south of the Barwon River, it covers an area of 621 km\u00b2, including the Geelong suburbs of Belmont and Grovedale, Waurn Ponds and part of Highton, the coastal centre of Torquay and the rural towns of Barrabool, Bellbrae, Connewarre, Gnarwarre, Modewarre, Moriac and Mount Moriac. The electorate had a population of 92,460 at the 2021 census.",
+  "members": [
+   {
+    "name": "Aurel Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1982
+   },
+   {
+    "name": "Harley Dickinson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1982,
+    "to": 1992
+   },
+   {
+    "name": "Harley Dickinson",
+    "party_raw": "Independent",
+    "party": "IND",
+    "from": 1992,
+    "to": 1992
+   },
+   {
+    "name": "Alister Paterson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Michael Crutchfield",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2010
+   },
+   {
+    "name": "Andrew Katos",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2010,
+    "to": 2018
+   },
+   {
+    "name": "Darren Cheeseman",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": 2024
+   },
+   {
+    "name": "Darren Cheeseman",
+    "party_raw": "Independent Labor",
+    "party": "ALP",
+    "from": 2024,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Josh Geard",
+     "party": "One Nation"
+    },
+    {
+     "name": "Madilyn Gorman",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Freya Hedley",
+     "party": "Socialist Alliance"
+    },
+    {
+     "name": "Ron Nelson",
+     "party": "Independent"
+    },
+    {
+     "name": "Libby Pettit",
+     "party": "Liberal"
+    },
+    {
+     "name": "Izzy Scherrer",
+     "party": "Greens"
+    },
+    {
+     "name": "Rebecca Thistleton",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Labor holds South Barwon by a substantial margin, but without a sitting MP an outer suburban seat like this could be vulnerable to One Nation.",
+   "url": "https://www.tallyroom.com.au/vic2026/southbarwon2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_South_Barwon"
+ },
+ "south-west-coast": {
+  "created": "2002",
+  "demographic": "Rural",
+  "blurb": "The electoral district of South-West Coast is an electorate of the Victorian Legislative Assembly. It was created prior to the 2002 election in order to replace the abolished seats of Portland and Warrnambool.",
+  "members": [
+   {
+    "name": "Denis Napthine",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2002,
+    "to": 2015
+   },
+   {
+    "name": "Roma Britnell",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2015,
+    "to": null
+   }
+  ],
+  "tallyroom": null,
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_South-West_Coast"
+ },
+ "st-albans": {
+  "created": null,
+  "demographic": "Inner-metropolitan",
+  "blurb": "The electoral district of St Albans is an electoral district of the Victorian Legislative Assembly. It has existed in 2 incarnations, first from 1985 to 1992, and was created again in the 2013 redistribution and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Alex Andrianopoulos",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1992
+   },
+   {
+    "name": "Natalie Suleyman",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "John Cowell",
+     "party": "One Nation"
+    },
+    {
+     "name": "Rob Dunstan",
+     "party": "Liberal"
+    },
+    {
+     "name": "Bao Huynh",
+     "party": "Greens"
+    },
+    {
+     "name": "Leanna Nguyen",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Natalie Suleyman",
+     "party": "Labor"
+    },
+    {
+     "name": "Lu\u1eadn Walker",
+     "party": "West Party"
+    }
+   ],
+   "assessment": "Labor has a substantial margin, but if One Nation does very well this seat could come into play.",
+   "url": "https://www.tallyroom.com.au/vic2026/stalbans2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_St_Albans"
+ },
+ "sunbury": {
+  "created": "2014",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Sunbury is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Josh Bull",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Adam Bremner",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Josh Bull",
+     "party": "Labor"
+    },
+    {
+     "name": "Simmone Cottom",
+     "party": "Liberal"
+    },
+    {
+     "name": "Elita Dabrowski",
+     "party": "One Nation"
+    },
+    {
+     "name": "Lauren Granger-Brown",
+     "party": "Greens"
+    }
+   ],
+   "assessment": "One Nation would be hoping to nab this seat from Labor.",
+   "url": "https://www.tallyroom.com.au/vic2026/sunbury2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Sunbury"
+ },
+ "sydenham": {
+  "created": "2014",
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Sydenham is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Natalie Hutchins",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Nancy Batres-Croes",
+     "party": "Family First"
+    },
+    {
+     "name": "Joh Bauch",
+     "party": "One Nation"
+    },
+    {
+     "name": "Matthew De Angelis",
+     "party": "Independent"
+    },
+    {
+     "name": "Maggie Jane",
+     "party": "Greens"
+    },
+    {
+     "name": "Maria Kerr",
+     "party": "Independent"
+    },
+    {
+     "name": "Shania Khan",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Nathalie Moussi",
+     "party": "Liberal"
+    },
+    {
+     "name": "Uros Rasic",
+     "party": "Labor"
+    },
+    {
+     "name": "Ashleigh Vandenberg",
+     "party": "Independent"
+    }
+   ],
+   "assessment": "Labor has a substantial margin in Sydenham, but that may not be enough to be confident of victory.",
+   "url": "https://www.tallyroom.com.au/vic2026/sydenham2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Sydenham"
+ },
+ "tarneit": {
+  "created": "2002",
+  "demographic": "Urban",
+  "blurb": "The electoral district of Tarneit is an electoral district of the Victorian Legislative Assembly. It was created before the 2002 election where it replaced the seat of Werribee.",
+  "members": [
+   {
+    "name": "Mary Gillett",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2006
+   },
+   {
+    "name": "Tim Pallas",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2006,
+    "to": 2014
+   },
+   {
+    "name": "Telmo Languiller",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": 2018
+   },
+   {
+    "name": "Sarah Connolly",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": 2022
+   },
+   {
+    "name": "Dylan Wight",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Andrew Elsbury",
+     "party": "West Party"
+    },
+    {
+     "name": "Rifai Raheem",
+     "party": "Greens"
+    },
+    {
+     "name": "Maurita Rahn",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Venkat Ram Upparlapalle",
+     "party": "Liberal"
+    },
+    {
+     "name": "Leah Van Keulen",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Walter Villagonzalo",
+     "party": "One Nation"
+    },
+    {
+     "name": "Dylan Wight",
+     "party": "Labor"
+    }
+   ],
+   "assessment": "Labor will likely hold this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/tarneit2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Tarneit"
+ },
+ "thomastown": {
+  "created": null,
+  "demographic": "Metropolitan",
+  "blurb": "The electoral district of Thomastown is an electorate of the Victorian Legislative Assembly. It currently includes the suburbs of Lalor and Thomastown, and parts of Fawkner, Reservoir and Wollert, and has been in existence since 1985.",
+  "members": [
+   {
+    "name": "Beth Gleeson",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1985,
+    "to": 1989
+   },
+   {
+    "name": "Peter Batchelor",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1990,
+    "to": 2010
+   },
+   {
+    "name": "Bronwyn Halfpenny",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2010,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Nadia Anthony",
+     "party": "One Nation"
+    },
+    {
+     "name": "Bronwyn Halfpenny",
+     "party": "Labor"
+    },
+    {
+     "name": "Priya Reddy",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Belinda Stojcevski",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "One Nation will hope to put in a good show here but Labor has a very large margin.",
+   "url": "https://www.tallyroom.com.au/vic2026/thomastown2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Thomastown"
+ },
+ "warrandyte": {
+  "created": "1976",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Warrandyte is an Australian electoral district of the Victorian Legislative Assembly. It is an outer metropolitan electorate and contains the suburbs of Park Orchards, Ringwood North, Warrandyte, Warrandyte North, Warrandyte South, Warranwood, Wonga Park, most of Donvale, and parts of Chirnside Park, Doncaster East, and Ringwood.",
+  "members": [
+   {
+    "name": "Norman Lacy",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1982
+   },
+   {
+    "name": "Lou Hill",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1982,
+    "to": 1988
+   },
+   {
+    "name": "Phil Honeywood",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1988,
+    "to": 2006
+   },
+   {
+    "name": "Ryan Smith",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2006,
+    "to": 2023
+   },
+   {
+    "name": "Nicole Werner",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 2023,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Mark Burnside",
+     "party": "One Nation"
+    },
+    {
+     "name": "John Stanley",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Nicole Werner",
+     "party": "Liberal"
+    }
+   ],
+   "assessment": "The Liberal Party should hold this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/warrandyte2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Warrandyte"
+ },
+ "wendouree": {
+  "created": "2014",
+  "demographic": "Regional city",
+  "blurb": "The electoral district of Wendouree is an electoral district of the Victorian Legislative Assembly in Australia. It was created in the redistribution of electoral boundaries in 2013, and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Sharon Knight",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": 2018
+   },
+   {
+    "name": "Juliana Addison",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Juliana Addison",
+     "party": "Labor"
+    },
+    {
+     "name": "Ellen Burns",
+     "party": "Greens"
+    },
+    {
+     "name": "Ruth Byrne",
+     "party": "Family First"
+    },
+    {
+     "name": "Melissa Collins",
+     "party": "Animal Justice"
+    },
+    {
+     "name": "Chris Meagher",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Stuart Robinson",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "While Labor appears to have a very large margin here, One Nation will be a serious threat in a regional city like Ballarat.",
+   "url": "https://www.tallyroom.com.au/vic2026/wendouree2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Wendouree"
+ },
+ "werribee": {
+  "created": null,
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Werribee is an electoral district of the Legislative Assembly in the Australian state of Victoria. It has existed in two incarnations, first from 1976 to 2002,  and was created again in the 2013 redistribution and came into effect at the 2014 state election.",
+  "members": [
+   {
+    "name": "Neville Hudson",
+    "party_raw": "Liberal",
+    "party": "LIB",
+    "from": 1976,
+    "to": 1979
+   },
+   {
+    "name": "Ken Coghill",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1979,
+    "to": 1996
+   },
+   {
+    "name": "Mary Gillett",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1996,
+    "to": 2002
+   },
+   {
+    "name": "Tim Pallas",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2014,
+    "to": 2025
+   },
+   {
+    "name": "John Lister",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2025,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Reece Clark",
+     "party": "Liberal"
+    },
+    {
+     "name": "Matthew Emerson",
+     "party": "Family First"
+    },
+    {
+     "name": "Paul Hopper",
+     "party": "West Party"
+    },
+    {
+     "name": "Tushar Kumar",
+     "party": "Greens"
+    },
+    {
+     "name": "John Lister",
+     "party": "Labor"
+    },
+    {
+     "name": "Sue Munro",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Paul Pateras",
+     "party": "One Nation"
+    }
+   ],
+   "assessment": "The ALP barely held on here at the by-election, and could be vulnerable to either One Nation, the Liberal Party or an independent.",
+   "url": "https://www.tallyroom.com.au/vic2026/werribee2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Werribee"
+ },
+ "williamstown": {
+  "created": "1856",
+  "demographic": "Inner metropolitan",
+  "blurb": "Williamstown is an electoral district of the Legislative Assembly in the Australian state of Victoria. It is a 51.54 km2 urban electorate  in the inner south-western suburbs of Melbourne, encompassing the suburbs of Brooklyn, Newport, Spotswood, Williamstown, Williamstown North, South Kingsville, Seaholme, Altona and Yarraville. The electorate had a population of 54,426 as of the 2006 census.",
+  "members": [
+   {
+    "name": "John Lemmon",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1945,
+    "to": 1955
+   },
+   {
+    "name": "Larry Floyd",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1955,
+    "to": 1973
+   },
+   {
+    "name": "Gordon Stirling",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1973,
+    "to": 1988
+   },
+   {
+    "name": "Joan Kirner",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1988,
+    "to": 1994
+   },
+   {
+    "name": "Steve Bracks",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1994,
+    "to": 2007
+   },
+   {
+    "name": "Wade Noonan",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2007,
+    "to": 2018
+   },
+   {
+    "name": "Melissa Horne",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2018,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Tony Briffa",
+     "party": "Independent"
+    },
+    {
+     "name": "Gill Gannon",
+     "party": "West Party"
+    },
+    {
+     "name": "Ben Hocking",
+     "party": "Greens"
+    },
+    {
+     "name": "Melissa Horne",
+     "party": "Labor"
+    },
+    {
+     "name": "Paul Lindemann",
+     "party": "Liberal"
+    },
+    {
+     "name": "Catherine Loughnan",
+     "party": "One Nation"
+    },
+    {
+     "name": "Oskar Martin",
+     "party": "Victorian Socialists"
+    }
+   ],
+   "assessment": "Labor has a large margin here and should be okay.",
+   "url": "https://www.tallyroom.com.au/vic2026/williamstown2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Williamstown"
+ },
+ "yan-yean": {
+  "created": "1992",
+  "demographic": "Outer metropolitan",
+  "blurb": "The electoral district of Yan Yean is an electoral district of the Victorian Legislative Assembly. It is located on the fringes of Melbourne's northern suburbs and contains the towns of Hurstbridge, Plenty, Whittlesea and Yan Yean.",
+  "members": [
+   {
+    "name": "Andre Haermeyer",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 1992,
+    "to": 2002
+   },
+   {
+    "name": "Danielle Green",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2002,
+    "to": 2022
+   },
+   {
+    "name": "Lauren Kathage",
+    "party_raw": "Labor",
+    "party": "ALP",
+    "from": 2022,
+    "to": null
+   }
+  ],
+  "tallyroom": {
+   "cands": [
+    {
+     "name": "Andrew Bell",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "Amanda Dow",
+     "party": "Liberal"
+    },
+    {
+     "name": "Jeremy Johnson",
+     "party": "One Nation"
+    },
+    {
+     "name": "Lauren Kathage",
+     "party": "Labor"
+    },
+    {
+     "name": "Gufran Mohammed",
+     "party": "Greens"
+    },
+    {
+     "name": "Sinan Okatan",
+     "party": "Animal Justice"
+    }
+   ],
+   "assessment": "Labor's margin in Yan Yean is very slim, and the Liberal Party or One Nation could gain this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/yanyean2026"
+  },
+  "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Yan_Yean"
+ }
+}

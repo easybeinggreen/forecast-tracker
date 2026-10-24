@@ -57,6 +57,33 @@ def pendulum():
 POLL_COL = {"ALP": "alp", "LIB": "lnp", "NAT": "lnp", "GRN": "grn", "ON": "onp"}
 
 
+def place_info(slug, s, h, demo, topics, mp):
+    from urllib.parse import quote_plus
+    name = s["name"]
+    members = (h or {}).get("members") or []
+    if not members or members[-1]["to"] is not None:
+        members = members + [{"name": nice_name(s["winner_2022"]["name"]), "party": s["winner_2022"]["party"], "from": 2022, "to": None}]
+    tr = (h or {}).get("tallyroom") or {}
+    links = [
+        {"label": "The Tally Room seat guide", "url": tr.get("url") or f"https://www.tallyroom.com.au/vic2026/{slug.replace('-', '')}2026", "note": "analysis, booth maps, active comments"},
+        {"label": "Wikipedia", "url": (h or {}).get("wiki") or f"https://en.wikipedia.org/wiki/Special:Search?search=Electoral+district+of+{quote_plus(name)}", "note": "history and past results"},
+        {"label": "Reddit", "url": f"https://www.reddit.com/search/?q={quote_plus(chr(34) + name + chr(34) + ' election')}&sort=new", "note": "local discussion"},
+        {"label": "X (Twitter)", "url": f"https://x.com/search?q={quote_plus(chr(34) + name + chr(34) + ' (election OR candidate OR vote)')}&f=live", "note": "latest posts"},
+        {"label": "Facebook", "url": f"https://www.facebook.com/search/posts/?q={quote_plus(name + ' election')}", "note": "candidate pages and local groups"},
+        {"label": "Google News", "url": f"https://news.google.com/search?q={quote_plus(chr(34) + name + chr(34) + ' Victorian election')}&hl=en-AU&gl=AU&ceid=AU:en"},
+    ]
+    if mp and not mp.startswith("Vacant"):
+        links.insert(2, {"label": f"{mp} on Wikipedia", "url": f"https://en.wikipedia.org/wiki/Special:Search?search={quote_plus(mp + ' Victorian politician')}"})
+    return {
+        "place": {"blurb": (h or {}).get("blurb"), "created": (h or {}).get("created"), "demographic": (h or {}).get("demographic"),
+                  "assessment": tr.get("assessment"), "tr_url": tr.get("url")},
+        "candidates_2026": tr.get("cands") or [],
+        "history": {"members": members},
+        "demo": demo["seats"].get(slug), "demo_vic": demo.get("vic"),
+        "topics": topics.get(slug, []), "links": links,
+    }
+
+
 def party_profiles(seats, F):
     """Hand-written profiles (config/parties.yaml) plus computed seats, polls and odds."""
     prof = yaml.safe_load((ROOT / "vic2026/config/parties.yaml").read_text())
@@ -96,6 +123,10 @@ def main():
     fedp = ROOT / "data/vic2026/on_federal2025.json"
     fed = json.loads(fedp.read_text())["seats"] if fedp.exists() else {}
     retiring = {s: p for p, ss in cfg["retiring"].items() for s in ss}
+    hist = json.loads((ROOT / "data/vic2026/history.json").read_text()) if (ROOT / "data/vic2026/history.json").exists() else {}
+    demo = json.loads((ROOT / "data/vic2026/demographics.json").read_text()) if (ROOT / "data/vic2026/demographics.json").exists() else {"seats": {}, "vic": None}
+    newsp = ROOT / "site/data/news.json"
+    topics = json.loads(newsp.read_text()).get("topics", {}) if newsp.exists() else {}
     regional = set(cfg["one_nation"]["regional_seats"])
     seats = []
     for s in F["seats"]:
@@ -116,9 +147,11 @@ def main():
             "on_federal_2025": fed.get(slug, {}).get("on_share"),
             "model": {"win": s["win_prob"], "outright": s["outright_prob"], "pairs": s["final_pairs"],
                       "primaries": s["primaries_2026"], "sim": s["sim"], "trace": s["trace"]},
+            "why": s.get("why"),
+            **place_info(slug, s, hist.get(slug), demo, topics, mp_name),
         })
     out = {"generated": F["generated"], "simulations": F["simulations"], "inputs": F["statewide_inputs"],
-           "summary": F["summary"], "distribution": F["seat_distribution"], "flows_base": F["flows_base"],
+           "summary": F["summary"], "why_statewide": F.get("why_statewide"), "distribution": F["seat_distribution"], "flows_base": F["flows_base"],
            "drivers": {"flows": cfg["flows"]}, "party_names": F["party_names"], "markets": MARKETS,
            "election_date": "2026-11-28", "seats": seats,
            "parties": party_profiles(seats, F)}

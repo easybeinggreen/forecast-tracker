@@ -25,6 +25,52 @@ POLITICS = re.compile(r"election|\belect|\bvot(e|er|ers|ing)\b|\bpoll|candidate|
                       r"funding|budget|policy|by-election|treaty", re.I)
 
 
+TOPICS = [
+    ("Cost of living", r"cost of living|cost-of-living|prices|power bills|energy bills|grocer|supermarket|afford"),
+    ("Housing", r"housing|\brent|renters|homeless|apartment|planning|rezon|development|tower"),
+    ("Crime & safety", r"crime|police|\bbail|stabbing|machete|carjack|break-in|assault|youth offend|safety|violence"),
+    ("Health & hospitals", r"hospital|health|ambulance|\bGP\b|mental health|surgery|nurse"),
+    ("Transport & roads", r"\broad|rail|train|tram|\bbus|level crossing|airport|suburban rail loop|\bSRL\b|freeway|bypass|traffic|pothole"),
+    ("Schools", r"school|education|TAFE|kinder|teacher"),
+    ("Energy & coal", r"\bcoal|power station|energy|renewable|wind farm|transmission|\bgas\b|solar"),
+    ("Treaty & First Peoples", r"treaty|Aboriginal|First Peoples|Indigenous"),
+    ("Taxes & levies", r"levy|\btax|ESVF|land tax|stamp duty"),
+    ("Environment", r"environment|climate|logging|forest|river|water|park"),
+    ("Integrity", r"corruption|IBAC|scandal|rort|misconduct|branch stack"),
+    ("Jobs & economy", r"\bjobs|unemploy|business|economy|\bdebt|budget"),
+    ("Farming & regions", r"farm|agricultur|drought|regional"),
+    ("Candidates", r"preselect|candidate|disendors|announce|running for|nominat"),
+]
+
+
+def topics(items):
+    out = {}
+    for it in items:
+        for name, rx in TOPICS:
+            if re.search(rx, it["title"], re.I):
+                out[name] = out.get(name, 0) + 1
+    return [{"t": k, "n": v} for k, v in sorted(out.items(), key=lambda kv: -kv[1]) if v][:6]
+
+
+def diverse(items, per_source=2, limit=10):
+    """Most recent first, but no more than `per_source` stories from any one outlet."""
+    seen, count, keep = set(), {}, []
+    for it in sorted(items, key=lambda x: x["published"] or "", reverse=True):
+        k = re.sub(r"\W+", "", it["title"].lower())[:80]
+        if k in seen:
+            continue
+        seen.add(k)
+        src = it["source"] or "?"
+        if count.get(src, 0) >= per_source:
+            continue
+        count[src] = count.get(src, 0) + 1
+        keep.append(it)
+    return keep[:limit]
+
+
+QUALITY = "(site:abc.net.au OR site:theage.com.au OR site:theguardian.com OR site:sbs.com.au OR site:crikey.com.au OR site:aap.com.au)"
+
+
 def relevant(title, mp):
     """Keep politics stories, or any story naming the sitting MP; drop sport, weather, property."""
     if NOISE.search(title):
@@ -57,36 +103,30 @@ def main():
     F = json.loads(Path("site/data/forecast.json").read_text())
     s = requests.Session()
     news = {}
+    seat_topics = {}
     for seat in F["seats"]:
         name, mp = seat["name"], seat["mp"]["name"]
         items = search(s, f'"{name}" Victorian election when:30d')
         time.sleep(1.2)
-        items += search(s, f'"{mp}" Victoria when:30d')
+        if not mp.startswith("Vacant"):
+            items += search(s, f'"{mp}" Victoria when:30d')
+            time.sleep(1.2)
+        items += search(s, f'"{name}" Victoria {QUALITY} when:60d')
         time.sleep(1.2)
-        seen, keep = set(), []
-        for it in sorted(items, key=lambda x: x["published"] or "", reverse=True):
-            if not relevant(it["title"], mp):
-                continue
-            k = re.sub(r"\W+", "", it["title"].lower())[:80]
-            if k in seen:
-                continue
-            seen.add(k)
-            keep.append(it)
-        news[seat["slug"]] = keep[:8]
-        print(name, len(keep))
+        items = [it for it in items if relevant(it["title"], mp)]
+        news[seat["slug"]] = diverse(items, per_source=2, limit=10)
+        seat_topics[seat["slug"]] = topics(items)
+        print(name, len(items), "->", len(news[seat["slug"]]))
     parties = {}
     for code, P in F.get("parties", {}).items():
         items = [it for it in search(s, f'{P["news_query"]} when:14d') if not NOISE.search(it["title"])]
         time.sleep(1.2)
-        seen, keep = set(), []
-        for it in sorted(items, key=lambda x: x["published"] or "", reverse=True):
-            k = re.sub(r"\W+", "", it["title"].lower())[:80]
-            if k not in seen:
-                seen.add(k); keep.append(it)
-        parties[code] = keep[:10]
-        print(code, len(keep))
+        items += [it for it in search(s, f'{P["news_query"]} {QUALITY} when:14d') if not NOISE.search(it["title"])]
+        time.sleep(1.2)
+        parties[code] = diverse(items, per_source=2, limit=10)
+        print(code, len(items))
     state = [it for it in search(s, '"Victorian election" when:7d') if not NOISE.search(it["title"])]
-    out = {"generated": datetime.now(timezone.utc).isoformat(), "statewide": state[:12], "seats": news, "parties": parties}
+    out = {"generated": datetime.now(timezone.utc).isoformat(), "statewide": diverse(state, per_source=2, limit=12), "seats": news, "parties": parties, "topics": seat_topics}
     Path("site/data/news.json").write_text(json.dumps(out, separators=(",", ":")))
 
 
