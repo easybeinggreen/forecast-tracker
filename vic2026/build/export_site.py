@@ -147,12 +147,21 @@ def main():
             "ind_assumed": nice_name(s["ind_2026_assumed"]) if s["ind_2026_assumed"] else None,
             "note": s.get("note"),
             "on_federal_2025": fed.get(slug, {}).get("on_share"),
+            "fed2025": {"prims": fed.get(slug, {}).get("prims"), "alp_tpp": fed.get(slug, {}).get("alp_tpp")} if slug in fed else None,
             "model": {"win": s["win_prob"], "outright": s["outright_prob"], "pairs": s["final_pairs"],
                       "primaries": s["primaries_2026"], "sim": s["sim"], "trace": s["trace"]},
             "why": s.get("why"),
             **place_info(slug, s, hist.get(slug), demo, topics, mp_name),
         })
-    out = {"generated": F["generated"], "simulations": F["simulations"], "inputs": F["statewide_inputs"],
+    tot = sum(v["formal"] for v in fed.values()) or 1
+    fed_vic = {"prims": {}, "alp_tpp": None}
+    for v in fed.values():
+        for g, x in (v.get("prims") or {}).items():
+            fed_vic["prims"][g] = fed_vic["prims"].get(g, 0) + x * v["formal"] / tot
+    fed_vic["prims"] = {g: round(x, 1) for g, x in fed_vic["prims"].items()}
+    tw = [(v["alp_tpp"], v["formal"]) for v in fed.values() if v.get("alp_tpp") is not None]
+    fed_vic["alp_tpp"] = round(sum(a * w for a, w in tw) / sum(w for _, w in tw), 1) if tw else None
+    out = {"generated": F["generated"], "fed2025_vic": fed_vic, "simulations": F["simulations"], "inputs": F["statewide_inputs"],
            "summary": F["summary"], "why_statewide": F.get("why_statewide"), "distribution": F["seat_distribution"], "flows_base": F["flows_base"],
            "drivers": {"flows": cfg["flows"]}, "party_names": F["party_names"], "markets": MARKETS,
            "election_date": "2026-11-28", "seats": seats,

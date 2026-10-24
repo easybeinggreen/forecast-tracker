@@ -18,23 +18,28 @@ export function whyHTML(s, F, PARTY) {
   const on = w.on, ratio = on.fed / on.fed_vic;
   // sensitivity: the multiplier scales roughly as (local/state)^elasticity
   const at = (g) => Math.min(60, on.state * on.mult * Math.pow(ratio, g - on.elasticity));
-  const sw = (k) => { const a = st["2022"][k], b = st["2026"][k]; return a ? `${f1(a)} → ${f1(b)}` : f1(b); };
+  const fv = F.fed2025_vic?.prims || {}, fs = s.fed2025?.prims || {};
+  const fedOf = (o, k) => (k === "LNP" ? (o.LIB || 0) + (o.NAT || 0) : o[k]);
+  const sw = (k) => { const a = st["2022"][k], f = fedOf(fv, k), b = st["2026"][k];
+    return `${a ? f1(a) : "—"} → <span class="fedc">${f != null ? f1(f) : "—"}</span> → <b>${f1(b)}</b>`; };
   const rows = slots.map((k) => {
     const a = w.base[k] || 0, b = prim[k].mean;
-    return `<tr><td><span class="sw" style="background:${col(k)}"></span> ${esc(PARTY[k] || k)}</td><td class="num">${f1(a)}</td><td class="num"><b>${f1(b)}</b></td><td class="num ${b - a >= 0 ? "up" : "down"}">${sgn(b - a)}</td><td class="num dim">${prim[k].p10}–${prim[k].p90}</td></tr>`;
+    const f = fs[k];
+    return `<tr><td><span class="sw" style="background:${col(k)}"></span> ${esc(PARTY[k] || k)}</td><td class="num">${f1(a)}</td><td class="num fedc">${f != null ? f1(f) : "—"}</td><td class="num"><b>${f1(b)}</b></td><td class="num ${b - a >= 0 ? "up" : "down"}">${sgn(b - a)}</td><td class="num dim">${prim[k].p10}–${prim[k].p90}</td></tr>`;
   }).join("");
   const big = on.mult >= 1.3 ? "well above" : on.mult <= 0.7 ? "well below" : "close to";
   return `<section class="d-sec why" aria-labelledby="h-why">
     <h3 id="h-why">Why the model says this</h3>
     <ol class="steps">
       <li><b>Start from 2022 here.</b> The left column below is how this seat voted last time.</li>
-      <li><b>Apply the statewide polls.</b> Labor ${sw("ALP")}, Coalition ${sw("LNP")}, Greens ${sw("GRN")}, One Nation ${f1(st["2026"].ON)} (it stood in only 5 seats in 2022). Each party's vote here is scaled by its statewide change, so a party that's down a third statewide is down about a third here too.</li>
-      <li><b>Place One Nation.</b> It polled <b>${f1(on.fed)}</b> here at the 2025 federal election, against ${f1(on.fed_vic)} across Victoria (${ratio.toFixed(1)}×). The model assumes its 2026 vote lands in the same places, but less extremely: ${on.mult.toFixed(2)}× its statewide ${f1(on.state)} gives <b>${f1(Math.min(60, on.state * on.mult))}</b> here, ${big} its statewide figure. Everyone else shrinks to make room.</li>
+      <li><b>Apply the statewide polls.</b> Victoria-wide, 2022 state → <span class="fedc">2025 federal</span> → <b>polls now</b>: Labor ${sw("ALP")}; Coalition ${sw("LNP")}; Greens ${sw("GRN")}; One Nation — → <span class="fedc">${f1(fv.ON)}</span> → <b>${f1(st["2026"].ON)}</b> (it stood in only 5 state seats in 2022). Each party's vote here is scaled by its statewide change, so a party that's down a third statewide is down about a third here too.</li>
+      <li><b>Place One Nation.</b> It polled <b>${f1(on.fed)}</b> here at the 2025 federal election, against ${f1(fv.ON ?? on.fed_vic)} across Victoria (${ratio.toFixed(1)}×). The model assumes its 2026 vote lands in the same places, but less extremely: ${on.mult.toFixed(2)}× its statewide ${f1(on.state)} gives <b>${f1(Math.min(60, on.state * on.mult))}</b> here, ${big} its statewide figure. Everyone else shrinks to make room.</li>
       ${w.retiring ? `<li><b>Sitting MP retiring.</b> ${esc(PARTY[w.retiring])} loses ${w.retire_pts} points of personal vote.</li>` : ""}
       ${w.shift ? `<li><b>Local adjustment.</b> ${Object.entries(w.shift).map(([k, v]) => `${esc(PARTY[k])} ${v > 0 ? "+" : ""}${v} points`).join(", ")}, set by hand in the drivers file.</li>` : ""}
       <li><b>Add uncertainty and count.</b> 10,000 runs, each with its own statewide swing, local noise and preference flows, then a full preference count.</li>
     </ol>
-    <div class="sheet-wrap"><table class="sheet why-t"><thead><tr><th>Party</th><th>2022 here</th><th>2026 model</th><th>Change</th><th>Likely range</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="sheet-wrap"><table class="sheet why-t"><thead><tr><th>Party</th><th>2022 state</th><th class="fedc">2025 federal</th><th>2026 model</th><th>Change</th><th>Likely range</th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${s.fed2025 ? `<p class="hint" style="margin-top:6px">2025 federal: votes at the polling places inside this district, regrouped to state parties (postal and absent votes not included). Labor two-party here: <b>${f1(s.fed2025.alp_tpp)}</b> (Victoria ${f1(F.fed2025_vic?.alp_tpp)}). Federal and state contests differ: different candidates, teal and Nationals candidates in some federal seats only, and the model does not use the federal column except for One Nation.</p>` : ""}
     <div class="sens"><b>The judgement call here: how concentrated One Nation's vote is.</b>
       <div class="sens-row">${[[0.3, "Spread more evenly"], [on.elasticity, "Model's setting"], [0.9, "More concentrated"]].map(([g, l]) =>
         `<div${g === on.elasticity ? ' class="on"' : ""}><span class="v" style="color:${col("ON")}">${at(g) >= 60 ? "60%+" : f1(at(g))}</span><span class="l">${l} (${g})</span></div>`).join("")}</div>

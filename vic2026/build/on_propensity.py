@@ -14,6 +14,9 @@ from shapely.geometry import Point, shape
 from shapely.strtree import STRtree
 
 RAW = Path("data/raw/aec2025")
+GROUP = {"ALP": "ALP", "LP": "LIB", "NP": "NAT", "GRN": "GRN", "ON": "ON", "IND": "IND",
+         "FFP": "RMIN", "CYA": "RMIN", "LTP": "RMIN", "CEC": "RMIN", "GRPF": "RMIN",
+         "HMP": "PROG", "VNS": "PROG", "SAL": "PROG", "AJP": "PROG"}
 
 
 def rows(path):
@@ -33,17 +36,23 @@ def main():
            if r["State"] == "VIC" and r["Latitude"] and r["Longitude"]}
 
     on_divs = set()
-    place = defaultdict(lambda: {"on": 0, "formal": 0, "div": None})
+    place = defaultdict(lambda: {"on": 0, "formal": 0, "div": None, "g": defaultdict(int)})
     for r in rows(RAW / "HouseStateFirstPrefsByPollingPlaceDownload-31496-VIC.csv"):
         k = (r["DivisionNm"], r["PollingPlaceID"])
         v = int(r["OrdinaryVotes"] or 0)
         place[k]["formal"] += v if r["Surname"] != "Informal" else 0
         place[k]["div"] = r["DivisionNm"]
+        if r["Surname"] != "Informal":
+            place[k]["g"][GROUP.get(r["PartyAb"], "OTH")] += v
         if r["PartyAb"] == "ON":
             place[k]["on"] += v
             on_divs.add(r["DivisionNm"])
 
-    agg = defaultdict(lambda: {"on": 0, "formal": 0, "places": 0})
+    tpp = {}
+    for r in rows(RAW / "HouseTppByPollingPlaceDownload-31496.csv"):
+        if r["StateAb"] == "VIC":
+            tpp[(r["DivisionNm"], r["PollingPlaceID"])] = (int(r["Australian Labor Party Votes"]), int(r["TotalVotes"]))
+    agg = defaultdict(lambda: {"on": 0, "formal": 0, "places": 0, "g": defaultdict(int), "alp": 0, "tpp": 0})
     unplaced = 0
     for (div, ppid), v in place.items():
         if div not in on_divs or ppid not in loc or v["formal"] == 0:
@@ -55,8 +64,14 @@ def main():
             continue
         a = agg[slugs[hit[0]]]
         a["on"] += v["on"]; a["formal"] += v["formal"]; a["places"] += 1
+        for g, n in v["g"].items():
+            a["g"][g] += n
+        if (div, ppid) in tpp:
+            a["alp"] += tpp[(div, ppid)][0]; a["tpp"] += tpp[(div, ppid)][1]
 
-    out = {s: {"on_share": round(a["on"] / a["formal"], 5), "formal": a["formal"], "places": a["places"]}
+    out = {s: {"on_share": round(a["on"] / a["formal"], 5), "formal": a["formal"], "places": a["places"],
+               "prims": {g: round(100 * n / a["formal"], 1) for g, n in sorted(a["g"].items(), key=lambda kv: -kv[1])},
+               "alp_tpp": round(100 * a["alp"] / a["tpp"], 1) if a["tpp"] else None}
            for s, a in sorted(agg.items()) if a["formal"] > 0}
     tot_on = sum(a["on"] for a in agg.values()); tot_f = sum(a["formal"] for a in agg.values())
     Path("data/vic2026/on_federal2025.json").write_text(json.dumps(

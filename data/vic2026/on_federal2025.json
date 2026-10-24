@@ -45,442 +45,1321 @@
   "albert-park": {
    "on_share": 0.02689,
    "formal": 36377,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 38.4,
+    "GRN": 28.4,
+    "LIB": 27.5,
+    "ON": 2.7,
+    "IND": 1.8,
+    "RMIN": 1.1,
+    "OTH": 0.1
+   },
+   "alp_tpp": 67.0
   },
   "ashwood": {
    "on_share": 0.01743,
    "formal": 51164,
-   "places": 26
+   "places": 26,
+   "prims": {
+    "ALP": 37.4,
+    "LIB": 35.3,
+    "GRN": 12.8,
+    "IND": 9.5,
+    "RMIN": 3.3,
+    "ON": 1.7
+   },
+   "alp_tpp": 57.6
   },
   "bass": {
    "on_share": 0.07125,
    "formal": 48449,
-   "places": 28
+   "places": 28,
+   "prims": {
+    "LIB": 31.0,
+    "ALP": 30.8,
+    "IND": 15.7,
+    "GRN": 7.8,
+    "ON": 7.1,
+    "RMIN": 4.5,
+    "PROG": 3.1
+   },
+   "alp_tpp": 53.2
   },
   "bayswater": {
    "on_share": 0.03773,
    "formal": 40446,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "ALP": 37.0,
+    "LIB": 33.5,
+    "GRN": 12.9,
+    "RMIN": 6.3,
+    "IND": 6.2,
+    "ON": 3.8,
+    "PROG": 0.2
+   },
+   "alp_tpp": 56.7
   },
   "bellarine": {
    "on_share": 0.02978,
    "formal": 35831,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 38.1,
+    "LIB": 34.5,
+    "GRN": 13.5,
+    "IND": 5.0,
+    "RMIN": 3.2,
+    "ON": 3.0,
+    "PROG": 2.7
+   },
+   "alp_tpp": 58.2
   },
   "benambra": {
    "on_share": 0.07658,
    "formal": 34067,
-   "places": 24
+   "places": 24,
+   "prims": {
+    "IND": 45.0,
+    "LIB": 29.6,
+    "ON": 7.7,
+    "ALP": 7.5,
+    "GRN": 3.7,
+    "RMIN": 3.6,
+    "PROG": 2.9
+   },
+   "alp_tpp": 43.8
   },
   "bendigo-east": {
    "on_share": 0.04997,
    "formal": 37800,
-   "places": 28
+   "places": 28,
+   "prims": {
+    "NAT": 35.6,
+    "ALP": 31.7,
+    "LIB": 9.0,
+    "GRN": 8.7,
+    "ON": 5.0,
+    "PROG": 4.7,
+    "RMIN": 4.4,
+    "IND": 1.0
+   },
+   "alp_tpp": 46.3
   },
   "bendigo-west": {
    "on_share": 0.03807,
    "formal": 41766,
-   "places": 24
+   "places": 24,
+   "prims": {
+    "ALP": 34.8,
+    "NAT": 28.5,
+    "GRN": 14.4,
+    "LIB": 8.6,
+    "PROG": 5.4,
+    "ON": 3.8,
+    "RMIN": 3.6,
+    "IND": 0.9
+   },
+   "alp_tpp": 55.4
   },
   "bentleigh": {
    "on_share": 0.03526,
    "formal": 41157,
-   "places": 22
+   "places": 22,
+   "prims": {
+    "LIB": 34.5,
+    "ALP": 32.8,
+    "IND": 14.3,
+    "GRN": 10.8,
+    "RMIN": 4.1,
+    "ON": 3.5
+   },
+   "alp_tpp": 56.5
   },
   "berwick": {
    "on_share": 0.0669,
    "formal": 41541,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 37.1,
+    "LIB": 36.3,
+    "GRN": 12.0,
+    "RMIN": 6.7,
+    "ON": 6.7,
+    "PROG": 1.2
+   },
+   "alp_tpp": 52.5
   },
   "box-hill": {
    "on_share": 0.01582,
    "formal": 39697,
-   "places": 23
+   "places": 23,
+   "prims": {
+    "ALP": 40.1,
+    "LIB": 32.9,
+    "GRN": 13.2,
+    "IND": 7.8,
+    "RMIN": 4.4,
+    "ON": 1.6
+   },
+   "alp_tpp": 60.0
   },
   "brighton": {
    "on_share": 0.01615,
    "formal": 35480,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "LIB": 43.4,
+    "IND": 24.4,
+    "ALP": 16.4,
+    "GRN": 11.7,
+    "RMIN": 2.4,
+    "ON": 1.6
+   },
+   "alp_tpp": 47.8
   },
   "broadmeadows": {
    "on_share": 0.04765,
    "formal": 31352,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "ALP": 35.6,
+    "GRN": 19.1,
+    "LIB": 16.3,
+    "IND": 13.1,
+    "PROG": 5.5,
+    "RMIN": 5.1,
+    "ON": 4.8,
+    "OTH": 0.5
+   },
+   "alp_tpp": 70.4
   },
   "brunswick": {
    "on_share": 0.02277,
    "formal": 41287,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "GRN": 42.2,
+    "ALP": 33.1,
+    "PROG": 12.0,
+    "LIB": 8.5,
+    "ON": 2.3,
+    "OTH": 1.1,
+    "RMIN": 0.6,
+    "IND": 0.2
+   },
+   "alp_tpp": 87.3
   },
   "bulleen": {
    "on_share": 0.01975,
    "formal": 22685,
-   "places": 14
+   "places": 14,
+   "prims": {
+    "LIB": 43.2,
+    "ALP": 32.4,
+    "GRN": 9.8,
+    "IND": 6.5,
+    "RMIN": 6.2,
+    "ON": 2.0
+   },
+   "alp_tpp": 47.4
   },
   "bundoora": {
    "on_share": 0.05561,
    "formal": 61442,
-   "places": 21
+   "places": 21,
+   "prims": {
+    "ALP": 42.5,
+    "LIB": 29.6,
+    "GRN": 12.1,
+    "ON": 5.6,
+    "RMIN": 5.1,
+    "IND": 2.6,
+    "PROG": 2.5,
+    "OTH": 0.1
+   },
+   "alp_tpp": 60.0
   },
   "carrum": {
    "on_share": 0.0706,
    "formal": 35140,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 40.0,
+    "LIB": 31.1,
+    "GRN": 11.2,
+    "ON": 7.1,
+    "PROG": 4.8,
+    "RMIN": 2.9,
+    "IND": 2.3,
+    "OTH": 0.7
+   },
+   "alp_tpp": 58.4
   },
   "caulfield": {
    "on_share": 0.01917,
    "formal": 12310,
-   "places": 12
+   "places": 12,
+   "prims": {
+    "LIB": 37.9,
+    "ALP": 27.6,
+    "GRN": 18.1,
+    "IND": 12.6,
+    "ON": 1.9,
+    "RMIN": 1.9
+   },
+   "alp_tpp": 56.1
   },
   "clarinda": {
    "on_share": 0.05332,
    "formal": 15624,
-   "places": 16
+   "places": 16,
+   "prims": {
+    "ALP": 51.2,
+    "LIB": 25.7,
+    "GRN": 12.7,
+    "ON": 5.3,
+    "RMIN": 5.1
+   },
+   "alp_tpp": 66.3
   },
   "cranbourne": {
    "on_share": 0.08482,
    "formal": 35179,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 46.4,
+    "LIB": 24.4,
+    "GRN": 11.6,
+    "ON": 8.5,
+    "RMIN": 4.9,
+    "PROG": 4.2
+   },
+   "alp_tpp": 65.1
   },
   "croydon": {
    "on_share": 0.03737,
    "formal": 30321,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "LIB": 37.7,
+    "ALP": 32.9,
+    "GRN": 12.4,
+    "IND": 7.1,
+    "RMIN": 5.7,
+    "ON": 3.7,
+    "PROG": 0.4
+   },
+   "alp_tpp": 52.3
   },
   "dandenong": {
    "on_share": 0.05245,
    "formal": 56665,
-   "places": 24
+   "places": 24,
+   "prims": {
+    "ALP": 54.8,
+    "LIB": 19.3,
+    "GRN": 13.5,
+    "RMIN": 5.7,
+    "ON": 5.2,
+    "PROG": 1.4
+   },
+   "alp_tpp": 72.4
   },
   "eildon": {
    "on_share": 0.07301,
    "formal": 29420,
-   "places": 38
+   "places": 38,
+   "prims": {
+    "LIB": 34.9,
+    "IND": 20.7,
+    "ALP": 19.2,
+    "GRN": 9.4,
+    "ON": 7.3,
+    "RMIN": 5.3,
+    "PROG": 3.0,
+    "OTH": 0.1
+   },
+   "alp_tpp": 47.3
   },
   "eltham": {
    "on_share": 0.03666,
    "formal": 22643,
-   "places": 16
+   "places": 16,
+   "prims": {
+    "ALP": 41.9,
+    "LIB": 28.9,
+    "GRN": 16.8,
+    "IND": 4.5,
+    "ON": 3.7,
+    "RMIN": 2.8,
+    "PROG": 1.2,
+    "OTH": 0.2
+   },
+   "alp_tpp": 63.4
   },
   "essendon": {
    "on_share": 0.04917,
    "formal": 49463,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "ALP": 40.6,
+    "LIB": 30.2,
+    "GRN": 22.7,
+    "ON": 4.9,
+    "PROG": 0.8,
+    "IND": 0.4,
+    "RMIN": 0.3,
+    "OTH": 0.1
+   },
+   "alp_tpp": 64.0
   },
   "eureka": {
    "on_share": 0.10208,
    "formal": 29242,
-   "places": 26
+   "places": 26,
+   "prims": {
+    "ALP": 37.4,
+    "LIB": 29.6,
+    "GRN": 12.3,
+    "ON": 10.2,
+    "RMIN": 4.4,
+    "PROG": 4.0,
+    "IND": 2.1
+   },
+   "alp_tpp": 57.3
   },
   "euroa": {
    "on_share": 0.1005,
    "formal": 31025,
-   "places": 33
+   "places": 33,
+   "prims": {
+    "NAT": 24.1,
+    "ALP": 22.3,
+    "IND": 15.4,
+    "LIB": 13.0,
+    "ON": 10.0,
+    "RMIN": 7.2,
+    "GRN": 6.3,
+    "PROG": 1.6,
+    "OTH": 0.0
+   },
+   "alp_tpp": 42.5
   },
   "evelyn": {
    "on_share": 0.0498,
    "formal": 30522,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "LIB": 45.5,
+    "ALP": 22.9,
+    "GRN": 9.4,
+    "IND": 8.9,
+    "RMIN": 6.6,
+    "ON": 5.0,
+    "PROG": 1.7
+   },
+   "alp_tpp": 42.2
   },
   "footscray": {
    "on_share": 0.03327,
    "formal": 29427,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 38.8,
+    "GRN": 30.7,
+    "LIB": 14.8,
+    "PROG": 9.6,
+    "ON": 3.3,
+    "RMIN": 2.7,
+    "OTH": 0.0,
+    "IND": 0.0
+   },
+   "alp_tpp": 77.0
   },
   "frankston": {
    "on_share": 0.06007,
    "formal": 33130,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 38.8,
+    "LIB": 30.1,
+    "GRN": 13.3,
+    "ON": 6.0,
+    "PROG": 4.9,
+    "IND": 3.7,
+    "RMIN": 2.4,
+    "OTH": 0.8
+   },
+   "alp_tpp": 59.6
   },
   "geelong": {
    "on_share": 0.07218,
    "formal": 44096,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 41.4,
+    "LIB": 26.7,
+    "GRN": 18.2,
+    "ON": 7.2,
+    "IND": 3.5,
+    "PROG": 2.6,
+    "RMIN": 0.5
+   },
+   "alp_tpp": 63.3
   },
   "gippsland-east": {
    "on_share": 0.12105,
    "formal": 34563,
-   "places": 33
+   "places": 33,
+   "prims": {
+    "NAT": 58.8,
+    "ALP": 18.1,
+    "ON": 12.1,
+    "GRN": 8.2,
+    "RMIN": 2.9
+   },
+   "alp_tpp": 26.7
   },
   "gippsland-south": {
    "on_share": 0.10838,
    "formal": 35275,
-   "places": 43
+   "places": 43,
+   "prims": {
+    "NAT": 37.4,
+    "ALP": 17.8,
+    "LIB": 12.7,
+    "IND": 11.0,
+    "ON": 10.8,
+    "GRN": 6.1,
+    "RMIN": 2.9,
+    "PROG": 1.4
+   },
+   "alp_tpp": 32.2
   },
   "glen-waverley": {
    "on_share": 0.01799,
    "formal": 18958,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "ALP": 42.6,
+    "LIB": 34.9,
+    "GRN": 11.0,
+    "IND": 5.8,
+    "RMIN": 3.9,
+    "ON": 1.8
+   },
+   "alp_tpp": 58.1
   },
   "greenvale": {
    "on_share": 0.03064,
    "formal": 17524,
-   "places": 13
+   "places": 13,
+   "prims": {
+    "IND": 32.0,
+    "ALP": 30.4,
+    "LIB": 14.5,
+    "RMIN": 8.2,
+    "GRN": 8.0,
+    "PROG": 3.5,
+    "ON": 3.1,
+    "OTH": 0.4
+   },
+   "alp_tpp": 67.0
   },
   "hastings": {
    "on_share": 0.08398,
    "formal": 29672,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "LIB": 35.2,
+    "ALP": 27.7,
+    "IND": 16.4,
+    "ON": 8.4,
+    "GRN": 7.9,
+    "RMIN": 3.0,
+    "PROG": 1.2,
+    "OTH": 0.2
+   },
+   "alp_tpp": 49.7
   },
   "hawthorn": {
    "on_share": 0.01017,
    "formal": 21238,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "IND": 38.7,
+    "LIB": 34.3,
+    "ALP": 13.8,
+    "GRN": 9.8,
+    "RMIN": 2.4,
+    "ON": 1.0
+   },
+   "alp_tpp": 56.5
   },
   "ivanhoe": {
    "on_share": 0.02864,
    "formal": 35228,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 43.4,
+    "LIB": 26.8,
+    "GRN": 17.1,
+    "IND": 7.4,
+    "ON": 2.9,
+    "RMIN": 2.1,
+    "PROG": 0.3
+   },
+   "alp_tpp": 66.3
   },
   "kalkallo": {
    "on_share": 0.03536,
    "formal": 37722,
-   "places": 16
+   "places": 16,
+   "prims": {
+    "ALP": 32.8,
+    "IND": 29.0,
+    "LIB": 17.0,
+    "GRN": 7.9,
+    "RMIN": 5.8,
+    "ON": 3.5,
+    "PROG": 3.4,
+    "OTH": 0.5
+   },
+   "alp_tpp": 62.7
   },
   "kew": {
    "on_share": 0.01072,
    "formal": 39556,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "LIB": 40.9,
+    "IND": 34.2,
+    "ALP": 13.6,
+    "GRN": 7.9,
+    "RMIN": 2.3,
+    "ON": 1.1,
+    "OTH": 0.0
+   },
+   "alp_tpp": 49.4
   },
   "kororoit": {
    "on_share": 0.04818,
    "formal": 37841,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 46.2,
+    "LIB": 28.2,
+    "GRN": 10.7,
+    "PROG": 5.3,
+    "ON": 4.8,
+    "RMIN": 4.8
+   },
+   "alp_tpp": 62.6
   },
   "lara": {
    "on_share": 0.12366,
    "formal": 38485,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "ALP": 45.0,
+    "LIB": 22.0,
+    "GRN": 13.0,
+    "ON": 12.4,
+    "PROG": 4.0,
+    "IND": 3.6,
+    "RMIN": 0.1
+   },
+   "alp_tpp": 64.0
   },
   "laverton": {
    "on_share": 0.04215,
    "formal": 43625,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 45.4,
+    "GRN": 21.2,
+    "LIB": 21.0,
+    "RMIN": 4.3,
+    "ON": 4.2,
+    "PROG": 3.7,
+    "IND": 0.2
+   },
+   "alp_tpp": 69.3
   },
   "lowan": {
    "on_share": 0.08734,
    "formal": 36971,
-   "places": 44
+   "places": 44,
+   "prims": {
+    "NAT": 32.4,
+    "LIB": 17.8,
+    "ALP": 13.9,
+    "IND": 11.2,
+    "ON": 8.7,
+    "RMIN": 8.6,
+    "GRN": 6.5,
+    "PROG": 0.9
+   },
+   "alp_tpp": 30.7
   },
   "macedon": {
    "on_share": 0.06079,
    "formal": 28079,
-   "places": 28
+   "places": 28,
+   "prims": {
+    "ALP": 37.4,
+    "LIB": 27.4,
+    "GRN": 15.5,
+    "ON": 6.1,
+    "PROG": 5.0,
+    "RMIN": 4.6,
+    "NAT": 2.8,
+    "OTH": 0.7,
+    "IND": 0.5
+   },
+   "alp_tpp": 58.8
   },
   "malvern": {
    "on_share": 0.01352,
    "formal": 39647,
-   "places": 21
+   "places": 21,
+   "prims": {
+    "LIB": 48.0,
+    "ALP": 19.8,
+    "IND": 17.6,
+    "GRN": 11.3,
+    "RMIN": 2.0,
+    "ON": 1.4
+   },
+   "alp_tpp": 45.2
   },
   "melbourne": {
    "on_share": 0.02442,
    "formal": 36029,
-   "places": 50
+   "places": 50,
+   "prims": {
+    "GRN": 42.5,
+    "ALP": 32.8,
+    "LIB": 16.3,
+    "IND": 3.3,
+    "ON": 2.4,
+    "OTH": 1.5,
+    "PROG": 0.7,
+    "RMIN": 0.4
+   },
+   "alp_tpp": 77.8
   },
   "melton": {
    "on_share": 0.07965,
    "formal": 35016,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 43.4,
+    "LIB": 28.7,
+    "GRN": 10.0,
+    "ON": 8.0,
+    "PROG": 5.9,
+    "RMIN": 4.1
+   },
+   "alp_tpp": 60.6
   },
   "mildura": {
    "on_share": 0.10765,
    "formal": 34082,
-   "places": 30
+   "places": 30,
+   "prims": {
+    "NAT": 51.5,
+    "ALP": 17.7,
+    "ON": 10.8,
+    "RMIN": 10.3,
+    "GRN": 9.8
+   },
+   "alp_tpp": 29.9
   },
   "mill-park": {
    "on_share": 0.06909,
    "formal": 13894,
-   "places": 10
+   "places": 10,
+   "prims": {
+    "ALP": 43.1,
+    "LIB": 21.0,
+    "RMIN": 12.9,
+    "GRN": 10.4,
+    "ON": 6.9,
+    "PROG": 5.7
+   },
+   "alp_tpp": 63.1
   },
   "monbulk": {
    "on_share": 0.05227,
    "formal": 21655,
-   "places": 25
+   "places": 25,
+   "prims": {
+    "ALP": 28.2,
+    "LIB": 27.2,
+    "GRN": 17.8,
+    "IND": 13.7,
+    "RMIN": 6.1,
+    "ON": 5.2,
+    "PROG": 1.8
+   },
+   "alp_tpp": 60.7
   },
   "mordialloc": {
    "on_share": 0.04521,
    "formal": 37582,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "ALP": 45.8,
+    "LIB": 31.0,
+    "GRN": 14.6,
+    "ON": 4.5,
+    "RMIN": 3.1,
+    "PROG": 0.6,
+    "IND": 0.3,
+    "OTH": 0.1
+   },
+   "alp_tpp": 61.7
   },
   "mornington": {
    "on_share": 0.03626,
    "formal": 35382,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "LIB": 42.2,
+    "IND": 22.7,
+    "ALP": 22.5,
+    "GRN": 6.6,
+    "ON": 3.6,
+    "RMIN": 2.0,
+    "PROG": 0.2,
+    "OTH": 0.1
+   },
+   "alp_tpp": 45.9
   },
   "morwell": {
    "on_share": 0.16008,
    "formal": 44871,
-   "places": 22
+   "places": 22,
+   "prims": {
+    "NAT": 33.4,
+    "ALP": 25.7,
+    "ON": 16.0,
+    "GRN": 7.8,
+    "IND": 6.2,
+    "LIB": 5.7,
+    "RMIN": 4.1,
+    "PROG": 1.1
+   },
+   "alp_tpp": 40.0
   },
   "mulgrave": {
    "on_share": 0.0382,
    "formal": 31830,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "ALP": 48.7,
+    "LIB": 28.4,
+    "GRN": 11.3,
+    "RMIN": 6.2,
+    "ON": 3.8,
+    "IND": 1.3,
+    "PROG": 0.4
+   },
+   "alp_tpp": 63.7
   },
   "murray-plains": {
    "on_share": 0.11015,
    "formal": 36595,
-   "places": 37
+   "places": 37,
+   "prims": {
+    "NAT": 54.2,
+    "ALP": 17.0,
+    "ON": 11.0,
+    "RMIN": 10.8,
+    "GRN": 6.2,
+    "LIB": 0.6,
+    "PROG": 0.2,
+    "IND": 0.0
+   },
+   "alp_tpp": 26.5
   },
   "narracan": {
    "on_share": 0.09067,
    "formal": 34962,
-   "places": 32
+   "places": 32,
+   "prims": {
+    "LIB": 36.7,
+    "IND": 23.3,
+    "ALP": 18.3,
+    "ON": 9.1,
+    "RMIN": 5.2,
+    "GRN": 4.6,
+    "PROG": 2.7
+   },
+   "alp_tpp": 40.4
   },
   "narre-warren-north": {
    "on_share": 0.08913,
    "formal": 19556,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 44.6,
+    "LIB": 18.5,
+    "GRN": 14.5,
+    "RMIN": 9.7,
+    "ON": 8.9,
+    "PROG": 3.8
+   },
+   "alp_tpp": 67.6
   },
   "narre-warren-south": {
    "on_share": 0.07322,
    "formal": 32602,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "ALP": 49.1,
+    "LIB": 20.6,
+    "GRN": 12.9,
+    "ON": 7.3,
+    "RMIN": 6.1,
+    "PROG": 4.0
+   },
+   "alp_tpp": 68.9
   },
   "nepean": {
    "on_share": 0.05194,
    "formal": 31110,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "LIB": 39.1,
+    "IND": 25.9,
+    "ALP": 21.9,
+    "GRN": 5.6,
+    "ON": 5.2,
+    "RMIN": 2.3
+   },
+   "alp_tpp": 46.9
   },
   "niddrie": {
    "on_share": 0.08415,
    "formal": 25431,
-   "places": 16
+   "places": 16,
+   "prims": {
+    "ALP": 40.7,
+    "LIB": 35.9,
+    "GRN": 14.0,
+    "ON": 8.4,
+    "PROG": 0.4,
+    "RMIN": 0.4,
+    "IND": 0.1,
+    "OTH": 0.0
+   },
+   "alp_tpp": 55.5
   },
   "northcote": {
    "on_share": 0.03559,
    "formal": 40100,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 41.8,
+    "GRN": 29.2,
+    "PROG": 13.0,
+    "LIB": 12.3,
+    "ON": 3.6,
+    "IND": 0.1,
+    "OTH": 0.1,
+    "RMIN": 0.0
+   },
+   "alp_tpp": 83.1
   },
   "oakleigh": {
    "on_share": 0.04005,
    "formal": 39571,
-   "places": 19
+   "places": 19,
+   "prims": {
+    "ALP": 47.3,
+    "LIB": 25.0,
+    "GRN": 17.3,
+    "RMIN": 4.9,
+    "ON": 4.0,
+    "IND": 1.5
+   },
+   "alp_tpp": 67.9
   },
   "ovens-valley": {
    "on_share": 0.07421,
    "formal": 36963,
-   "places": 31
+   "places": 31,
+   "prims": {
+    "IND": 32.4,
+    "LIB": 20.4,
+    "NAT": 17.1,
+    "ALP": 12.1,
+    "ON": 7.4,
+    "RMIN": 5.1,
+    "GRN": 3.7,
+    "PROG": 1.8
+   },
+   "alp_tpp": 39.1
   },
   "pakenham": {
    "on_share": 0.08061,
    "formal": 32612,
-   "places": 14
+   "places": 14,
+   "prims": {
+    "LIB": 37.0,
+    "ALP": 31.0,
+    "GRN": 14.7,
+    "RMIN": 9.0,
+    "ON": 8.1,
+    "IND": 0.2,
+    "PROG": 0.0
+   },
+   "alp_tpp": 48.7
   },
   "pascoe-vale": {
    "on_share": 0.03968,
    "formal": 19079,
-   "places": 19
+   "places": 19,
+   "prims": {
+    "ALP": 35.0,
+    "GRN": 34.9,
+    "LIB": 13.0,
+    "PROG": 11.4,
+    "ON": 4.0,
+    "RMIN": 0.9,
+    "OTH": 0.8
+   },
+   "alp_tpp": 80.0
   },
   "point-cook": {
    "on_share": 0.06556,
    "formal": 38180,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 46.7,
+    "LIB": 27.1,
+    "GRN": 15.1,
+    "ON": 6.6,
+    "RMIN": 4.6,
+    "IND": 0.1
+   },
+   "alp_tpp": 63.3
   },
   "polwarth": {
    "on_share": 0.03426,
    "formal": 45005,
-   "places": 38
+   "places": 38,
+   "prims": {
+    "LIB": 38.8,
+    "ALP": 24.0,
+    "IND": 17.1,
+    "GRN": 10.5,
+    "ON": 3.4,
+    "RMIN": 3.4,
+    "PROG": 2.9
+   },
+   "alp_tpp": 49.2
   },
   "prahran": {
    "on_share": 0.0227,
    "formal": 16959,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "GRN": 35.5,
+    "ALP": 32.7,
+    "LIB": 22.8,
+    "IND": 5.3,
+    "ON": 2.3,
+    "OTH": 0.8,
+    "RMIN": 0.7
+   },
+   "alp_tpp": 71.2
   },
   "preston": {
    "on_share": 0.06103,
    "formal": 36193,
-   "places": 23
+   "places": 23,
+   "prims": {
+    "ALP": 41.3,
+    "GRN": 23.3,
+    "LIB": 15.2,
+    "PROG": 13.6,
+    "ON": 6.1,
+    "RMIN": 0.3,
+    "IND": 0.2,
+    "OTH": 0.0
+   },
+   "alp_tpp": 77.5
   },
   "richmond": {
    "on_share": 0.01903,
    "formal": 35047,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "GRN": 41.8,
+    "ALP": 32.6,
+    "LIB": 15.0,
+    "IND": 5.6,
+    "ON": 1.9,
+    "PROG": 1.7,
+    "OTH": 1.4,
+    "RMIN": 0.1
+   },
+   "alp_tpp": 79.7
   },
   "ringwood": {
    "on_share": 0.02211,
    "formal": 22933,
-   "places": 23
+   "places": 23,
+   "prims": {
+    "ALP": 37.1,
+    "LIB": 30.6,
+    "GRN": 15.6,
+    "IND": 9.7,
+    "RMIN": 4.8,
+    "ON": 2.2
+   },
+   "alp_tpp": 60.8
   },
   "ripon": {
    "on_share": 0.09986,
    "formal": 28490,
-   "places": 39
+   "places": 39,
+   "prims": {
+    "ALP": 30.1,
+    "LIB": 19.3,
+    "NAT": 16.5,
+    "ON": 10.0,
+    "GRN": 8.8,
+    "RMIN": 7.6,
+    "IND": 6.8,
+    "PROG": 0.9
+   },
+   "alp_tpp": 46.8
   },
   "rowville": {
    "on_share": 0.028,
    "formal": 40601,
-   "places": 19
+   "places": 19,
+   "prims": {
+    "LIB": 40.9,
+    "ALP": 37.4,
+    "GRN": 10.1,
+    "RMIN": 5.3,
+    "IND": 3.4,
+    "ON": 2.8,
+    "PROG": 0.1
+   },
+   "alp_tpp": 51.2
   },
   "sandringham": {
    "on_share": 0.01859,
    "formal": 38361,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "LIB": 40.3,
+    "IND": 31.7,
+    "ALP": 15.2,
+    "GRN": 8.1,
+    "RMIN": 2.9,
+    "ON": 1.9
+   },
+   "alp_tpp": 49.6
   },
   "shepparton": {
    "on_share": 0.10576,
    "formal": 39487,
-   "places": 29
+   "places": 29,
+   "prims": {
+    "NAT": 48.3,
+    "ALP": 22.9,
+    "ON": 10.6,
+    "RMIN": 9.9,
+    "GRN": 8.3
+   },
+   "alp_tpp": 34.3
   },
   "south-barwon": {
    "on_share": 0.04676,
    "formal": 20488,
-   "places": 18
+   "places": 18,
+   "prims": {
+    "ALP": 39.2,
+    "LIB": 28.1,
+    "GRN": 17.8,
+    "ON": 4.7,
+    "IND": 4.5,
+    "PROG": 3.3,
+    "RMIN": 2.4
+   },
+   "alp_tpp": 63.0
   },
   "south-west-coast": {
    "on_share": 0.03462,
    "formal": 41223,
-   "places": 29
+   "places": 29,
+   "prims": {
+    "LIB": 42.1,
+    "IND": 39.1,
+    "ALP": 7.8,
+    "ON": 3.5,
+    "RMIN": 3.1,
+    "PROG": 2.7,
+    "GRN": 1.9
+   },
+   "alp_tpp": 39.3
   },
   "st-albans": {
    "on_share": 0.05039,
    "formal": 30086,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 45.1,
+    "LIB": 21.3,
+    "GRN": 19.1,
+    "ON": 5.0,
+    "RMIN": 4.8,
+    "PROG": 4.6
+   },
+   "alp_tpp": 64.6
   },
   "sunbury": {
    "on_share": 0.09054,
    "formal": 31159,
-   "places": 14
+   "places": 14,
+   "prims": {
+    "ALP": 39.1,
+    "LIB": 30.9,
+    "GRN": 10.9,
+    "ON": 9.1,
+    "PROG": 6.0,
+    "RMIN": 3.5,
+    "IND": 0.5,
+    "OTH": 0.1
+   },
+   "alp_tpp": 57.4
   },
   "sydenham": {
    "on_share": 0.06932,
    "formal": 29429,
-   "places": 15
+   "places": 15,
+   "prims": {
+    "ALP": 42.2,
+    "LIB": 30.9,
+    "GRN": 9.4,
+    "ON": 6.9,
+    "PROG": 6.0,
+    "RMIN": 4.6
+   },
+   "alp_tpp": 58.5
   },
   "tarneit": {
    "on_share": 0.05944,
    "formal": 31748,
-   "places": 14
+   "places": 14,
+   "prims": {
+    "ALP": 44.3,
+    "LIB": 24.2,
+    "GRN": 17.8,
+    "ON": 5.9,
+    "RMIN": 5.3,
+    "IND": 2.4
+   },
+   "alp_tpp": 65.9
   },
   "thomastown": {
    "on_share": 0.05784,
    "formal": 40079,
-   "places": 24
+   "places": 24,
+   "prims": {
+    "ALP": 45.3,
+    "LIB": 19.4,
+    "RMIN": 10.9,
+    "PROG": 8.8,
+    "GRN": 8.7,
+    "ON": 5.8,
+    "IND": 0.9,
+    "OTH": 0.1
+   },
+   "alp_tpp": 65.8
   },
   "warrandyte": {
    "on_share": 0.02545,
    "formal": 62127,
-   "places": 28
+   "places": 28,
+   "prims": {
+    "LIB": 43.4,
+    "ALP": 31.4,
+    "GRN": 10.6,
+    "IND": 6.8,
+    "RMIN": 4.9,
+    "ON": 2.5,
+    "PROG": 0.3
+   },
+   "alp_tpp": 47.9
   },
   "wendouree": {
    "on_share": 0.06841,
    "formal": 57782,
-   "places": 19
+   "places": 19,
+   "prims": {
+    "ALP": 43.2,
+    "LIB": 29.4,
+    "GRN": 13.8,
+    "ON": 6.8,
+    "RMIN": 4.2,
+    "IND": 2.5,
+    "PROG": 0.0
+   },
+   "alp_tpp": 60.6
   },
   "werribee": {
    "on_share": 0.07384,
    "formal": 41538,
-   "places": 17
+   "places": 17,
+   "prims": {
+    "ALP": 43.8,
+    "LIB": 26.7,
+    "GRN": 13.5,
+    "ON": 7.4,
+    "RMIN": 6.7,
+    "IND": 1.8,
+    "PROG": 0.0
+   },
+   "alp_tpp": 62.0
   },
   "williamstown": {
    "on_share": 0.04871,
    "formal": 36710,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "ALP": 45.1,
+    "LIB": 24.3,
+    "GRN": 21.6,
+    "ON": 4.9,
+    "RMIN": 3.3,
+    "PROG": 0.9
+   },
+   "alp_tpp": 68.2
   },
   "yan-yean": {
    "on_share": 0.06415,
    "formal": 25676,
-   "places": 20
+   "places": 20,
+   "prims": {
+    "ALP": 38.8,
+    "LIB": 32.6,
+    "GRN": 9.6,
+    "RMIN": 6.5,
+    "ON": 6.4,
+    "PROG": 5.4,
+    "OTH": 0.6
+   },
+   "alp_tpp": 54.4
   }
  }
 }
