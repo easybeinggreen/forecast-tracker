@@ -18,10 +18,20 @@ COMMONS = "https://commons.wikimedia.org/w/api.php"
 FREE = re.compile(r"^(CC0|CC BY|CC-BY|Public domain|PD|Attribution|GFDL|CC BY-SA)", re.I)
 
 
+def getj(s, url, params):
+    for i in range(4):
+        r = s.get(url, params=params, headers=UA, timeout=30)
+        try:
+            return r.json()
+        except ValueError:
+            time.sleep(10 * (i + 1))
+    raise RuntimeError(f"no JSON after retries ({r.status_code})")
+
+
 def find_page(s, name):
     q = {"action": "query", "list": "search", "format": "json", "srlimit": 5,
          "srsearch": f'{name} Australian politician'}
-    for h in s.get(API, params=q, headers=UA, timeout=30).json()["query"]["search"]:
+    for h in getj(s, API, q)["query"]["search"]:
         t = h["title"]
         last = name.split()[-1].lower()
         if last in t.lower() and "election" not in t.lower() and "district" not in t.lower():
@@ -42,20 +52,23 @@ def main():
     names = sorted({s["mp"]["name"] for s in F["seats"] if not s["mp"]["name"].startswith("Vacant")}
                    | {p["leader"]["name"] for p in F.get("parties", {}).values()})
     s = requests.Session()
-    out = {}
+    dest = Path("site/data/photos.json")
+    out = json.loads(dest.read_text()) if dest.exists() else {}
     for name in names:
+        if name in out:
+            continue
         try:
             t = find_page(s, name)
             if not t:
                 print(name, "no page"); continue
             q = {"action": "query", "titles": t, "prop": "pageimages|info", "piprop": "thumbnail|name",
                  "pithumbsize": 240, "inprop": "url", "format": "json", "redirects": 1}
-            pg = next(iter(s.get(API, params=q, headers=UA, timeout=30).json()["query"]["pages"].values()))
+            pg = next(iter(getj(s, API, q)["query"]["pages"].values()))
             if "thumbnail" not in pg:
                 print(name, "no image", t); continue
             f = "File:" + pg["pageimage"]
             q = {"action": "query", "titles": f, "prop": "imageinfo", "iiprop": "extmetadata|url", "format": "json"}
-            ii = next(iter(s.get(COMMONS, params=q, headers=UA, timeout=30).json()["query"]["pages"].values()))
+            ii = next(iter(getj(s, COMMONS, q)["query"]["pages"].values()))
             md = (ii.get("imageinfo") or [{}])[0].get("extmetadata", {})
             lic = re.sub(r"<[^>]+>", "", md.get("LicenseShortName", {}).get("value", "")).strip()
             artist = re.sub(r"<[^>]+>", "", md.get("Artist", {}).get("value", "")).strip()
@@ -66,7 +79,7 @@ def main():
             print(name, "ok", lic)
         except Exception as e:  # noqa: BLE001
             print(name, "error", repr(e))
-        time.sleep(0.4)
+        time.sleep(1.5)
     Path("site/data/photos.json").write_text(json.dumps(out, indent=1))
     print(len(out), "of", len(names), "with free photos")
     Path("data/raw/photos_log.txt").write_text("\n".join(LOG))
