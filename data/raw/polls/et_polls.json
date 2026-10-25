@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T09:26:53.491Z",
+  "generated": "2026-10-25T21:31:46.267Z",
   "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
   "methodology": "docs/poll-methodology.md",
   "polls": [
@@ -393,6 +393,45 @@
           "publisher": "Pyxis Polling & Insights",
           "title": "Polling for the Public — Pyxis conducts Newspoll",
           "accessed": "2026-08-02"
+        }
+      ]
+    },
+    {
+      "id": "newspoll-2026-10",
+      "pollster": "Newspoll / Pyxis",
+      "commissioner": "the-australian",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-10-15",
+      "fieldwork_end": "2026-10-22",
+      "sample_size": 1017,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Victorian state voting intention conducted by Pyxis Polling & Insights as Newspoll for The Australian, fieldwork 15–22 Oct 2026, n=1,017. First Vic Newspoll since newspoll-2026-07 (23–26 Jul, one week before Ben Carroll replaced Jacinta Allan). Changes on July per Poll Bludger: ALP down four, L-NP up two, ONP up one, GRN up one. Others residual after ALP+LNP+GRN+ONP (9). Reported 2PP L-NP 55–45 vs ALP (not encoded). Figures confirmed via Poll Bludger; The Australian report is paywalled at access. Supersedes newspoll-2026-07 in the average via one-poll-per-pollster de-dupe.",
+      "primaries": {
+        "alp": 24,
+        "lnp": 33,
+        "onp": 20,
+        "grn": 14,
+        "others": 9
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.theaustralian.com.au/nation/politics/newspoll-coalition-on-track-to-end-12-years-of-labor-rule-in-victoria/news-story/de80200643073b5304702a952a05b3ec",
+          "publisher": "The Australian",
+          "title": "Newspoll: Coalition on track to end 12 years of Labor rule in Victoria",
+          "published": "2026-10-25",
+          "accessed": "2026-10-26"
+        },
+        {
+          "url": "https://www.pollbludger.net/2026/10/26/newspoll-labor-24-coalition-33-one-nation-20-in-victoria/",
+          "publisher": "The Poll Bludger",
+          "title": "Newspoll: Labor 24, Coalition 33, One Nation 20 in Victoria",
+          "published": "2026-10-26",
+          "accessed": "2026-10-26"
         }
       ]
     },

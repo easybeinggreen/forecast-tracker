@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T09:26:53.490Z",
+  "generated": "2026-10-25T21:31:46.267Z",
   "methodology": "docs/poll-methodology.md",
   "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
   "parameters": {
@@ -13,12 +13,13 @@
     "min_polls": 2,
     "min_pollsters": 2
   },
-  "as_of": "2026-10-10",
+  "as_of": "2026-10-22",
   "window_days_used": 45,
   "thin_series": false,
   "status": "ok",
   "status_reason": null,
   "included_poll_ids": [
+    "newspoll-2026-10",
     "resolve-2026-10-age",
     "redbridge-accent-2026-10-afr",
     "freshwater-2026-09",
@@ -26,64 +27,74 @@
   ],
   "excluded_from_average": [],
   "primaries": {
-    "alp": 24.5,
-    "lnp": 29.1,
-    "onp": 22.6,
-    "grn": 14.9,
+    "alp": 24.3,
+    "lnp": 30.4,
+    "onp": 21.8,
+    "grn": 14.6,
     "others": 8.9
   },
   "intervals": {
     "alp": {
-      "estimate": 24.5,
-      "se": 1.28,
-      "low": 22,
-      "high": 27,
-      "var_sampling_pp2": 0.63,
+      "estimate": 24.3,
+      "se": 1.24,
+      "low": 21.9,
+      "high": 26.7,
+      "var_sampling_pp2": 0.532,
       "var_between_pp2": 1
     },
     "lnp": {
-      "estimate": 29.1,
-      "se": 1.31,
-      "low": 26.5,
-      "high": 31.7,
-      "var_sampling_pp2": 0.702,
-      "var_between_pp2": 1.015
+      "estimate": 30.4,
+      "se": 2.31,
+      "low": 25.9,
+      "high": 34.9,
+      "var_sampling_pp2": 0.617,
+      "var_between_pp2": 4.698
     },
     "onp": {
-      "estimate": 22.6,
-      "se": 1.75,
-      "low": 19.2,
-      "high": 26,
-      "var_sampling_pp2": 0.6,
-      "var_between_pp2": 2.454
+      "estimate": 21.8,
+      "se": 1.97,
+      "low": 17.9,
+      "high": 25.7,
+      "var_sampling_pp2": 0.488,
+      "var_between_pp2": 3.379
     },
     "grn": {
-      "estimate": 14.9,
-      "se": 1.2,
-      "low": 12.6,
-      "high": 17.2,
-      "var_sampling_pp2": 0.435,
+      "estimate": 14.6,
+      "se": 1.17,
+      "low": 12.3,
+      "high": 16.9,
+      "var_sampling_pp2": 0.36,
       "var_between_pp2": 1
     },
     "others": {
       "estimate": 8.9,
-      "se": 2.43,
-      "low": 4.1,
-      "high": 13.7,
-      "var_sampling_pp2": 0.265,
-      "var_between_pp2": 5.616
+      "se": 1.95,
+      "low": 5.1,
+      "high": 12.7,
+      "var_sampling_pp2": 0.231,
+      "var_between_pp2": 3.567
     }
   },
   "weights": [
+    {
+      "id": "newspoll-2026-10",
+      "pollster": "Newspoll / Pyxis",
+      "fieldwork_end": "2026-10-22",
+      "sample_size": 1017,
+      "n_eff": 782.31,
+      "age_days": 0,
+      "decay": 1,
+      "weight": 782.31
+    },
     {
       "id": "resolve-2026-10-age",
       "pollster": "resolve",
       "fieldwork_end": "2026-10-10",
       "sample_size": 1000,
       "n_eff": 769.23,
-      "age_days": 0,
-      "decay": 1,
-      "weight": 769.23
+      "age_days": 12,
+      "decay": 0.673,
+      "weight": 517.65
     },
     {
       "id": "redbridge-accent-2026-10-afr",
@@ -91,9 +102,9 @@
       "fieldwork_end": "2026-10-08",
       "sample_size": 1008,
       "n_eff": 775.38,
-      "age_days": 2,
-      "decay": 0.9361,
-      "weight": 725.85
+      "age_days": 14,
+      "decay": 0.63,
+      "weight": 488.46
     },
     {
       "id": "freshwater-2026-09",
@@ -101,9 +112,9 @@
       "fieldwork_end": "2026-09-28",
       "sample_size": 1030,
       "n_eff": 792.31,
-      "age_days": 12,
-      "decay": 0.673,
-      "weight": 533.18
+      "age_days": 24,
+      "decay": 0.4529,
+      "weight": 358.81
     },
     {
       "id": "demosau-2026-09",
@@ -111,9 +122,9 @@
       "fieldwork_end": "2026-09-20",
       "sample_size": 1020,
       "n_eff": 784.62,
-      "age_days": 20,
-      "decay": 0.5168,
-      "weight": 405.47
+      "age_days": 32,
+      "decay": 0.3478,
+      "weight": 272.86
     }
   ],
   "bloc_split": {
@@ -139,21 +150,21 @@
     },
     "caveat": "Primary-vote groupings only. Not a two-party preferred result, seat model, or preference forecast. Others are minor parties and independents combined.",
     "core": {
-      "left": 39.4,
-      "right": 51.7,
+      "left": 38.9,
+      "right": 52.2,
       "other": 8.9
     },
     "other_split_proportional": {
       "method": "proportional_to_core_blocs",
-      "left": 43.2,
-      "right": 56.8,
+      "left": 42.7,
+      "right": 57.3,
       "left_from_other": 3.8,
       "right_from_other": 5.1
     },
     "other_split_even": {
       "method": "even_split",
-      "left": 43.9,
-      "right": 56.2,
+      "left": 43.4,
+      "right": 56.7,
       "left_from_other": 4.5,
       "right_from_other": 4.5
     }
