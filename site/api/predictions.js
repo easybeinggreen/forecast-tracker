@@ -17,6 +17,10 @@ export default async function handler(req, res) {
   if (stake > 0 && !(b.backed in probs)) return send(res, 400, { error: "Choose the outcome you are staking on." });
   if (stake > 0 && !(b.price_p > 0 && b.price_p < 1)) return send(res, 400, { error: "A stake needs a price between 0 and 100%." });
 
+  const sbOdds = b.sb_odds == null || b.sb_odds === "" ? null : Number(b.sb_odds);
+  if (sbOdds != null && !(sbOdds > 1 && sbOdds < 1000)) return send(res, 400, { error: "Sportsbet odds must be decimal odds above 1.00 (e.g. 2.50)." });
+  const sbStatus = sbOdds != null ? "priced" : b.sb_status === "not_offered" ? "not_offered" : null;
+
   try {
     await ensureSchema();
     const client = await db().connect();
@@ -29,10 +33,10 @@ export default async function handler(req, res) {
         return send(res, 409, { error: `That stake is more than your remaining ${BUDGET - rows[0].c} points.` });
       }
       const ins = await client.query(
-        `insert into vic_predictions (seat, probs, backed, stake, price_p, price_source, model_probs, adjustments, note)
-         values ($1,$2,$3,$4,$5,$6,$7,$8,$9) returning *`,
+        `insert into vic_predictions (seat, probs, backed, stake, price_p, price_source, model_probs, adjustments, note, sb_odds, sb_status)
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) returning *`,
         [b.seat, probs, stake > 0 ? b.backed : b.backed || null, stake, stake > 0 ? b.price_p : b.price_p || null,
-         b.price_source || null, b.model_probs || null, b.adjustments || null, (b.note || "").slice(0, 2000)]);
+         b.price_source || null, b.model_probs || null, b.adjustments || null, (b.note || "").slice(0, 2000), sbOdds, sbStatus]);
       await client.query("commit");
       send(res, 201, { prediction: ins.rows[0] });
     } catch (e) {

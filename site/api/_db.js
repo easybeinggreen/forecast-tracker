@@ -33,6 +33,9 @@ export async function ensureSchema() {
         note text
       );
       create index if not exists vic_predictions_seat on vic_predictions (seat, created_at);
+      -- shadow real-money tracking: Sportsbet's decimal odds for the backed outcome at lock time
+      alter table vic_predictions add column if not exists sb_odds numeric;
+      alter table vic_predictions add column if not exists sb_status text;  -- 'priced' | 'not_offered' | null (not checked)
       create table if not exists vic_market_odds (
         id bigint generated always as identity primary key,
         created_at timestamptz not null default now(),

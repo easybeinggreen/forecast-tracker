@@ -329,11 +329,21 @@ function renderLedger() {
       <div><div class="v">${S.ledger.budget.committed.toLocaleString("en-AU")}</div><div class="l">Points committed</div></div>
       <div><div class="v">${called}</div><div class="l">Seats called</div></div>
       <div><div class="v ${ev >= 0 ? "pos" : "neg"}">${ev >= 0 ? "+" : "−"}${Math.abs(ev).toFixed(0)}</div><div class="l">Expected profit, by your own odds</div></div></div>
-    ${P.length ? `<div class="table-wrap" style="margin:0"><table><thead><tr><th>Locked</th><th>Seat</th><th>Call</th><th class="num">Price</th><th class="num">Stake</th><th class="num">Returns if right</th><th>Why</th></tr></thead><tbody>
+    ${(() => { const sb = P.filter((r) => r.stake > 0 && r.sb_odds); const none = P.filter((r) => r.stake > 0 && r.sb_status === "not_offered").length;
+      const unk = P.filter((r) => r.stake > 0 && !r.sb_odds && r.sb_status !== "not_offered").length;
+      const staked = sb.reduce((a, r) => a + Number(r.stake), 0), back = sb.reduce((a, r) => a + Number(r.stake) * Number(r.sb_odds), 0);
+      const sev = sb.reduce((a, r) => a + Number(r.stake) * (Number(r.probs[r.backed]) * Number(r.sb_odds) - 1), 0);
+      return `<div class="sb-shadow"><h3>If it were real money at Sportsbet</h3><p class="hint">Each point treated as $1, placed at the Sportsbet odds you entered when you locked. Bookmaker odds include their margin, so this is tougher than the points ledger. Winnings are worked out once results are in.</p>
+        <div class="ledger-grid"><div><div class="v">$${staked.toLocaleString("en-AU")}</div><div class="l">Staked on ${sb.length} bet${sb.length === 1 ? "" : "s"}</div></div>
+        <div><div class="v">$${Math.round(back).toLocaleString("en-AU")}</div><div class="l">Back if every one wins</div></div>
+        <div><div class="v ${sev >= 0 ? "pos" : "neg"}">${sev >= 0 ? "+" : "−"}$${Math.abs(sev).toFixed(0)}</div><div class="l">Expected profit, by your odds</div></div>
+        <div><div class="v">${none}${unk ? ` <small>+${unk}</small>` : ""}</div><div class="l">Not offered${unk ? " (+ not checked)" : ""}</div></div></div></div>`; })()}
+    ${P.length ? `<div class="table-wrap" style="margin:0"><table><thead><tr><th>Locked</th><th>Seat</th><th>Call</th><th class="num">Price</th><th class="num">Stake</th><th class="num">Returns if right</th><th class="num">Sportsbet</th><th>Why</th></tr></thead><tbody>
       ${[...P].reverse().map((r) => `<tr><td>${new Date(r.created_at).toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" })}</td><td>${esc(r.seat === "statewide" ? "Statewide" : seatBy(r.seat)?.name || r.seat)}</td>
         <td>${r.backed ? `${esc(outName(r.backed))} ${pct(Number(r.probs[r.backed]))}` : "Probabilities only"}</td>
         <td class="num">${r.price_p ? `${pct(Number(r.price_p))} <span class="dim">${esc(r.price_source || "")}</span>` : "—"}</td>
-        <td class="num">${r.stake}</td><td class="num">${r.stake && r.price_p ? Math.round(Number(r.stake) / Number(r.price_p)) : "—"}</td><td>${esc(r.note || "")}</td></tr>`).join("")}
+        <td class="num">${r.stake}</td><td class="num">${r.stake && r.price_p ? Math.round(Number(r.stake) / Number(r.price_p)) : "—"}</td>
+        <td class="num">${r.sb_odds ? `$${Number(r.sb_odds).toFixed(2)} <span class="dim">→ $${Math.round(Number(r.stake) * Number(r.sb_odds))}</span>` : r.sb_status === "not_offered" ? '<span class="dim">not offered</span>' : '<span class="dim">—</span>'}</td><td>${esc(r.note || "")}</td></tr>`).join("")}
       </tbody></table></div>` : `<p class="locked-note">No calls yet. Open any seat, adjust the drivers if you disagree with the model, then lock your call.</p>`}`;
 }
 
@@ -586,6 +596,11 @@ function lockHTML(slug, outs) {
         <label>Stake on<select name="backed">${outs.map((k) => `<option value="${k}">${esc(outName(k))}</option>`).join("")}</select></label>
         <label>Points (${S.ledger.budget.remaining} left)<input name="stake" type="number" min="0" max="${S.ledger.budget.remaining}" step="1" value="0"></label>
       </div>
+      <div class="sb-row">
+        <label>Sportsbet odds for this outcome <span class="dim">(decimal, at this moment)</span><input name="sb_odds" type="number" min="1.01" step="0.01" placeholder="e.g. 2.50"></label>
+        <label class="chk"><input type="checkbox" name="sb_none"> Sportsbet doesn't offer it</label>
+        <a class="dim" href="https://www.sportsbet.com.au/betting/politics" target="_blank" rel="noopener">Check Sportsbet ↗</a>
+      </div>
       <div class="lock-out" id="lock-out"></div>
       <textarea name="note" placeholder="Why? The driver or story behind this call."></textarea>
       <div class="row-end"><button class="btn" type="submit">Lock call</button></div>
@@ -633,6 +648,11 @@ function priceFor(slug, k) {
   return { p: Math.min(0.99, Math.max(0.01, m || 0.01)), src: "model" };
 }
 
+function sbRecorded(slug, k) {
+  const o = (S.ledger?.odds || []).filter((r) => r.seat === slug && /sportsbet/i.test(r.source || "")).at(-1);
+  return o && o.odds[k] ? Number(o.odds[k]) : null;
+}
+
 function updateLockSummary() {
   const f = $("#lock-form"); if (!f) return;
   const outs = lockOutcomes();
@@ -647,14 +667,21 @@ function updateLockSummary() {
   $("#lock-out").innerHTML = `<div class="row"><span>Price for ${esc(outName(k))} (${pr.src === "model" ? "model, no odds recorded" : esc(pr.src)})</span><b>${pct(pr.p)}</b></div>
     <div class="row"><span>Your edge</span><b class="${edge >= 0 ? "pos" : "neg"}">${edge >= 0 ? "+" : "−"}${Math.abs(edge * 100).toFixed(0)} points</b></div>
     <div class="row"><span>If right, ${stake} pts returns</span><b>${Math.round(stake / pr.p)} pts</b></div>
-    <div class="row"><span>Expected profit by your own odds</span><b class="${ev >= 0 ? "pos" : "neg"}">${ev >= 0 ? "+" : "−"}${Math.abs(ev).toFixed(0)} pts</b></div>`;
+    <div class="row"><span>Expected profit by your own odds</span><b class="${ev >= 0 ? "pos" : "neg"}">${ev >= 0 ? "+" : "−"}${Math.abs(ev).toFixed(0)} pts</b></div>
+    ${(() => { const sb = Number(f.elements.sb_odds.value || 0); if (!(sb > 1) || !stake) return f.elements.sb_none.checked ? `<div class="row"><span>Sportsbet</span><b class="dim">not offered, no shadow bet</b></div>` : "";
+      const sev = stake * (mine * sb - 1);
+      return `<div class="row"><span>As real money at Sportsbet: $${stake} at $${sb.toFixed(2)} returns</span><b>$${(stake * sb).toFixed(0)}</b></div>
+        <div class="row"><span>Expected profit at Sportsbet, by your odds</span><b class="${sev >= 0 ? "pos" : "neg"}">${sev >= 0 ? "+" : "−"}$${Math.abs(sev).toFixed(0)}</b></div>`; })()}`;
 }
 
 function bindLock() {
   const f = $("#lock-form");
   if (f) {
     refreshLockDefaults();
-    f.addEventListener("input", (e) => { if (e.target.name !== "note") updateLockSummary(); });
+    const prefillSb = () => { const v = sbRecorded(S.seat, f.elements.backed.value); f.elements.sb_odds.value = v ? v.toFixed(2) : ""; };
+    prefillSb();
+    f.addEventListener("input", (e) => { if (e.target.name === "backed") prefillSb(); if (e.target.name === "sb_none" && e.target.checked) f.elements.sb_odds.value = ""; if (e.target.name !== "note") updateLockSummary(); });
+    f.elements.backed.addEventListener("change", () => { prefillSb(); updateLockSummary(); });
     f.addEventListener("submit", async (e) => {
       e.preventDefault();
       const outs = lockOutcomes();
@@ -668,7 +695,8 @@ function bindLock() {
       try {
         f.querySelector("button[type=submit]").disabled = true;
         await api("/api/predictions", { method: "POST", body: JSON.stringify({ seat: S.seat, probs, backed, stake, price_p: pr.p, price_source: pr.src, model_probs,
-          adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows } : null, note: f.elements.note.value }) });
+          adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows } : null, note: f.elements.note.value,
+          sb_odds: f.elements.sb_odds.value || null, sb_status: f.elements.sb_none.checked ? "not_offered" : null }) });
         await loadLedger();
         const sec = $("#lock-form")?.closest(".d-sec");
         if (sec) {
