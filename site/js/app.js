@@ -381,7 +381,7 @@ function currentProbs(seat) {
 function renderDrawer() {
   const d = $("#drawer");
   if (S.seat === "statewide") { d.innerHTML = statewideHTML(); bindLock(); return; }
-  if (S.seat.startsWith("party:")) { d.innerHTML = partyHTML(S.seat.slice(6), S.F, S.news, PARTY, calledSet()); return; }
+  if (S.seat.startsWith("party:")) { d.innerHTML = partyHTML(S.seat.slice(6), S.F, S.news, PARTY, calledSet()).replace("<!--research-->", researchHTML(S.F.research_by_party?.[S.seat.slice(6)])); return; }
   const s = seatBy(S.seat);
   const slots = s.model.sim.slots;
   const prim = s.model.primaries;
@@ -437,6 +437,7 @@ function renderDrawer() {
       </div>
     </section>
 
+    ${researchHTML(s.research)}
     ${seatNewsHTML(s)}
     ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
@@ -466,6 +467,14 @@ function avatar(name, party) {
   if (!ph) return `<div class="monogram" style="background:${col(party)}" aria-hidden="true">${esc(initials(name))}</div>`;
   return `<figure class="avatar"><img src="${esc(ph.img)}" alt="${esc(name)}" style="border-color:${col(party)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')">
     <figcaption><a href="${esc(ph.file || ph.page)}" target="_blank" rel="noopener" title="${esc(ph.credit)}, ${esc(ph.license)}">Photo: ${esc(ph.license)}</a></figcaption></figure>`;
+}
+
+function researchHTML(items) {
+  if (!items?.length) return "";
+  return `<section class="d-sec" aria-labelledby="h-res"><h3 id="h-res">Research notes</h3>
+    <p class="hint">Insights from articles you've saved, kept in <code>vic2026/config/research.yaml</code>.</p>
+    ${items.map((r) => `<div class="note"><p>${esc(r.text)}</p><p class="src"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.source)}: ${esc(r.title)}</a>${r.author ? `, ${esc(r.author)}` : ""}, ${esc(r.date)}</p></div>`).join("")}
+  </section>`;
 }
 
 function seatNewsHTML(s) {

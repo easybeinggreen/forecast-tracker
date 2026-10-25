@@ -161,7 +161,19 @@ def main():
     fed_vic["prims"] = {g: round(x, 1) for g, x in fed_vic["prims"].items()}
     tw = [(v["alp_tpp"], v["formal"]) for v in fed.values() if v.get("alp_tpp") is not None]
     fed_vic["alp_tpp"] = round(sum(a * w for a, w in tw) / sum(w for _, w in tw), 1) if tw else None
-    out = {"generated": F["generated"], "fed2025_vic": fed_vic, "simulations": F["simulations"], "inputs": F["statewide_inputs"],
+    rp = ROOT / "vic2026/config/research.yaml"
+    research = yaml.safe_load(rp.read_text()) if rp.exists() else []
+    by_seat, by_party = {}, {}
+    for a in research:
+        ref = {k: a.get(k) for k in ("title", "source", "author", "date", "url")}
+        for ins in a.get("insights", []):
+            for s in ins.get("seats", []) or []:
+                by_seat.setdefault(s, []).append({**ref, "text": ins["text"]})
+            for pcode in ins.get("parties", []) or []:
+                by_party.setdefault(pcode, []).append({**ref, "text": ins["text"]})
+    for s in seats:
+        s["research"] = by_seat.get(s["slug"], [])
+    out = {"generated": F["generated"], "research": research, "research_by_party": by_party, "fed2025_vic": fed_vic, "simulations": F["simulations"], "inputs": F["statewide_inputs"],
            "summary": F["summary"], "why_statewide": F.get("why_statewide"), "distribution": F["seat_distribution"], "flows_base": F["flows_base"],
            "drivers": {"flows": cfg["flows"]}, "party_names": F["party_names"], "markets": MARKETS,
            "election_date": "2026-11-28", "seats": seats,

@@ -1,0 +1,32 @@
+# Research log: articles and what they mean for the forecast. Shown in the seat and party panels.
+# Each insight names the seats (slugs) or parties it bears on. Add new articles at the top.
+
+- id: crikey-greens-sleepers
+  title: "Could the Greens flip these 'sleeper' seats in Victoria?"
+  source: Crikey
+  author: Leo Puglisi
+  date: "2026-10-14"
+  url: https://www.crikey.com.au/2026/10/14/victoria-state-elections-greens-sleeper-seats-labor-liberals/
+  summary: >-
+    Greens polling 14-16% (11.5% in 2022). Seven Labor- or Liberal-held seats rated from the obvious
+    pickup (Northcote) to the unlikeliest (Essendon). Liberal and One Nation preferences are the big variables.
+  insights:
+    - seats: [northcote]
+      text: "The most obvious Greens pickup: Labor holds it by 0.2% against Campbell Gome, who is running again. Greens ran their 'biggest campaign day ever' here with 200+ volunteers. No One Nation candidate listed, so the model's One Nation vote here is overstated."
+    - seats: [prahran]
+      text: "Retake target. Labor didn't stand at the 2025 by-election and a former Labor MP running as an independent sent preferences to the Liberals. Labor is standing this time, so Labor preferences should flow to the Greens."
+    - seats: [preston]
+      text: "Sleeper. Greens had 15% in 2022, 2.2 points behind the Liberals. Labor MP Nathan Lambert attacking the Greens candidate online suggests they're the main threat. Model's 26% may be cheap if One Nation's 'Labor last' pledge holds."
+    - seats: [pascoe-vale]
+      text: "Sleeper. Labor by 2.0%; Angelica Panopoulos running again. Socialist vote 9.7% in 2022 (two socialist parties standing). Liberal preferences helped the Greens in 2022. Notable One Nation support possible in a working-class, South European seat."
+    - seats: [footscray]
+      text: "'Nearly impossible to predict.' Greens' Elena Pereyra v Labor's Katie Hall, plus independent Jess Marsh (Voices of the Inner West), a strong Victorian Socialists campaign (20%+ in some booths) and One Nation. Greens swung 6.4% in overlapping federal Fraser. New independent not in the model."
+    - seats: [essendon]
+      text: "Unlikeliest. Labor's replacement candidate Kat Theodosis lives outside the seat (local branch 'revolt'); independent Oscar Yildiz running. Greens only win if Labor drops out of the top two."
+    - seats: [albert-park]
+      text: "Tough for the Greens: older, affluent electorate; overlapping federal Macnamara swung 4% against the Greens in 2025. The model's 42% Greens looks too high: it comes from scaling the 2022 vote, which ignores that federal swing."
+    - parties: ["ON", GRN, ALP]
+      seats: [northcote, preston, pascoe-vale, footscray]
+      text: "Pauline Hanson signed a pledge to put Labor last on One Nation how-to-vote cards. In Labor-v-Greens final counts this helps the Greens. The model currently assumes One Nation voters prefer Labor over the Greens about 3 to 1 (fixed, not yet an adjustable driver)."
+    - parties: [LIB, GRN]
+      text: "Liberal preferences are the biggest variable. The Liberals' 'put Labor last' advice helped the Greens win Richmond in 2022, and some Liberal candidates have said the same this year. Model assumes 65% of Liberal voters put the Greens ahead of Labor."

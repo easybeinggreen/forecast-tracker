@@ -468,3 +468,6 @@ th.fedc { font-style: italic; }
 .mine-t { width: 100%; }
 .mine-t td.up { color: var(--good); } .mine-t td.down { color: var(--bad); }
 .mine-t td .sw { margin-right: 4px; }
+.note { border-left: 3px solid var(--ink); padding: 2px 0 2px 12px; margin-bottom: 10px; font-size: 13.5px; }
+.note .src { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.note .src a { color: inherit; }

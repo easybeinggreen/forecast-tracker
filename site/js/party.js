@@ -129,6 +129,7 @@ export function partyHTML(code, F, news, PARTY, called = new Set()) {
       ${P.quotes.map((q) => `<blockquote class="quote"><p>“${esc(q.text)}”</p><footer>${esc(q.who)}, <a href="${esc(q.url)}" target="_blank" rel="noopener">${esc(q.source)}</a>, ${day(q.date)}</footer></blockquote>`).join("")}
     </section>
 
+    <!--research-->
     <section class="d-sec" aria-labelledby="h-pnews">
       <h3 id="h-pnews">In the news</h3>
       ${items.length ? `<ul class="news">${items.map((n) => `<li><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a><span>${esc(n.source)}${n.published ? `, ${day(n.published.slice(0, 10))}` : ""}</span></li>`).join("")}</ul>`
