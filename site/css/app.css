@@ -477,3 +477,25 @@ th.fedc { font-style: italic; }
 .sb-row .chk { display: flex; align-items: center; gap: 6px; }
 .sb-shadow { margin: 6px 0 16px; }
 .sb-shadow h3 { margin-bottom: 4px; }
+/* ---- what changed + polls */
+.changes { max-width: 1440px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 36px); }
+.changes-in { background: var(--sheet); border: 1px solid var(--rule); border-left: 5px solid var(--ink); border-radius: var(--radius-m); padding: 12px 18px; margin-top: 14px; font-size: 13.5px; }
+.ch-head { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; margin-bottom: 6px; }
+.ch-tag { background: var(--ink); color: var(--sheet); font-weight: 700; font-size: 12px; border-radius: 999px; padding: 2px 10px; }
+.ch-poll { font-size: 15px; margin: 4px 0 8px; }
+.ch-poll a { color: var(--ink-2); font-size: 12.5px; }
+.ch-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ch-grid > div, .ch-flips { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.ch-grid .l, .ch-flips .l { flex-basis: 100%; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); }
+.ch-flips { margin-top: 10px; }
+.ch-foot { margin-top: 6px; font-size: 12.5px; } .ch-foot a { color: var(--focus); }
+.polls { margin-top: 24px; background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: 18px 20px; }
+.polls-t { width: 100%; border-collapse: collapse; font-size: 13px; }
+.polls-t th, .polls-t td { padding: 6px 8px; border-bottom: 1px solid var(--rule-2); text-align: left; white-space: nowrap; }
+.polls-t .num { text-align: right; }
+.polls-t tr.out td { color: var(--ink-3); }
+.polls-t tr.in td { font-weight: 500; }
+.polls-t tr.avg td { background: var(--hover); }
+.polls-t tr.new td { background: color-mix(in srgb, var(--good) 8%, var(--sheet)); }
+.polls-t a { color: var(--ink-2); }
+@media (max-width: 900px) { .ch-grid { grid-template-columns: 1fr; } }

@@ -24,6 +24,7 @@
     <div class="budget" id="budget" aria-live="polite"></div>
     <button class="btn btn-quiet" id="unlock" type="button">Unlock ledger</button>
   </header>
+  <section class="changes" id="changes" aria-label="What changed in the latest model run" hidden></section>
 
   <main>
     <section class="overview" aria-labelledby="chamber-title">
@@ -55,6 +56,11 @@
         <div class="mine" id="mine"></div>
         <div class="markets" id="markets"></div>
       </div>
+    </section>
+
+    <section class="polls" id="polls" aria-labelledby="polls-title" hidden>
+      <div class="panel-head"><h2 id="polls-title">The polls</h2><p class="caption" style="margin:0">Every published Victorian voting-intention poll this year. Bold rows are in the average the model uses.</p></div>
+      <div id="polls-body"></div>
     </section>
 
     <section class="parties" aria-labelledby="parties-title">

@@ -49,6 +49,7 @@ async function boot() {
     fetch("data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   S.news = news;
+  S.changes = await fetch("data/changes.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const raw = await fetch("data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const key = (n) => n.toLowerCase().replace(/\s+/g, " ").trim();
   const byKey = Object.fromEntries(Object.entries(raw).map(([k, v]) => [key(k), v]));
@@ -74,7 +75,7 @@ async function loadLedger() {
 }
 
 function renderAll() {
-  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage(); renderMine();
+  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage(); renderMine(); renderChanges(); renderPolls();
   if (S.F.parties) $("#party-grid").innerHTML = partyCards(S.F);
   $("#foot-model").textContent = `Model run ${S.F.generated} from ${S.F.simulations.toLocaleString("en-AU")} simulated elections, each with a full preference count in all 88 seats.`;
 }
@@ -224,6 +225,51 @@ function renderOutcome() {
 
   $("#markets").innerHTML = `<h3>What the markets say</h3><table>${S.F.markets.map((m) => `<tr><td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>: ${esc(m.what)}<div class="muted">${esc(m.note)}, ${esc(m.as_of)}</div></td><td class="num">${pct(m.p)}</td></tr>`).join("")}
     <tr><td>This model: Coalition largest party<div class="muted">Majority in ${pct(sm.p_lnp_majority)} of simulations</div></td><td class="num">${pct(sm.p_lnp_largest)}</td></tr></table>`;
+}
+
+const POLLSTER = { "demosau": "DemosAU", "freshwater": "Freshwater Strategy", "redbridge": "RedBridge", "redbridge-accent": "RedBridge Accent",
+  "resolve": "Resolve", "roy-morgan": "Roy Morgan" };
+const COMM = { "the-australian": "The Australian", "premier-national": "Premier National", "herald-sun": "Herald Sun", "victorian-trades-hall": "Victorian Trades Hall",
+  "australian-financial-review": "AFR", "the-age": "The Age", "self": "" };
+const pollName = (p) => POLLSTER[p.pollster] || p.pollster;
+const dshort = (d) => new Date(d + "T00:00:00").toLocaleDateString("en-AU", { day: "numeric", month: "short" });
+const IN = [["LNP", "Coalition", "LIB"], ["ALP", "Labor", "ALP"], ["ON", "One Nation", "ON"], ["GRN", "Greens", "GRN"]];
+const arrow = (a, b, fmt, good = null) => { const d = b - a; return Math.abs(d) < 1e-9 ? `<b>${fmt(b)}</b>` : `${fmt(a)} → <b>${fmt(b)}</b>`; };
+
+function renderChanges() {
+  const C = S.changes, el = $("#changes");
+  if (!C) { el.hidden = true; return; }
+  el.hidden = false;
+  const L = C.latest, P = C.previous;
+  const when = new Date(L.run_at).toLocaleString("en-AU", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
+  const np = C.new_polls.map((id) => C.polls.find((p) => p.id === id)).filter(Boolean);
+  const pin = (k) => ({ LNP: L.inputs.LNP, ALP: L.inputs.ALP, ON: L.inputs.ON, GRN: L.inputs.GRN })[k];
+  const flips = C.flips.slice(0, 10).map((f) => { const s = seatBy(f.slug); return s ? `<button class="seat-chip" type="button" data-open-seat="${f.slug}" style="--a:.35;--pc:${col(f.to[0])}">${esc(s.name)} <b>${f.from[0] !== f.to[0] ? `${SHORT[f.from[0]] || f.from[0]} → ` : ""}${SHORT[f.to[0]] || f.to[0]} ${pct(f.to[1])}</b></button>` : ""; }).join("");
+  el.innerHTML = `<div class="changes-in">
+    <div class="ch-head"><span class="ch-tag">Latest update</span><span>${when}</span>${P ? `<span class="dim">compared with ${new Date(P.run_at).toLocaleDateString("en-AU", { day: "numeric", month: "short" })}</span>` : ""}</div>
+    ${np.length ? np.map((p) => `<p class="ch-poll"><b>New poll:</b> ${esc(pollName(p))}${COMM[p.commissioner] ? ` for ${COMM[p.commissioner]}` : ""}, ${dshort(p.start)}–${dshort(p.end)}: ${IN.map(([k, n, c]) => `<span style="color:${col(c)}">${n} ${p[{ LNP: "lnp", ALP: "alp", ON: "on", GRN: "grn" }[k]]}</span>`).join(" · ")} ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</p>`).join("")
+      : `<p class="ch-poll dim">No new poll since the previous run.</p>`}
+    ${P ? `<div class="ch-grid">
+      <div><span class="l">Poll average</span>${IN.map(([k, n]) => `<span>${n} ${arrow(P.inputs[k], L.inputs[k], (v) => v.toFixed(1))}</span>`).join("")}</div>
+      <div><span class="l">Who governs</span><span>Coalition majority ${arrow(P.summary.lnp_maj, L.summary.lnp_maj, pct)}</span><span>Hung ${arrow(P.summary.hung, L.summary.hung, pct)}</span><span>Labor majority ${arrow(P.summary.alp_maj, L.summary.alp_maj, pct)}</span></div>
+      <div><span class="l">Seats (middle)</span>${[["LNP", "Coalition"], ["ALP", "Labor"], ["ON", "One Nation"], ["GRN", "Greens"]].map(([k, n]) => `<span>${n} ${arrow(P.summary.seats[k] ?? 0, L.summary.seats[k] ?? 0, (v) => v)}</span>`).join("")}</div>
+    </div>
+    ${flips ? `<div class="ch-flips"><span class="l">Seats that moved most</span><div class="chips-wrap">${flips}</div></div>` : ""}` : ""}
+    <p class="ch-foot"><a href="#polls">All polls ↓</a></p></div>`;
+}
+
+function renderPolls() {
+  const C = S.changes, el = $("#polls");
+  if (!C?.polls?.length) { el.hidden = true; return; }
+  el.hidden = false;
+  const avg = C.latest.inputs;
+  $("#polls-body").innerHTML = `<div class="table-wrap" style="margin:0"><table class="polls-t"><thead><tr><th>Pollster</th><th>For</th><th>Fieldwork</th><th class="num">Sample</th>
+      ${IN.map(([, n, c]) => `<th class="num"><span class="sw" style="background:${col(c)}"></span> ${n}</th>`).join("")}<th class="num">Others</th><th></th></tr></thead><tbody>
+      <tr class="avg"><td colspan="4"><b>Average the model uses</b> <span class="dim">(as of ${C.latest.poll_as_of ? dshort(C.latest.poll_as_of) : "—"})</span></td>${IN.map(([k]) => `<td class="num"><b>${avg[k].toFixed(1)}</b></td>`).join("")}<td class="num"><b>${avg.OTHERS.toFixed(1)}</b></td><td></td></tr>
+      ${C.polls.map((p) => `<tr class="${p.in_average ? "in" : "out"}${C.new_polls.includes(p.id) ? " new" : ""}"><td>${esc(pollName(p))}${C.new_polls.includes(p.id) ? ' <span class="kind mine">New</span>' : ""}</td><td>${esc(COMM[p.commissioner] ?? p.commissioner)}</td><td>${dshort(p.start)}–${dshort(p.end)}</td><td class="num">${esc(p.n)}</td>
+        ${["lnp", "alp", "on", "grn", "oth"].map((k) => `<td class="num">${esc(p[k])}</td>`).join("")}<td>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="caption">Collected nightly from Australian Election Tracker's poll list and average. Polls outside the average are older or excluded by its rules (for example, superseded by a newer poll from the same pollster).</p>`;
 }
 
 function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => p.seat !== "statewide").map((p) => p.seat)); }
@@ -766,6 +812,7 @@ function wire() {
     const os = e.target.closest("[data-open-seat]"); if (os) openSeat(os.dataset.openSeat);
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
+  $("#changes").addEventListener("click", (e) => { const b = e.target.closest("[data-open-seat]"); if (b) openSeat(b.dataset.openSeat); });
   drawer.addEventListener("input", (e) => {
     const t = e.target;
     if (t.dataset.shift) { S.shifts[t.dataset.shift] = Number(t.value); $(`#sv-${t.dataset.shift}`).textContent = fmtShift(Number(t.value)); recompute(); }

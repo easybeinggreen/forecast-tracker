@@ -27,6 +27,7 @@ jobs:
         run: |
           python -m vic2026.model.model2026
           python -m vic2026.build.export_site
+          python -m vic2026.build.run_log
       - name: Refresh seat news
         continue-on-error: true
         run: python vic2026/fetch/fetch_news.py
@@ -34,7 +35,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/raw/polls data/vic2026/forecast.json site/data/forecast.json site/data/news.json
+          git add data/raw/polls data/vic2026/forecast.json data/vic2026/runs.json site/data/forecast.json site/data/news.json site/data/changes.json
           git diff --cached --quiet || git commit -m "Victorian model: nightly run $(date -u +%F)"
           git pull --rebase -q origin main
           git push
