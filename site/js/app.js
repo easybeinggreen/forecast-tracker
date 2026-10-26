@@ -247,8 +247,9 @@ function renderChanges() {
   const flips = C.flips.slice(0, 10).map((f) => { const s = seatBy(f.slug); return s ? `<button class="seat-chip" type="button" data-open-seat="${f.slug}" style="--a:.35;--pc:${col(f.to[0])}">${esc(s.name)} <b>${f.from[0] !== f.to[0] ? `${SHORT[f.from[0]] || f.from[0]} → ` : ""}${SHORT[f.to[0]] || f.to[0]} ${pct(f.to[1])}</b></button>` : ""; }).join("");
   el.innerHTML = `<div class="changes-in">
     <div class="ch-head"><span class="ch-tag">Latest update</span><span>${when}</span>${P ? `<span class="dim">compared with ${new Date(P.run_at).toLocaleDateString("en-AU", { day: "numeric", month: "short" })}</span>` : ""}</div>
+    ${L.note ? `<p class="ch-poll"><b>${esc(L.note.split(":")[0])}:</b>${esc(L.note.split(":").slice(1).join(":"))}</p>` : ""}
     ${np.length ? np.map((p) => `<p class="ch-poll"><b>New poll:</b> ${esc(pollName(p))}${COMM[p.commissioner] ? ` for ${COMM[p.commissioner]}` : ""}, ${dshort(p.start)}–${dshort(p.end)}: ${IN.map(([k, n, c]) => `<span style="color:${col(c)}">${n} ${p[{ LNP: "lnp", ALP: "alp", ON: "on", GRN: "grn" }[k]]}</span>`).join(" · ")} ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</p>`).join("")
-      : `<p class="ch-poll dim">No new poll since the previous run.</p>`}
+      : L.note ? "" : `<p class="ch-poll dim">No new poll since the previous run.</p>`}
     ${P ? `<div class="ch-grid">
       <div><span class="l">Poll average</span>${IN.map(([k, n]) => `<span>${n} ${arrow(P.inputs[k], L.inputs[k], (v) => v.toFixed(1))}</span>`).join("")}</div>
       <div><span class="l">Who governs</span><span>Coalition majority ${arrow(P.summary.lnp_maj, L.summary.lnp_maj, pct)}</span><span>Hung ${arrow(P.summary.hung, L.summary.hung, pct)}</span><span>Labor majority ${arrow(P.summary.alp_maj, L.summary.alp_maj, pct)}</span></div>
@@ -258,18 +259,39 @@ function renderChanges() {
     <p class="ch-foot"><a href="#polls">All polls ↓</a></p></div>`;
 }
 
+function pollTrend(PA) {
+  const tr = PA.trend, W = 760, H = 170, pad = { l: 30, r: 90, t: 10, b: 20 };
+  const t0 = Date.parse(tr[0].date), t1 = Date.parse(S.F.election_date);
+  const x = (d) => pad.l + ((Date.parse(d) - t0) / (t1 - t0)) * (W - pad.l - pad.r), y = (v) => pad.t + (1 - v / 40) * (H - pad.t - pad.b);
+  const ser = [["lnp", "Coalition", "LIB"], ["alp", "Labor", "ALP"], ["onp", "One Nation", "ON"], ["grn", "Greens", "GRN"]];
+  const polls = (S.changes?.polls || []);
+  const key = { lnp: "lnp", alp: "alp", onp: "on", grn: "grn" };
+  const ly = ser.map(([k, n]) => ({ k, y: y(tr.at(-1)[k]) + 4 })).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < ly.length; i++) ly[i].y = Math.max(ly[i].y, ly[i - 1].y + 12);
+  const at = Object.fromEntries(ly.map((l) => [l.k, l.y]));
+  return `<svg viewBox="0 0 ${W} ${H}" class="trend" role="img" aria-label="Poll average over 2026">
+    <g class="axis">${[0, 10, 20, 30, 40].map((v) => `<line x1="${pad.l}" x2="${W - pad.r}" y1="${y(v)}" y2="${y(v)}" class="g"/><text x="${pad.l - 6}" y="${y(v) + 3.5}" text-anchor="end">${v}%</text>`).join("")}
+    ${["2026-03-01", "2026-05-01", "2026-07-01", "2026-09-01", "2026-11-01"].map((d) => `<text x="${x(d)}" y="${H - 5}" text-anchor="middle">${new Date(d).toLocaleDateString("en-AU", { month: "short" })}</text>`).join("")}</g>
+    <line x1="${x(S.F.election_date)}" x2="${x(S.F.election_date)}" y1="${pad.t}" y2="${H - pad.b}" stroke="var(--ink-3)"/>
+    ${ser.map(([k, n, c]) => polls.map((p) => `<circle cx="${x(p.end).toFixed(1)}" cy="${y(Number(p[key[k]])).toFixed(1)}" r="2.6" fill="${col(c)}" opacity=".3"><title>${esc(pollName(p))} ${dshort(p.end)}: ${n} ${p[key[k]]}</title></circle>`).join("")
+      + `<path d="${tr.map((d, i) => `${i ? "L" : "M"}${x(d.date).toFixed(1)},${y(d[k]).toFixed(1)}`).join("")}" fill="none" stroke="${col(c)}" stroke-width="2.4"/>
+      <text x="${W - pad.r + 6}" y="${at[k].toFixed(1)}" class="lab" style="fill:${col(c)}">${n} ${tr.at(-1)[k].toFixed(1)}</text>`).join("")}
+  </svg>`;
+}
+
 function renderPolls() {
   const C = S.changes, el = $("#polls");
   if (!C?.polls?.length) { el.hidden = true; return; }
   el.hidden = false;
-  const avg = C.latest.inputs;
-  $("#polls-body").innerHTML = `<div class="table-wrap" style="margin:0"><table class="polls-t"><thead><tr><th>Pollster</th><th>For</th><th>Fieldwork</th><th class="num">Sample</th>
+  const avg = C.latest.inputs, PA = S.F.poll_avg;
+  $("#polls-body").innerHTML = `${PA ? pollTrend(PA) : ""}<div class="table-wrap" style="margin:0"><table class="polls-t"><thead><tr><th>Pollster</th><th>For</th><th>Fieldwork</th><th class="num">Sample</th>
       ${IN.map(([, n, c]) => `<th class="num"><span class="sw" style="background:${col(c)}"></span> ${n}</th>`).join("")}<th class="num">Others</th><th></th></tr></thead><tbody>
-      <tr class="avg"><td colspan="4"><b>Average the model uses</b> <span class="dim">(as of ${C.latest.poll_as_of ? dshort(C.latest.poll_as_of) : "—"})</span></td>${IN.map(([k]) => `<td class="num"><b>${avg[k].toFixed(1)}</b></td>`).join("")}<td class="num"><b>${avg.OTHERS.toFixed(1)}</b></td><td></td></tr>
+      <tr class="avg"><td colspan="4"><b>Average the model uses</b> <span class="dim">(smoothed, house effects removed)</span></td>${IN.map(([k]) => `<td class="num"><b>${avg[k].toFixed(1)}</b></td>`).join("")}<td class="num"><b>${avg.OTHERS.toFixed(1)}</b></td><td class="num dim">weight</td></tr>
+      ${PA?.election_tracker ? `<tr class="avg2"><td colspan="4">Election Tracker's average <span class="dim">(for comparison; reacts faster to new polls)</span></td>${["lnp", "alp", "onp", "grn", "others"].map((k) => `<td class="num">${PA.election_tracker[k]?.toFixed(1) ?? "—"}</td>`).join("")}<td></td></tr>` : ""}
       ${C.polls.map((p) => `<tr class="${p.in_average ? "in" : "out"}${C.new_polls.includes(p.id) ? " new" : ""}"><td>${esc(pollName(p))}${C.new_polls.includes(p.id) ? ' <span class="kind mine">New</span>' : ""}</td><td>${esc(COMM[p.commissioner] ?? p.commissioner)}</td><td>${dshort(p.start)}–${dshort(p.end)}</td><td class="num">${esc(p.n)}</td>
-        ${["lnp", "alp", "on", "grn", "oth"].map((k) => `<td class="num">${esc(p[k])}</td>`).join("")}<td>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</td></tr>`).join("")}
+        ${["lnp", "alp", "on", "grn", "oth"].map((k) => `<td class="num">${esc(p[k])}</td>`).join("")}<td class="num dim">${PA?.weights?.[p.id] ? `${Math.round(PA.weights[p.id] * 100)}%` : "—"} ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</td></tr>`).join("")}
     </tbody></table></div>
-    <p class="caption">Collected nightly from Australian Election Tracker's poll list and average. Polls outside the average are older or excluded by its rules (for example, superseded by a newer poll from the same pollster).</p>`;
+    <p class="caption">Polls collected nightly from Australian Election Tracker. The model's average weights each poll by sample size and age (half-life 30 days, up to 120 days old), removes each pollster's lean against the trend (${PA ? Object.entries(PA.house).filter(([, h]) => Math.abs(h.lnp) >= 0.7).map(([f, h]) => `${esc(POLLSTER[f] || f)} ${h.lnp > 0 ? "+" : ""}${h.lnp.toFixed(1)} Coalition`).join(", ") : ""}), and caps any one pollster's share, so a single poll moves it by about a third of the poll's gap from the average. Weight = that poll's share of today's average.</p>`;
 }
 
 function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => p.seat !== "statewide").map((p) => p.seat)); }
@@ -425,6 +447,7 @@ const DRIVERS = [
   ["alp_to_on_vs_lib", "Labor voters putting One Nation ahead of the Coalition", ["ALP", "ON"]],
   ["lib_to_grn_vs_alp", "Liberal voters putting the Greens ahead of Labor", ["LIB", "GRN", "ALP"]],
   ["grn_to_on_vs_alp", "Greens voters putting One Nation ahead of Labor", ["GRN", "ON"]],
+  ["on_to_grn_vs_alp", "One Nation voters putting the Greens ahead of Labor", ["ON", "GRN", "ALP"]],
   ["rmin_to_on_vs_lib", "Other right-wing voters putting One Nation ahead of the Liberals", ["RMIN", "ON"]],
   ["ind_to_on_vs_alp", "Independent voters putting One Nation ahead of Labor", ["IND", "ON"]],
 ];

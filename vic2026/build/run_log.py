@@ -27,6 +27,7 @@ def entry(F, avg, when=None):
         "summary": {"lnp_maj": round(s["p_lnp_majority"], 3), "alp_maj": round(s["p_alp_majority"], 3), "hung": round(s["p_hung"], 3),
                     "seats": {k: s["seats"][k]["p50"] for k in ("LNP", "ALP", "ON", "GRN", "IND") if k in s["seats"]}},
         "fav": {x["slug"]: max(x["model"]["win"].items(), key=lambda kv: kv[1]) for x in F["seats"]},
+        "known": [p["id"] for p in polls()] if when is None else None,
     }
 
 
@@ -47,12 +48,14 @@ def polls():
 def changes(runs):
     cur = runs[-1]
     prev = next((r for r in reversed(runs[:-1]) if r["inputs"] != cur["inputs"] or r["fav"] != cur["fav"]), runs[-2] if len(runs) > 1 else None)
-    out = {"latest": {k: cur[k] for k in ("run_at", "generated", "inputs", "summary", "poll_as_of")}, "previous": None,
+    out = {"latest": {**{k: cur[k] for k in ("run_at", "generated", "inputs", "summary", "poll_as_of")}, "note": cur.get("note")}, "previous": None,
            "new_polls": [], "dropped_polls": [], "flips": [], "history": [{"run_at": r["run_at"], **r["summary"]} for r in runs]}
     if prev:
         out["previous"] = {k: prev[k] for k in ("run_at", "generated", "inputs", "summary")}
-        out["new_polls"] = [p for p in cur["polls"] if p not in prev["polls"]]
-        out["dropped_polls"] = [p for p in prev["polls"] if p not in cur["polls"]]
+        allp = polls()
+        known = set(prev.get("known") or [q["id"] for q in allp if q["end"] <= (prev.get("poll_as_of") or "")] + prev["polls"])
+        out["new_polls"] = [q["id"] for q in allp if q["id"] not in known]
+        out["dropped_polls"] = []
         for slug, (p, v) in cur["fav"].items():
             q, w = prev["fav"].get(slug, (None, 0))
             if p != q or abs(v - w) >= 0.15:
@@ -71,8 +74,10 @@ def main():
             runs.append(entry(git_json(c, "site/data/forecast.json"), git_json(c, "data/raw/polls/et_poll-average.json"), when))
     else:
         F = json.loads((ROOT / "site/data/forecast.json").read_text())
-        avg = json.loads((ROOT / "data/raw/polls/et_poll-average.json").read_text())
+        avg = json.loads((ROOT / "data/vic2026/poll_average.json").read_text())
         e = entry(F, avg)
+        if "--note" in sys.argv:
+            e["note"] = sys.argv[sys.argv.index("--note") + 1]
         if runs and runs[-1]["inputs"] == e["inputs"] and runs[-1]["fav"] == e["fav"] and runs[-1]["generated"] == e["generated"]:
             runs[-1]["run_at"] = e["run_at"]
         else:

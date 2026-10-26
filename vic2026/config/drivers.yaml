@@ -2,10 +2,16 @@
 # Statewide primaries come from the Election Tracker poll average unless overridden.
 
 statewide:
-  source: data/raw/polls/et_poll-average.json      # alp / lnp / onp / grn / others
+  # Our own average (vic2026/model/poll_average.py): recency- and size-weighted over 120 days (half-life 30),
+  # pollster house effects removed, no pollster more than 1.5x a fresh poll's weight. One new poll moves it
+  # roughly a third as much as Election Tracker's average.
+  source: data/vic2026/poll_average.json           # alp / lnp / onp / grn / others
   override: {}                                     # e.g. {alp: 25.0} to test a scenario
-  # election-day uncertainty per party (percentage points, 1 sd): poll error + late swing
-  sd: {ALP: 2.5, LNP: 2.5, "ON": 3.5, GRN: 2.0, OTHERS: 1.5}   # "ON" quoted: bare ON means true in YAML
+  # Election-day error per party (percentage points, 1 sd): how far the result could land from the
+  # poll average. Sized to past Australian state-poll misses plus a novelty premium for One Nation,
+  # drawn from a fat-tailed (t, 5 df) distribution so big misses are possible.
+  sd: {ALP: 3.0, LNP: 3.0, "ON": 4.0, GRN: 2.0, OTHERS: 2.0}   # "ON" quoted: bare ON means true in YAML
+  tails_df: 5
 
 one_nation:
   # Where One Nation's vote lands. method "federal2025": each seat's share follows One Nation's 2025
@@ -14,7 +20,11 @@ one_nation:
   # 1.0 = same proportional pattern as 2025; lower = flatter (a bigger party's vote spreads more evenly).
   method: federal2025
   federal_file: data/vic2026/on_federal2025.json
-  elasticity: {mean: 0.60, sd: 0.12}
+  # Calibrated to two checks: South Australia 2026 (One Nation 22.9% statewide, best seat 37.5%, about 1.6x)
+  # caps the top end; Roy Morgan's inner-Melbourne sample (One Nation 2% in Brunswick, Melbourne and
+  # Richmond) says the bottom end stays low. So it flattens above the state average and not below it.
+  elasticity: {mean: 0.45, sd: 0.10}       # seats where One Nation's federal vote was above the Victorian average
+  elasticity_low: {mean: 0.90, sd: 0.15}   # seats below the average
   # Fallback proxy (method "proxy"): 2022 right-minor and Greens votes plus a regional bonus.
   right_minor_weight: 0.6
   greens_weight: 0.4
@@ -42,6 +52,8 @@ flows:
   ind_to_on_vs_alp:   {mean: 0.35, sd: 0.08}
   oth_to_on_vs_alp:   {mean: 0.40, sd: 0.08}
   lib_to_grn_vs_alp:  {mean: 0.65, sd: 0.08}   # 2022 fitted value; depends on the Liberal how-to-vote
+  on_to_grn_vs_alp:   {mean: 0.40, sd: 0.12}   # One Nation voters choosing the Greens over Labor. Hanson pledged to put
+                                               # Labor last (Crikey, 14 Oct 2026); many voters ignore cards. Was fixed at ~0.23.
   coalition_internal: 0.80                     # Liberal <-> National over Labor
 
 # Sitting MPs retiring (party loses its personal vote)
@@ -62,3 +74,54 @@ seat_overrides:
   narracan:
     note: Labor did not run at the 2023 supplementary election; impute a Labor vote.
     impute: {ALP: 0.25}
+
+# Region-specific swings. Polls that publish results by Upper House region tell us how the swing differs
+# across the state (e.g. One Nation much stronger in the outer south-east than in the inner north).
+# For each region and party, the model compares the poll's region-minus-statewide gap with its own gap
+# and moves `weight` of the way toward the poll (regional samples are ~250, so about +/-6 points each).
+regions:
+  file: data/vic2026/regions.json
+  weight: 0.35    # one poll so far; raise as more regional breakdowns are added
+  polls:
+    - source: "Roy Morgan SMS poll, 5-7 Aug 2026 (n=2,084; ~250 per region)"
+      url: https://www.roymorgan.com/findings/victorian-state-voting-intention-l-np-coalition-and-one-nation-set-for-a-majority-in-victorias-upper-house-in-november
+      statewide: {ALP: 26, LNP: 26, "ON": 23.5, GRN: 12.5, OTHERS: 12}
+      regions:
+        Northern Metropolitan:      {ALP: 39,   LNP: 13,   "ON": 12,   GRN: 22,   OTHERS: 14}
+        Southern Metropolitan:      {ALP: 25.5, LNP: 36,   "ON": 14.5, GRN: 11,   OTHERS: 13}
+        Western Metropolitan:       {ALP: 22.5, LNP: 16,   "ON": 29.5, GRN: 11,   OTHERS: 21}
+        North-Eastern Metropolitan: {ALP: 26.5, LNP: 26.5, "ON": 23,   GRN: 12.5, OTHERS: 11.5}
+        South-Eastern Metropolitan: {ALP: 21.5, LNP: 22,   "ON": 36.5, GRN: 6,    OTHERS: 14}
+        Eastern Victoria:           {ALP: 21,   LNP: 32.5, "ON": 26.5, GRN: 9.5,  OTHERS: 10.5}
+        Northern Victoria:          {ALP: 22,   LNP: 30.5, "ON": 27,   GRN: 11,   OTHERS: 9.5}
+        Western Victoria:           {ALP: 28,   LNP: 26,   "ON": 28.5, GRN: 8,    OTHERS: 9.5}
+    - source: "Roy Morgan, Jul-Sep 2026 pooled (n=2,845; ~360 per region). Release gives no statewide or 'others'
+              figures and no One Nation figure for two regions; statewide taken as the mean of regions."
+      url: https://www.roymorgan.com/findings/10361-victorian-state-voting-intention-september-2026
+      regions:
+        Eastern Victoria:           {LNP: 35,   ALP: 21,   "ON": 21.5, GRN: 15}
+        Northern Victoria:          {LNP: 29,   ALP: 24,   "ON": 24,   GRN: 12.5}
+        Western Victoria:           {LNP: 26,   ALP: 21,   "ON": 24,   GRN: 16}
+        Southern Metropolitan:      {LNP: 32.5, ALP: 23,                GRN: 23}
+        South-Eastern Metropolitan: {LNP: 30.5, ALP: 23,   "ON": 20.5, GRN: 16}
+        Northern Metropolitan:      {LNP: 14.5, ALP: 34.5,              GRN: 26}
+        Western Metropolitan:       {LNP: 28,   ALP: 24.5, "ON": 20.5, GRN: 18}
+        North-Eastern Metropolitan: {LNP: 25.5, ALP: 30.5, "ON": 12.5, GRN: 19.5}
+
+# Candidates that differ from 2022. Until nominations close (13 Nov) these come from announced candidates.
+#   add:  a party standing where it didn't in 2022. NAT "federal" = take the Coalition base vote split by the
+#         2025 federal Nationals:Liberal ratio in the district (or give a fraction, e.g. 0.5).
+#   drop: a party not standing; its 2022 vote is shared among the rest.
+candidates:
+  add:
+    ripon: {NAT: federal}          # Jo Armstrong (Nationals) v Megan Read (Liberal): three-cornered
+    bendigo-east: {NAT: federal}   # Andrew Lethlean; no Liberal announced yet
+    bendigo-west: {NAT: federal}   # David Hutchings; no Liberal announced yet
+  drop:
+    northcote: ["ON"]              # no One Nation candidate (Election Tracker, Tally Room)
+
+# Seat polls. Each moves its seat part-way toward the poll: weight = n_eff / (n_eff + seat_poll_prior_n),
+# so a 600-person poll gets about 40%. Add entries as they're published (primaries in percent; LNP = Lib+Nat).
+seat_poll_prior_n: 600
+seat_polls: []
+#  - {seat: frankston, pollster: uComms, date: "2026-11-05", n: 650, url: "...", primaries: {ALP: 30, LNP: 32, "ON": 20, GRN: 10, OTHERS: 8}}

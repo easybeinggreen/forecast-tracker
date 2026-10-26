@@ -499,3 +499,8 @@ th.fedc { font-style: italic; }
 .polls-t tr.new td { background: color-mix(in srgb, var(--good) 8%, var(--sheet)); }
 .polls-t a { color: var(--ink-2); }
 @media (max-width: 900px) { .ch-grid { grid-template-columns: 1fr; } }
+.polls-t tr.avg2 td { color: var(--ink-2); font-style: italic; }
+.polls .trend { margin-bottom: 10px; }
+.byel { font-size: 13px; margin: 4px 0 12px; padding: 8px 10px; border: 1px dashed var(--rule); border-radius: 6px; }
+.byel .sheet-wrap { margin-top: 6px; }
+.byel td.up { color: var(--good); } .byel td.down { color: var(--bad); }

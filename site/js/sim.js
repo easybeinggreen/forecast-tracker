@@ -22,7 +22,7 @@ export function makeW(W0, flows, vals) {
   W[G.ON] = W[G.RMIN].slice();
   W[G.ON][G.LIB] = W[G.ON][G.ALP] * odds(vals.on_to_lib_vs_alp);
   W[G.ON][G.NAT] = W[G.ON][G.LIB];
-  W[G.ON][G.GRN] = W[G.ON][G.ALP] * 0.3;
+  W[G.ON][G.GRN] = W[G.ON][G.ALP] * odds(vals.on_to_grn_vs_alp ?? 0.23);
   return W;
 }
 
@@ -59,7 +59,7 @@ function rng(seed) {
 }
 
 export const FLOW_KEYS = ["lib_to_on_vs_alp", "nat_to_on_vs_alp", "on_to_lib_vs_alp", "alp_to_on_vs_lib", "grn_to_on_vs_alp",
-  "rmin_to_on_vs_lib", "prog_to_on_vs_alp", "ind_to_on_vs_alp", "oth_to_on_vs_alp", "lib_to_grn_vs_alp"];
+  "rmin_to_on_vs_lib", "prog_to_on_vs_alp", "ind_to_on_vs_alp", "oth_to_on_vs_alp", "lib_to_grn_vs_alp", "on_to_grn_vs_alp"];
 
 // Adjusted mean primaries (fractions) for a seat after shifts in percentage points.
 export function adjustedMeans(seat, shifts = {}) {

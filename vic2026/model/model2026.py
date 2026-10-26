@@ -63,6 +63,16 @@ def baselines(D, cfg):
         for g, v in ov.get("impute", {}).items():
             B[i] *= (1 - v) / B[i].sum()
             B[i, G[g]] = v
+        cand = cfg.get("candidates") or {}
+        for g, how in ((cand.get("add") or {}).get(d["slug"]) or {}).items():
+            if g == "NAT" and B[i, G["NAT"]] == 0:
+                fed = json.loads((ROOT / "data/vic2026/on_federal2025.json").read_text())["seats"].get(d["slug"], {}).get("prims", {})
+                frac = how if isinstance(how, (int, float)) else fed.get("NAT", 0) / max(fed.get("NAT", 0) + fed.get("LIB", 0), 1e-9)
+                B[i, G["NAT"]] = B[i, G["LIB"]] * frac
+                B[i, G["LIB"]] *= 1 - frac
+        for g in (cand.get("drop") or {}).get(d["slug"], []) or []:
+            if g != "ON":
+                B[i, G[g]] = 0
         B[i] /= B[i].sum()
         fin = sorted(d["final_two"], key=lambda x: -x["votes"])
         pmap = {c["name"]: c["party"] for c in d["candidates"]}
@@ -94,7 +104,7 @@ def make_W(W0, cfg, vals, S):
     W[:, G["ON"], :] = W[:, G["RMIN"], :]
     W[:, G["ON"], G["LIB"]] = W[:, G["ON"], G["ALP"]] * odds(vals["on_to_lib_vs_alp"])
     W[:, G["ON"], G["NAT"]] = W[:, G["ON"], G["LIB"]]
-    W[:, G["ON"], G["GRN"]] = W[:, G["ON"], G["ALP"]] * 0.3
+    W[:, G["ON"], G["GRN"]] = W[:, G["ON"], G["ALP"]] * odds(vals["on_to_grn_vs_alp"])
     return W
 
 
@@ -110,6 +120,71 @@ def on_propensity(B):
     return z(rmin), z(grn)
 
 
+RG = {"ALP": ["ALP"], "LNP": ["LIB", "NAT"], "ON": ["ON"], "GRN": ["GRN"], "OTHERS": ["RMIN", "PROG", "OTH"]}
+
+
+def region_mults(x, meta, wts, cfg):
+    """Multipliers per (region, party group) that move each region's vote part-way toward the pattern in
+    regional poll breakdowns. Each poll's region-minus-statewide gap is compared with the model's own gap;
+    `weight` of the difference is applied (regional samples are small)."""
+    rc = cfg.get("regions") or {}
+    if not rc.get("polls"):
+        return {}, {}
+    reg = json.loads((ROOT / rc["file"]).read_text())
+    seat_reg = np.array([reg.get(m["slug"], "") for m in meta])
+    share = lambda mask, g: float((x[mask][:, [G[s] for s in RG[g]]].sum(-1) * wts[mask]).sum() / wts[mask].sum())
+    allm = np.ones(len(meta), bool)
+    model_state = {g: share(allm, g) for g in RG}
+    gaps = {}
+    for poll in rc["polls"]:
+        regs = poll["regions"]
+        st = poll.get("statewide") or {g: float(np.mean([v[g] for v in regs.values() if g in v])) for g in RG
+                                        if any(g in v for v in regs.values())}
+        for r, v in regs.items():
+            for g in RG:
+                if g in v and g in st:   # some releases only give some parties
+                    gaps.setdefault(r, {}).setdefault(g, []).append((v[g] - st[g]) / 100)
+    mults, report = {}, {}
+    for r, gg in gaps.items():
+        mask = seat_reg == r
+        if not mask.any():
+            continue
+        for g, devs in gg.items():
+            poll_gap = sum(devs) / len(devs)
+            cur = share(mask, g)
+            model_gap = cur - model_state[g]
+            target = max(cur + rc["weight"] * (poll_gap - model_gap), 0.005)
+            m = float(np.clip(target / max(cur, 1e-6), 0.4, 2.5))
+            mults.setdefault(r, {})[g] = m
+            report.setdefault(r, {})[g] = {"model": round(100 * cur, 1), "poll_gap": round(100 * poll_gap, 1),
+                                           "model_gap": round(100 * model_gap, 1), "after": round(100 * cur * m, 1)}
+    return mults, report
+
+
+def apply_regions(x, meta, wts, mults, targets):
+    """Apply region multipliers (x: (..., N, K)), keep independents fixed, then re-rake statewide totals."""
+    if not mults:
+        return x
+    reg = json.loads((ROOT / "data/vic2026/regions.json").read_text())
+    IND = x[..., G["IND"]].copy()
+    for i, m in enumerate(meta):
+        for g, f in mults.get(reg.get(m["slug"], ""), {}).items():
+            for s in RG[g]:
+                x[..., i, G[s]] *= f
+    for _ in range(3):
+        x[..., G["IND"]] = 0
+        x *= (np.clip(1 - IND, 0.05, None) / x.sum(-1))[..., None]
+        x[..., G["IND"]] = IND
+        for g, tgt in targets.items():
+            idx = [G[s] for s in RG[g]]
+            cur = (x[..., idx].sum(-1) * wts).sum(-1)
+            x[..., idx] *= (tgt / np.maximum(cur, 1e-9))[..., None, None]
+    x[..., G["IND"]] = 0
+    x *= (np.clip(1 - IND, 0.05, None) / x.sum(-1))[..., None]
+    x[..., G["IND"]] = IND
+    return x
+
+
 def explain(B, meta, cfg, p, wts):
     """Deterministic walk-through of steps 2-4 at the central values, for the 'why these numbers' panel."""
     N, K = B.shape
@@ -119,7 +194,9 @@ def explain(B, meta, cfg, p, wts):
     fed = json.loads((ROOT / oc["federal_file"]).read_text())
     share = np.array([fed["seats"][m["slug"]]["on_share"] for m in meta])
     g = oc["elasticity"]["mean"]
-    raw = np.exp(g * np.log(share))
+    gl = oc.get("elasticity_low", oc["elasticity"])["mean"]
+    zz = np.log(share / (share * wts).sum())
+    raw = np.exp(np.where(zz > 0, g, gl) * zz)
     mult = raw / (raw * wts).sum()
     ON = np.clip(T[2] * mult, 0.01, 0.6)
     x = B.copy(); IND = x[:, G["IND"]].copy(); x[:, G["ON"]] = 0; x[:, G["IND"]] = 0
@@ -133,21 +210,31 @@ def explain(B, meta, cfg, p, wts):
             x[:, idx] *= target[gname] / max((x[:, idx].sum(-1) * wts).sum(), 1e-9)
     x *= (room / x.sum(-1))[:, None]
     x[:, G["ON"]] = ON; x[:, G["IND"]] = IND
+    pre_region = x.copy()
+    mults, reg_report = region_mults(x, meta, wts, cfg)
+    others_c = max(T[4] - (IND * wts).sum(), 0.005)
+    x = apply_regions(x[None], meta, wts, mults, {"ALP": np.array([T[0]]), "LNP": np.array([T[1]]), "ON": np.array([T[2]]),
+                                                 "GRN": np.array([T[3]]), "OTHERS": np.array([others_c])})[0]
+    regions = json.loads((ROOT / "data/vic2026/regions.json").read_text()) if mults else {}
     state22 = {gname: float((B[:, [G[s] for s in slots]].sum(-1) * wts).sum()) for gname, slots in SG.items()}
     retire = {s: party for party, ss in cfg["retiring"].items() for s in ss}
     out = {}
     for i, m in enumerate(meta):
         out[m["slug"]] = {
             "base": {s: round(100 * float(B[i, G[s]]), 1) for s in SLOTS if B[i, G[s]] > 0.0005},
-            "swung": {s: round(100 * float(x[i, G[s]]), 1) for s in SLOTS if x[i, G[s]] > 0.0005},
+            "swung": {s: round(100 * float(pre_region[i, G[s]]), 1) for s in SLOTS if pre_region[i, G[s]] > 0.0005},
+            "regional": {s: round(100 * float(x[i, G[s]]), 1) for s in SLOTS if x[i, G[s]] > 0.0005},
+            "region": regions.get(m["slug"]), "region_mult": {g: round(v, 2) for g, v in mults.get(regions.get(m["slug"], ""), {}).items()},
             "on": {"fed": round(100 * float(share[i]), 1), "fed_vic": round(100 * float((share * wts).sum()), 1),
-                   "mult": round(float(mult[i]), 2), "state": round(100 * float(T[2]), 1), "elasticity": g},
+                   "mult": round(float(mult[i]), 2), "state": round(100 * float(T[2]), 1), "elasticity": g if zz[i] > 0 else gl,
+                   "elasticity_hi": g, "elasticity_lo": gl},
             "retiring": retire.get(m["slug"]), "retire_pts": cfg["retirement_penalty"],
             "shift": (cfg.get("seat_overrides") or {}).get(m["slug"], {}).get("shift"),
         }
     statewide = {"2022": {k: round(100 * v, 1) for k, v in state22.items()},
                  "2026": {k: round(100 * float(T[j]), 1) for j, k in enumerate(keys)}}
-    return out, statewide
+    statewide["regions"] = reg_report
+    return out, statewide, mults
 
 
 def simulate(S=10000, seed=7, scenario=None):
@@ -164,7 +251,9 @@ def simulate(S=10000, seed=7, scenario=None):
     p.update(scenario or {})
     keys = ["ALP", "LNP", "ON", "GRN", "OTHERS"]
     mean = np.array([p[k] for k in keys]); sd = np.array([cfg["statewide"]["sd"][k] for k in keys])
-    T = np.clip(mean + sd * rng.standard_normal((S, 5)), 0.5, None)
+    df = cfg["statewide"].get("tails_df")
+    z = rng.standard_t(df, (S, 5)) / np.sqrt(df / (df - 2)) if df else rng.standard_normal((S, 5))
+    T = np.clip(mean + sd * z, 0.5, None)
     T = T / T.sum(1, keepdims=True)                                            # (S, 5) fractions
 
     # 2. One Nation by propensity ----------------------------------------------------------------
@@ -172,13 +261,20 @@ def simulate(S=10000, seed=7, scenario=None):
     oc = cfg["one_nation"]
     if oc.get("method") == "federal2025":
         fed = json.loads((ROOT / oc["federal_file"]).read_text())["seats"]
-        zi = np.log(np.array([fed[m["slug"]]["on_share"] for m in meta]))
-        gamma = np.clip(oc["elasticity"]["mean"] + oc["elasticity"]["sd"] * rng.standard_normal(S), 0.1, 1.5)
+        sh = np.array([fed[m["slug"]]["on_share"] for m in meta])
+        zi = np.log(sh / (sh * wts).sum())                       # log of local / Victoria-wide federal share
+        eh, el = oc["elasticity"], oc.get("elasticity_low", oc["elasticity"])
+        g_hi = np.clip(eh["mean"] + eh["sd"] * rng.standard_normal(S), 0.1, 1.5)
+        g_lo = np.clip(el["mean"] + el["sd"] * rng.standard_normal(S), 0.1, 2.0)
+        gamma = None
     else:
         regional = np.array([m["slug"] in set(oc.get("regional_seats", [])) for m in meta], float)
         zi = oc["right_minor_weight"] * zr - oc["greens_weight"] * zg + oc.get("regional_bonus", 0.0) * regional
         gamma = oc["concentration"]["mean"] + oc["concentration"]["sd"] * rng.standard_normal(S)
-    raw = np.exp(gamma[:, None] * zi[None, :])                                  # (S, N)
+    if gamma is None:   # different elasticity above and below the state average
+        raw = np.exp(np.where(zi[None, :] > 0, g_hi[:, None], g_lo[:, None]) * zi[None, :])
+    else:
+        raw = np.exp(gamma[:, None] * zi[None, :])                              # (S, N)
     ON = T[:, 2:3] * raw / (raw * wts).sum(1, keepdims=True)
     ON = np.clip(ON, 0.01, 0.6)
 
@@ -202,6 +298,8 @@ def simulate(S=10000, seed=7, scenario=None):
     x *= (room / x.sum(-1))[..., None]
     x[..., G["ON"]] = ON
     x[..., G["IND"]] = IND
+    why, why_state, mults = explain(B, meta, cfg, p, wts)
+    x = apply_regions(x, meta, wts, mults, {"ALP": T[:, 0], "LNP": T[:, 1], "ON": (ON * wts).sum(1), "GRN": T[:, 3], "OTHERS": others_t})
 
     # 4. retirements and seat noise --------------------------------------------------------------
     slug_i = {m["slug"]: i for i, m in enumerate(meta)}
@@ -215,8 +313,29 @@ def simulate(S=10000, seed=7, scenario=None):
         for g, pts in (ov.get("shift") or {}).items():
             if s in slug_i:
                 x[:, slug_i[s], G[g]] = np.maximum(x[:, slug_i[s], G[g]] + pts / 100, 0.001)
+    # seat polls: move each polled seat part-way toward its poll, by effective sample size
+    seat_poll_info = {}
+    for sp in cfg.get("seat_polls") or []:
+        if sp["seat"] not in slug_i:
+            continue
+        i = slug_i[sp["seat"]]
+        neff = sp["n"] / 1.3
+        w = neff / (neff + cfg.get("seat_poll_prior_n", 600))
+        tot = sum(sp["primaries"].values())
+        info = {"pollster": sp["pollster"], "date": sp["date"], "n": sp["n"], "weight": round(w, 2), "url": sp.get("url"), "parties": {}}
+        for g, v in sp["primaries"].items():
+            idx = [G[s] for s in RG.get(g, [g])]
+            cur = float(x[:, i, idx].sum(-1).mean())
+            target = cur + w * (v / tot - cur)
+            x[:, i, idx] *= target / max(cur, 1e-6)
+            info["parties"][g] = {"model": round(100 * cur, 1), "poll": round(100 * v / tot, 1), "after": round(100 * target, 1)}
+        x[:, i, :] /= x[:, i, :].sum(-1, keepdims=True)
+        seat_poll_info[sp["seat"]] = info
     x *= np.exp(cfg["seat_noise_sd"] * rng.standard_normal(x.shape))
     present_all = present.copy(); present_all[:, G["ON"]] = True
+    for s_, gs in ((cfg.get("candidates") or {}).get("drop") or {}).items():
+        if s_ in slug_i and "ON" in gs:
+            present_all[slug_i[s_], G["ON"]] = False
     x *= present_all[None]
     x /= x.sum(-1, keepdims=True)
 
@@ -261,9 +380,10 @@ def simulate(S=10000, seed=7, scenario=None):
                                                     "p10": round(100 * float(np.quantile(prim[:, s], 0.1)), 1),
                                                     "p90": round(100 * float(np.quantile(prim[:, s], 0.9)), 1)} for s in cand}})
 
-    why, why_state = explain(B, meta, cfg, p, wts)
     for s in seats:
         s["why"] = why[s["slug"]]
+        if s["slug"] in seat_poll_info:
+            s["why"]["seat_poll"] = seat_poll_info[s["slug"]]
 
     # statewide outputs ---------------------------------------------------------------------------
     counts = {g: (win == G[g]).sum(1) for g in SLOTS}

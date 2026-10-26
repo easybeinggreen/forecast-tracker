@@ -18,6 +18,7 @@ export function whyHTML(s, F, PARTY) {
   const on = w.on, ratio = on.fed / on.fed_vic;
   // sensitivity: the multiplier scales roughly as (local/state)^elasticity
   const at = (g) => Math.min(60, on.state * on.mult * Math.pow(ratio, g - on.elasticity));
+  const eSet = on.elasticity, eLo = ratio >= 1 ? 0.3 : eSet - 0.3, eHi = ratio >= 1 ? 0.75 : eSet + 0.3;
   const fv = F.fed2025_vic?.prims || {}, fs = s.fed2025?.prims || {};
   const fedOf = (o, k) => (k === "LNP" ? (o.LIB || 0) + (o.NAT || 0) : o[k]);
   const sw = (k) => { const a = st["2022"][k], f = fedOf(fv, k), b = st["2026"][k];
@@ -33,16 +34,24 @@ export function whyHTML(s, F, PARTY) {
     <ol class="steps">
       <li><b>Start from 2022 here.</b> The left column below is how this seat voted last time.</li>
       <li><b>Apply the statewide polls.</b> Victoria-wide, 2022 state → <span class="fedc">2025 federal</span> → <b>polls now</b>: Labor ${sw("ALP")}; Coalition ${sw("LNP")}; Greens ${sw("GRN")}; One Nation — → <span class="fedc">${f1(fv.ON)}</span> → <b>${f1(st["2026"].ON)}</b> (it stood in only 5 state seats in 2022). Each party's vote here is scaled by its statewide change, so a party that's down a third statewide is down about a third here too.</li>
-      <li><b>Place One Nation.</b> It polled <b>${f1(on.fed)}</b> here at the 2025 federal election, against ${f1(fv.ON ?? on.fed_vic)} across Victoria (${ratio.toFixed(1)}×). The model assumes its 2026 vote lands in the same places, but less extremely: ${on.mult.toFixed(2)}× its statewide ${f1(on.state)} gives <b>${f1(Math.min(60, on.state * on.mult))}</b> here, ${big} its statewide figure. Everyone else shrinks to make room.</li>
+      ${w.on.fed != null && !(s.model.sim?.slots || []).includes("ON") ? `<li><b>No One Nation candidate.</b> One Nation isn't standing here, so its vote is shared among the others.</li>` : `<li><b>Place One Nation.</b> It polled <b>${f1(on.fed)}</b> here at the 2025 federal election, against ${f1(fv.ON ?? on.fed_vic)} across Victoria (${ratio.toFixed(1)}×). The model assumes its 2026 vote lands in the same places, but ${ratio >= 1 ? "less extremely in its strong areas (calibrated so the best seats match South Australia's 2026 result)" : "stays low where it was weak (Roy Morgan's inner-Melbourne sample had it on 2%)"}: ${on.mult.toFixed(2)}× its statewide ${f1(on.state)} gives <b>${f1(Math.min(60, on.state * on.mult))}</b> here, ${big} its statewide figure. Everyone else shrinks to make room.</li>`}
+      ${w.region && Object.keys(w.region_mult || {}).length ? (() => { const r = F.why_statewide?.regions?.[w.region] || {};
+        const moved = Object.entries(w.region_mult).filter(([, m]) => Math.abs(m - 1) >= 0.03).map(([g, m]) => `${({ LNP: "Coalition", OTHERS: "others" })[g] || PARTY[g] || g} ${m > 1 ? "+" : "−"}${Math.abs(Math.round((m - 1) * 100))}%`);
+        return `<li><b>Regional polling (${esc(w.region)}).</b> Roy Morgan's regional breakdown shows how this region differs from the state. The model moves 35% of the way toward it${moved.length ? `: ${moved.join(", ")} here` : ", which barely changes this seat"}.${r.ON ? ` One Nation: poll has this region ${r.ON.poll_gap >= 0 ? "+" : ""}${r.ON.poll_gap} points from the state figure, the model had ${r.ON.model_gap >= 0 ? "+" : ""}${r.ON.model_gap}.` : ""}</li>`; })() : ""}
+      ${w.seat_poll ? `<li><b>Seat poll.</b> ${esc(w.seat_poll.pollster)} (${esc(w.seat_poll.date)}, n=${w.seat_poll.n}) moved this seat ${Math.round(w.seat_poll.weight * 100)}% of the way toward its numbers.</li>` : ""}
       ${w.retiring ? `<li><b>Sitting MP retiring.</b> ${esc(PARTY[w.retiring])} loses ${w.retire_pts} points of personal vote.</li>` : ""}
       ${w.shift ? `<li><b>Local adjustment.</b> ${Object.entries(w.shift).map(([k, v]) => `${esc(PARTY[k])} ${v > 0 ? "+" : ""}${v} points`).join(", ")}, set by hand in the drivers file.</li>` : ""}
       <li><b>Add uncertainty and count.</b> 10,000 runs, each with its own statewide swing, local noise and preference flows, then a full preference count.</li>
     </ol>
+    ${s.byelection ? (() => { const b = s.byelection, ks = [...new Set([...Object.keys(b.primaries), ...Object.keys(b.base_2022)])].filter((k) => (b.primaries[k] || 0) >= 2 || (b.base_2022[k] || 0) >= 2).sort((a, c) => (b.primaries[c] || 0) - (b.primaries[a] || 0));
+      return `<div class="byel"><b>By-election, ${esc(b.date)}.</b> ${b.labor_stood ? "" : "<b>Labor did not stand</b>, so its voters went elsewhere. "}The model doesn't use this directly (by-elections have their own candidates and protest votes), but it's the most recent real result here:
+        <div class="sheet-wrap"><table class="sheet"><thead><tr><th></th><th>2022</th><th>By-election</th><th>Change</th></tr></thead><tbody>${ks.map((k) => { const a = b.base_2022[k] || 0, c = b.primaries[k] || 0;
+          return `<tr><td><span class="sw" style="background:${col(k)}"></span> ${esc(PARTY[k] || k)}</td><td class="num">${f1(a)}</td><td class="num"><b>${f1(c)}</b></td><td class="num ${c - a >= 0 ? "up" : "down"}">${sgn(c - a)}</td></tr>`; }).join("")}</tbody></table></div></div>`; })() : ""}
     <div class="sheet-wrap"><table class="sheet why-t"><thead><tr><th>Party</th><th>2022 state</th><th class="fedc">2025 federal</th><th>2026 model</th><th>Change</th><th>Likely range</th></tr></thead><tbody>${rows}</tbody></table></div>
     ${s.fed2025 ? `<p class="hint" style="margin-top:6px">2025 federal: votes at the polling places inside this district, regrouped to state parties (postal and absent votes not included). Labor two-party here: <b>${f1(s.fed2025.alp_tpp)}</b> (Victoria ${f1(F.fed2025_vic?.alp_tpp)}). Federal and state contests differ: different candidates, teal and Nationals candidates in some federal seats only, and the model does not use the federal column except for One Nation.</p>` : ""}
     <div class="sens"><b>The judgement call here: how concentrated One Nation's vote is.</b>
-      <div class="sens-row">${[[0.3, "Spread more evenly"], [on.elasticity, "Model's setting"], [0.9, "More concentrated"]].map(([g, l]) =>
-        `<div${g === on.elasticity ? ' class="on"' : ""}><span class="v" style="color:${col("ON")}">${at(g) >= 60 ? "60%+" : f1(at(g))}</span><span class="l">${l} (${g})</span></div>`).join("")}</div>
+      <div class="sens-row">${[[eLo, "Spread more evenly"], [eSet, "Model's setting"], [eHi, "More concentrated"]].map(([g, l]) =>
+        `<div${g === eSet ? ' class="on"' : ""}><span class="v" style="color:${col("ON")}">${at(g) >= 60 ? "60%+" : f1(at(g))}</span><span class="l">${l} (${g.toFixed(2)})</span></div>`).join("")}</div>
       <p class="hint">One Nation's primary vote here at each setting, other things equal. The setting is the <i>elasticity</i> driver in the model; if you think it's wrong, slide One Nation's vote in the calculator below and lock your own call.</p></div>
   </section>`;
 }

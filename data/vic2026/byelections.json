@@ -1,0 +1,394 @@
+{
+ "mulgrave": {
+  "date": "18 November 2023",
+  "primaries": {
+   "ALP": 40.2,
+   "LIB": 21.7,
+   "IND": 20.6,
+   "RMIN": 7.1,
+   "GRN": 6.0,
+   "PROG": 4.4
+  },
+  "candidates": [
+   {
+    "name": "Eden Foster",
+    "party": "Labor",
+    "code": "ALP",
+    "pct": 40.18
+   },
+   {
+    "name": "Courtney Mann",
+    "party": "Liberal",
+    "code": "LIB",
+    "pct": 21.69
+   },
+   {
+    "name": "Ian Cook",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 18.81
+   },
+   {
+    "name": "Rhonda Garad",
+    "party": "Greens",
+    "code": "GRN",
+    "pct": 5.97
+   },
+   {
+    "name": "Kelly Cvetkova",
+    "party": "Victorian Socialists",
+    "code": "PROG",
+    "pct": 3.65
+   },
+   {
+    "name": "Jane Foreman",
+    "party": "Family First",
+    "code": "RMIN",
+    "pct": 3.08
+   },
+   {
+    "name": "Ethelyn King",
+    "party": "Libertarian",
+    "code": "RMIN",
+    "pct": 2.9
+   },
+   {
+    "name": "Tina Theodossopoulou",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 1.84
+   },
+   {
+    "name": "Bronwyn Currie",
+    "party": "Animal Justice",
+    "code": "RMIN",
+    "pct": 1.12
+   },
+   {
+    "name": "Celeste Ackerly",
+    "party": "Sustainable Australia",
+    "code": "PROG",
+    "pct": 0.77
+   }
+  ],
+  "labor_stood": true,
+  "source": "Wikipedia results table"
+ },
+ "nepean": {
+  "date": "2 May 2026",
+  "primaries": {
+   "LIB": 38.7,
+   "ON": 24.5,
+   "IND": 21.0,
+   "GRN": 9.4,
+   "PROG": 4.7,
+   "RMIN": 1.2,
+   "OTH": 0.4
+  },
+  "candidates": [
+   {
+    "name": "Anthony Marsh",
+    "party": "Liberal",
+    "code": "LIB",
+    "pct": 38.7
+   },
+   {
+    "name": "Darren Hercus",
+    "party": "One Nation",
+    "code": "ON",
+    "pct": 24.5
+   },
+   {
+    "name": "Tracee Hutchison",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 21.0
+   },
+   {
+    "name": "Sianan Healy",
+    "party": "Greens",
+    "code": "GRN",
+    "pct": 9.4
+   },
+   {
+    "name": "Renee Thompson",
+    "party": "Legalise Cannabis",
+    "code": "PROG",
+    "pct": 2.9
+   },
+   {
+    "name": "Reade Smith",
+    "party": "Sustainable Australia",
+    "code": "PROG",
+    "pct": 1.8
+   },
+   {
+    "name": "Peter Angelico",
+    "party": "Libertarian",
+    "code": "RMIN",
+    "pct": 1.2
+   },
+   {
+    "name": "Milton Wilde",
+    "party": "EMI \u2013 Reform",
+    "code": "OTH",
+    "pct": 0.4
+   }
+  ],
+  "labor_stood": false,
+  "source": "Wikipedia results table"
+ },
+ "prahran": {
+  "date": "8 February 2025",
+  "primaries": {
+   "LIB": 36.2,
+   "GRN": 36.2,
+   "IND": 21.5,
+   "RMIN": 4.8,
+   "PROG": 1.4
+  },
+  "candidates": [
+   {
+    "name": "Rachel Westaway",
+    "party": "Liberal",
+    "code": "LIB",
+    "pct": 36.19
+   },
+   {
+    "name": "Angelica Di Camillo",
+    "party": "Greens",
+    "code": "GRN",
+    "pct": 36.19
+   },
+   {
+    "name": "Tony Lupton",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 12.72
+   },
+   {
+    "name": "Nathan Chisholm",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 5.29
+   },
+   {
+    "name": "Faith Fuhrer",
+    "party": "Animal Justice",
+    "code": "RMIN",
+    "pct": 2.78
+   },
+   {
+    "name": "Janine Hendry",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 1.6
+   },
+   {
+    "name": "Buzz Billman",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 1.47
+   },
+   {
+    "name": "Dennis Bilic",
+    "party": "Sustainable Australia",
+    "code": "PROG",
+    "pct": 1.36
+   },
+   {
+    "name": "Genevi\u00e8ve Gilbert",
+    "party": "Family First",
+    "code": "RMIN",
+    "pct": 1.08
+   },
+   {
+    "name": "Mark Dessau",
+    "party": "Libertarian",
+    "code": "RMIN",
+    "pct": 0.92
+   },
+   {
+    "name": "Alan Menadue",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.4
+   }
+  ],
+  "labor_stood": false,
+  "source": "Wikipedia results table"
+ },
+ "warrandyte": {
+  "date": "26 August 2023",
+  "primaries": {
+   "LIB": 57.3,
+   "GRN": 18.6,
+   "RMIN": 10.8,
+   "IND": 6.8,
+   "PROG": 6.5
+  },
+  "candidates": [
+   {
+    "name": "Nicole Werner",
+    "party": "Liberal",
+    "code": "LIB",
+    "pct": 57.3
+   },
+   {
+    "name": "Tomas Lightbody",
+    "party": "Greens",
+    "code": "GRN",
+    "pct": 18.6
+   },
+   {
+    "name": "Cary de Wit",
+    "party": "Democratic Labour",
+    "code": "RMIN",
+    "pct": 5.8
+   },
+   {
+    "name": "Maya Tesa",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 4.1
+   },
+   {
+    "name": "Colleen Bolger",
+    "party": "Victorian Socialists",
+    "code": "PROG",
+    "pct": 3.8
+   },
+   {
+    "name": "Richard Griffith-Jones",
+    "party": "Family First",
+    "code": "RMIN",
+    "pct": 2.8
+   },
+   {
+    "name": "Jack Corcoran",
+    "party": "Sustainable Australia",
+    "code": "PROG",
+    "pct": 2.7
+   },
+   {
+    "name": "Greg Cheesman",
+    "party": "Freedom",
+    "code": "RMIN",
+    "pct": 2.2
+   },
+   {
+    "name": "Wai Man Raymond Chow",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 1.8
+   },
+   {
+    "name": "Morgan Ranieri",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.4
+   },
+   {
+    "name": "Alan Max Menadue",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.3
+   },
+   {
+    "name": "Philip Jenkins",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.2
+   }
+  ],
+  "labor_stood": false,
+  "source": "Wikipedia results table"
+ },
+ "werribee": {
+  "date": "8 February 2025",
+  "primaries": {
+   "LIB": 29.0,
+   "ALP": 28.9,
+   "IND": 16.6,
+   "PROG": 12.6,
+   "GRN": 7.6,
+   "RMIN": 5.2
+  },
+  "candidates": [
+   {
+    "name": "Steve Murphy",
+    "party": "Liberal",
+    "code": "LIB",
+    "pct": 28.98
+   },
+   {
+    "name": "John Lister",
+    "party": "Labor",
+    "code": "ALP",
+    "pct": 28.89
+   },
+   {
+    "name": "Paul Hopper",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 14.56
+   },
+   {
+    "name": "Rifai A. Raheem",
+    "party": "Greens",
+    "code": "GRN",
+    "pct": 7.57
+   },
+   {
+    "name": "Sue Munro",
+    "party": "Victorian Socialists",
+    "code": "PROG",
+    "pct": 7.14
+   },
+   {
+    "name": "Xavier Menta",
+    "party": "Legalise Cannabis",
+    "code": "PROG",
+    "pct": 5.5
+   },
+   {
+    "name": "Matt Emerson",
+    "party": "Family First",
+    "code": "RMIN",
+    "pct": 4.34
+   },
+   {
+    "name": "Shohre Mansouri Jajaee",
+    "party": "Animal Justice",
+    "code": "RMIN",
+    "pct": 0.95
+   },
+   {
+    "name": "Munish Joshi",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.84
+   },
+   {
+    "name": "Aidan McLindon",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.64
+   },
+   {
+    "name": "Aijaz Moinuddin",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.39
+   },
+   {
+    "name": "Kodei Mulcahy",
+    "party": "Independent",
+    "code": "IND",
+    "pct": 0.19
+   }
+  ],
+  "labor_stood": true,
+  "source": "Wikipedia results table"
+ }
+}
