@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-26",
+ "as_of": "2026-10-27",
  "method": "recency- and size-weighted, house-effect adjusted, pollster-capped",
  "params": {
   "half_life_days": 30.0,
@@ -8,18 +8,18 @@
   "house_shrink": 2.0
  },
  "primaries": {
-  "alp": 24.6,
-  "lnp": 29.1,
-  "onp": 22.8,
+  "alp": 24.5,
+  "lnp": 29.2,
+  "onp": 22.7,
   "grn": 14.0,
   "others": 9.5
  },
  "unsmoothed": {
   "alp": 24.6,
-  "lnp": 29.4,
-  "onp": 22.6,
+  "lnp": 29.5,
+  "onp": 22.5,
   "grn": 14.0,
-  "others": 9.3
+  "others": 9.4
  },
  "house": {
   "freshwater": {
@@ -194,7 +194,7 @@
    "id": "redbridge-accent-2026-06-afr",
    "pollster": "redbridge-accent",
    "end": "2026-06-28",
-   "weight": 0.026,
+   "weight": 0,
    "house": {
     "alp": -0.47,
     "lnp": 0.36,
@@ -207,7 +207,7 @@
    "id": "resolve-2026-07-age",
    "pollster": "resolve",
    "end": "2026-07-12",
-   "weight": 0.015,
+   "weight": 0.016,
    "house": {
     "alp": 0.65,
     "lnp": -0.76,
@@ -220,7 +220,7 @@
    "id": "redbridge-2026-07-trades-hall",
    "pollster": "redbridge",
    "end": "2026-07-14",
-   "weight": 0.041,
+   "weight": 0.042,
    "house": {
     "alp": 0.32,
     "lnp": -0.9,
@@ -246,7 +246,7 @@
    "id": "redbridge-accent-2026-08-afr",
    "pollster": "redbridge-accent",
    "end": "2026-08-01",
-   "weight": 0.024,
+   "weight": 0.025,
    "house": {
     "alp": -0.47,
     "lnp": 0.36,
@@ -272,7 +272,7 @@
    "id": "roy-morgan-2026-08",
    "pollster": "roy-morgan",
    "end": "2026-08-07",
-   "weight": 0.04,
+   "weight": 0.041,
    "house": {
     "alp": 0.07,
     "lnp": -2.08,
@@ -285,7 +285,7 @@
    "id": "demosau-2026-08",
    "pollster": "demosau",
    "end": "2026-08-11",
-   "weight": 0.031,
+   "weight": 0.032,
    "house": {
     "alp": -1.09,
     "lnp": 1.15,
@@ -311,7 +311,7 @@
    "id": "resolve-2026-09-age",
    "pollster": "resolve",
    "end": "2026-09-12",
-   "weight": 0.064,
+   "weight": 0.066,
    "house": {
     "alp": 0.65,
     "lnp": -0.76,
@@ -324,7 +324,7 @@
    "id": "redbridge-accent-2026-09-afr",
    "pollster": "redbridge-accent",
    "end": "2026-09-14",
-   "weight": 0.103,
+   "weight": 0.106,
    "house": {
     "alp": -0.47,
     "lnp": 0.36,
@@ -337,7 +337,7 @@
    "id": "demosau-2026-09",
    "pollster": "demosau",
    "end": "2026-09-20",
-   "weight": 0.078,
+   "weight": 0.08,
    "house": {
     "alp": -1.09,
     "lnp": 1.15,
@@ -350,7 +350,7 @@
    "id": "freshwater-2026-09",
    "pollster": "freshwater",
    "end": "2026-09-28",
-   "weight": 0.094,
+   "weight": 0.097,
    "house": {
     "alp": -0.05,
     "lnp": 0.74,
@@ -363,7 +363,7 @@
    "id": "redbridge-accent-2026-10-afr",
    "pollster": "redbridge-accent",
    "end": "2026-10-08",
-   "weight": 0.117,
+   "weight": 0.12,
    "house": {
     "alp": -0.47,
     "lnp": 0.36,
@@ -376,7 +376,7 @@
    "id": "resolve-2026-10-age",
    "pollster": "resolve",
    "end": "2026-10-10",
-   "weight": 0.122,
+   "weight": 0.126,
    "house": {
     "alp": 0.65,
     "lnp": -0.76,
@@ -389,7 +389,7 @@
    "id": "newspoll-2026-10",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-10-22",
-   "weight": 0.163,
+   "weight": 0.167,
    "house": {
     "alp": 0.56,
     "lnp": 1.5,
@@ -411,7 +411,6 @@
   "roy-morgan-2026-08",
   "resolve-2026-08-age",
   "demosau-2026-08",
-  "redbridge-accent-2026-06-afr",
   "freshwater-2026-08",
   "redbridge-accent-2026-08-afr",
   "newspoll-2026-07",
