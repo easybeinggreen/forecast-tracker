@@ -1,0 +1,30 @@
+name: Market prices
+
+# Prediction-market prices every 3 hours (Kalshi, Polymarket, Manifold). Bookmaker odds are entered by hand.
+on:
+  schedule:
+    - cron: "23 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python vic2026/fetch/fetch_markets.py
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/markets site/data/markets.json
+          git diff --cached --quiet || git commit -m "Market prices $(date -u +%FT%H:%M)"
+          git pull --rebase -q origin main
+          git push
