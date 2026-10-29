@@ -348,7 +348,7 @@ function renderMine() {
 // Live prediction-market prices (data/markets.json, refreshed every 3 hours by GitHub Actions)
 const MK_PICK = [
   [(m) => m.source === "Kalshi", "Who wins government", "real money, US"],
-  [(m) => m.source === "Polymarket" && /most seats/i.test(m.title) && !/second|third/i.test(m.title), "Most seats", "real money, crypto"],
+  [(m) => m.source === "Polymarket" && /most seats in the next Victorian state/i.test(m.title), "Most seats", "real money, crypto"],
   [(m) => m.source === "Manifold" && /Premier of Victoria will be from/i.test(m.title), "Premier's party", "play money"],
   [(m) => m.source === "Manifold" && /Number of Seats won by One Na/i.test(m.title), "One Nation seats", "play money"],
 ];
