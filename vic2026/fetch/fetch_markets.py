@@ -40,10 +40,16 @@ def kalshi():
     out = []
     d = get("https://api.elections.kalshi.com/trade-api/v2/markets", series_ticker="KXVICTORIANSTATE", limit=100)
     for m in (d or {}).get("markets", []):
-        bid, ask, last = m.get("yes_bid"), m.get("yes_ask"), m.get("last_price")
-        mid = (bid + ask) / 200 if bid and ask else (last or 0) / 100
+        def px(k):  # Kalshi reports cents, or dollars in newer fields
+            v = m.get(k + "_dollars")
+            if v not in (None, ""):
+                return float(v)
+            v = m.get(k)
+            return v / 100 if isinstance(v, (int, float)) else None
+        bid, ask, last = px("yes_bid"), px("yes_ask"), px("last_price")
+        mid = (bid + ask) / 2 if bid and ask else (last or 0)
         out.append({"source": "Kalshi", "id": m["ticker"], "title": m.get("title"), "outcome": m.get("yes_sub_title") or m.get("subtitle") or "Yes",
-                    "p": round(mid, 4), "volume": m.get("volume"), "url": "https://kalshi.com/markets/kxvictorianstate"})
+                    "p": round(mid, 4), "volume": m.get("volume") or m.get("volume_fp"), "url": "https://kalshi.com/markets/kxvictorianstate"})
     return out
 
 
@@ -51,13 +57,16 @@ def polymarket():
     out = []
     d = get("https://gamma-api.polymarket.com/public-search", q="Victoria election")
     for ev in (d or {}).get("events", []):
-        if "victoria" not in (ev.get("title") or "").lower():
+        title = (ev.get("title") or "").lower()
+        if "victoria" not in title or "mayor" in title:
             continue
         for m in ev.get("markets", []):
             try:
                 names, prices = json.loads(m.get("outcomes") or "[]"), json.loads(m.get("outcomePrices") or "[]")
             except ValueError:
                 continue
+            if not float(m.get("volume") or 0):
+                continue   # unlisted placeholder outcomes ("Party A")
             for n, pr in zip(names, prices):
                 if n.lower() == "no" and len(names) == 2:
                     continue
