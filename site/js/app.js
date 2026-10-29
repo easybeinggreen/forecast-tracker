@@ -49,6 +49,7 @@ async function boot() {
     fetch("data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   S.news = news;
+  S.mk = await fetch("data/markets.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.changes = await fetch("data/changes.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const raw = await fetch("data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const key = (n) => n.toLowerCase().replace(/\s+/g, " ").trim();
@@ -223,8 +224,9 @@ function renderOutcome() {
   $("#dist").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribution of Coalition seat totals"><g class="axis"><line x1="0" x2="${W}" y1="${H - 17.5}" y2="${H - 17.5}"/>${ticks.join("")}</g>${bars}<line x1="${mx}" x2="${mx}" y1="4" y2="${H - 18}" stroke="var(--ink-3)" stroke-dasharray="3 3"/><text x="${mx + 4}" y="12" font-size="10.5" fill="var(--ink-2)">majority</text></svg>`;
   $("#dist-cap").textContent = `Coalition seat totals across ${n.toLocaleString("en-AU")} simulated elections. Solid bars reach a majority.`;
 
-  $("#markets").innerHTML = `<h3>What the markets say</h3><table>${S.F.markets.map((m) => `<tr><td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>: ${esc(m.what)}<div class="muted">${esc(m.note)}, ${esc(m.as_of)}</div></td><td class="num">${pct(m.p)}</td></tr>`).join("")}
-    <tr><td>This model: Coalition largest party<div class="muted">Majority in ${pct(sm.p_lnp_majority)} of simulations</div></td><td class="num">${pct(sm.p_lnp_largest)}</td></tr></table>`;
+  $("#markets").innerHTML = `<h3>What the markets say</h3>${liveMarkets() || `<table>${S.F.markets.map((m) => `<tr><td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>: ${esc(m.what)}<div class="muted">${esc(m.note)}, ${esc(m.as_of)}</div></td><td class="num">${pct(m.p)}</td></tr>`).join("")}</table>`}
+    <table><tr><td><b>This model:</b> Coalition largest party<div class="muted">Majority in ${pct(sm.p_lnp_majority)} of simulations</div></td><td class="num">${pct(sm.p_lnp_largest)}</td></tr>
+    ${(() => { const o = (S.ledger?.odds || []).filter((r) => r.seat === "statewide").at(-1); return o ? `<tr><td><b>${esc(o.source)}</b> (you recorded, ${esc(o.as_of || "")})<div class="muted">${Object.entries(o.odds).map(([k, v]) => `${esc(outName(k))} $${Number(v).toFixed(2)}`).join(" · ")}</div></td><td class="num">${pct(Number(Object.entries(o.implied).sort((a, b) => b[1] - a[1])[0][1]))}</td></tr>` : ""; })()}</table>`;
 }
 
 const POLLSTER = { "demosau": "DemosAU", "freshwater": "Freshwater Strategy", "redbridge": "RedBridge", "redbridge-accent": "RedBridge Accent",
@@ -341,6 +343,30 @@ function renderMine() {
     <table class="sheet mine-t"><thead><tr><th></th><th>Model</th><th>With your calls</th><th>Change</th><th>Seats you favour</th></tr></thead><tbody>${rows}</tbody></table>
     ${chart}
     ${sw ? `<p class="hint" style="margin-top:6px">Your latest statewide call: ${Object.entries(sw.probs).map(([k, v]) => `${esc(outName(k))} ${pct(Number(v))}`).join(", ")}.</p>` : `<p class="hint" style="margin-top:6px">No statewide call yet. Use "Make a call" above when your seat picture settles.</p>`}`;
+}
+
+// Live prediction-market prices (data/markets.json, refreshed every 3 hours by GitHub Actions)
+const MK_PICK = [
+  [(m) => m.source === "Kalshi", "Who wins government", "real money, US"],
+  [(m) => m.source === "Polymarket" && /most seats/i.test(m.title) && !/second|third/i.test(m.title), "Most seats", "real money, crypto"],
+  [(m) => m.source === "Manifold" && /Premier of Victoria will be from/i.test(m.title), "Premier's party", "play money"],
+  [(m) => m.source === "Manifold" && /Number of Seats won by One Na/i.test(m.title), "One Nation seats", "play money"],
+];
+function liveMarkets() {
+  const D = S.mk; if (!D?.markets?.length) return "";
+  const ago = (h) => { const cut = Date.now() - 24 * 3600e3; return h.filter(([t]) => Date.parse(t) <= cut).at(-1)?.[1]; };
+  const spark = (h) => { if (h.length < 2) return ""; const W = 60, H = 16, xs = h.map(([t]) => Date.parse(t)), x0 = Math.min(...xs), x1 = Math.max(...xs);
+    return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${h.map(([t, v], i) => `${i ? "L" : "M"}${(((Date.parse(t) - x0) / (x1 - x0 || 1)) * W).toFixed(1)},${(H - 1 - v * (H - 2)).toFixed(1)}`).join("")}" fill="none" stroke="var(--ink-2)" stroke-width="1.3"/></svg>`; };
+  const blocks = MK_PICK.map(([f, label, note]) => {
+    const ms = D.markets.filter(f); if (!ms.length) return "";
+    const byTitle = {}; ms.forEach((m) => (byTitle[m.title] ||= []).push(m));
+    const grp = Object.values(byTitle).sort((a, b) => (b[0].volume || 0) - (a[0].volume || 0));
+    const rows = (ms[0].source === "Polymarket" || ms[0].source === "Kalshi" ? ms : grp[0]).filter((m) => m.p >= 0.02).sort((a, b) => b.p - a.p).slice(0, 4);
+    return `<tr class="mk-head"><td colspan="3"><a href="${esc(ms[0].url)}" target="_blank" rel="noopener">${esc(ms[0].source)}</a>: ${label} <span class="muted">(${note})</span></td></tr>
+      ${rows.map((m) => { const a = ago(m.history || []), d = a == null ? null : m.p - a;
+        return `<tr><td class="mk-out">${esc(m.outcome)}</td><td class="mk-sp">${spark(m.history || [])}${d != null && Math.abs(d) >= 0.005 ? `<span class="${d > 0 ? "pos" : "neg"}">${d > 0 ? "▲" : "▼"}${Math.abs(d * 100).toFixed(0)}</span>` : ""}</td><td class="num">${pct(m.p)}</td></tr>`; }).join("")}`;
+  }).join("");
+  return blocks ? `<table class="mk">${blocks}</table><p class="muted" style="margin-top:4px">Prices checked every 3 hours; last ${new Date(D.fetched).toLocaleString("en-AU", { weekday: "short", hour: "numeric", minute: "2-digit" })}. ▲▼ = change over 24 hours. Sportsbet and other bookmakers: enter their odds yourself with "Make a call" → Record market odds.</p>` : "";
 }
 
 // ---------------------------------------------------------------- table
