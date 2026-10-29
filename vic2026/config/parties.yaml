@@ -127,6 +127,15 @@ GRN:
     - {slug: melton, kind: reported, note: "Outer-west 'red wall' seat at risk to One Nation or Coalition", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
     - {slug: sunbury, kind: reported, note: "Outer north-west, at risk to One Nation or Coalition", url: "https://www.abc.net.au/news/2026-08-22/coalition-path-to-victory-victoria-state-election-2026/107063196"}
     - {slug: murray-plains, kind: reported, note: "Nationals seat, MP retiring; One Nation 'particularly' threatening the Nationals", url: "https://www.abc.net.au/news/2026-10-03/victorian-state-election-unpredictable-casey-briggs-analysis/107216078"}
+    - {slug: ripon, kind: reported, note: "On One Nation's reported 20-seat target list", url: "https://www.southasiatimes.com.au/australia/36657/"}
+    - {slug: bendigo-east, kind: reported, note: "On the reported target list; Jacinta Allan retiring", url: "https://www.southasiatimes.com.au/australia/36657/"}
+    - {slug: bendigo-west, kind: reported, note: "On the reported target list; Labor MP retiring", url: "https://www.southasiatimes.com.au/australia/36657/"}
+    - {slug: gippsland-east, kind: reported, note: "On the reported target list; Nationals MP retiring", url: "https://www.southasiatimes.com.au/australia/36657/"}
+    - {slug: morwell, kind: reported, note: "ABC: 'the biggest threat to the Nationals'; campaigning to stop Loy Yang A's closure", url: "https://www.abc.net.au/news/elections/vic/2026/guide/key-seats"}
+    - {slug: lara, kind: reported, note: "ABC: compared with Light in SA, which swung to One Nation", url: "https://www.abc.net.au/news/elections/vic/2026/guide/key-seats"}
+    - {slug: eureka, kind: reported, note: "ABC: 'may be well placed' on demographics", url: "https://www.abc.net.au/news/elections/vic/2026/guide/key-seats"}
+    - {slug: bass, kind: reported, note: "ABC: 'a promising prospect for One Nation'", url: "https://www.abc.net.au/news/elections/vic/2026/guide/key-seats"}
+    - {slug: mildura, kind: reported, note: "ABC: three-way with the Nationals and independent Ali Cupper", url: "https://www.abc.net.au/news/elections/vic/2026/guide/key-seats"}
   quotes:
     - {text: "We intend for this to be a November to remember and we are contesting to govern.", who: Warren Pickering, date: "2026-08-03", source: ABC News, url: "https://www.abc.net.au/news/2026-08-03/one-nation-victoria-candiates-revealed/106989410"}
     - {text: "If we can get government, or even the balance of power, it's going to make one hell of a difference in this state", who: Pauline Hanson, date: "2026-08-03", source: ABC News, url: "https://www.abc.net.au/news/2026-08-03/one-nation-victoria-candiates-revealed/106989410"}
