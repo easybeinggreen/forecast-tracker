@@ -31,3 +31,6 @@ Labor 25.0 (26.6), Nationals 6.6 (6.4). Where they differ, and the evidence to c
 ## Data corrections between reviews (allowed: facts, not judgement)
 - 30 Oct: dropped 2022 independents not standing again (Narracan Tony Wolfe, Rowville Nicole Seymour, South-West Coast Carol Altmann). Shepparton keeps an independent (Lou Costa announced) but the carried-over 24% from the Sheed era is flagged as a seat question for v2.0.
 - 30 Oct: census "families with children" measure corrected (was subtracting the wrong column).
+
+## Evidence for the 1 Nov review (v2.0)
+- Roy Morgan seat poll, Bass/Hastings/Morwell/Pakenham, 21–26 Oct, n=283 (SMS): Hastings+Morwell+Pakenham average One Nation 39, Coalition 24, Labor 20, Greens 8, others 9. Says One Nation leads Hastings, Morwell, Pakenham; Liberal leads Bass. Per-seat figures only in a chart image. Candidate for `seat_polls` (about 70 per seat, so weight ~0.1 each).

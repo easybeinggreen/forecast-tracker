@@ -22,12 +22,14 @@ def main():
         slug = f["properties"]["slug"]; sh = shape(f["geometry"])
         km2 = abs(g.geometry_area_perimeter(sh)[0]) / 1e6
         c = sh.representative_point()
-        km = g.inv(*CBD, c.x, c.y)[2] / 1000
+        az, _, m = g.inv(*CBD, c.x, c.y)
+        km = m / 1000
+        compass = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"][round((az % 360) / 45) % 8]
         if region.get(slug) == "metro":
             band = "inner" if km <= 12 else "middle" if km <= 25 else "outer"
         else:
             band = "city" if slug in REGIONAL_CITIES else "rural"
-        out[slug] = {"km2": round(km2, 1), "density": round(demo.get(slug, {}).get("pop", 0) / km2, 1), "km_cbd": round(km, 1), "band": band}
+        out[slug] = {"km2": round(km2, 1), "density": round(demo.get(slug, {}).get("pop", 0) / km2, 1), "km_cbd": round(km, 1), "dir": compass, "band": band}
     (ROOT / "data/vic2026/geography.json").write_text(json.dumps(out, indent=1))
     from collections import Counter
     print(Counter(v["band"] for v in out.values()))

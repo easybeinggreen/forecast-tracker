@@ -155,6 +155,57 @@ def voter_profile(code, seats):
     return {"n": len(pool), "rows": rows}
 
 
+PEOPLE = {  # trait: (more, less, number format)
+    "age": ("older", "younger", "median age {:.0f}"),
+    "inc": ("higher incomes", "lower incomes", "${:,.0f} a week"),
+    "uni": ("more graduates", "fewer graduates", "{:.0f}%"),
+    "cert": ("more tradespeople", "fewer tradespeople", "{:.0f}%"),
+    "rent": ("more renters", "fewer renters", "{:.0f}%"),
+    "kids": ("more families with children", "fewer families with children", "{:.0f}%"),
+    "lang": ("more multilingual households", "mostly English-speaking", "{:.0f}%"),
+    "christian": ("more religious", "less religious", "{:.0f}% Christian"),
+    "atsi": ("more First Nations people", None, "{:.1f}%"),
+    "own": ("more own their home outright", "fewer own their home outright", "{:.0f}%"),
+}
+KIND = {"inner": "Inner-city seat", "middle": "Middle-ring suburban seat", "outer": "Outer-suburban seat",
+        "city": "Regional city seat", "rural": "Rural seat"}
+
+
+def add_profiles(seats, geog):
+    """A plain-English profile per seat: what kind of place, and how its people differ from Victoria's."""
+    import statistics as st
+    ds = [s for s in seats if s.get("demo")]
+    sd = {k: st.pstdev([s["demo"][k] for s in ds if s["demo"].get(k) is not None]) for k in PEOPLE}
+    for s in ds:
+        g, d, v = geog.get(s["slug"], {}), s["demo"], s.get("demo_vic") or {}
+        kind = KIND.get(s.get("band"), "Seat")
+        where = f"{g['km_cbd']:.0f} km {g['dir']} of the Melbourne CBD" if g else ""
+        if s.get("band") == "outer" and g.get("density", 1e9) < 600:
+            kind = "Outer-suburban seat on Melbourne's fringe"
+        size = f", covering {g['km2']:,.0f} km²" if g.get("km2", 0) >= 500 else ""
+        z = []
+        for k, (more, less, fmt) in PEOPLE.items():
+            if d.get(k) is None or v.get(k) is None or not sd[k]:
+                continue
+            zz = (d[k] - v[k]) / sd[k]
+            if zz < 0 and less is None:
+                continue
+            here, vic = fmt.format(d[k]), fmt.format(v[k])
+            if k == "age":
+                vic = vic.replace("median age ", "")
+            if k == "inc":
+                here, vic = here.replace(" a week", ""), vic
+            z.append((abs(zz), f"{more if zz > 0 else less} ({here} v {vic})"))
+        z.sort(reverse=True)
+        bits = [w for a_, w in z[:4] if a_ >= 0.7]
+        people = ("Compared with Victoria: " + ", ".join(bits) + ".") if bits else "Close to the Victorian average on most measures."
+        s["profile"] = {"kind": f"{kind}, {where}{size}." if where else f"{kind}{size}.", "people": people}
+
+
+def show_vic(k, v):
+    return f"{v:.0f}" if k == "age" else f"${v:,.0f}"
+
+
 # Candidates reported in local coverage but not yet on the Tally Room list (source in "src")
 EXTRA_CANDIDATES = {
     "bass": [{"name": "Nikole Schellekens", "party": "One Nation", "src": "San Remo/Phillip Island SGST, 2 Sep 2026"}],
@@ -217,7 +268,6 @@ def main():
     bp = ROOT / "data/vic2026/byelections.json"
     byel = json.loads(bp.read_text()) if bp.exists() else {}
     from vic2026.model.flows import GROUP_OF
-    from vic2026.model.flows import GROUP_OF
     qp = ROOT / "vic2026/config/questions.yaml"
     questions = yaml.safe_load(qp.read_text()) if qp.exists() else {}
     gp = ROOT / "data/vic2026/geography.json"
@@ -241,6 +291,12 @@ def main():
                 g = GROUP_OF.get(c["party"], "OTH")
                 base[g] = round(base.get(g, 0) + c["pct"], 1)
             s["byelection"] = {**b, "base_2022": base}
+    add_profiles(seats, geog)
+    ip = ROOT / "vic2026/config/issues.yaml"
+    issues = {k: v for k, v in (yaml.safe_load(ip.read_text()) or {}).items() if not k.startswith("_")} if ip.exists() else {}
+    for s in seats:
+        if issues.get(s["slug"]) and s.get("profile"):
+            s["profile"]["issues"] = issues[s["slug"]]
     pa = json.loads((ROOT / "data/vic2026/poll_average.json").read_text()) if (ROOT / "data/vic2026/poll_average.json").exists() else None
     eta = json.loads((ROOT / "data/raw/polls/et_poll-average.json").read_text())
     poll_avg = pa and {"as_of": pa["as_of"], "primaries": pa["primaries"], "house": pa["house"], "params": pa["params"],

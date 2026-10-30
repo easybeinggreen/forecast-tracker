@@ -1,0 +1,22 @@
+# Local issues per seat, each from a source read for this project (no source, no entry). Shown under "The place".
+_rm_east: &rm_east
+  text: "Roy Morgan seat poll of Bass, Hastings, Morwell and Pakenham (21–26 Oct, 283 voters): biggest concerns are cost of living (25%), government waste and corruption (23%), crime (20%) and roads and potholes (12%)."
+  source: "Roy Morgan, 27 Oct 2026"
+  url: "https://www.roymorgan.com/findings/10371-victorian-state-voting-intention-eastern-victoria-seats-october-2026"
+_bendigo: &bendigo
+  text: "Bendigo Advertiser reader survey: crime (53%), roads (45%) and cost of living (42%) top the list; some want bail and police powers overhauled and action on construction-industry corruption."
+  source: "Bendigo Advertiser, 20 Aug 2026"
+  url: "https://www.bendigoadvertiser.com.au/story/9334431/bendigo-voters-anger-threatens-labors-treasured-seats/"
+  paywalled: true
+
+bass: [*rm_east]
+hastings: [*rm_east]
+morwell: [*rm_east]
+pakenham:
+  - *rm_east
+  - text: "Locals interviewed say they're \"fed up with both sides\": two years to fix a roundabout, too little parking for the growing town, rents former Labor voters can't afford. The Liberals' preselection snub of David Farrelly may push some conservatives to One Nation."
+    source: "ACM (Canberra Times), 25 Oct 2026"
+    url: "https://www.canberratimes.com.au/story/9379774/choosing-one-nation-disillusioned-or-just-fed-up/"
+    paywalled: true
+bendigo-east: [*bendigo]
+bendigo-west: [*bendigo]

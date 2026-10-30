@@ -250,17 +250,17 @@ export function changesHTML(s, PARTY) {
 }
 
 export function placeHTML(s, locator, PARTY) {
-  const P = s.place || {};
-  const links = s.links || [];
+  const P = s.place || {}, Q = s.profile || {};
+  const wiki = (s.links || []).find((l) => l.label === "Wikipedia");
   return `<section class="d-sec place" aria-labelledby="h-place">
     <h3 id="h-place">The place</h3>
     <div class="place-grid">${locator}<div>
-      ${P.blurb ? `<p class="lede-s">${esc(P.blurb)} <a class="dim" href="${esc((links.find((l) => l.label === "Wikipedia") || {}).url || "#")}" target="_blank" rel="noopener">Wikipedia</a></p>` : ""}
-      ${P.created || P.demographic ? `<p class="facts-line">${P.demographic ? `<span>${esc(P.demographic)}</span>` : ""}${P.created ? `<span>Created ${esc(P.created)}</span>` : ""}</p>` : ""}
+      ${Q.kind ? `<p class="lede-s"><b>${esc(Q.kind)}</b> ${Q.work ? esc(Q.work) : ""}</p>` : ""}
+      ${Q.people ? `<p class="lede-s">${esc(Q.people)}</p>` : ""}
+      ${Q.issues?.length ? `<h4>Local issues</h4><ul class="issues">${Q.issues.map((i) => `<li>${esc(i.text)} <a class="dim" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source)}${i.paywalled ? " (paywalled)" : ""}</a></li>`).join("")}</ul>` : ""}
       ${P.assessment ? `<blockquote class="quote small"><p>${esc(P.assessment)}</p><footer><a href="${esc(P.tr_url)}" target="_blank" rel="noopener">The Tally Room's assessment</a></footer></blockquote>` : ""}
-
-      ${links.length ? `<h4>Follow it</h4><ul class="links">${links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>${l.note ? ` <span class="dim">${esc(l.note)}</span>` : ""}</li>`).join("")}</ul>` : ""}
+      ${P.blurb ? `<details class="more-s"><summary>Background (Wikipedia)</summary><p>${esc(P.blurb)}${P.created ? ` Created ${esc(P.created)}.` : ""} ${wiki ? `<a class="dim" href="${esc(wiki.url)}" target="_blank" rel="noopener">Wikipedia</a>` : ""}</p></details>` : ""}
     </div></div>
-    ${demoHTML(s.demo, s.demo_vic || {})}
+    <details class="more-s"><summary>All census figures (2021)</summary>${demoHTML(s.demo, s.demo_vic || {})}</details>
   </section>`;
 }
