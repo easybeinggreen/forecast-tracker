@@ -49,6 +49,7 @@ async function boot() {
     fetch("data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   S.news = news;
+  S.sb = await fetch("data/sportsbet.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.mk = await fetch("data/markets.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.changes = await fetch("data/changes.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const raw = await fetch("data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
@@ -544,6 +545,7 @@ function renderDrawer() {
 
     ${researchHTML(s.research)}
     ${seatNewsHTML(s)}
+    ${sportsbetHTML(s)}
     ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
   paintCalc(s, old);
@@ -658,11 +660,43 @@ function recompute() {
     } else { S.calc = null; S.central = null; }
     const old = Object.fromEntries(s.primaries_2022.reduce((m, c) => { const g = groupOf(c.party); m.set(g, (m.get(g) || 0) + c.pct); return m; }, new Map()));
     paintCalc(s, old);
+    const sbs = $("#sb-sec"); if (sbs) sbs.outerHTML = sportsbetHTML(s);
     refreshLockDefaults();
   }, 90);
 }
 
 // ---------------------------------------------------------------- market odds + lock
+const odds$ = (p) => (p > 0 ? `$${(1 / p).toFixed(2)}` : "—");
+const pc$ = (p) => `${pct(p)} <span class="dim">(${odds$(p)})</span>`;
+function sbSpark(hist, k) {
+  const pts = hist.filter((h) => h.odds[k]).map((h) => [Date.parse(h.t), 1 / h.odds[k]]);
+  if (pts.length < 2) return '<span class="dim">—</span>';
+  const W = 70, H = 18, x0 = pts[0][0], x1 = pts.at(-1)[0], lo = Math.min(...pts.map((p) => p[1])), hi = Math.max(...pts.map((p) => p[1]));
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-label="Implied chance over time"><path d="${pts.map(([x, v], i) => `${i ? "L" : "M"}${(((x - x0) / (x1 - x0 || 1)) * (W - 2) + 1).toFixed(1)},${(H - 2 - ((v - lo) / (hi - lo || 1)) * (H - 4)).toFixed(1)}`).join("")}" fill="none" stroke="var(--ink-2)" stroke-width="1.4"/></svg>`;
+}
+function sportsbetHTML(s) {
+  const d = S.sb?.seats?.[s.slug]; if (!d) return "";
+  const L = d.latest, mine = adjusted() && S.calc ? S.calc.win : null, c = lastCall(s.slug);
+  const keys = Object.keys(L.odds).sort((a, b) => L.odds[a] - L.odds[b]);
+  const name = (k) => (k === "OTH" ? "Any other" : k === "IND" && d.names?.IND ? `${esc(d.names.IND)} (Ind.)` : esc(PARTY[k] || k));
+  const rows = keys.map((k) => {
+    const o = L.odds[k], m = s.model.win[k] ?? (k === "OTH" ? 0 : null);
+    const you = c && c.probs[k] != null ? Number(c.probs[k]) : mine ? mine[k] ?? null : null;
+    const p = you ?? m, ev = p == null ? null : p * o - 1;
+    return `<tr><td>${k === "OTH" ? "" : `<span class="sw" style="background:${col(k)}"></span> `}${name(k)}</td><td class="num"><b>$${o.toFixed(2)}</b></td><td class="num">${pct(L.implied[k])}</td><td class="num">${pct(L.fair[k])}</td>
+      <td class="num">${m == null ? '<span class="dim">not in model</span>' : pc$(m)}</td><td class="num">${you == null ? '<span class="dim">—</span>' : pc$(you)}</td>
+      <td class="num">${ev == null ? "—" : `<span class="${ev > 0 ? "pos" : "neg"}">${ev > 0 ? "+" : "−"}${Math.abs(ev * 100).toFixed(0)}c</span>`}</td><td>${sbSpark(d.history, k)}</td></tr>`;
+  }).join("");
+  const best = keys.map((k) => { const p = (c && c.probs[k] != null ? Number(c.probs[k]) : mine?.[k]) ?? s.model.win[k]; return p == null ? null : { k, ev: p * L.odds[k] - 1, p }; }).filter(Boolean).sort((a, b) => b.ev - a.ev)[0];
+  return `<section class="d-sec" id="sb-sec" aria-labelledby="h-sb"><h3 id="h-sb">Sportsbet</h3>
+    <p class="hint">Odds as of ${new Date(L.as_of).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })} (${d.history.length} snapshot${d.history.length > 1 ? "s" : ""}). Margin on this seat: <b>${(L.margin * 100).toFixed(1)}%</b>. Implied = 1 ÷ odds; fair = with the margin removed. Value = chance × odds − 1, per $1, using your chance if you've set one, otherwise the model's.</p>
+    <div class="sheet-wrap"><table class="sheet sb-t"><thead><tr><th></th><th>Odds</th><th>Implied</th><th>Fair</th><th>Model</th><th>You</th><th>Value</th><th>Trend</th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${best && best.ev > 0.03 ? `<p class="verdict pos">Best value: <b>${name(best.k)} at $${L.odds[best.k].toFixed(2)}</b>: ${pct(best.p)} × ${L.odds[best.k].toFixed(2)} = ${(best.p * L.odds[best.k]).toFixed(2)}, about ${(best.ev * 100).toFixed(0)}c per $1 on average. Quarter-Kelly stake: <b>${Math.max(0, Math.round(250 * best.ev / (L.odds[best.k] - 1)))} points</b>. Only worth it if you believe ${pct(best.p)} (${odds$(best.p)}).</p>`
+      : `<p class="verdict">No value at these odds: every price is shorter than ${c || mine ? "your" : "the model's"} chance justifies.</p>`}
+    <p class="hint"><a href="${esc(S.sb.url)}" target="_blank" rel="noopener">Sportsbet seat markets ↗</a> · refreshed on request</p>
+  </section>`;
+}
+
 function marketHTML(slug, outs) {
   const o = lastOdds(slug);
   const latest = o ? `<p class="mkt-latest">Latest: ${esc(o.source)}${o.as_of ? `, ${esc(String(o.as_of).slice(0, 10))}` : ""}. With the bookmaker's margin removed: ${Object.entries(o.implied).map(([k, v]) => `${esc(outName(k))} ${pct(Number(v))}`).join(", ")}.</p>` : `<p class="hint">No odds recorded for this ${slug === "statewide" ? "question" : "seat"} yet. Bookmakers usually open seat markets in the last few weeks.</p>`;
@@ -737,13 +771,18 @@ function refreshLockDefaults(force = true) {
 }
 
 function priceFor(slug, k) {
+  const sb = S.sb?.seats?.[slug]?.latest;
+  if (sb && sb.odds[k]) return { p: 1 / sb.odds[k], src: "Sportsbet", odds: sb.odds[k] };
   const o = lastOdds(slug);
+  if (o && o.odds?.[k]) return { p: 1 / Number(o.odds[k]), src: o.source, odds: Number(o.odds[k]) };
   if (o && o.implied[k] != null) return { p: Number(o.implied[k]), src: o.source };
   const m = slug === "statewide" ? { LNP_MAJ: S.F.summary.p_lnp_majority, HUNG: S.F.summary.p_hung, ALP_MAJ: S.F.summary.p_alp_majority }[k] : seatBy(slug).model.win[k];
   return { p: Math.min(0.99, Math.max(0.01, m || 0.01)), src: "model" };
 }
 
 function sbRecorded(slug, k) {
+  const sb = S.sb?.seats?.[slug]?.latest;
+  if (sb && sb.odds[k]) return sb.odds[k];
   const o = (S.ledger?.odds || []).filter((r) => r.seat === slug && /sportsbet/i.test(r.source || "")).at(-1);
   return o && o.odds[k] ? Number(o.odds[k]) : null;
 }

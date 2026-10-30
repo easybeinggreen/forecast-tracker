@@ -1,6 +1,6 @@
 {
  "source": "Sportsbet",
- "as_of": "2026-10-30",
+ "as_of": "2026-10-30T09:04+00:00",
  "url": "https://www.sportsbet.com.au/betting/politics/vic-politics/victorian-state-election-seat-betting-10944986",
  "seats": {
   "albert-park": {
@@ -564,6 +564,32 @@
    "ALP": 6.0,
    "GRN": 51.0,
    "OTH": 51.0
+  }
+ },
+ "names": {
+  "essendon": {
+   "IND": "Oscar Yildiz"
+  },
+  "glen-waverley": {
+   "IND": "Nicholas Siow"
+  },
+  "hawthorn": {
+   "IND": "Shima Ibuki"
+  },
+  "kew": {
+   "IND": "Sophie Torney"
+  },
+  "mildura": {
+   "IND": "Ali Cupper"
+  },
+  "mulgrave": {
+   "IND": "Ian Cook"
+  },
+  "south-barwon": {
+   "IND": "Ron Nelson"
+  },
+  "williamstown": {
+   "IND": "Tony Briffa"
   }
  }
 }
