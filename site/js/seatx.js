@@ -227,7 +227,7 @@ export function placeHTML(s, locator, PARTY) {
       ${P.blurb ? `<p class="lede-s">${esc(P.blurb)} <a class="dim" href="${esc((links.find((l) => l.label === "Wikipedia") || {}).url || "#")}" target="_blank" rel="noopener">Wikipedia</a></p>` : ""}
       ${P.created || P.demographic ? `<p class="facts-line">${P.demographic ? `<span>${esc(P.demographic)}</span>` : ""}${P.created ? `<span>Created ${esc(P.created)}</span>` : ""}</p>` : ""}
       ${P.assessment ? `<blockquote class="quote small"><p>${esc(P.assessment)}</p><footer><a href="${esc(P.tr_url)}" target="_blank" rel="noopener">The Tally Room's assessment</a></footer></blockquote>` : ""}
-      ${s.topics?.length ? `<h4>What local coverage is about</h4><div class="chips-wrap">${s.topics.map((t) => `<span class="topic" title="${t.n} stor${t.n > 1 ? "ies" : "y"}">${esc(t.t)} <b>${t.n}</b></span>`).join("")}</div>` : ""}
+
       ${links.length ? `<h4>Follow it</h4><ul class="links">${links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>${l.note ? ` <span class="dim">${esc(l.note)}</span>` : ""}</li>`).join("")}</ul>` : ""}
     </div></div>
     ${candidatesHTML(s, PARTY)}

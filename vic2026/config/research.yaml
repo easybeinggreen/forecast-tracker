@@ -1,6 +1,92 @@
 # Research log: articles and what they mean for the forecast. Shown in the seat and party panels.
 # Each insight names the seats (slugs) or parties it bears on. Add new articles at the top.
 
+# --- batch 30 Oct 2026: contested seats where the model and Sportsbet disagree ---
+- id: abc-nationals-bendigo
+  title: "Nationals 'fighting' to win Bendigo as Jacinta Allan exits politics"
+  source: ABC News
+  author: Tyrone Dalton
+  date: "2026-08-15"
+  url: https://www.abc.net.au/news/2026-08-15/nationals-bid-for-bendigo-after-jacinta-allan-quits-politics/107038444
+  paywalled: false
+  insights:
+    - seats: [bendigo-east]
+      text: "Nationals' Andrew Lethlean: \"We have missed out; we had a city-centric government\"; wants \"25 per cent of the investment into the regions\". Monash academic Zareh Ghazarian: Allan's exit \"changes the political dynamic of the seat considerably\" and he expects \"a very close result\"."
+    - seats: [bendigo-west]
+      text: "Nationals candidate David Hutchings is an accountant, volunteer firefighter and emergency responder. Sitting Labor MP Maree Edwards (Speaker) has since announced her retirement; Labor's candidate is Brenton Baldwin."
+- id: bendigo-adv-dental
+  title: "Andrew Lethlean questions Labor's free Bendigo dental care"
+  source: Bendigo Advertiser
+  author: Joseph Najjar
+  date: "2026-10-30"
+  url: https://www.bendigoadvertiser.com.au/story/9382020/andrew-lethlean-questions-labors-free-bendigo-dental-care/
+  paywalled: true
+  insights:
+    - seats: [bendigo-east, bendigo-west]
+      text: "Labor announced a free public dental clinic for Bendigo (opening July 2027 if re-elected) with candidates Tim Rickwood and Brenton Baldwin. Lethlean: \"It shouldn't take an election for these sweeteners to be thrown\" and \"For 27 years Labor have sat in the seat of Bendigo East\". Labor is spending to defend both Bendigo seats."
+- id: abc-guide-mildura
+  title: "Mildura: electorate guide"
+  source: ABC News
+  date: "2026-10-30"
+  url: https://www.abc.net.au/news/elections/vic/2026/guide/mild
+  paywalled: false
+  insights:
+    - seats: [mildura]
+      text: "Nationals' Jade Benham holds by 1.2% after preferences, but in 2022 independent Ali Cupper led the first-preference count, 33.9% to Benham's 25.9%. Cupper held the seat 2018-22 and is now Mildura mayor; One Nation's Guy Cooper also stands. The model doesn't include Cupper (it carries over only 80% of her 2022 vote as a generic independent)."
+- id: sat-mulgrave
+  title: "Labor's Eden Foster launches Mulgrave bid in four-cornered contest"
+  source: South Asia Times
+  date: "2026-10-14"
+  url: https://www.southasiatimes.com.au/australia/labors-eden-foster-launches-mulgrave-bid-in-four-cornered-contest/
+  paywalled: false
+  insights:
+    - seats: [mulgrave]
+      text: "Four-cornered contest: Labor's Eden Foster (40.2% at the 2023 by-election), Liberal Charles Tran, One Nation's Cody Rebbechi and independent Ian Cook, whose by-election campaign showed real strength (he finished second). Labor 'remains confident'. Sportsbet has Cook at $4.00 (25%); the model has no strong independent here."
+- id: star-pakenham-pickering
+  title: "One Nation Victoria leader to run for Pakenham"
+  source: Star News Group (Pakenham Gazette)
+  date: "2026-08-07"
+  url: https://dandenong.starcommunity.com.au/news/2026-08-07/one-nation-victoria-leader-to-run-for-pakenham/
+  paywalled: false
+  insights:
+    - seats: [pakenham]
+      text: "One Nation's state leader Warren Pickering is running here. Pickering: \"We've got a lot of support in the metro areas as well.\" Labor MP Emma Vulin is retiring. A July RedBridge poll had One Nation on 27% statewide. Sportsbet makes One Nation the clear favourite at $1.40 (71%); the model favours the Liberals, because its One Nation placement doesn't reward a leader's personal profile."
+- id: herald-sun-frankston-line
+  title: "Senior Labor ministers at risk as internal polling points to a wipeout in Frankston line"
+  source: The Australia Today (reporting the Herald Sun)
+  date: "2026-10-23"
+  url: https://www.theaustraliatoday.com.au/senior-labor-ministers-at-risk-as-internal-polling-points-to-a-wipeout-in-frankston-line/
+  paywalled: false
+  insights:
+    - seats: [carrum]
+      text: "Labor internal polling: Carrum (Attorney-General Sonya Kilkenny, 9.8%) is the seat causing Labor strategists 'the most concern'. Original Herald Sun report is paywalled; this is a free summary."
+    - seats: [frankston]
+      text: "Labor insiders expect Frankston (Police Minister Paul Edbrooke, 8.7%) to change hands despite his strong local standing."
+    - seats: [mordialloc]
+      text: "Sources expect a substantial move to the Liberals and some to the Greens; Labor hopes Tim Richardson's local profile holds the seat (8.2%)."
+    - seats: [bentleigh]
+      text: "Insiders expect a large swing but think Nick Staikos is better placed than his neighbours to survive (8.0%)."
+    - seats: [melton, sydenham, kororoit]
+      text: "Named in Labor's internal concern list alongside the Frankston-line seats. RedBridge's Kos Samaras: Labor support falling sharply in parts of the south-east and north."
+- id: shepp-news-showdown
+  title: "One Nation vs National Party election showdown"
+  source: Shepparton News
+  author: Ashley Darling
+  date: "2026-09-14"
+  url: https://www.sheppnews.com.au/news/one-nation-vs-national-party-election-showdown/
+  paywalled: false
+  insights:
+    - seats: [shepparton]
+      text: "Nationals pick former Greater Shepparton mayor Shane Sali, with strong name recognition, to replace retiring MP Kim O'Keeffe. One Nation's Phillip Bryant (ex-defence, 30 years CFA) is a first-time candidate. The writer calls it 'a surging One Nation threat in the National Party's heartland' and warns 2026 'could be unlike any the state has seen'."
+- id: sgst-bass-one-nation
+  title: "One Nation turns to Bass Coast farmer and mental health care worker for state's tightest seat"
+  source: South Gippsland Sentinel-Times
+  date: "2026-09-02"
+  url: https://www.sgst.com.au/one-nation-turns-to-bass-coast-farmer-and-mental-health-care-worker-for-states-tightest-seat/
+  paywalled: false
+  insights:
+    - seats: [bass]
+      text: "Open seat (Labor's Jordan Crugnale retiring; held by about 200 votes). One Nation's Nikole Schellekens, a beef farmer, ran for Bass Coast council in 2024 and missed by 80 votes; the Liberal, Rochelle Halstead, is the former Bass Coast mayor who topped that same ward. Schellekens campaigns on cost of living and against solar and transmission lines on farmland: \"I would prefer to see a million dairy farms over a million solar farms any day.\""
 - id: crikey-greens-sleepers
   title: "Could the Greens flip these 'sleeper' seats in Victoria?"
   source: Crikey

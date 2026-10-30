@@ -512,3 +512,4 @@ th.fedc { font-style: italic; }
 .sb-t td .sw { margin-right: 4px; }
 .verdict { margin-top: 8px; font-size: 13.5px; padding: 8px 10px; border-radius: 6px; background: var(--hover); }
 .verdict.pos { background: color-mix(in srgb, var(--good) 10%, var(--sheet)); color: var(--ink); }
+.note .src .pw { color: var(--bad); }

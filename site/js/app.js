@@ -578,17 +578,18 @@ function avatar(name, party) {
 
 function researchHTML(items) {
   if (!items?.length) return "";
-  return `<section class="d-sec" aria-labelledby="h-res"><h3 id="h-res">Research notes</h3>
-    <p class="hint">Insights from articles you've saved, kept in <code>vic2026/config/research.yaml</code>.</p>
-    ${items.map((r) => `<div class="note"><p>${esc(r.text)}</p><p class="src"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.source)}: ${esc(r.title)}</a>${r.author ? `, ${esc(r.author)}` : ""}, ${esc(r.date)}</p></div>`).join("")}
+  const items2 = [...items].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  return `<section class="d-sec" aria-labelledby="h-res"><h3 id="h-res">What the coverage says</h3>
+    <p class="hint">Statements from articles I've read, with links. Paywalled sources are marked; where possible a free version is used.</p>
+    ${items2.map((r) => `<div class="note"><p>${esc(r.text)}</p><p class="src"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.source)}: ${esc(r.title)}</a>${r.author ? `, ${esc(r.author)}` : ""}, ${esc(r.date)}${r.paywalled ? ' · <span class="pw">paywalled</span>' : r.paywalled === false ? " · free to read" : ""}</p></div>`).join("")}
   </section>`;
 }
 
 function seatNewsHTML(s) {
   const items = S.news?.seats?.[s.slug] || [];
-  return `<section class="d-sec" aria-labelledby="h-news"><h3 id="h-news">In the news</h3>${items.length
+  return `<section class="d-sec" aria-labelledby="h-news"><details><summary>Unread headlines (${items.length}), not yet checked</summary>${items.length
     ? `<p class="hint">Last 30 days, searching the seat and ${esc(s.mp.name)}. Log anything that should move your call in the note when you lock it.</p>${newsList(items)}`
-    : `<p class="hint">No recent coverage found for this seat${S.news ? "" : " (news refreshes each morning)"}.</p>`}</section>`;
+    : `<p class="hint">No recent coverage found for this seat${S.news ? "" : " (news refreshes each morning)"}.</p>`}</details></section>`;
 }
 
 function groupOf(code) {

@@ -165,7 +165,7 @@ def main():
     research = yaml.safe_load(rp.read_text()) if rp.exists() else []
     by_seat, by_party = {}, {}
     for a in research:
-        ref = {k: a.get(k) for k in ("title", "source", "author", "date", "url")}
+        ref = {k: a.get(k) for k in ("title", "source", "author", "date", "url", "paywalled")}
         for ins in a.get("insights", []):
             for s in ins.get("seats", []) or []:
                 by_seat.setdefault(s, []).append({**ref, "text": ins["text"]})
