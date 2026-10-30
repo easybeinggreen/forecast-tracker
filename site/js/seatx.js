@@ -218,6 +218,37 @@ function candidatesHTML(s, PARTY) {
     ${missing.length || newInd.length ? `<p class="flag">${missing.length ? `The model assumes ${missing.map((k) => esc(PARTY[k])).join(" and ")} will stand here, but no candidate is listed yet. If that holds, their votes go elsewhere and the odds change. ` : ""}${newInd.length ? `${newInd.map((c) => esc(c.name)).join(", ")} (independent) isn't in the model, which only carries over independents who polled strongly in 2022.` : ""}</p>` : ""}`;
 }
 
+// Results: 2022 state, 2025 federal (same booths), model 2026, and how often the seat has changed hands
+export function resultsHTML(s, PARTY) {
+  const st = s.prims_2022_grouped || {}, fd = s.fed2025?.prims || {};
+  const slots = s.model.sim.slots, mean = s.model.sim.mean;
+  const m26 = Object.fromEntries(slots.map((p, i) => [p, 100 * mean[i]]));
+  const rows = ["ALP", "LIB", "NAT", "GRN", "ON", "IND"].filter((p) => (st[p] || 0) + (fd[p] || 0) + (m26[p] || 0) >= 0.5);
+  const other = (o) => Math.max(0, 100 - rows.reduce((a, p) => a + (o[p] || 0), 0));
+  const cell = (v) => `<td class="num">${v == null || v < 0.05 ? '<span class="dim">–</span>' : v.toFixed(1)}</td>`;
+  const h = s.history?.members || [];
+  let changes = 0; for (let i = 1; i < h.length; i++) if (h[i].party !== h[i - 1].party) changes++;
+  const since = h.length ? h[0].from : null;
+  return `<section class="d-sec" aria-labelledby="h-vote">
+    <h3 id="h-vote">How it has voted</h3>
+    <p class="hint">First-preference vote, %. The 2025 federal column counts the same polling places, so it shows how this area voted most recently.</p>
+    <div class="sheet-wrap"><table class="sheet"><thead><tr><th></th><th>2022 state</th><th>2025 federal</th><th>Model 2026</th></tr></thead><tbody>
+      ${rows.map((p) => `<tr><td><span class="sw" style="background:${col(p)}"></span>${esc(PARTY[p])}</td>${cell(st[p])}${cell(fd[p])}${cell(m26[p])}</tr>`).join("")}
+      <tr><td class="dim">Others</td>${cell(other(st))}${cell(other(fd))}${cell(other(m26))}</tr>
+    </tbody></table></div>
+    <p class="facts-line"><span>2022: ${PARTY[s.held_2022] || s.held_2022} won by ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs}</span>${s.fed2025?.alp_tpp != null ? `<span>2025 federal: Labor ${s.fed2025.alp_tpp.toFixed(1)}% two-party</span>` : ""}${since ? `<span>Changed party ${changes} time${changes === 1 ? "" : "s"} since ${since}</span>` : ""}</p>
+    ${historyHTML(s.history, PARTY)}
+  </section>`;
+}
+
+export function changesHTML(s, PARTY) {
+  const c = candidatesHTML(s, PARTY);
+  if (!c && !s.mp.retiring) return "";
+  return `<section class="d-sec" aria-labelledby="h-chg"><h3 id="h-chg">What's different in 2026</h3>
+    ${s.mp.retiring ? `<p class="flag">${esc(s.mp.name)} (${esc(PARTY[s.mp.party])}) is retiring, so the seat is open.</p>` : ""}
+    ${c}</section>`;
+}
+
 export function placeHTML(s, locator, PARTY) {
   const P = s.place || {};
   const links = s.links || [];
@@ -230,8 +261,6 @@ export function placeHTML(s, locator, PARTY) {
 
       ${links.length ? `<h4>Follow it</h4><ul class="links">${links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>${l.note ? ` <span class="dim">${esc(l.note)}</span>` : ""}</li>`).join("")}</ul>` : ""}
     </div></div>
-    ${candidatesHTML(s, PARTY)}
     ${demoHTML(s.demo, s.demo_vic || {})}
-    ${historyHTML(s.history, PARTY)}
   </section>`;
 }

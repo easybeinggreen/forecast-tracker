@@ -524,3 +524,10 @@ th.fedc { font-style: italic; }
 .q-opt small { color: var(--ink-2); font-size: 11.5px; }
 .q-opt:hover { border-color: var(--ink-2); }
 .q-opt.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--rule-2); }
+.model-more > summary { cursor: pointer; list-style: none; padding: 2px 0; }
+.model-more > summary::-webkit-details-marker { display: none; }
+.model-more > summary::before { content: "▸ "; color: var(--ink-2); }
+.model-more[open] > summary::before { content: "▾ "; }
+.model-more[open] > summary { margin-bottom: 8px; }
+.model-more > .d-sec { padding-left: 0; padding-right: 0; }
+.model-more > .d-sec:last-child { border-bottom: 0; }

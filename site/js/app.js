@@ -1,7 +1,7 @@
 import { simulateSeat, centralCount } from "./sim.js";
 import { decodeTopo, projector, bboxOf, pathOf } from "./map.js";
 import { partyCards, partyHTML } from "./party.js";
-import { whyHTML, locatorSVG, insideShell, renderInside, placeHTML } from "./seatx.js";
+import { whyHTML, locatorSVG, insideShell, renderInside, placeHTML, resultsHTML, changesHTML } from "./seatx.js";
 
 // ---------------------------------------------------------------- state & helpers
 const S = {
@@ -529,17 +529,18 @@ function renderDrawer() {
       <button class="close back" type="button" data-act="close" aria-label="Back to the count room">← Count room</button>
     </div>
 
+    ${placeHTML(s, locatorSVG(S.geo, s.slug), PARTY)}
+    ${resultsHTML(s, PARTY)}
+    ${insideShell(s.slug)}
+    ${changesHTML(s, PARTY)}
+    ${researchHTML(s.research)}
+    ${seatNewsHTML(s)}
     <section class="d-sec" aria-labelledby="h-win">
-      <h3 id="h-win">Who wins</h3>
+      <h3 id="h-win">Who wins: model v${esc(S.F.model_version || "1.0")}</h3>
       <p class="hint" id="outright"></p>
       <div class="wins" id="wins"></div>
       <div class="keyline"><span><i class="k-m"></i>Model</span><span><i class="k-a"></i>With your adjustments</span><span><i class="k-me"></i>Your locked call</span></div>
     </section>
-
-    ${whyHTML(s, S.F, PARTY)}
-    ${placeHTML(s, locatorSVG(S.geo, s.slug), PARTY)}
-    ${insideShell(s.slug)}
-
     <section class="d-sec" aria-labelledby="h-prim">
       <h3 id="h-prim">First preferences <button class="btn btn-ghost reset" type="button" data-act="reset">Reset adjustments</button></h3>
       <p class="hint">Dot: model estimate for 2026, band: likely range. Grey tick: 2022 result. Slide to shift a party's vote in this seat (other parties rebalance).</p>
@@ -548,19 +549,19 @@ function renderDrawer() {
         <div class="shift"><span>adjust</span><input type="range" min="-10" max="10" step="0.5" value="${S.shifts[p] || 0}" data-shift="${p}" aria-label="Shift ${PARTY[p]} vote in ${esc(s.name)}"><span id="sv-${p}">${fmtShift(S.shifts[p] || 0)}</span></div>`).join("")}
       </div>
     </section>
-
+    ${questionsHTML(s)}
+    <details class="d-sec model-more"${S.moreOpen ? " open" : ""}><summary><b>How the model gets there</b> <span class="dim">the working: swings, final two, the count, preference settings</span></summary>
+    ${whyHTML(s, S.F, PARTY)}
     <section class="d-sec" aria-labelledby="h-pairs">
       <h3 id="h-pairs">Final two</h3>
       <p class="hint">After everyone else is excluded, who is left standing, and who wins from there.</p>
       <div class="pairs" id="pairs"></div>
     </section>
-
     <section class="d-sec" aria-labelledby="h-count">
       <h3 id="h-count">The count</h3>
       <p class="hint">How a typical count runs, round by round: the lowest candidate is excluded and their votes pass on by preference. Figures are percentages of formal votes.</p>
       <div class="sheet-wrap" id="sheet"></div>
     </section>
-
     <section class="d-sec" aria-labelledby="h-drv">
       <h3 id="h-drv">Preference drivers</h3>
       <p class="hint">How voters of an excluded party split between two that are still in. Defaults are the model's statewide assumptions; changes here only affect this seat's calculator.</p>
@@ -569,10 +570,7 @@ function renderDrawer() {
         <input id="f-${k}" type="range" min="2" max="98" step="1" value="${Math.round(v * 100)}" data-flow="${k}"><span class="def">Statewide assumption ${pct(def)}</span></div>`; }).join("") || '<p class="hint">No contested preference flows in this seat.</p>'}
       </div>
     </section>
-
-    ${researchHTML(s.research)}
-    ${seatNewsHTML(s)}
-    ${questionsHTML(s)}
+    </details>
     ${sportsbetHTML(s)}
     ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
@@ -931,6 +929,7 @@ function wire() {
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
   $("#changes").addEventListener("click", (e) => { const b = e.target.closest("[data-open-seat]"); if (b) openSeat(b.dataset.openSeat); });
+  drawer.addEventListener("toggle", (e) => { if (e.target.classList?.contains("model-more")) S.moreOpen = e.target.open; }, true);
   drawer.addEventListener("input", (e) => {
     const t = e.target;
     if (t.dataset.shift) { S.shifts[t.dataset.shift] = Number(t.value); $(`#sv-${t.dataset.shift}`).textContent = fmtShift(Number(t.value)); recompute(); }

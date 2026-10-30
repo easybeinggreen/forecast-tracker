@@ -79,7 +79,7 @@ def place_info(slug, s, h, demo, topics, mp):
     return {
         "place": {"blurb": (h or {}).get("blurb"), "created": (h or {}).get("created"), "demographic": (h or {}).get("demographic"),
                   "assessment": tr.get("assessment"), "tr_url": tr.get("url")},
-        "candidates_2026": tr.get("cands") or [],
+        "candidates_2026": (tr.get("cands") or []) + [c for c in EXTRA_CANDIDATES.get(slug, []) if c["name"] not in {x["name"] for x in tr.get("cands") or []}],
         "history": {"members": members},
         "demo": demo["seats"].get(slug), "demo_vic": demo.get("vic"),
         "topics": topics.get(slug, []), "links": links,
@@ -116,6 +116,12 @@ def party_profiles(seats, F):
                      "held": [s["slug"] for s in held],
                      "gains": [s["slug"] for s in gains[:12]]}
     return out
+
+
+# Candidates reported in local coverage but not yet on the Tally Room list (source in "src")
+EXTRA_CANDIDATES = {
+    "bass": [{"name": "Nikole Schellekens", "party": "One Nation", "src": "San Remo/Phillip Island SGST, 2 Sep 2026"}],
+}
 
 
 def main():
@@ -174,10 +180,16 @@ def main():
     bp = ROOT / "data/vic2026/byelections.json"
     byel = json.loads(bp.read_text()) if bp.exists() else {}
     from vic2026.model.flows import GROUP_OF
+    from vic2026.model.flows import GROUP_OF
     qp = ROOT / "vic2026/config/questions.yaml"
     questions = yaml.safe_load(qp.read_text()) if qp.exists() else {}
     for s in seats:
         s["research"] = by_seat.get(s["slug"], [])
+        g22 = {}
+        for c in s["primaries_2022"]:
+            g = GROUP_OF.get(c["party"], "OTH")
+            g22[g] = round(g22.get(g, 0) + c["pct"], 1)
+        s["prims_2022_grouped"] = g22
         if questions.get(s["slug"]):
             s["questions"] = questions[s["slug"]]
         b = byel.get(s["slug"])
