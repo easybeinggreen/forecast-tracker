@@ -73,6 +73,8 @@ def baselines(D, cfg):
         for g in (cand.get("drop") or {}).get(d["slug"], []) or []:
             if g != "ON":
                 B[i, G[g]] = 0
+            if g == "IND":
+                best_ind = None
         B[i] /= B[i].sum()
         fin = sorted(d["final_two"], key=lambda x: -x["votes"])
         pmap = {c["name"]: c["party"] for c in d["candidates"]}

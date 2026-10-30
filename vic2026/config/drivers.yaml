@@ -123,6 +123,9 @@ candidates:
     bendigo-west: {NAT: federal}   # David Hutchings; no Liberal announced yet
   drop:
     northcote: ["ON"]              # no One Nation candidate (Election Tracker, Tally Room)
+    narracan: [IND]                # 2022 independents not standing again (none announced, 30 Oct)
+    rowville: [IND]
+    south-west-coast: [IND]
 
 # Seat polls. Each moves its seat part-way toward the poll: weight = n_eff / (n_eff + seat_poll_prior_n),
 # so a 600-person poll gets about 40%. Add entries as they're published (primaries in percent; LNP = Lib+Nat).

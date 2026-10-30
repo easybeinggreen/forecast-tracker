@@ -454,7 +454,7 @@ function openParty(code) {
 }
 function openSeat(slug) {
   if (slug !== "statewide" && !seatBy(slug)) return;
-  S.seat = slug; S.shifts = {}; S.flows = {}; S.calc = null; S.central = null;
+  S.seat = slug; S.shifts = {}; S.flows = {}; S.answers = {}; S.calc = null; S.central = null;
   history.replaceState(null, "", `#seat=${slug}`);
   renderDrawer();
   const d = $("#drawer");
@@ -478,7 +478,34 @@ const DRIVERS = [
   ["rmin_to_on_vs_lib", "Other right-wing voters putting One Nation ahead of the Liberals", ["RMIN", "ON"]],
   ["ind_to_on_vs_alp", "Independent voters putting One Nation ahead of Labor", ["IND", "ON"]],
 ];
-const adjusted = () => Object.values(S.shifts).some((v) => v) || Object.keys(S.flows).length > 0;
+const adjusted = () => Object.values(S.shifts).some((v) => v) || Object.keys(S.flows).length > 0 || Object.keys(S.answers || {}).length > 0;
+
+// Seat-specific questions: each answer nudges this seat's calculator. Answers are saved with the locked call.
+function questionsHTML(s) {
+  const qs = s.questions; if (!qs?.length) return "";
+  const slots = s.model.sim.slots;
+  const eff = (o) => [...Object.entries(o.shifts || {}).filter(([p, v]) => v && slots.includes(p)).map(([p, v]) => `${SHORT[p]} ${v > 0 ? "+" : ""}${v}`),
+    ...Object.entries(o.flows || {}).map(([k, v]) => `preferences ${pct(v)}`)].join(", ") || "no change";
+  return `<section class="d-sec" aria-labelledby="h-q">
+    <h3 id="h-q">Your view on ${esc(s.name)}</h3>
+    <p class="hint">Questions for this seat. Each answer moves the calculator above; your answers are saved with your call and reviewed on Sunday.</p>
+    ${qs.map((q, i) => `<div class="q"><p class="q-q">${esc(q.q)}</p>${q.why ? `<p class="q-why">${esc(q.why)}</p>` : ""}
+      <div class="q-opts" role="radiogroup">${q.options.map((o, j) => `<button type="button" class="q-opt${S.answers?.[i] === j ? " on" : ""}" data-q="${i}" data-o="${j}" aria-pressed="${S.answers?.[i] === j}">${esc(o.label)}<small>${eff(o)}</small></button>`).join("")}</div></div>`).join("")}
+  </section>`;
+}
+function answerQ(i, j) {
+  const s = seatBy(S.seat), qs = s.questions; S.answers = S.answers || {};
+  const slots = s.model.sim.slots;
+  const apply = (o, sign) => {
+    for (const [p, v] of Object.entries(o.shifts || {})) if (slots.includes(p)) S.shifts[p] = Math.max(-10, Math.min(10, (S.shifts[p] || 0) + sign * v));
+    for (const k of Object.keys(o.flows || {})) { if (sign > 0) S.flows[k] = o.flows[k]; else delete S.flows[k]; }
+  };
+  const prev = S.answers[i];
+  if (prev != null) apply(qs[i].options[prev], -1);
+  if (prev === j) delete S.answers[i]; else { S.answers[i] = j; apply(qs[i].options[j], 1); }
+  const keep = window.scrollY, dr = $("#drawer"), top = dr.scrollTop;
+  renderDrawer(); dr.scrollTop = top; window.scrollTo(0, keep);
+}
 
 function currentProbs(seat) {
   return adjusted() && S.calc ? S.calc.win : seat.model.win;
@@ -545,6 +572,7 @@ function renderDrawer() {
 
     ${researchHTML(s.research)}
     ${seatNewsHTML(s)}
+    ${questionsHTML(s)}
     ${sportsbetHTML(s)}
     ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
@@ -830,7 +858,7 @@ function bindLock() {
       try {
         f.querySelector("button[type=submit]").disabled = true;
         await api("/api/predictions", { method: "POST", body: JSON.stringify({ seat: S.seat, probs, backed, stake, price_p: pr.p, price_source: pr.src, model_probs,
-          adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows } : null, note: f.elements.note.value,
+          adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows, answers: Object.entries(S.answers || {}).map(([i, j]) => ({ q: seatBy(S.seat)?.questions?.[i]?.q, a: seatBy(S.seat)?.questions?.[i]?.options[j]?.label })) } : null, note: f.elements.note.value,
           model_version: S.F.model_version, sb_odds: f.elements.sb_odds.value || null, sb_status: f.elements.sb_none.checked ? "not_offered" : null }) });
         await loadLedger();
         const sec = $("#lock-form")?.closest(".d-sec");
@@ -894,11 +922,12 @@ function wire() {
   drawer.addEventListener("click", (e) => {
     const a = e.target.closest("[data-act]")?.dataset.act;
     if (a === "close") closeSeat();
-    if (a === "reset") { S.shifts = {}; S.flows = {}; S.calc = null; S.central = null; renderDrawer(); }
+    if (a === "reset") { S.shifts = {}; S.flows = {}; S.answers = {}; S.calc = null; S.central = null; renderDrawer(); }
     if (a === "unlock") openPass();
     if (a === "show-on-map") showOnMap(S.seat);
     if (a === "to-ledger") { closeSeat(); $("#ledger").scrollIntoView({ behavior: "smooth", block: "start" }); }
     const os = e.target.closest("[data-open-seat]"); if (os) openSeat(os.dataset.openSeat);
+    const qb = e.target.closest("[data-q]"); if (qb) answerQ(Number(qb.dataset.q), Number(qb.dataset.o));
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
   $("#changes").addEventListener("click", (e) => { const b = e.target.closest("[data-open-seat]"); if (b) openSeat(b.dataset.openSeat); });

@@ -1,0 +1,196 @@
+# Seat-specific questions. Each answer moves the seat calculator (shifts = first-preference points for a party,
+# flows = a preference driver for this seat). Answers are saved with your locked call and reviewed each Sunday:
+# if the same kind of answer keeps coming up across seats, it becomes a candidate model change.
+# Written 30 Oct 2026 from seat data, coverage and the model-vs-Sportsbet gaps.
+
+carrum:
+  - q: "Labor's internal polling reportedly makes Carrum (Attorney-General Sonya Kilkenny) its biggest worry on the Frankston line. Does Kilkenny's profile as a senior minister help or hurt her here?"
+    why: "The model scales Labor's 2022 vote down by the statewide drop (to about 28%) and gives her no extra personal vote."
+    options:
+      - {label: "Helps: ministers usually hold up", shifts: {ALP: 3}}
+      - {label: "No difference", shifts: {}}
+      - {label: "Hurts: she owns the government's record", shifts: {ALP: -3}}
+  - q: "Who finishes second behind the leader: the Liberals or One Nation?"
+    why: "It decides the seat. The model has One Nation 31%, Labor 28%, Liberal 26%, close enough that the order is a coin toss."
+    options:
+      - {label: "Liberals: it's a Liberal-Labor seat at heart", shifts: {LIB: 3, ON: -3}}
+      - {label: "Too close to call", shifts: {}}
+      - {label: "One Nation: outer south-east is its territory", shifts: {ON: 3, LIB: -3}}
+
+bendigo-east:
+  - q: "Without Jacinta Allan, how much of Labor's vote goes with her? She had 48% in 2022."
+    why: "The model only takes 1.5 points off for a retiring MP. Sportsbet has Labor at $13.00 (7.7%), which implies a collapse."
+    options:
+      - {label: "Little: Labor seat since 1999", shifts: {ALP: 0}}
+      - {label: "A fair bit (3-5 points)", shifts: {ALP: -4}}
+      - {label: "A lot: her personal vote was big", shifts: {ALP: -8}}
+  - q: "Is the Liberal Party standing here? None is announced, so the Nationals' Andrew Lethlean may get the whole Coalition vote."
+    why: "The model still gives a Liberal about 5%. If they stay out, those votes mostly go to the Nationals."
+    options:
+      - {label: "No Liberal: Nationals get the lot", shifts: {NAT: 5, LIB: -5}}
+      - {label: "Not sure", shifts: {}}
+  - q: "Lethlean beat Labor in these booths at the 2025 federal election (35.6% to 31.7%). Will that carry over?"
+    why: "The model doesn't use candidates' past results."
+    options:
+      - {label: "Yes, he's the favourite now", shifts: {NAT: 6}}
+      - {label: "Partly", shifts: {NAT: 3}}
+      - {label: "No, federal and state are different", shifts: {}}
+
+bendigo-west:
+  - q: "Both Bendigo seats lost their Labor MPs (Allan, and Speaker Maree Edwards). Is Bendigo West as vulnerable as East?"
+    why: "Sportsbet has Labor $2.00 (50%) v One Nation $2.10 (48%) here; the model says Labor 93% ($1.08)."
+    options:
+      - {label: "Less: West is Labor's stronger seat", shifts: {}}
+      - {label: "Just as vulnerable", shifts: {ALP: -4}}
+  - q: "Who is the main challenger: the Nationals' David Hutchings or One Nation's Ellen Morgan?"
+    why: "One Nation had only 3.8% federally here (2025), so the model keeps it modest. Sportsbet thinks One Nation is the real threat."
+    options:
+      - {label: "Nationals", shifts: {NAT: 4, ON: -2}}
+      - {label: "One Nation", shifts: {ON: 6}}
+      - {label: "Neither: Labor holds", shifts: {}}
+
+mildura:
+  - q: "Ali Cupper (former MP, now Mildura mayor) topped the first-preference count in 2022 with 33.9%. How strong is she this time?"
+    why: "The model carries over 80% of her 2022 vote (about 27%). Sportsbet prices her at $8.00 (12.5%)."
+    options:
+      - {label: "As strong as 2022 or more", shifts: {IND: 6}}
+      - {label: "About the same as the model", shifts: {}}
+      - {label: "Weaker: One Nation takes her protest vote", shifts: {IND: -7, ON: 4}}
+  - q: "Do the Nationals' brand and a sitting MP (Jade Benham, shadow minister) hold up better than the model assumes?"
+    why: "The model cuts the Nationals with the Coalition's statewide fall (to 16%). Sportsbet makes them favourites at $1.45 (69%)."
+    options:
+      - {label: "Yes, Nationals are stable in their heartland", shifts: {NAT: 8}}
+      - {label: "A bit", shifts: {NAT: 4}}
+      - {label: "No", shifts: {}}
+
+mulgrave:
+  - q: "Independent Ian Cook finished second at the 2023 by-election. Is he a real chance in 2026?"
+    why: "The model has him on about 14%. Sportsbet has him at $4.00 (25%)."
+    options:
+      - {label: "Yes, a genuine contender", shifts: {IND: 8}}
+      - {label: "He'll get a decent vote but not win", shifts: {IND: 3}}
+      - {label: "No, by-election protest vote fades", shifts: {IND: -4}}
+  - q: "Does Labor's Eden Foster hold up in Daniel Andrews' former seat?"
+    why: "Labor has held it since 2002; she won 40% at the by-election. Model: Labor 95% ($1.05)."
+    options:
+      - {label: "Yes, safe", shifts: {ALP: 2}}
+      - {label: "Weaker than the model thinks", shifts: {ALP: -4}}
+
+pakenham:
+  - q: "One Nation's state leader Warren Pickering is the candidate. Is a party leader worth extra votes here?"
+    why: "The model places One Nation by the 2025 federal vote and gives nothing for the leader. Sportsbet: One Nation $1.40 (71%), Liberal $3.00 (33%)."
+    options:
+      - {label: "Yes, a lot (leader's seat, media focus)", shifts: {ON: 6}}
+      - {label: "A little", shifts: {ON: 3}}
+      - {label: "No, he isn't local", shifts: {}}
+  - q: "If One Nation and the Liberals finish top two, do Labor voters' preferences stop One Nation?"
+    why: "The model assumes 75% of Labor voters put the Liberals ahead of One Nation."
+    options:
+      - {label: "Yes, strongly", flows: {alp_to_on_vs_lib: 0.2}}
+      - {label: "Less than the model thinks", flows: {alp_to_on_vs_lib: 0.35}}
+
+shepparton:
+  - q: "Is the independent here strong? The model carries over 24% from Suzanna Sheed's era; the 2026 independent (Lou Costa) is little known."
+    why: "Sheed held the seat as an independent until 2022. Without a strong successor that vote is up for grabs."
+    options:
+      - {label: "No, the independent vote has gone", shifts: {IND: -18, NAT: 8, ON: 6}}
+      - {label: "Partly", shifts: {IND: -10, NAT: 4, ON: 3}}
+      - {label: "Still strong", shifts: {}}
+  - q: "Does the Nationals' new candidate, former mayor Shane Sali, bring a personal vote?"
+    why: "Retiring MP Kim O'Keeffe costs the Nationals 1.5 points in the model; Sali's local profile isn't counted."
+    options:
+      - {label: "Yes, well known locally", shifts: {NAT: 4}}
+      - {label: "No", shifts: {}}
+
+bass:
+  - q: "Open seat (Labor MP retiring, held by about 200 votes). Is it One Nation v Liberal now, with Labor out of it?"
+    why: "Sportsbet: One Nation $1.67 (60%), Liberal $2.00 (50%), Labor $18.00 (6%). The model: Liberal 83% ($1.20)."
+    options:
+      - {label: "Yes, Labor's out", shifts: {ALP: -4}}
+      - {label: "Labor still competitive", shifts: {ALP: 2}}
+  - q: "One Nation's Nikole Schellekens (local farmer, nearly won a council seat in 2024) against Liberal Rochelle Halstead (former mayor, topped the same ward). Who has the local edge?"
+    why: "The model also still gives the Nationals 11% (they stood in 2022). Check whether they stand in 2026."
+    options:
+      - {label: "Halstead (Liberal)", shifts: {LIB: 4}}
+      - {label: "Even", shifts: {}}
+      - {label: "Schellekens (One Nation)", shifts: {ON: 4}}
+
+morwell:
+  - q: "The Nationals held a third of the federal vote here (33.4% in 2025). Will the state Nationals hold up better than the model's 17%?"
+    why: "The model cuts the Nationals with the Coalition. Sportsbet: One Nation $1.83 (55%), Nationals $2.63 (38%)."
+    options:
+      - {label: "Yes, much better (sitting MP Martin Cameron)", shifts: {NAT: 8}}
+      - {label: "A bit", shifts: {NAT: 4}}
+      - {label: "No", shifts: {}}
+  - q: "Is One Nation's 40% here realistic? Its best SA seat in 2026 was 37.5%."
+    why: "Latrobe Valley is One Nation's strongest area federally, and it's campaigning on keeping Loy Yang A open."
+    options:
+      - {label: "Too high", shifts: {ON: -6}}
+      - {label: "About right", shifts: {}}
+      - {label: "Could be higher", shifts: {ON: 3}}
+
+hawthorn:
+  - q: "How strong is teal independent Shima Ibuki compared with Melissa Lowe's 20% in 2022?"
+    why: "The federal teal got 38.7% in these booths in 2025. The model gives Ibuki 16%; Sportsbet $7.00 (14%)."
+    options:
+      - {label: "Stronger: low-to-mid 20s", shifts: {IND: 7}}
+      - {label: "About 2022's level", shifts: {IND: 4}}
+      - {label: "Weaker: state teals don't fire", shifts: {}}
+  - q: "Does John Pesutto's profile (former leader, the Deeming case) help or hurt him locally?"
+    why: "The model gives him no personal vote either way."
+    options:
+      - {label: "Helps: seen as the moderate", shifts: {LIB: 2}}
+      - {label: "Neutral", shifts: {}}
+      - {label: "Hurts", shifts: {LIB: -3}}
+
+frankston:
+  - q: "Police Minister Paul Edbrooke has 'strong local standing' (Labor insiders), yet they expect to lose. Which wins out?"
+    why: "Model: Liberal 41%, Labor 31%, One Nation 25%. Sportsbet: Labor $1.91 (52%)."
+    options:
+      - {label: "His personal vote holds it", shifts: {ALP: 4}}
+      - {label: "The swing wins", shifts: {}}
+  - q: "Second place: Liberal or One Nation?"
+    why: "The model puts One Nation on 28%, ahead of the Liberals on 25%."
+    options:
+      - {label: "Liberal", shifts: {LIB: 3, ON: -3}}
+      - {label: "One Nation", shifts: {ON: 3, LIB: -3}}
+
+mordialloc:
+  - q: "Insiders expect a big move to the Liberals but hope Tim Richardson's local profile holds. Does it?"
+    why: "Model: Liberal 72% ($1.39). Sportsbet: Labor $2.00 (50%), Liberal $2.88 (35%)."
+    options:
+      - {label: "Yes, Richardson holds", shifts: {ALP: 4}}
+      - {label: "No, Liberals gain it", shifts: {LIB: 2}}
+      - {label: "Too close", shifts: {}}
+
+northcote:
+  - q: "No One Nation candidate here. Do the votes the model would have given One Nation go to Labor, the Greens or the Liberals?"
+    why: "The model shares them in proportion to everyone's vote. Greens 86% ($1.16) in the model; Sportsbet $1.40 (71%)."
+    options:
+      - {label: "Mostly Labor (working-class voters)", shifts: {ALP: 3}}
+      - {label: "Spread evenly", shifts: {}}
+  - q: "Labor's Kat Theophanous holds by 0.2% against the Greens. Will she hold some ground as the sitting MP?"
+    why: "The Greens ran their 'biggest campaign day ever' here."
+    options:
+      - {label: "Yes, sitting MP holds some", shifts: {ALP: 2}}
+      - {label: "No, the Greens take it", shifts: {GRN: 2}}
+
+prahran:
+  - q: "Labor didn't stand at the 2025 by-election and the Liberals won. With Labor back, do its voters' preferences hand it to the Greens?"
+    why: "Model: Greens 81% ($1.23). Sportsbet: Greens $1.45 (69%), Liberal $2.88 (35%)."
+    options:
+      - {label: "Yes, Greens win comfortably", shifts: {GRN: 2}}
+      - {label: "Sitting Liberal Rachel Westaway holds some ground", shifts: {LIB: 3}}
+
+footscray:
+  - q: "Will One Nation voters follow Hanson's pledge to put Labor last, helping the Greens?"
+    why: "This seat is very sensitive to it: Greens 74% at the model's setting, about 44% if One Nation voters favour Labor. Sportsbet: Labor $1.40 (71%), Greens $3.50 (29%)."
+    options:
+      - {label: "Most will follow the card", flows: {on_to_grn_vs_alp: 0.5}}
+      - {label: "Some", flows: {on_to_grn_vs_alp: 0.35}}
+      - {label: "Few: they'll favour Labor", flows: {on_to_grn_vs_alp: 0.15}}
+  - q: "How much do independent Jess Marsh and the Victorian Socialists take, and where do their preferences go?"
+    why: "Neither is properly in the model. Socialists have topped 20% in some booths; their preferences favour the Greens."
+    options:
+      - {label: "They lift the Greens", shifts: {GRN: 3, ALP: -2}}
+      - {label: "They mostly split the left vote", shifts: {}}

@@ -174,8 +174,12 @@ def main():
     bp = ROOT / "data/vic2026/byelections.json"
     byel = json.loads(bp.read_text()) if bp.exists() else {}
     from vic2026.model.flows import GROUP_OF
+    qp = ROOT / "vic2026/config/questions.yaml"
+    questions = yaml.safe_load(qp.read_text()) if qp.exists() else {}
     for s in seats:
         s["research"] = by_seat.get(s["slug"], [])
+        if questions.get(s["slug"]):
+            s["questions"] = questions[s["slug"]]
         b = byel.get(s["slug"])
         if b:
             base = {}
