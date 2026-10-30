@@ -188,7 +188,7 @@ def main():
     poll_avg = pa and {"as_of": pa["as_of"], "primaries": pa["primaries"], "house": pa["house"], "params": pa["params"],
                        "weights": {q["id"]: q["weight"] for q in pa["polls"]}, "trend": pa["trend"],
                        "election_tracker": eta.get("primaries"), "et_as_of": eta.get("as_of")}
-    out = {"generated": F["generated"], "poll_avg": poll_avg, "research": research, "research_by_party": by_party, "fed2025_vic": fed_vic, "simulations": F["simulations"], "inputs": F["statewide_inputs"],
+    out = {"generated": F["generated"], "model_version": cfg.get("model_version", "1.0"), "poll_avg": poll_avg, "research": research, "research_by_party": by_party, "fed2025_vic": fed_vic, "simulations": F["simulations"], "inputs": F["statewide_inputs"],
            "summary": F["summary"], "why_statewide": F.get("why_statewide"), "distribution": F["seat_distribution"], "flows_base": F["flows_base"],
            "drivers": {"flows": cfg["flows"]}, "party_names": F["party_names"], "markets": MARKETS,
            "election_date": "2026-11-28", "seats": seats,

@@ -249,7 +249,7 @@ function renderChanges() {
   const pin = (k) => ({ LNP: L.inputs.LNP, ALP: L.inputs.ALP, ON: L.inputs.ON, GRN: L.inputs.GRN })[k];
   const flips = C.flips.slice(0, 10).map((f) => { const s = seatBy(f.slug); return s ? `<button class="seat-chip" type="button" data-open-seat="${f.slug}" style="--a:.35;--pc:${col(f.to[0])}">${esc(s.name)} <b>${f.from[0] !== f.to[0] ? `${SHORT[f.from[0]] || f.from[0]} → ` : ""}${SHORT[f.to[0]] || f.to[0]} ${pct(f.to[1])}</b></button>` : ""; }).join("");
   el.innerHTML = `<div class="changes-in">
-    <div class="ch-head"><span class="ch-tag">Latest update</span><span>${when}</span>${P ? `<span class="dim">compared with ${new Date(P.run_at).toLocaleDateString("en-AU", { day: "numeric", month: "short" })}</span>` : ""}</div>
+    <div class="ch-head"><span class="ch-tag">Model v${esc(S.F.model_version || "1.0")}</span><span class="ch-tag" style="background:var(--ink-2)">Latest update</span><span>${when}</span>${P ? `<span class="dim">compared with ${new Date(P.run_at).toLocaleDateString("en-AU", { day: "numeric", month: "short" })}</span>` : ""}</div>
     ${L.note ? `<p class="ch-poll"><b>${esc(L.note.split(":")[0])}:</b>${esc(L.note.split(":").slice(1).join(":"))}</p>` : ""}
     ${np.length ? np.map((p) => `<p class="ch-poll"><b>New poll:</b> ${esc(pollName(p))}${COMM[p.commissioner] ? ` for ${COMM[p.commissioner]}` : ""}, ${dshort(p.start)}–${dshort(p.end)}: ${IN.map(([k, n, c]) => `<span style="color:${col(c)}">${n} ${p[{ LNP: "lnp", ALP: "alp", ON: "on", GRN: "grn" }[k]]}</span>`).join(" · ")} ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</p>`).join("")
       : L.note ? "" : `<p class="ch-poll dim">No new poll since the previous run.</p>`}
@@ -830,7 +830,7 @@ function bindLock() {
         f.querySelector("button[type=submit]").disabled = true;
         await api("/api/predictions", { method: "POST", body: JSON.stringify({ seat: S.seat, probs, backed, stake, price_p: pr.p, price_source: pr.src, model_probs,
           adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows } : null, note: f.elements.note.value,
-          sb_odds: f.elements.sb_odds.value || null, sb_status: f.elements.sb_none.checked ? "not_offered" : null }) });
+          model_version: S.F.model_version, sb_odds: f.elements.sb_odds.value || null, sb_status: f.elements.sb_none.checked ? "not_offered" : null }) });
         await loadLedger();
         const sec = $("#lock-form")?.closest(".d-sec");
         if (sec) {

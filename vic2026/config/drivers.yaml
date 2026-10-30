@@ -1,3 +1,7 @@
+# Model version. Method changes happen only at the Sunday reviews (v2.0 1 Nov, v3.0 8 Nov, v4.0 15 Nov after
+# nominations close); between reviews only new data flows in (polls, odds, candidates). See MODEL_CHANGELOG.md.
+model_version: "1.0"
+
 # Drivers for the 2026 Victorian model. Every number here is an assumption you can change.
 # Statewide primaries come from the Election Tracker poll average unless overridden.
 

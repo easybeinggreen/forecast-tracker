@@ -33,10 +33,10 @@ export default async function handler(req, res) {
         return send(res, 409, { error: `That stake is more than your remaining ${BUDGET - rows[0].c} points.` });
       }
       const ins = await client.query(
-        `insert into vic_predictions (seat, probs, backed, stake, price_p, price_source, model_probs, adjustments, note, sb_odds, sb_status)
-         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) returning *`,
+        `insert into vic_predictions (seat, probs, backed, stake, price_p, price_source, model_probs, adjustments, note, sb_odds, sb_status, model_version)
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) returning *`,
         [b.seat, probs, stake > 0 ? b.backed : b.backed || null, stake, stake > 0 ? b.price_p : b.price_p || null,
-         b.price_source || null, b.model_probs || null, b.adjustments || null, (b.note || "").slice(0, 2000), sbOdds, sbStatus]);
+         b.price_source || null, b.model_probs || null, b.adjustments || null, (b.note || "").slice(0, 2000), sbOdds, sbStatus, String(b.model_version || "").slice(0, 10) || null]);
       await client.query("commit");
       send(res, 201, { prediction: ins.rows[0] });
     } catch (e) {
