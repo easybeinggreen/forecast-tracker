@@ -39,7 +39,7 @@ def main():
             "cert": 100 * G43.loc[idx, cert].values.sum() / adults.loc[idx].sum(),
             "rent": 100 * s(G37, "R_Tot_Total") / s(G37, "Total_Total"),
             "own": 100 * s(G37, "O_OR_Total") / s(G37, "Total_Total"),
-            "kids": 100 * (s(G29, "CF_Total_P") - s(G29, "CF_no_children_P")) / s(G29, "Total_P"),
+            "kids": 100 * s(G29, "CF_Total_P") / s(G29, "Total_P"),   # people in families: share in couple families with children
             "christian": 100 * s(G14, "Christianity_Tot_P") / s(G14, "Tot_P"),
             "norel": 100 * s(G14, "SB_OSB_NRA_NR_P") / s(G14, "Tot_P"),
         }

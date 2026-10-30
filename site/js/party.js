@@ -49,6 +49,25 @@ export function partyCards(F) {
 let CALLED = new Set();
 const chip = (s, p, code) => `<button class="seat-chip${CALLED.has(s.slug) ? " called" : ""}" type="button" title="${CALLED.has(s.slug) ? "You've locked a call here" : "No call yet"}" data-open-seat="${s.slug}" style="--a:${(0.12 + 0.6 * p).toFixed(2)};--pc:${col(code)}">${esc(s.name)} <b>${pct(p)}</b></button>`;
 
+function votersHTML(P, code) {
+  const V = P.voters; if (!V?.rows?.length) return "";
+  const hiLo = { regional: "regional v Melbourne", age: "oldest v youngest", inc: "richest v poorest" };
+  const phrase = { uni: ["more graduates", "fewer graduates"], cert: ["more tradespeople", "fewer tradespeople"], inc: ["higher incomes", "lower incomes"],
+    rent: ["more renters", "fewer renters"], age: ["older people", "younger people"], kids: ["more families with children", "fewer families with children"],
+    lang: ["more migrant communities", "fewer migrant communities"], christian: ["more Christians", "fewer Christians"], regional: ["in the regions", "in Melbourne"] };
+  const top = V.rows.filter((r) => Math.abs(r.r_f25) >= 0.4).slice(0, 3);
+  const says = top.map((r) => phrase[r.k][r.r_f25 > 0 ? 0 : 1]).join(", ");
+  const cell = (pr) => { const hi = pr[0] >= pr[1]; return `<td class="num"><b${hi ? ` style="color:${col(code)}"` : ""}>${pr[0].toFixed(0)}</b> <span class="dim">v</span> <b${!hi ? ` style="color:${col(code)}"` : ""}>${pr[1].toFixed(0)}</b></td>`; };
+  return `<section class="d-sec" aria-labelledby="h-voters">
+    <h3 id="h-voters">Who votes for them</h3>
+    <p class="hint">Average vote (%) in the third of seats with the <b>most</b> of each trait v the third with the <b>least</b>${code === "NAT" ? ` (only the ${V.n} seats the Nationals contest)` : ""}. Strongest links first.${says ? ` <b>Does best with ${says}.</b>` : ""}</p>
+    <div class="sheet-wrap"><table class="sheet voters"><thead>
+      <tr><th>Most v least</th><th>2022 state</th><th>2025 federal</th><th>Model 2026</th></tr></thead><tbody>
+      ${V.rows.map((r) => `<tr><td>${esc(r.label)}${hiLo[r.k] ? ` <span class="dim">(${hiLo[r.k]})</span>` : ""}</td>${cell(r.s22)}${cell(r.f25)}${cell(r.m26)}</tr>`).join("")}
+    </tbody></table></div>
+  </section>`;
+}
+
 export function partyHTML(code, F, news, PARTY, called = new Set()) {
   CALLED = called;
   const P = F.parties[code], seat = (slug) => F.seats.find((s) => s.slug === slug);
@@ -99,6 +118,7 @@ export function partyHTML(code, F, news, PARTY, called = new Set()) {
       ${trend(P, F)}
     </section>
 
+    ${votersHTML(P, code)}
     <section class="d-sec" aria-labelledby="h-targets">
       <h3 id="h-targets">${esc(P.targets_label || "Target seats")}</h3>
       <p class="hint">"Party says" means the party named the seat on the record; "Reported" is media reporting of its plans. The bar is the model's chance ${esc(P.name)} wins it.</p>

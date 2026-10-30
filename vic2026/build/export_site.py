@@ -114,8 +114,45 @@ def party_profiles(seats, F):
                      "polls": series,
                      "forecast": F["summary"]["seats"].get(code),
                      "held": [s["slug"] for s in held],
-                     "gains": [s["slug"] for s in gains[:12]]}
+                     "gains": [s["slug"] for s in gains[:12]],
+                     "voters": voter_profile(code, seats)}
     return out
+
+
+DEMO_VARS = [("uni", "University degree"), ("cert", "Trade or certificate"), ("inc", "Household income"), ("rent", "Renting"),
+             ("age", "Median age"), ("kids", "Families with children"), ("lang", "Other language at home"), ("christian", "Christian")]
+
+
+def voter_profile(code, seats):
+    """Where a party's vote is strongest: its average vote in the third of seats with the most of each trait
+    v the third with the least, for 2022 state, 2025 federal (same booths) and the model's 2026 estimate."""
+    import numpy as np
+    def share(s, which):
+        if which == "s22":
+            return s.get("prims_2022_grouped", {}).get(code, 0)
+        if which == "f25":
+            return (s.get("fed2025") or {}).get("prims", {}).get(code, 0)
+        sl = s["model"]["sim"]["slots"]
+        return 100 * s["model"]["sim"]["mean"][sl.index(code)] if code in sl else 0
+    pool = [s for s in seats if s.get("demo")]
+    if code == "NAT":
+        pool = [s for s in pool if share(s, "s22") > 0 or share(s, "f25") > 0]
+    rows = []
+    for k, label in DEMO_VARS + [("regional", "Regional")]:
+        x = np.array([(1.0 if s["region"] == "regional" else 0.0) if k == "regional" else s["demo"][k] for s in pool])
+        o = np.argsort(x)
+        n3 = len(pool) // 3
+        lo, hi = (x == 0, x == 1) if k == "regional" else (np.isin(np.arange(len(pool)), o[:n3]), np.isin(np.arange(len(pool)), o[-n3:]))
+        if not lo.any() or not hi.any():
+            continue
+        r = {"k": k, "label": label}
+        for w in ("s22", "f25", "m26"):
+            y = np.array([share(s, w) for s in pool])
+            r[w] = [round(float(y[hi].mean()), 1), round(float(y[lo].mean()), 1)]
+            r["r_" + w] = round(float(np.corrcoef(x, y)[0, 1]), 2) if y.std() > 0 else 0
+        rows.append(r)
+    rows.sort(key=lambda r: -abs(r["r_f25"]))
+    return {"n": len(pool), "rows": rows}
 
 
 # Candidates reported in local coverage but not yet on the Tally Room list (source in "src")

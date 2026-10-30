@@ -531,3 +531,6 @@ th.fedc { font-style: italic; }
 .model-more[open] > summary { margin-bottom: 8px; }
 .model-more > .d-sec { padding-left: 0; padding-right: 0; }
 .model-more > .d-sec:last-child { border-bottom: 0; }
+.voters td.num { white-space: nowrap; }
+.vbar { display: inline-block; width: 40px; height: 6px; background: var(--rule-2); border-radius: 3px; margin-right: 6px; vertical-align: middle; overflow: hidden; }
+.vbar i { display: block; height: 100%; }

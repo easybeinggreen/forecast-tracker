@@ -27,3 +27,7 @@ Labor 25.0 (26.6), Nationals 6.6 (6.4). Where they differ, and the evidence to c
   Niddrie, Greenvale). Check: incumbency effect in 2022 and 2025.
 - One Nation beating the Liberals for second in outer/regional seats (Pakenham, Bass, Yan Yean, Macedon).
 - Independents not in the model (Mulgrave: Ian Cook; Essendon: Oscar Yildiz; Ringwood; Mildura: Ali Cupper).
+
+## Data corrections between reviews (allowed: facts, not judgement)
+- 30 Oct: dropped 2022 independents not standing again (Narracan Tony Wolfe, Rowville Nicole Seymour, South-West Coast Carol Altmann). Shepparton keeps an independent (Lou Costa announced) but the carried-over 24% from the Sheed era is flagged as a seat question for v2.0.
+- 30 Oct: census "families with children" measure corrected (was subtracting the wrong column).

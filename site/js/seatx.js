@@ -183,7 +183,7 @@ function demoHTML(d, vic) {
     ${row("Trade or certificate qualification", d.cert, vic.cert)}
     ${row("Renting", d.rent, vic.rent)}
     ${row("Own outright", d.own, vic.own)}
-    ${row("Couples with children", d.kids, vic.kids)}
+    ${row("In a couple family with children", d.kids, vic.kids)}
     ${row("Christian", d.christian, vic.christian)}
     ${row("No religion", d.norel, vic.norel)}
     ${row("Aboriginal and Torres Strait Islander", d.atsi, vic.atsi, "%", (x) => x.toFixed(1))}
