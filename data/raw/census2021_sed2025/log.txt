@@ -3,17 +3,15 @@ MB allocation links: ['https://www.abs.gov.au/statistics/standards/australian-st
 alloc columns: ['MB_CODE_2021', 'SED_CODE_2025', 'SED_NAME_2025', 'STATE_CODE_2021', 'STATE_NAME_2021', 'AUS_CODE_2021', 'AUS_NAME_2021', 'AREA_ALBERS_SQKM', 'SA1_CODE_2021']
 15482 SA1s mapped to 90 districts
 datapack: https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_all_for_VIC_short-header.zip
-G01 (90, 108)
-G02 (90, 8)
-G14 (90, 102)
-G29 (90, 46)
-G37 (90, 72)
-G43 (90, 66)
-G09A (90, 200)
-G09B (90, 200)
-G09C (90, 200)
-G09D (90, 200)
-G09E (90, 200)
-G09F (90, 200)
-G09G (90, 200)
-G09H (90, 190)
+FAILED HTTPError('503 Server Error: Service Temporarily Unavailable for url: https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_all_for_VIC_short-header.zip')
+Traceback (most recent call last):
+  File "/home/runner/work/forecast-tracker/forecast-tracker/vic2026/fetch/fetch_census2025.py", line 64, in main
+    run()
+  File "/home/runner/work/forecast-tracker/forecast-tracker/vic2026/fetch/fetch_census2025.py", line 107, in run
+    dp_and_aggregate(s, sa1_to_sed)
+  File "/home/runner/work/forecast-tracker/forecast-tracker/vic2026/fetch/fetch_census2025.py", line 129, in dp_and_aggregate
+    r = s.get(url, headers=UA, timeout=900); r.raise_for_status()
+                                             ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 503 Server Error: Service Temporarily Unavailable for url: https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_all_for_VIC_short-header.zip
