@@ -49,22 +49,69 @@ export function partyCards(F) {
 let CALLED = new Set();
 const chip = (s, p, code) => `<button class="seat-chip${CALLED.has(s.slug) ? " called" : ""}" type="button" title="${CALLED.has(s.slug) ? "You've locked a call here" : "No call yet"}" data-open-seat="${s.slug}" style="--a:${(0.12 + 0.6 * p).toFixed(2)};--pc:${col(code)}">${esc(s.name)} <b>${pct(p)}</b></button>`;
 
-function votersHTML(P, code) {
-  const V = P.voters; if (!V?.rows?.length) return "";
-  const hiLo = { regional: "regional v Melbourne", age: "oldest v youngest", inc: "richest v poorest" };
-  const phrase = { uni: ["more graduates", "fewer graduates"], cert: ["more tradespeople", "fewer tradespeople"], inc: ["higher incomes", "lower incomes"],
-    rent: ["more renters", "fewer renters"], age: ["older people", "younger people"], kids: ["more families with children", "fewer families with children"],
-    lang: ["more migrant communities", "fewer migrant communities"], christian: ["more Christians", "fewer Christians"], regional: ["in the regions", "in Melbourne"] };
-  const top = V.rows.filter((r) => Math.abs(r.r_f25) >= 0.4).slice(0, 3);
-  const says = top.map((r) => phrase[r.k][r.r_f25 > 0 ? 0 : 1]).join(", ");
-  const cell = (pr) => { const hi = pr[0] >= pr[1]; return `<td class="num"><b${hi ? ` style="color:${col(code)}"` : ""}>${pr[0].toFixed(0)}</b> <span class="dim">v</span> <b${!hi ? ` style="color:${col(code)}"` : ""}>${pr[1].toFixed(0)}</b></td>`; };
+// "Who votes for them": one small scatter per trait, each dot a seat (hollow = regional). Hover enlarges.
+const TRAITS = [["uni", "University degree", "%"], ["cert", "Trade or certificate", "%"], ["inc", "Household income ($/wk)", "$"],
+  ["rent", "Renting", "%"], ["age", "Median age", "y"], ["kids", "Families with children", "%"],
+  ["lang", "Other language at home", "%"], ["born_os", "Born overseas", "%"], ["christian", "Christian", "%"]];
+const ELECTIONS = [["s22", "2022 state"], ["f25", "2025 federal"], ["m26", "Model 2026"]];
+const OVERLAY = [["ALP", "Labor"], ["COAL", "Coalition"], ["ON", "One Nation"], ["GRN", "Greens"]];
+const VOPT = { el: "f25", mode: "one" };
+export function setVoterOpt(k, v) { VOPT[k] = v; }
+
+function voteIn(s, party, el) {
+  const one = (p) => {
+    if (el === "s22") return s.prims_2022_grouped?.[p] || 0;
+    if (el === "f25") return s.fed2025?.prims?.[p] || 0;
+    const sl = s.model.sim.slots, i = sl.indexOf(p); return i < 0 ? 0 : 100 * s.model.sim.mean[i];
+  };
+  return party === "COAL" ? one("LIB") + one("NAT") : one(party);
+}
+function fit(pts) {
+  const n = pts.length; if (n < 3) return null;
+  const mx = pts.reduce((a, p) => a + p[0], 0) / n, my = pts.reduce((a, p) => a + p[1], 0) / n;
+  let sxy = 0, sxx = 0, syy = 0; for (const [x, y] of pts) { sxy += (x - mx) * (y - my); sxx += (x - mx) ** 2; syy += (y - my) ** 2; }
+  if (!sxx || !syy) return null;
+  return { b: sxy / sxx, a: my - (sxy / sxx) * mx, r: sxy / Math.sqrt(sxx * syy) };
+}
+function scatterSVG(F, trait, series) {
+  const W = 200, H = 130, L = 26, R = 6, T = 8, B = 20;
+  const xs = F.seats.filter((s) => s.demo).map((s) => s.demo[trait[0]]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const ymax = Math.max(10, ...series.flatMap((se) => se.pts.map((p) => p[1]))) * 1.05;
+  const X = (v) => L + ((v - x0) / (x1 - x0 || 1)) * (W - L - R), Y = (v) => H - B - (v / ymax) * (H - T - B);
+  const fmt = (v) => trait[2] === "$" ? "$" + Math.round(v).toLocaleString("en-AU") : Math.round(v) + (trait[2] === "%" ? "%" : "");
+  const yt = [0, Math.round(ymax / 2 / 5) * 5, Math.floor(ymax / 10) * 10].filter((v, i, a) => a.indexOf(v) === i);
+  let g = yt.map((v) => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="vg"/><text x="${L - 3}" y="${Y(v) + 3}" class="vt" text-anchor="end">${v}</text>`).join("");
+  g += `<text x="${L}" y="${H - 6}" class="vt">${fmt(x0)}</text><text x="${W - R}" y="${H - 6}" class="vt" text-anchor="end">${fmt(x1)}</text>`;
+  for (const se of series) {
+    g += se.pts.map(([x, y, s]) => `<circle cx="${X(x).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="${se.faint ? 1.6 : 2.2}" style="${s.region === "regional" ? `fill:none;stroke:${col(se.code)}` : `fill:${col(se.code)}`};opacity:${se.faint ? 0.35 : 0.75}"><title>${esc(s.name)}: ${esc(se.name)} ${y.toFixed(1)}%, ${esc(trait[1].toLowerCase())} ${fmt(x)}</title></circle>`).join("");
+  }
+  for (const se of series) {
+    const f = fit(se.pts); if (!f) continue;
+    g += `<line x1="${X(x0)}" x2="${X(x1)}" y1="${Y(Math.max(0, f.a + f.b * x0))}" y2="${Y(Math.max(0, f.a + f.b * x1))}" style="stroke:${col(se.code)}" class="vfit"/>`;
+  }
+  const rs = series.map((se) => ({ se, f: fit(se.pts) })).filter((o) => o.f);
+  return `<div class="vchart"><div class="vc-h">${esc(trait[1])}${rs.length === 1 ? ` <span class="dim">r ${rs[0].f.r.toFixed(2)}</span>` : ""}</div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(trait[1])} against vote share">${g}</svg></div>`;
+}
+function votersHTML(P, code, F) {
+  if (!F?.seats?.[0]?.demo) return "";
+  const seats = F.seats.filter((s) => s.demo);
+  const mk = (pc, name, faint) => ({ code: pc === "COAL" ? (code === "NAT" ? "NAT" : "LIB") : pc, name,
+    faint, pts: seats.map((s) => [null, voteIn(s, pc, VOPT.el), s]).filter((p) => !(pc === "NAT" && p[1] === 0)) });
+  const btn = (k, v, label) => `<button type="button" class="vseg${VOPT[k] === v ? " on" : ""}" data-vopt="${k}" data-v="${v}" aria-pressed="${VOPT[k] === v}">${label}</button>`;
+  const charts = TRAITS.map((tr) => {
+    const series = VOPT.mode === "all" ? OVERLAY.map(([pc, n]) => mk(pc, n, true)) : [mk(code, P.name, false)];
+    for (const se of series) se.pts = se.pts.map(([, y, s]) => [s.demo[tr[0]], y, s]).filter((p) => p[0] != null);
+    return scatterSVG(F, tr, series);
+  }).join("");
   return `<section class="d-sec" aria-labelledby="h-voters">
     <h3 id="h-voters">Who votes for them</h3>
-    <p class="hint">Average vote (%) in the third of seats with the <b>most</b> of each trait v the third with the <b>least</b>${code === "NAT" ? ` (only the ${V.n} seats the Nationals contest)` : ""}. Strongest links first.${says ? ` <b>Does best with ${says}.</b>` : ""}</p>
-    <div class="sheet-wrap"><table class="sheet voters"><thead>
-      <tr><th>Most v least</th><th>2022 state</th><th>2025 federal</th><th>Model 2026</th></tr></thead><tbody>
-      ${V.rows.map((r) => `<tr><td>${esc(r.label)}${hiLo[r.k] ? ` <span class="dim">(${hiLo[r.k]})</span>` : ""}</td>${cell(r.s22)}${cell(r.f25)}${cell(r.m26)}</tr>`).join("")}
-    </tbody></table></div>
+    <p class="hint">Each dot is a seat: the trait along the bottom, the vote (%) up the side. Filled dots are Melbourne, hollow dots regional. The line is the trend; r near ±1 means a strong link, near 0 none. Hover a chart to enlarge it, a dot for the seat.${code === "NAT" ? " Nationals: only seats they contest." : ""}</p>
+    <div class="vctl"><span class="segs">${ELECTIONS.map(([v, l]) => btn("el", v, l)).join("")}</span>
+      <span class="segs">${btn("mode", "one", esc(P.name))}${btn("mode", "all", "All parties")}</span></div>
+    ${VOPT.mode === "all" ? `<div class="keyline vkey">${OVERLAY.map(([pc, n]) => `<span><i style="background:${col(pc === "COAL" ? "LIB" : pc)}"></i>${n}</span>`).join("")}</div>` : ""}
+    <div class="vgrid">${charts}</div>
   </section>`;
 }
 
@@ -118,7 +165,7 @@ export function partyHTML(code, F, news, PARTY, called = new Set()) {
       ${trend(P, F)}
     </section>
 
-    ${votersHTML(P, code)}
+    ${votersHTML(P, code, F)}
     <section class="d-sec" aria-labelledby="h-targets">
       <h3 id="h-targets">${esc(P.targets_label || "Target seats")}</h3>
       <p class="hint">"Party says" means the party named the seat on the record; "Reported" is media reporting of its plans. The bar is the model's chance ${esc(P.name)} wins it.</p>
