@@ -19,7 +19,7 @@ UA = {"User-Agent": "vic2026-forecast (personal research; Paul Green green.paul.
 ALLOC_PAGE = ("https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/"
               "jul2021-jun2026/access-and-downloads/allocation-files")
 DP_PAGE = "https://www.abs.gov.au/census/find-census-data/datapacks"
-TABLES = ["G01", "G02", "G14", "G29", "G37", "G43"] + [f"G09{x}" for x in "ABCDEFGH"]
+TABLES = ["G01", "G02", "G14", "G29", "G37", "G43"] + [f"G09{x}" for x in "ABCDEFGH"] + ["G54A", "G54B", "G60A", "G60B", "G40"]  # + industry, occupation, labour force
 OUT = Path("data/raw/census2021_sed2025")
 
 
@@ -129,7 +129,9 @@ def dp_and_aggregate(s, sa1_to_sed):
     r = s.get(url, headers=UA, timeout=900); r.raise_for_status()
     z = zipfile.ZipFile(io.BytesIO(r.content))
     for t in TABLES:
-        name = next(n for n in z.namelist() if re.search(rf"2021Census_{t}_VIC_SA1\.csv$", n))
+        name = next((n for n in z.namelist() if re.search(rf"2021Census_{t}_VIC_SA1\.csv$", n)), None)
+        if not name:
+            log(t, "not in datapack"); continue
         df = pd.read_csv(io.BytesIO(z.read(name)), dtype={"SA1_CODE_2021": str})
         df["SED"] = df["SA1_CODE_2021"].map(sa1_to_sed)
         df = df.dropna(subset=["SED"]).drop(columns=["SA1_CODE_2021"])
