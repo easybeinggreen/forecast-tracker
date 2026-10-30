@@ -926,7 +926,7 @@ function wire() {
     if (a === "to-ledger") { closeSeat(); $("#ledger").scrollIntoView({ behavior: "smooth", block: "start" }); }
     const os = e.target.closest("[data-open-seat]"); if (os) openSeat(os.dataset.openSeat);
     const vb = e.target.closest("[data-vopt]");
-    if (vb) { setVoterOpt(vb.dataset.vopt, vb.dataset.v); const dr = $("#drawer"), top = dr.scrollTop; renderDrawer(); dr.scrollTop = top; }
+    if (vb) { setVoterOpt(vb.dataset.vopt, vb.dataset.v, vb.dataset.code); const dr = $("#drawer"), top = dr.scrollTop; renderDrawer(); dr.scrollTop = top; }
     const qb = e.target.closest("[data-q]"); if (qb) answerQ(Number(qb.dataset.q), Number(qb.dataset.o));
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });

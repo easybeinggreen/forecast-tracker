@@ -56,9 +56,42 @@ const TRAITS = [["band", "City to country", "band"], ["km_cbd", "Distance from M
   ["lang", "Other language at home", "%"], ["christian", "Christian", "%"], ["born_os", "Born overseas", "%"]];
 const BANDS = [["inner", "Inner"], ["middle", "Middle"], ["outer", "Outer"], ["city", "Reg. city"], ["rural", "Rural"]];
 const ELECTIONS = [["s22", "2022 state"], ["f25", "2025 federal"], ["m26", "Model 2026"]];
-const OVERLAY = [["ALP", "Labor"], ["COAL", "Coalition"], ["ON", "One Nation"], ["GRN", "Greens"]];
-const VOPT = { el: "f25", mode: "one" };
-export function setVoterOpt(k, v) { VOPT[k] = v; }
+const PICK = [["ALP", "Labor"], ["LIB", "Liberal"], ["NAT", "Nationals"], ["COAL", "Coalition"], ["ON", "One Nation"], ["GRN", "Greens"]];
+const VOPT = { el: "f25", sel: null };   // sel: parties chosen on the chart; null = just the party whose page is open. Kept when you switch party.
+export function setVoterOpt(k, v, code) {
+  if (k === "p") {
+    const cur = new Set(VOPT.sel || [code]);
+    cur.has(v) ? cur.delete(v) : cur.add(v);
+    VOPT.sel = cur.size ? PICK.map(([c]) => c).filter((c) => cur.has(c)) : null;
+  } else if (k === "reset") VOPT.sel = null;
+  else VOPT[k] = v;
+}
+const PHRASE = { uni: ["university-educated seats", "seats with fewer graduates"], cert: ["trades seats", "seats with fewer tradespeople"],
+  inc: ["wealthier seats", "lower-income seats"], rent: ["renter seats", "home-owner seats"], age: ["older seats", "younger seats"],
+  kids: ["family seats", "seats with fewer families (singles and couples)"], lang: ["multicultural seats", "mainly English-speaking seats"],
+  christian: ["more religious seats", "less religious seats"], born_os: ["migrant seats", "Australian-born seats"],
+  km_cbd: ["seats further from the city", "seats close to the city"], density: ["dense city seats", "sparse country seats"] };
+const BAND_WORDS = { inner: "inner Melbourne", middle: "the middle suburbs", outer: "the outer suburbs", city: "the regional cities", rural: "rural and coastal seats" };
+function summary(pc, name, F) {
+  const seats = F.seats.filter((s) => s.demo && s.band);
+  const pts = seats.map((s) => [s, voteIn(s, pc, VOPT.el)]).filter(([, v]) => !((pc === "NAT" || pc === "LIB") && v === 0));
+  if (pts.length < 8) return "";
+  const avg = BANDS.map(([b]) => { const xs = pts.filter(([s]) => s.band === b); return [b, xs.length ? xs.reduce((a, [, v]) => a + v, 0) / xs.length : -1]; }).sort((a, b) => b[1] - a[1]);
+  const links = TRAITS.filter((tr) => tr[0] !== "band").map((tr) => {
+    const lg = tr[3] === "log", f = fit(pts.map(([s, v]) => [lg ? Math.log10(Math.max(s.demo[tr[0]], 0.5)) : s.demo[tr[0]], v]));
+    return { k: tr[0], r: f ? f.r : 0 };
+  }).sort((a, b) => Math.abs(b.r) - Math.abs(a.r));
+  const picked = [];
+  for (const l of links) {
+    if (Math.abs(l.r) < 0.35 || picked.length >= 3) break;
+    if ((l.k === "density" && picked.some((x) => x.k === "km_cbd")) || (l.k === "km_cbd" && picked.some((x) => x.k === "density"))) continue;
+    if ((l.k === "born_os" && picked.some((x) => x.k === "lang")) || (l.k === "lang" && picked.some((x) => x.k === "born_os"))) continue;
+    picked.push(l);
+  }
+  const ph = picked.map((l) => PHRASE[l.k][l.r > 0 ? 0 : 1]);
+  const list = ph.length > 1 ? ph.slice(0, -1).join(", ") + " and " + ph.at(-1) : ph[0];
+  return `<p class="vsum"><i style="background:${col(pc)}"></i><b>${esc(name)}:</b> best in ${BAND_WORDS[avg[0][0]]} (${avg[0][1].toFixed(0)}% v ${avg.at(-1)[1].toFixed(0)}% in ${BAND_WORDS[avg.at(-1)[0]]})${list ? `, and in ${list}` : ""}.</p>`;
+}
 
 function voteIn(s, party, el) {
   const one = (p) => {
@@ -124,20 +157,22 @@ function stripSVG(trait, series) {
 function votersHTML(P, code, F) {
   if (!F?.seats?.[0]?.demo) return "";
   const seats = F.seats.filter((s) => s.demo);
-  const mk = (pc, name, faint) => ({ code: pc === "COAL" ? (code === "NAT" ? "NAT" : "LIB") : pc, name,
-    faint, pts: seats.map((s) => [null, voteIn(s, pc, VOPT.el), s]).filter((p) => !((pc === "NAT" || pc === "LIB") && p[1] === 0)) });
-  const btn = (k, v, label) => `<button type="button" class="vseg${VOPT[k] === v ? " on" : ""}" data-vopt="${k}" data-v="${v}" aria-pressed="${VOPT[k] === v}">${label}</button>`;
+  const sel = VOPT.sel || [code], many = sel.length > 1, names = Object.fromEntries(PICK);
+  const mk = (pc) => ({ code: pc, name: names[pc], faint: many,
+    pts: seats.map((s) => [null, voteIn(s, pc, VOPT.el), s]).filter((p) => !((pc === "NAT" || pc === "LIB") && p[1] === 0)) });
+  const btn = (k, v, label, on) => `<button type="button" class="vseg${on ? " on" : ""}" data-vopt="${k}" data-v="${v}" data-code="${code}" aria-pressed="${on}">${label}</button>`;
   const charts = TRAITS.map((tr) => {
-    const series = VOPT.mode === "all" ? OVERLAY.map(([pc, n]) => mk(pc, n, true)) : [mk(code, P.name, false)];
+    const series = sel.map(mk);
     for (const se of series) se.pts = tr[0] === "band" ? se.pts.filter((p) => p[2].band) : se.pts.map(([, y, s]) => [s.demo[tr[0]], y, s]).filter((p) => p[0] != null);
     return scatterSVG(F, tr, series);
   }).join("");
+  const elName = Object.fromEntries(ELECTIONS)[VOPT.el];
   return `<section class="d-sec" aria-labelledby="h-voters">
     <h3 id="h-voters">Who votes for them</h3>
-    <p class="hint">Each dot is a seat: the trait along the bottom, the vote (%) up the side. Filled dots are Melbourne, hollow dots regional. The first three charts are geography: city-to-country bands (inner, middle and outer Melbourne, regional cities, rural and coast), then distance and density on a log scale. The line is the trend; r near ±1 means a strong link, near 0 none. Hover a chart to enlarge it, a dot for the seat.${code === "NAT" || code === "LIB" ? ` ${code === "NAT" ? "Nationals" : "Liberals"}: only seats they contested in that election.` : ""}</p>
-    <div class="vctl"><span class="segs">${ELECTIONS.map(([v, l]) => btn("el", v, l)).join("")}</span>
-      <span class="segs">${btn("mode", "one", esc(P.name))}${btn("mode", "all", "All parties")}</span></div>
-    ${VOPT.mode === "all" ? `<div class="keyline vkey">${OVERLAY.map(([pc, n]) => `<span><i style="background:${col(pc === "COAL" ? "LIB" : pc)}"></i>${n}</span>`).join("")}</div>` : ""}
+    <div class="vsums"><p class="dim">In one line, ${esc(elName)}:</p>${sel.map((pc) => summary(pc, names[pc], F)).join("")}</div>
+    <div class="vctl"><span class="segs">${ELECTIONS.map(([v, l]) => btn("el", v, l, VOPT.el === v)).join("")}</span>
+      <span class="vchips">${PICK.map(([pc, n]) => `<button type="button" class="vchip${sel.includes(pc) ? " on" : ""}" data-vopt="p" data-v="${pc}" data-code="${code}" aria-pressed="${sel.includes(pc)}" style="--pc:${col(pc)}"><i></i>${n}</button>`).join("")}${VOPT.sel ? btn("reset", "", "Just " + esc(P.name), false) : ""}</span></div>
+    <p class="hint">Each dot is a seat: the trait along the bottom, the vote (%) up the side. Filled dots are Melbourne, hollow regional. First row is geography: city-to-country bands, then distance and density (log scale). The line is the trend; r near ±1 is a strong link, near 0 none. Pick any parties above (your choice stays as you move between party pages). Hover a chart to enlarge it, a dot for the seat. Liberal and Nationals charts only count seats they contested.</p>
     <div class="vgrid">${charts}</div>
   </section>`;
 }

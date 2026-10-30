@@ -557,3 +557,16 @@ th.fedc { font-style: italic; }
 .vchart .vfit { stroke-width: 1.4; }
 @media (max-width: 640px) { .vgrid { grid-template-columns: repeat(2, 1fr); } .vchart:hover { transform: none; } }
 .vkey i { display: inline-block; width: 14px; height: 3px; margin-right: 5px; vertical-align: middle; border-radius: 2px; }
+:root { --COAL: #2C3E66; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --COAL: #9FB2D9; } }
+:root[data-theme="dark"] { --COAL: #9FB2D9; }
+.vchips { display: inline-flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.vchip { font: inherit; font-size: 12.5px; padding: 4px 9px; border: 1px solid var(--rule-2); border-radius: 999px; background: transparent; color: var(--ink-2); cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+.vchip i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--pc); }
+.vchip.on { color: var(--ink); border-color: var(--pc); }
+.vchip.on i { background: var(--pc); }
+.vchips .vseg { font: inherit; font-size: 12px; border: 0; background: none; color: var(--ink-2); text-decoration: underline; cursor: pointer; }
+.vsums { margin: 2px 0 8px; }
+.vsums > p { margin: 0 0 3px; font-size: 12px; }
+.vsum { margin: 0 0 4px; font-size: 13.5px; max-width: 70ch; }
+.vsum i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
