@@ -50,9 +50,11 @@ let CALLED = new Set();
 const chip = (s, p, code) => `<button class="seat-chip${CALLED.has(s.slug) ? " called" : ""}" type="button" title="${CALLED.has(s.slug) ? "You've locked a call here" : "No call yet"}" data-open-seat="${s.slug}" style="--a:${(0.12 + 0.6 * p).toFixed(2)};--pc:${col(code)}">${esc(s.name)} <b>${pct(p)}</b></button>`;
 
 // "Who votes for them": one small scatter per trait, each dot a seat (hollow = regional). Hover enlarges.
-const TRAITS = [["uni", "University degree", "%"], ["cert", "Trade or certificate", "%"], ["inc", "Household income ($/wk)", "$"],
+const TRAITS = [["band", "City to country", "band"], ["km_cbd", "Distance from Melbourne CBD (km)", "km", "log"], ["density", "People per km²", "", "log"],
+  ["uni", "University degree", "%"], ["cert", "Trade or certificate", "%"], ["inc", "Household income ($/wk)", "$"],
   ["rent", "Renting", "%"], ["age", "Median age", "y"], ["kids", "Families with children", "%"],
-  ["lang", "Other language at home", "%"], ["born_os", "Born overseas", "%"], ["christian", "Christian", "%"]];
+  ["lang", "Other language at home", "%"], ["christian", "Christian", "%"], ["born_os", "Born overseas", "%"]];
+const BANDS = [["inner", "Inner"], ["middle", "Middle"], ["outer", "Outer"], ["city", "Reg. city"], ["rural", "Rural"]];
 const ELECTIONS = [["s22", "2022 state"], ["f25", "2025 federal"], ["m26", "Model 2026"]];
 const OVERLAY = [["ALP", "Labor"], ["COAL", "Coalition"], ["ON", "One Nation"], ["GRN", "Greens"]];
 const VOPT = { el: "f25", mode: "one" };
@@ -75,11 +77,14 @@ function fit(pts) {
 }
 function scatterSVG(F, trait, series) {
   const W = 200, H = 130, L = 26, R = 6, T = 8, B = 20;
-  const xs = F.seats.filter((s) => s.demo).map((s) => s.demo[trait[0]]);
+  if (trait[2] === "band") return stripSVG(trait, series);
+  const lg = trait[3] === "log", tx = (v) => (lg ? Math.log10(Math.max(v, 0.5)) : v);
+  const xs = F.seats.filter((s) => s.demo?.[trait[0]] != null).map((s) => tx(s.demo[trait[0]]));
   const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  for (const se of series) se.pts = se.pts.map(([x, y, s]) => [tx(x), y, s, x]);
   const ymax = Math.max(10, ...series.flatMap((se) => se.pts.map((p) => p[1]))) * 1.05;
   const X = (v) => L + ((v - x0) / (x1 - x0 || 1)) * (W - L - R), Y = (v) => H - B - (v / ymax) * (H - T - B);
-  const fmt = (v) => trait[2] === "$" ? "$" + Math.round(v).toLocaleString("en-AU") : Math.round(v) + (trait[2] === "%" ? "%" : "");
+  const fmt = (v) => lg ? Math.round(10 ** v).toLocaleString("en-AU") + (trait[2] ? " " + trait[2] : "") : trait[2] === "$" ? "$" + Math.round(v).toLocaleString("en-AU") : Math.round(v) + (trait[2] === "%" ? "%" : "");
   const yt = [0, Math.round(ymax / 2 / 5) * 5, Math.floor(ymax / 10) * 10].filter((v, i, a) => a.indexOf(v) === i);
   let g = yt.map((v) => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="vg"/><text x="${L - 3}" y="${Y(v) + 3}" class="vt" text-anchor="end">${v}</text>`).join("");
   g += `<text x="${L}" y="${H - 6}" class="vt">${fmt(x0)}</text><text x="${W - R}" y="${H - 6}" class="vt" text-anchor="end">${fmt(x1)}</text>`;
@@ -94,20 +99,42 @@ function scatterSVG(F, trait, series) {
   return `<div class="vchart"><div class="vc-h">${esc(trait[1])}${rs.length === 1 ? ` <span class="dim">r ${rs[0].f.r.toFixed(2)}</span>` : ""}</div>
     <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(trait[1])} against vote share">${g}</svg></div>`;
 }
+// Categorical: seats grouped into city-to-country bands, jittered dots, a bar at each band's average
+function stripSVG(trait, series) {
+  const W = 200, H = 130, L = 26, R = 6, T = 8, B = 20, n = BANDS.length, bw = (W - L - R) / n;
+  const ymax = Math.max(10, ...series.flatMap((se) => se.pts.map((p) => p[1]))) * 1.05;
+  const Y = (v) => H - B - (v / ymax) * (H - T - B);
+  const jit = (slug) => { let h = 0; for (const c of slug) h = (h * 31 + c.charCodeAt(0)) % 997; return h / 997 - 0.5; };
+  const yt = [0, Math.round(ymax / 2 / 5) * 5, Math.floor(ymax / 10) * 10].filter((v, i, a) => a.indexOf(v) === i);
+  let g = yt.map((v) => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="vg"/><text x="${L - 3}" y="${Y(v) + 3}" class="vt" text-anchor="end">${v}</text>`).join("");
+  g += BANDS.map(([, l], i) => `<text x="${L + bw * (i + 0.5)}" y="${H - 6}" class="vt" text-anchor="middle">${l}</text>`).join("");
+  const off = (k) => series.length > 1 ? ((k - (series.length - 1) / 2) * bw) / (series.length + 1) : 0;
+  series.forEach((se, k) => {
+    BANDS.forEach(([b, bl], i) => {
+      const pts = se.pts.filter((p) => p[2].band === b); if (!pts.length) return;
+      const cx = L + bw * (i + 0.5) + off(k), spread = series.length > 1 ? bw / (series.length + 2) : bw * 0.55;
+      g += pts.map(([, y, s]) => `<circle cx="${(cx + jit(s.slug) * spread).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="${se.faint ? 1.5 : 2.1}" style="fill:${col(se.code)};opacity:${se.faint ? 0.35 : 0.7}"><title>${esc(s.name)} (${bl}): ${esc(se.name)} ${y.toFixed(1)}%</title></circle>`).join("");
+      const avg = pts.reduce((a, p) => a + p[1], 0) / pts.length;
+      g += `<line x1="${cx - spread / 2 - 2}" x2="${cx + spread / 2 + 2}" y1="${Y(avg)}" y2="${Y(avg)}" style="stroke:${col(se.code)}" class="vfit"><title>${bl} average: ${esc(se.name)} ${avg.toFixed(1)}%</title></line>`;
+    });
+  });
+  return `<div class="vchart"><div class="vc-h">${esc(trait[1])} <span class="dim">bar = average</span></div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Vote share by city-to-country band">${g}</svg></div>`;
+}
 function votersHTML(P, code, F) {
   if (!F?.seats?.[0]?.demo) return "";
   const seats = F.seats.filter((s) => s.demo);
   const mk = (pc, name, faint) => ({ code: pc === "COAL" ? (code === "NAT" ? "NAT" : "LIB") : pc, name,
-    faint, pts: seats.map((s) => [null, voteIn(s, pc, VOPT.el), s]).filter((p) => !(pc === "NAT" && p[1] === 0)) });
+    faint, pts: seats.map((s) => [null, voteIn(s, pc, VOPT.el), s]).filter((p) => !((pc === "NAT" || pc === "LIB") && p[1] === 0)) });
   const btn = (k, v, label) => `<button type="button" class="vseg${VOPT[k] === v ? " on" : ""}" data-vopt="${k}" data-v="${v}" aria-pressed="${VOPT[k] === v}">${label}</button>`;
   const charts = TRAITS.map((tr) => {
     const series = VOPT.mode === "all" ? OVERLAY.map(([pc, n]) => mk(pc, n, true)) : [mk(code, P.name, false)];
-    for (const se of series) se.pts = se.pts.map(([, y, s]) => [s.demo[tr[0]], y, s]).filter((p) => p[0] != null);
+    for (const se of series) se.pts = tr[0] === "band" ? se.pts.filter((p) => p[2].band) : se.pts.map(([, y, s]) => [s.demo[tr[0]], y, s]).filter((p) => p[0] != null);
     return scatterSVG(F, tr, series);
   }).join("");
   return `<section class="d-sec" aria-labelledby="h-voters">
     <h3 id="h-voters">Who votes for them</h3>
-    <p class="hint">Each dot is a seat: the trait along the bottom, the vote (%) up the side. Filled dots are Melbourne, hollow dots regional. The line is the trend; r near ±1 means a strong link, near 0 none. Hover a chart to enlarge it, a dot for the seat.${code === "NAT" ? " Nationals: only seats they contest." : ""}</p>
+    <p class="hint">Each dot is a seat: the trait along the bottom, the vote (%) up the side. Filled dots are Melbourne, hollow dots regional. The first three charts are geography: city-to-country bands (inner, middle and outer Melbourne, regional cities, rural and coast), then distance and density on a log scale. The line is the trend; r near ±1 means a strong link, near 0 none. Hover a chart to enlarge it, a dot for the seat.${code === "NAT" || code === "LIB" ? ` ${code === "NAT" ? "Nationals" : "Liberals"}: only seats they contested in that election.` : ""}</p>
     <div class="vctl"><span class="segs">${ELECTIONS.map(([v, l]) => btn("el", v, l)).join("")}</span>
       <span class="segs">${btn("mode", "one", esc(P.name))}${btn("mode", "all", "All parties")}</span></div>
     ${VOPT.mode === "all" ? `<div class="keyline vkey">${OVERLAY.map(([pc, n]) => `<span><i style="background:${col(pc === "COAL" ? "LIB" : pc)}"></i>${n}</span>`).join("")}</div>` : ""}

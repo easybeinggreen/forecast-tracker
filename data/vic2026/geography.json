@@ -1,0 +1,530 @@
+{
+ "albert-park": {
+  "km2": 21.3,
+  "density": 3472.2,
+  "km_cbd": 3.7,
+  "band": "inner"
+ },
+ "ashwood": {
+  "km2": 29.5,
+  "density": 2732.1,
+  "km_cbd": 14.2,
+  "band": "middle"
+ },
+ "bass": {
+  "km2": 1391.2,
+  "density": 47.3,
+  "km_cbd": 87.0,
+  "band": "rural"
+ },
+ "bayswater": {
+  "km2": 38.8,
+  "density": 1884.2,
+  "km_cbd": 27.2,
+  "band": "outer"
+ },
+ "bellarine": {
+  "km2": 333.2,
+  "density": 208.6,
+  "km_cbd": 55.5,
+  "band": "city"
+ },
+ "benambra": {
+  "km2": 9148.5,
+  "density": 7.3,
+  "km_cbd": 264.4,
+  "band": "rural"
+ },
+ "bendigo-east": {
+  "km2": 2658.0,
+  "density": 27.3,
+  "km_cbd": 143.4,
+  "band": "city"
+ },
+ "bendigo-west": {
+  "km2": 1524.9,
+  "density": 41.8,
+  "km_cbd": 126.0,
+  "band": "city"
+ },
+ "bentleigh": {
+  "km2": 25.3,
+  "density": 3021.1,
+  "km_cbd": 15.9,
+  "band": "middle"
+ },
+ "berwick": {
+  "km2": 99.4,
+  "density": 821.7,
+  "km_cbd": 43.1,
+  "band": "outer"
+ },
+ "box-hill": {
+  "km2": 29.1,
+  "density": 2936.0,
+  "km_cbd": 14.4,
+  "band": "middle"
+ },
+ "brighton": {
+  "km2": 20.0,
+  "density": 3333.8,
+  "km_cbd": 10.8,
+  "band": "inner"
+ },
+ "broadmeadows": {
+  "km2": 46.5,
+  "density": 1731.9,
+  "km_cbd": 14.6,
+  "band": "middle"
+ },
+ "brunswick": {
+  "km2": 14.1,
+  "density": 4834.3,
+  "km_cbd": 4.5,
+  "band": "inner"
+ },
+ "bulleen": {
+  "km2": 39.4,
+  "density": 1899.9,
+  "km_cbd": 14.9,
+  "band": "middle"
+ },
+ "bundoora": {
+  "km2": 35.5,
+  "density": 1954.1,
+  "km_cbd": 16.0,
+  "band": "middle"
+ },
+ "carrum": {
+  "km2": 88.2,
+  "density": 842.4,
+  "km_cbd": 35.4,
+  "band": "outer"
+ },
+ "caulfield": {
+  "km2": 17.3,
+  "density": 4121.4,
+  "km_cbd": 9.2,
+  "band": "inner"
+ },
+ "clarinda": {
+  "km2": 45.0,
+  "density": 1634.4,
+  "km_cbd": 21.2,
+  "band": "middle"
+ },
+ "cranbourne": {
+  "km2": 63.1,
+  "density": 1380.2,
+  "km_cbd": 43.4,
+  "band": "outer"
+ },
+ "croydon": {
+  "km2": 42.0,
+  "density": 1779.8,
+  "km_cbd": 29.8,
+  "band": "outer"
+ },
+ "dandenong": {
+  "km2": 57.1,
+  "density": 1569.2,
+  "km_cbd": 29.5,
+  "band": "outer"
+ },
+ "eildon": {
+  "km2": 10061.6,
+  "density": 6.6,
+  "km_cbd": 95.6,
+  "band": "rural"
+ },
+ "eltham": {
+  "km2": 72.8,
+  "density": 910.9,
+  "km_cbd": 21.6,
+  "band": "middle"
+ },
+ "essendon": {
+  "km2": 24.5,
+  "density": 2841.5,
+  "km_cbd": 8.1,
+  "band": "inner"
+ },
+ "eureka": {
+  "km2": 3911.3,
+  "density": 19.3,
+  "km_cbd": 88.5,
+  "band": "city"
+ },
+ "euroa": {
+  "km2": 11394.0,
+  "density": 5.8,
+  "km_cbd": 116.2,
+  "band": "rural"
+ },
+ "evelyn": {
+  "km2": 260.0,
+  "density": 264.1,
+  "km_cbd": 40.6,
+  "band": "outer"
+ },
+ "footscray": {
+  "km2": 22.9,
+  "density": 3164.0,
+  "km_cbd": 7.5,
+  "band": "inner"
+ },
+ "frankston": {
+  "km2": 42.2,
+  "density": 1621.0,
+  "km_cbd": 40.9,
+  "band": "outer"
+ },
+ "geelong": {
+  "km2": 330.6,
+  "density": 217.3,
+  "km_cbd": 75.2,
+  "band": "city"
+ },
+ "gippsland-east": {
+  "km2": 27537.5,
+  "density": 2.3,
+  "km_cbd": 279.8,
+  "band": "rural"
+ },
+ "gippsland-south": {
+  "km2": 7995.8,
+  "density": 8.2,
+  "km_cbd": 147.8,
+  "band": "rural"
+ },
+ "glen-waverley": {
+  "km2": 36.3,
+  "density": 2271.0,
+  "km_cbd": 19.3,
+  "band": "middle"
+ },
+ "greenvale": {
+  "km2": 60.2,
+  "density": 1285.3,
+  "km_cbd": 20.1,
+  "band": "middle"
+ },
+ "hastings": {
+  "km2": 395.2,
+  "density": 169.1,
+  "km_cbd": 70.4,
+  "band": "outer"
+ },
+ "hawthorn": {
+  "km2": 21.0,
+  "density": 3364.4,
+  "km_cbd": 9.1,
+  "band": "inner"
+ },
+ "ivanhoe": {
+  "km2": 31.3,
+  "density": 2118.1,
+  "km_cbd": 11.4,
+  "band": "inner"
+ },
+ "kalkallo": {
+  "km2": 264.3,
+  "density": 360.4,
+  "km_cbd": 34.8,
+  "band": "outer"
+ },
+ "kew": {
+  "km2": 31.0,
+  "density": 2367.5,
+  "km_cbd": 8.8,
+  "band": "inner"
+ },
+ "kororoit": {
+  "km2": 115.0,
+  "density": 760.7,
+  "km_cbd": 22.6,
+  "band": "middle"
+ },
+ "lara": {
+  "km2": 694.0,
+  "density": 101.6,
+  "km_cbd": 55.2,
+  "band": "city"
+ },
+ "laverton": {
+  "km2": 87.2,
+  "density": 1084.8,
+  "km_cbd": 17.8,
+  "band": "middle"
+ },
+ "lowan": {
+  "km2": 41813.8,
+  "density": 1.6,
+  "km_cbd": 295.3,
+  "band": "rural"
+ },
+ "macedon": {
+  "km2": 3365.2,
+  "density": 19.1,
+  "km_cbd": 75.0,
+  "band": "rural"
+ },
+ "malvern": {
+  "km2": 20.3,
+  "density": 3171.6,
+  "km_cbd": 8.6,
+  "band": "inner"
+ },
+ "melbourne": {
+  "km2": 24.5,
+  "density": 4832.5,
+  "km_cbd": 2.3,
+  "band": "inner"
+ },
+ "melton": {
+  "km2": 342.6,
+  "density": 240.7,
+  "km_cbd": 39.0,
+  "band": "outer"
+ },
+ "mildura": {
+  "km2": 37528.4,
+  "density": 1.9,
+  "km_cbd": 386.6,
+  "band": "rural"
+ },
+ "mill-park": {
+  "km2": 41.9,
+  "density": 1634.5,
+  "km_cbd": 20.9,
+  "band": "middle"
+ },
+ "monbulk": {
+  "km2": 437.0,
+  "density": 150.5,
+  "km_cbd": 45.0,
+  "band": "outer"
+ },
+ "mordialloc": {
+  "km2": 55.5,
+  "density": 1310.9,
+  "km_cbd": 27.9,
+  "band": "outer"
+ },
+ "mornington": {
+  "km2": 153.5,
+  "density": 424.0,
+  "km_cbd": 49.0,
+  "band": "outer"
+ },
+ "morwell": {
+  "km2": 933.1,
+  "density": 77.4,
+  "km_cbd": 140.6,
+  "band": "city"
+ },
+ "mulgrave": {
+  "km2": 35.7,
+  "density": 2159.6,
+  "km_cbd": 23.0,
+  "band": "middle"
+ },
+ "murray-plains": {
+  "km2": 11896.4,
+  "density": 5.4,
+  "km_cbd": 248.4,
+  "band": "rural"
+ },
+ "narracan": {
+  "km2": 4520.0,
+  "density": 15.0,
+  "km_cbd": 95.7,
+  "band": "rural"
+ },
+ "narre-warren-north": {
+  "km2": 68.9,
+  "density": 1128.3,
+  "km_cbd": 35.9,
+  "band": "outer"
+ },
+ "narre-warren-south": {
+  "km2": 40.4,
+  "density": 2248.6,
+  "km_cbd": 38.9,
+  "band": "outer"
+ },
+ "nepean": {
+  "km2": 385.0,
+  "density": 161.4,
+  "km_cbd": 65.0,
+  "band": "outer"
+ },
+ "niddrie": {
+  "km2": 38.3,
+  "density": 1809.9,
+  "km_cbd": 12.6,
+  "band": "middle"
+ },
+ "northcote": {
+  "km2": 21.2,
+  "density": 3188.3,
+  "km_cbd": 6.1,
+  "band": "inner"
+ },
+ "oakleigh": {
+  "km2": 32.2,
+  "density": 2792.6,
+  "km_cbd": 16.2,
+  "band": "middle"
+ },
+ "ovens-valley": {
+  "km2": 10556.9,
+  "density": 6.0,
+  "km_cbd": 206.6,
+  "band": "rural"
+ },
+ "pakenham": {
+  "km2": 230.8,
+  "density": 330.2,
+  "km_cbd": 51.3,
+  "band": "outer"
+ },
+ "pascoe-vale": {
+  "km2": 20.8,
+  "density": 3308.6,
+  "km_cbd": 8.4,
+  "band": "inner"
+ },
+ "point-cook": {
+  "km2": 87.9,
+  "density": 1053.5,
+  "km_cbd": 23.5,
+  "band": "middle"
+ },
+ "polwarth": {
+  "km2": 8852.7,
+  "density": 7.9,
+  "km_cbd": 132.8,
+  "band": "rural"
+ },
+ "prahran": {
+  "km2": 10.8,
+  "density": 6720.2,
+  "km_cbd": 4.0,
+  "band": "inner"
+ },
+ "preston": {
+  "km2": 27.0,
+  "density": 2743.0,
+  "km_cbd": 11.0,
+  "band": "inner"
+ },
+ "richmond": {
+  "km2": 12.5,
+  "density": 5402.7,
+  "km_cbd": 2.9,
+  "band": "inner"
+ },
+ "ringwood": {
+  "km2": 35.5,
+  "density": 2253.5,
+  "km_cbd": 21.8,
+  "band": "middle"
+ },
+ "ripon": {
+  "km2": 14527.8,
+  "density": 4.7,
+  "km_cbd": 167.3,
+  "band": "rural"
+ },
+ "rowville": {
+  "km2": 61.7,
+  "density": 1152.7,
+  "km_cbd": 27.7,
+  "band": "outer"
+ },
+ "sandringham": {
+  "km2": 23.9,
+  "density": 2613.0,
+  "km_cbd": 18.1,
+  "band": "middle"
+ },
+ "shepparton": {
+  "km2": 3315.8,
+  "density": 22.5,
+  "km_cbd": 187.1,
+  "band": "city"
+ },
+ "south-barwon": {
+  "km2": 368.1,
+  "density": 197.1,
+  "km_cbd": 75.4,
+  "band": "city"
+ },
+ "south-west-coast": {
+  "km2": 6567.9,
+  "density": 10.7,
+  "km_cbd": 262.8,
+  "band": "rural"
+ },
+ "st-albans": {
+  "km2": 35.1,
+  "density": 2121.8,
+  "km_cbd": 15.6,
+  "band": "middle"
+ },
+ "sunbury": {
+  "km2": 338.4,
+  "density": 186.8,
+  "km_cbd": 30.8,
+  "band": "outer"
+ },
+ "sydenham": {
+  "km2": 95.8,
+  "density": 806.7,
+  "km_cbd": 25.0,
+  "band": "middle"
+ },
+ "tarneit": {
+  "km2": 76.6,
+  "density": 1212.7,
+  "km_cbd": 26.8,
+  "band": "outer"
+ },
+ "thomastown": {
+  "km2": 90.6,
+  "density": 857.6,
+  "km_cbd": 20.9,
+  "band": "middle"
+ },
+ "warrandyte": {
+  "km2": 104.9,
+  "density": 705.9,
+  "km_cbd": 25.9,
+  "band": "outer"
+ },
+ "wendouree": {
+  "km2": 63.7,
+  "density": 1074.6,
+  "km_cbd": 104.4,
+  "band": "city"
+ },
+ "werribee": {
+  "km2": 339.4,
+  "density": 248.2,
+  "km_cbd": 33.6,
+  "band": "outer"
+ },
+ "williamstown": {
+  "km2": 51.5,
+  "density": 1283.4,
+  "km_cbd": 11.7,
+  "band": "inner"
+ },
+ "yan-yean": {
+  "km2": 689.5,
+  "density": 106.9,
+  "km_cbd": 38.2,
+  "band": "outer"
+ }
+}

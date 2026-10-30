@@ -220,8 +220,13 @@ def main():
     from vic2026.model.flows import GROUP_OF
     qp = ROOT / "vic2026/config/questions.yaml"
     questions = yaml.safe_load(qp.read_text()) if qp.exists() else {}
+    gp = ROOT / "data/vic2026/geography.json"
+    geog = json.loads(gp.read_text()) if gp.exists() else {}
     for s in seats:
         s["research"] = by_seat.get(s["slug"], [])
+        if s.get("demo") and s["slug"] in geog:
+            s["demo"] = {**s["demo"], "density": geog[s["slug"]]["density"], "km_cbd": geog[s["slug"]]["km_cbd"]}
+            s["band"] = geog[s["slug"]]["band"]
         g22 = {}
         for c in s["primaries_2022"]:
             g = GROUP_OF.get(c["party"], "OTH")
