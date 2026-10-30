@@ -348,3 +348,72 @@ time,source,id,title,outcome,p,volume
 2026-10-30T10:14+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Statewide Treaty Act 2025 is repealed by the end of 2027,0.5,1215
 2026-10-30T10:14+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Victoria holds a referendum on electoral reform by the end of 2028,0.5,1215
 2026-10-30T10:14+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,"SRL North is cancelled, postponed or downsized by the end of 2028",0.5,1215
+2026-10-30T18:06+00:00,Kalshi,KXVICTORIANSTATE-26NOV28-ONE,Will One Nation win the 2026 Victorian state election?,One Nation,0.06,1403.62
+2026-10-30T18:06+00:00,Kalshi,KXVICTORIANSTATE-26NOV28-LIB,Will Liberals and Nationals win the 2026 Victorian state election?,Liberals and Nationals,0.82,2316.16
+2026-10-30T18:06+00:00,Kalshi,KXVICTORIANSTATE-26NOV28-ALP,Will Australian Labor Party win the 2026 Victorian state election?,Australian Labor Party,0.14,1633.07
+2026-10-30T18:06+00:00,Polymarket,will-labor-win-the-third-most-seats-in-the-next-victorian-state-election,Will Labor win the third-most seats in the next Victorian state election?,Labor,0.0535,6938
+2026-10-30T18:06+00:00,Polymarket,will-liberal-national-win-the-third-most-seats-in-the-next-victorian-state-election,Will Liberal–National win the third-most seats in the next Victorian state election?,Liberal–National,0.0035,2097
+2026-10-30T18:06+00:00,Polymarket,will-greens-win-the-third-most-seats-in-the-next-victorian-state-election,Will Greens win the third-most seats in the next Victorian state election?,Greens,0.3585,2844
+2026-10-30T18:06+00:00,Polymarket,will-one-nation-win-the-third-most-seats-in-the-next-victorian-state-election,Will One Nation win the third-most seats in the next Victorian state election?,One Nation,0.36,10469
+2026-10-30T18:06+00:00,Polymarket,will-legalise-cannabis-win-the-third-most-seats-in-the-next-victorian-state-election,Will Legalise Cannabis win the third-most seats in the next Victorian state election?,Legalise Cannabis,0.0015,1662
+2026-10-30T18:06+00:00,Polymarket,will-animal-justice-win-the-third-most-seats-in-the-next-victorian-state-election,Will Animal Justice win the third-most seats in the next Victorian state election?,Animal Justice,0.0025,1328
+2026-10-30T18:06+00:00,Polymarket,will-libertarian-win-the-third-most-seats-in-the-next-victorian-state-election,Will Libertarian win the third-most seats in the next Victorian state election?,Libertarian,0.003,1630
+2026-10-30T18:06+00:00,Polymarket,will-shooters-fishers-farmers-win-the-third-most-seats-in-the-next-victorian-state-election,"Will Shooters, Fishers, Farmers win the third-most seats in the next Victorian state election?","Shooters, Fishers, Farmers",0.0015,914
+2026-10-30T18:06+00:00,Polymarket,will-labor-win-the-most-seats-in-the-next-victorian-state-election,Will Labor win the most seats in the next Victorian state election?,Labor,0.13,8435
+2026-10-30T18:06+00:00,Polymarket,will-liberal-national-win-the-most-seats-in-the-next-victorian-state-election,Will Liberal–National win the most seats in the next Victorian state election?,Liberal–National,0.86,20357
+2026-10-30T18:06+00:00,Polymarket,will-greens-win-the-most-seats-in-the-next-victorian-state-election,Will Greens win the most seats in the next Victorian state election?,Greens,0.0005,610
+2026-10-30T18:06+00:00,Polymarket,will-one-nation-win-the-most-seats-in-the-next-victorian-state-election,Will One Nation win the most seats in the next Victorian state election?,One Nation,0.035,6537
+2026-10-30T18:06+00:00,Polymarket,will-labor-win-the-second-most-seats-in-the-next-victorian-state-election,Will Labor win the second-most seats in the next Victorian state election?,Labor,0.665,2614
+2026-10-30T18:06+00:00,Polymarket,will-liberal-national-win-the-second-most-seats-in-the-next-victorian-state-election,Will Liberal–National win the second-most seats in the next Victorian state election?,Liberal–National,0.1405,987
+2026-10-30T18:06+00:00,Polymarket,will-greens-win-the-second-most-seats-in-the-next-victorian-state-election,Will Greens win the second-most seats in the next Victorian state election?,Greens,0.0055,424
+2026-10-30T18:06+00:00,Polymarket,will-one-nation-win-the-second-most-seats-in-the-next-victorian-state-election,Will One Nation win the second-most seats in the next Victorian state election?,One Nation,0.1435,1248
+2026-10-30T18:06+00:00,Polymarket,will-labor-win-the-most-seats-in-the-next-victorian-legislative-council-election-20261008161713819,Will Labor win the most seats in the next Victorian Legislative Council election?,Labor,0.055,2725
+2026-10-30T18:06+00:00,Polymarket,will-liberal-national-win-the-most-seats-in-the-next-victorian-legislative-council-election-20261008161713819,Will Liberal–National win the most seats in the next Victorian Legislative Council election?,Liberal–National,0.745,4728
+2026-10-30T18:06+00:00,Polymarket,will-greens-win-the-most-seats-in-the-next-victorian-legislative-council-election-20261008161713819,Will Greens win the most seats in the next Victorian Legislative Council election?,Greens,0.0155,1278
+2026-10-30T18:06+00:00,Polymarket,will-one-nation-win-the-most-seats-in-the-next-victorian-legislative-council-election-20261008161713819,Will One Nation win the most seats in the next Victorian Legislative Council election?,One Nation,0.1935,1733
+2026-10-30T18:06+00:00,Manifold,NUPputhdZU,Which party or coalition will win the primary vote in the 2026 Victorian state election?,Labor Party,0.2388,778
+2026-10-30T18:06+00:00,Manifold,NUPputhdZU,Which party or coalition will win the primary vote in the 2026 Victorian state election?,Liberal-National Coalition,0.6414,778
+2026-10-30T18:06+00:00,Manifold,NUPputhdZU,Which party or coalition will win the primary vote in the 2026 Victorian state election?,One Nation,0.1093,778
+2026-10-30T18:06+00:00,Manifold,NUPputhdZU,Which party or coalition will win the primary vote in the 2026 Victorian state election?,Other,0.0105,778
+2026-10-30T18:06+00:00,Manifold,NUs61EFEoXxgzhM112up,The Premier of Victoria will be from which Part(ies) after the 2026 state election?,Victorian Labor Party,0.2859,722
+2026-10-30T18:06+00:00,Manifold,NUs61EFEoXxgzhM112up,The Premier of Victoria will be from which Part(ies) after the 2026 state election?,Liberal/National Coalition,0.7011,722
+2026-10-30T18:06+00:00,Manifold,NUs61EFEoXxgzhM112up,The Premier of Victoria will be from which Part(ies) after the 2026 state election?,Other,0.0129,722
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Liberal + National + One Nation,0.0509,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Labor,0.2754,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,One Nation,0.0174,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Liberal + National,0.505,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,One Nation + National,0.0174,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Labor + Liberal,0.0174,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Labor + Liberal + National,0.02,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Labor + Greens,0.0563,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Liberal + One Nation,0.0227,1140
+2026-10-30T18:06+00:00,Manifold,ICUIpRssuu,What combination of parties will form executive government after the 2026 Victorian state election?,Other,0.0174,1140
+2026-10-30T18:06+00:00,Manifold,hEyyRcPOP5,Victorian State Election 2026: Number of Seats won by One Nation,0,0.1357,133
+2026-10-30T18:06+00:00,Manifold,hEyyRcPOP5,Victorian State Election 2026: Number of Seats won by One Nation,1,0.0553,133
+2026-10-30T18:06+00:00,Manifold,hEyyRcPOP5,Victorian State Election 2026: Number of Seats won by One Nation,2,0.0553,133
+2026-10-30T18:06+00:00,Manifold,hEyyRcPOP5,Victorian State Election 2026: Number of Seats won by One Nation,3,0.0553,133
+2026-10-30T18:06+00:00,Manifold,hEyyRcPOP5,Victorian State Election 2026: Number of Seats won by One Nation,4,0.0597,133
+2026-10-30T18:06+00:00,Manifold,hEyyRcPOP5,Victorian State Election 2026: Number of Seats won by One Nation,5+,0.6387,133
+2026-10-30T18:06+00:00,Manifold,2ZQgcNc5zU,2026 Victorian state election – 2PP count winner,Labor,0.2037,430
+2026-10-30T18:06+00:00,Manifold,2ZQgcNc5zU,2026 Victorian state election – 2PP count winner,Liberal-National,0.7963,430
+2026-10-30T18:06+00:00,Manifold,UuSln5yPls,Will Jess Wilson become Premier of Victoria after the 28 November 2026 state election?,Yes,0.87,149
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",The Coalition wins the most seats,0.5324,329
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",Labor wins the most seats,0.4023,329
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",One Nation wins the most seats,0.3007,329
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",The Coalition wins the primary vote,0.5324,329
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",Labor wins the primary vote,0.4023,329
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",One Nation wins the primary vote,0.3007,329
+2026-10-30T18:06+00:00,Manifold,8P2CI28yQL,"If X happens in the Victorian state election, will the Coalition overtake One Nation in national polls in December 2026?",The Coalition wins a majority of seats,0.5914,329
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Group voting tickets are abolished before the election,1,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,The Age endorses Labor,0.7708,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,The Herald Sun endorses One Nation,0.2656,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Jacinta Allan leads Labor to the election,0.0588,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Jacinta Allan retains her seat,0.1,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Greens primary vote share increases,0.6457,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Labor wins more seats than One Nation,0.7191,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,One Nation wins more seats than the Liberals,0.3567,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Greens win more seats than the Nationals,0.5,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,The election results in a hung parliament,0.5,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Statewide Treaty Act 2025 is repealed by the end of 2027,0.5,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,Victoria holds a referendum on electoral reform by the end of 2028,0.5,1215
+2026-10-30T18:06+00:00,Manifold,pAtpcLhQ80,2026 Victorian state election prop bets,"SRL North is cancelled, postponed or downsized by the end of 2028",0.5,1215
