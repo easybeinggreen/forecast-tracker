@@ -117,7 +117,10 @@ function renderChamber() {
   layout ||= chamberLayout();
   const W = 800, H = 452, cx = 400, cy = 428, R = 380, dot = 15.5;
   const seats = S.F.seats.map((s) => ({ s, ...seatParty(s) }));
-  seats.sort((a, b) => ORDER.indexOf(a.p) - ORDER.indexOf(b.p) || (b.op - a.op));
+  // Left of the aisle: most certain at the outer edge, least certain toward the centre. Right of the aisle: mirrored,
+  // so the doubtful seats of every party sit around the middle of the chamber and the safe ones at the ends.
+  const right = (p) => ORDER.indexOf(p) > ORDER.indexOf("unset");
+  seats.sort((a, b) => ORDER.indexOf(a.p) - ORDER.indexOf(b.p) || (right(a.p) ? a.op - b.op : b.op - a.op));
   const tally = {};
   seats.forEach((x) => (tally[x.p] = (tally[x.p] || 0) + 1));
   const lnp = (tally.LIB || 0) + (tally.NAT || 0);
@@ -132,7 +135,7 @@ function renderChamber() {
     const words = (n) => n.toLowerCase().split(/[\s-]+/);
     const hit = q && (isCode ? ab.toLowerCase() === q : words(x.s.name).some((w) => w.startsWith(q)) || words(x.s.mp.name).some((w) => w.startsWith(q)));
     const called = !!lastCall(x.s.slug);
-    return `<g class="seat-g${q ? (hit ? " hit" : " dim") : ""}${called ? " called" : ""}"><circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${X}" cy="${Y}" r="${dot}" style="${fill}"></circle><text class="ab${light ? " light" : ""}" x="${X}" y="${Y}" dy="0.35em" text-anchor="middle" font-size="${ab.length > 2 ? 9.5 : 11.5}">${ab}</text></g>`;
+    return `<g class="seat-g${q ? (hit ? " hit" : " dim") : ""}${called ? " called" : ""}"><circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${X}" cy="${Y}" r="${dot}" style="${fill}"></circle>${called ? `<circle class="ring" cx="${X}" cy="${Y}" r="${dot + 3.5}"/>` : ""}<text class="ab${light ? " light" : ""}" x="${X}" y="${Y}" dy="0.35em" text-anchor="middle" font-size="${ab.length > 2 ? 9.5 : 11.5}">${ab}</text></g>`;
   }).join("");
   const big = S.mode === "mine"
     ? `<text class="tally" x="${cx}" y="${cy - 52}" text-anchor="middle" font-size="44">${88 - (tally.unset || 0)}</text><text class="tally-sub" x="${cx}" y="${cy - 28}" text-anchor="middle">seats called, 88 to go${tally.unset ? "" : ""}</text>`

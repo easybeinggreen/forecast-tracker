@@ -457,7 +457,8 @@ details summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); margi
 .fedc { color: var(--ink-2); font-style: italic; }
 th.fedc { font-style: italic; }
 /* ---- your calls */
-#chamber .seat-g.called .seat { stroke: var(--ink); stroke-width: 3; }
+#chamber .seat-g.called .seat { stroke: var(--sheet); stroke-width: 2; }
+#chamber .ring { fill: none; stroke: var(--ink-3); stroke-width: 2.4; pointer-events: none; }
 .district.called { stroke: var(--ink); stroke-width: 1.8; }
 .seat-chip.called { border: 2px solid var(--ink); font-weight: 600; }
 .target.called { border: 2px solid var(--ink); }
