@@ -1499,24 +1499,32 @@
   "tallyroom": {
    "cands": [
     {
-     "name": "Peter Malinauskas",
+     "name": "Glenn Brindley",
+     "party": "One Nation"
+    },
+    {
+     "name": "Richard Farr",
      "party": "Labor"
     },
     {
-     "name": "Michael Santagata",
-     "party": "Liberal"
-    },
-    {
-     "name": "Ruby Dolling",
+     "name": "Lini Fernando",
      "party": "Greens"
     },
     {
-     "name": "Suzanne Pope",
-     "party": "Animal Justice"
+     "name": "Beth Grimshaw",
+     "party": "Victorian Socialists"
+    },
+    {
+     "name": "David Vanderwolf",
+     "party": "Independent"
+    },
+    {
+     "name": "Toby Wooldridge",
+     "party": "Liberal"
     }
    ],
-   "assessment": "Croydon is a very safe Labor seat.",
-   "url": "https://www.tallyroom.com.au/vic2026/croydon2026"
+   "assessment": "The Liberal Party should safely retain this seat.",
+   "url": "https://www.tallyroom.com.au/vic2026/croydonvic2026"
   },
   "wiki": "https://en.wikipedia.org/wiki/Electoral_district_of_Croydon_(Victoria)"
  },

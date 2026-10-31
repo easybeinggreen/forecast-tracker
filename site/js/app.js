@@ -558,14 +558,14 @@ function renderDrawer() {
         <div class="shift"><span>adjust</span><input type="range" min="-10" max="10" step="0.5" value="${S.shifts[p] || 0}" data-shift="${p}" aria-label="Shift ${PARTY[p]} vote in ${esc(s.name)}"><span id="sv-${p}">${fmtShift(S.shifts[p] || 0)}</span></div>`).join("")}
       </div>
     </section>
-    ${questionsHTML(s)}
-    <details class="d-sec model-more"${S.moreOpen ? " open" : ""}><summary><b>How the model gets there</b> <span class="dim">the working: swings, final two, the count, preference settings</span></summary>
-    ${whyHTML(s, S.F, PARTY)}
     <section class="d-sec" aria-labelledby="h-pairs">
       <h3 id="h-pairs">Final two</h3>
       <p class="hint">After everyone else is excluded, who is left standing, and who wins from there.</p>
       <div class="pairs" id="pairs"></div>
     </section>
+    ${questionsHTML(s)}
+    <details class="d-sec model-more"${S.moreOpen ? " open" : ""}><summary><b>How the model gets there</b> <span class="dim">the working: swings, the count, preference settings</span></summary>
+    ${whyHTML(s, S.F, PARTY)}
     <section class="d-sec" aria-labelledby="h-count">
       <h3 id="h-count">The count</h3>
       <p class="hint">How a typical count runs, round by round: the lowest candidate is excluded and their votes pass on by preference. Figures are percentages of formal votes.</p>

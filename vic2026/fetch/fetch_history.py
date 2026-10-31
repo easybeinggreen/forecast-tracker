@@ -32,6 +32,9 @@ def wiki_title(s, name):
     return hits[0]["title"] if hits else None
 
 
+TR_SLUG = {"croydon": "croydonvic"}   # Tally Room's /croydon2026 is South Australia's Croydon
+
+
 def main():
     F = json.loads(Path("site/data/forecast.json").read_text())
     s = requests.Session()
@@ -55,7 +58,7 @@ def main():
         except Exception as e:  # noqa: BLE001
             print(name, "wiki error", e)
         time.sleep(0.5)
-        tr = f"https://www.tallyroom.com.au/vic2026/{slug.replace('-', '')}2026"
+        tr = f"https://www.tallyroom.com.au/vic2026/{TR_SLUG.get(slug, slug.replace('-', ''))}2026"
         try:
             r = s.get(tr, headers=UA, timeout=30)
             if r.ok:

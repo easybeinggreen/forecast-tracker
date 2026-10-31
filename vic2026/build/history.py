@@ -35,11 +35,27 @@ def lead(html):
     return None
 
 
+# Read by hand where the saved page was wrong or missing (Tally Room, 31 Oct 2026)
+TR_MANUAL = {
+    "croydon": {"cands": [{"name": "Glenn Brindley", "party": "One Nation"}, {"name": "Richard Farr", "party": "Labor"},
+                          {"name": "Lini Fernando", "party": "Greens"}, {"name": "Beth Grimshaw", "party": "Victorian Socialists"},
+                          {"name": "David Vanderwolf", "party": "Independent"}, {"name": "Toby Wooldridge", "party": "Liberal"}],
+                "assessment": "The Liberal Party should safely retain this seat.",
+                "url": "https://www.tallyroom.com.au/vic2026/croydonvic2026"},
+}
+
+
 def tallyroom(slug):
+    if slug in TR_MANUAL:
+        return TR_MANUAL[slug]
     f = ROOT / "data/raw/history/tallyroom" / f"{slug}.html"
     if not f.exists():
         return None
-    h = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", f.read_text(encoding="utf-8"), flags=re.S)
+    raw = f.read_text(encoding="utf-8")
+    title = re.search(r"<title>(.*?)</title>", raw, re.S)
+    if not title or "Victoria 2026" not in title.group(1).replace("&#8211;", "–"):
+        return None   # wrong page (e.g. /vic2026/croydon2026 serves South Australia's Croydon)
+    h = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", raw, flags=re.S)
     txt = re.sub(r"\n\s*\n+", "\n", re.sub(r"<[^>]+>", "\n", h))
     txt = txt.replace("&#8217;", "'").replace("&amp;", "&").replace("&#8211;", "–").replace("&nbsp;", " ")
     i = txt.find("Geography\n", txt.find("Results maps"))
@@ -53,7 +69,7 @@ def tallyroom(slug):
     if a0 > 0:
         nxt = body.find("\n2022 result", a0)
         assess = re.sub(r"\s+", " ", body[a0 + 12: nxt if nxt > 0 else a0 + 800]).strip()[:700]
-    return {"cands": cands, "assessment": assess, "url": f"https://www.tallyroom.com.au/vic2026/{slug.replace('-', '')}2026"}
+    return {"cands": cands, "assessment": assess, "url": f"https://www.tallyroom.com.au/vic2026/{ {'croydon': 'croydonvic'}.get(slug, slug.replace('-', ''))}2026"}
 
 
 def main():
