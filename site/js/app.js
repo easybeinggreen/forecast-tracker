@@ -563,14 +563,14 @@ function renderDrawer() {
       <p class="hint">After everyone else is excluded, who is left standing, and who wins from there.</p>
       <div class="pairs" id="pairs"></div>
     </section>
-    ${questionsHTML(s)}
-    <details class="d-sec model-more"${S.moreOpen ? " open" : ""}><summary><b>How the model gets there</b> <span class="dim">the working: swings, the count, preference settings</span></summary>
-    ${whyHTML(s, S.F, PARTY)}
     <section class="d-sec" aria-labelledby="h-count">
       <h3 id="h-count">The count</h3>
       <p class="hint">How a typical count runs, round by round: the lowest candidate is excluded and their votes pass on by preference. Figures are percentages of formal votes.</p>
       <div class="sheet-wrap" id="sheet"></div>
     </section>
+    ${questionsHTML(s)}
+    <details class="d-sec model-more"${S.moreOpen ? " open" : ""}><summary><b>How the model gets there</b> <span class="dim">the working: swings from 2022 and preference settings</span></summary>
+    ${whyHTML(s, S.F, PARTY)}
     <section class="d-sec" aria-labelledby="h-drv">
       <h3 id="h-drv">Preference drivers</h3>
       <p class="hint">How voters of an excluded party split between two that are still in. Defaults are the model's statewide assumptions; changes here only affect this seat's calculator.</p>
