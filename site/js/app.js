@@ -291,11 +291,18 @@ function renderPolls() {
       ${IN.map(([, n, c]) => `<th class="num"><span class="sw" style="background:${col(c)}"></span> ${n}</th>`).join("")}<th class="num">Others</th><th></th></tr></thead><tbody>
       <tr class="avg"><td colspan="4"><b>Average the model uses</b> <span class="dim">(smoothed, house effects removed)</span></td>${IN.map(([k]) => `<td class="num"><b>${avg[k].toFixed(1)}</b></td>`).join("")}<td class="num"><b>${avg.OTHERS.toFixed(1)}</b></td><td class="num dim">weight</td></tr>
       ${PA?.election_tracker ? `<tr class="avg2"><td colspan="4">Election Tracker's average <span class="dim">(for comparison; reacts faster to new polls)</span></td>${["lnp", "alp", "onp", "grn", "others"].map((k) => `<td class="num">${PA.election_tracker[k]?.toFixed(1) ?? "—"}</td>`).join("")}<td></td></tr>` : ""}
-      ${C.polls.map((p) => `<tr class="${p.in_average ? "in" : "out"}${C.new_polls.includes(p.id) ? " new" : ""}"><td>${esc(pollName(p))}${C.new_polls.includes(p.id) ? ' <span class="kind mine">New</span>' : ""}</td><td>${esc(COMM[p.commissioner] ?? p.commissioner)}</td><td>${dshort(p.start)}–${dshort(p.end)}</td><td class="num">${esc(p.n)}</td>
+      ${C.polls.map((p, i) => `<tr class="${p.in_average ? "in" : "out"}${C.new_polls.includes(p.id) ? " new" : ""}${i >= 8 ? " more" : ""}"><td>${esc(pollName(p))}${C.new_polls.includes(p.id) ? ' <span class="kind mine">New</span>' : ""}</td><td>${esc(COMM[p.commissioner] ?? p.commissioner)}</td><td>${dshort(p.start)}–${dshort(p.end)}</td><td class="num">${esc(p.n)}</td>
         ${["lnp", "alp", "on", "grn", "oth"].map((k) => `<td class="num">${esc(p[k])}</td>`).join("")}<td class="num dim">${PA?.weights?.[p.id] ? `${Math.round(PA.weights[p.id] * 100)}%` : "—"} ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">source</a>` : ""}</td></tr>`).join("")}
     </tbody></table></div>
+    ${C.polls.length > 8 ? `<p class="polls-more"><button class="btn btn-ghost" type="button" id="polls-all">Show all ${C.polls.length} polls</button></p>` : ""}
     <p class="caption">Polls collected nightly from Australian Election Tracker. The model's average weights each poll by sample size and age (half-life 30 days, up to 120 days old), removes each pollster's lean against the trend (${PA ? Object.entries(PA.house).filter(([, h]) => Math.abs(h.lnp) >= 0.7).map(([f, h]) => `${esc(POLLSTER[f] || f)} ${h.lnp > 0 ? "+" : ""}${h.lnp.toFixed(1)} Coalition`).join(", ") : ""}), and caps any one pollster's share, so a single poll moves it by about a third of the poll's gap from the average. Weight = that poll's share of today's average.</p>`;
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target.id !== "polls-all") return;
+  const tb = $(".polls-t"); tb.classList.toggle("all");
+  e.target.textContent = tb.classList.contains("all") ? "Show fewer" : `Show all ${S.changes.polls.length} polls`;
+});
 
 function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => p.seat !== "statewide").map((p) => p.seat)); }
 
@@ -367,7 +374,7 @@ function liveMarkets() {
       ${rows.map((m) => { const a = ago(m.history || []), d = a == null ? null : m.p - a;
         return `<tr><td class="mk-out">${esc(m.outcome)}</td><td class="mk-sp">${spark(m.history || [])}${d != null && Math.abs(d) >= 0.005 ? `<span class="${d > 0 ? "pos" : "neg"}">${d > 0 ? "▲" : "▼"}${Math.abs(d * 100).toFixed(0)}</span>` : ""}</td><td class="num">${pct(m.p)}</td></tr>`; }).join("")}`;
   }).join("");
-  return blocks ? `<table class="mk">${blocks}</table><p class="muted" style="margin-top:4px">Prices checked every 3 hours; last ${new Date(D.fetched).toLocaleString("en-AU", { weekday: "short", hour: "numeric", minute: "2-digit" })}. ▲▼ = change over 24 hours. Sportsbet and other bookmakers: enter their odds yourself with "Make a call" → Record market odds.</p>` : "";
+  return blocks ? `<table class="mk">${blocks}</table><p class="muted" style="margin-top:4px">Prices checked every 3 hours; last ${new Date(D.fetched).toLocaleString("en-AU", { weekday: "short", hour: "numeric", minute: "2-digit" })}. ▲▼ = change over 24 hours. Sportsbet seat odds are on each seat page and in the "Market" column of the seat table.</p>` : "";
 }
 
 // ---------------------------------------------------------------- table
@@ -382,6 +389,8 @@ function rows() {
 }
 
 function marketFav(slug) {
+  const sb = S.sb?.seats?.[slug]?.latest;
+  if (sb) { const [p, v] = fav(Object.fromEntries(Object.entries(sb.fair).filter(([k]) => k !== "OTH"))); return { p, v, src: "Sportsbet", odds: sb.odds[p] }; }
   const o = lastOdds(slug);
   if (!o) return null;
   const [p, v] = fav(o.implied);
@@ -401,7 +410,7 @@ function renderTable() {
       <td><span class="mp"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? '<span class="tag">retiring</span>' : ""}</span></td>
       <td class="num">${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span></td>
       <td><span class="model-cell"><span class="stack" aria-hidden="true">${win.map(([p, v]) => `<i style="width:${v * 100}%;background:${col(p)}"></i>`).join("")}</span><b>${SHORT[fp]} ${pct(fv)}</b></span></td>
-      <td class="num">${m ? `${SHORT[m.p] || m.p} ${pct(m.v)}` : '<span class="dim">—</span>'}</td>
+      <td class="num">${m ? `${SHORT[m.p] || m.p} ${pct(m.v)}${m.odds ? ` <span class="dim">$${m.odds.toFixed(2)}</span>` : ""}` : '<span class="dim">—</span>'}</td>
       <td class="num">${c?.backed ? `${SHORT[c.backed]} ${pct(myP)}` : '<span class="dim">—</span>'}</td>
       <td class="num">${edge == null ? '<span class="dim">—</span>' : `<span class="${edge >= 0 ? "pos" : "neg"}">${edge >= 0 ? "+" : "−"}${Math.abs(edge * 100).toFixed(0)}</span>`}</td>
       <td class="num">${c ? callsFor(s.slug).reduce((a, r) => a + Number(r.stake), 0) || '<span class="dim">0</span>' : '<span class="dim">—</span>'}</td></tr>`;
