@@ -39,6 +39,7 @@ def add(textfile, stamp=None):
             odds[key] = float(pm.group(2))
         out[slug] = odds
     stamp = stamp or datetime.now(timezone.utc).isoformat(timespec="minutes")
+    datetime.fromisoformat(stamp)  # must be a full ISO time, e.g. 2026-10-31T02:50+00:00 (the dashboard parses it)
     RAW.mkdir(parents=True, exist_ok=True)
     (RAW / f"{stamp[:16].replace(':', '')}.json").write_text(json.dumps({"source": "Sportsbet", "as_of": stamp, "url": URL, "seats": out, "names": names}, indent=1))
     print(len(out), "seats in snapshot", stamp)

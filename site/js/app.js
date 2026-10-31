@@ -572,7 +572,6 @@ function renderDrawer() {
     </section>
     </details>
     ${sportsbetHTML(s)}
-    ${marketHTML(s.slug, outcomesFor(s))}
     ${lockHTML(s.slug, outcomesFor(s))}`;
   paintCalc(s, old);
   loadInside(s);
@@ -701,6 +700,33 @@ function sbSpark(hist, k) {
   const W = 70, H = 18, x0 = pts[0][0], x1 = pts.at(-1)[0], lo = Math.min(...pts.map((p) => p[1])), hi = Math.max(...pts.map((p) => p[1]));
   return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-label="Implied chance over time"><path d="${pts.map(([x, v], i) => `${i ? "L" : "M"}${(((x - x0) / (x1 - x0 || 1)) * (W - 2) + 1).toFixed(1)},${(H - 2 - ((v - lo) / (hi - lo || 1)) * (H - 4)).toFixed(1)}`).join("")}" fill="none" stroke="var(--ink-2)" stroke-width="1.4"/></svg>`;
 }
+// Odds over time: fair chance (margin removed) per outcome at each snapshot; model's current chance as a ring at the right
+function sbChart(d, s, name) {
+  const H = d.history; if (!H?.length) return "";
+  const fair = (h) => { const tot = Object.values(h.odds).reduce((a, o) => a + 1 / o, 0); return Object.fromEntries(Object.entries(h.odds).map(([k, o]) => [k, 1 / o / tot])); };
+  const F_ = H.map((h) => ({ t: Date.parse(h.t), f: fair(h) }));
+  const keys = Object.keys(d.latest.odds).filter((k) => k !== "OTH" && Math.max(...F_.map((x) => x.f[k] || 0)) >= 0.04);
+  const W = 560, Ht = 170, L = 34, R = 150, T = 10, B = 24;
+  const t0 = F_[0].t, t1 = Math.max(F_.at(-1).t, t0 + 864e5);
+  const X = (t) => L + ((t - t0) / (t1 - t0)) * (W - L - R), Y = (v) => T + (1 - v) * (Ht - T - B);
+  let g = [0, 0.25, 0.5, 0.75, 1].map((v) => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="vg"/><text x="${L - 4}" y="${Y(v) + 3}" class="vt" text-anchor="end">${v * 100}%</text>`).join("");
+  const fd = (t) => new Date(t).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
+  g += `<text x="${L}" y="${Ht - 6}" class="vt">${fd(t0)}</text><text x="${W - R}" y="${Ht - 6}" class="vt" text-anchor="end">${fd(t1)}</text>`;
+  const ends = [];
+  for (const k of keys) {
+    const pts = F_.filter((x) => x.f[k] != null).map((x) => [X(x.t), Y(x.f[k])]);
+    if (pts.length === 1) pts.push([X(t1), pts[0][1]]);
+    g += `<path d="${pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join("")}" fill="none" style="stroke:${col(k)}" stroke-width="2"/>`;
+    g += F_.filter((x) => x.f[k] != null).map((x) => `<circle cx="${X(x.t).toFixed(1)}" cy="${Y(x.f[k]).toFixed(1)}" r="2.5" style="fill:${col(k)}"><title>${fd(x.t)}: ${name(k)} ${pct(x.f[k])} fair, $${H.find((h) => Date.parse(h.t) === x.t).odds[k].toFixed(2)}</title></circle>`).join("");
+    const m = s.model.win[k];
+    if (m != null) g += `<circle cx="${W - R + 8}" cy="${Y(m).toFixed(1)}" r="4" fill="none" style="stroke:${col(k)}" stroke-width="1.6"><title>Model: ${name(k)} ${pct(m)}</title></circle>`;
+    ends.push({ k, y: Y(F_.at(-1).f[k] ?? 0) });
+  }
+  ends.sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 12) ends[i].y = ends[i - 1].y + 12;
+  g += ends.map((e) => `<text x="${W - R + 18}" y="${e.y + 3}" class="vt sbl" style="fill:${col(e.k)}">${name(e.k)} ${pct(F_.at(-1).f[e.k])} ($${d.latest.odds[e.k].toFixed(2)})</text>`).join("");
+  return `<figure class="sb-chart"><svg viewBox="0 0 ${W} ${Ht}" role="img" aria-label="Sportsbet chances over time">${g}</svg>
+    <figcaption class="hint">Sportsbet's chance for each candidate with the margin removed, at each snapshot. Rings: the model's chance now.${H.length < 3 ? ` Only ${H.length} snapshot${H.length > 1 ? "s" : ""} so far, so the lines are flat until the odds move.` : ""}</figcaption></figure>`;
+}
 function sportsbetHTML(s) {
   const d = S.sb?.seats?.[s.slug]; if (!d) return "";
   const L = d.latest, mine = adjusted() && S.calc ? S.calc.win : null, c = lastCall(s.slug);
@@ -717,10 +743,11 @@ function sportsbetHTML(s) {
   const best = keys.map((k) => { const p = (c && c.probs[k] != null ? Number(c.probs[k]) : mine?.[k]) ?? s.model.win[k]; return p == null ? null : { k, ev: p * L.odds[k] - 1, p }; }).filter(Boolean).sort((a, b) => b.ev - a.ev)[0];
   return `<section class="d-sec" id="sb-sec" aria-labelledby="h-sb"><h3 id="h-sb">Sportsbet</h3>
     <p class="hint">Odds as of ${new Date(L.as_of).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })} (${d.history.length} snapshot${d.history.length > 1 ? "s" : ""}). Margin on this seat: <b>${(L.margin * 100).toFixed(1)}%</b>. Implied = 1 ÷ odds; fair = with the margin removed. Value = chance × odds − 1, per $1, using your chance if you've set one, otherwise the model's.</p>
+    ${sbChart(d, s, name)}
     <div class="sheet-wrap"><table class="sheet sb-t"><thead><tr><th></th><th>Odds</th><th>Implied</th><th>Fair</th><th>Model</th><th>You</th><th>Value</th><th>Trend</th></tr></thead><tbody>${rows}</tbody></table></div>
     ${best && best.ev > 0.03 ? `<p class="verdict pos">Best value: <b>${name(best.k)} at $${L.odds[best.k].toFixed(2)}</b>: ${pct(best.p)} × ${L.odds[best.k].toFixed(2)} = ${(best.p * L.odds[best.k]).toFixed(2)}, about ${(best.ev * 100).toFixed(0)}c per $1 on average. Quarter-Kelly stake: <b>${Math.max(0, Math.round(250 * best.ev / (L.odds[best.k] - 1)))} points</b>. Only worth it if you believe ${pct(best.p)} (${odds$(best.p)}).</p>`
       : `<p class="verdict">No value at these odds: every price is shorter than ${c || mine ? "your" : "the model's"} chance justifies.</p>`}
-    <p class="hint"><a href="${esc(S.sb.url)}" target="_blank" rel="noopener">Sportsbet seat markets ↗</a> · refreshed on request</p>
+    <p class="hint"><a href="${esc(S.sb.url)}" target="_blank" rel="noopener">Sportsbet seat markets ↗</a> · refreshed when you say "update odds"</p>
   </section>`;
 }
 
