@@ -70,6 +70,9 @@ def baselines(D, cfg):
                 frac = how if isinstance(how, (int, float)) else fed.get("NAT", 0) / max(fed.get("NAT", 0) + fed.get("LIB", 0), 1e-9)
                 B[i, G["NAT"]] = B[i, G["LIB"]] * frac
                 B[i, G["LIB"]] *= 1 - frac
+        for g, to in ((cand.get("merge") or {}).get(d["slug"]) or {}).items():
+            B[i, G[to]] += cand.get("merge_share", 0.8) * B[i, G[g]]   # the rest is shared out by the renormalise below
+            B[i, G[g]] = 0
         for g in (cand.get("drop") or {}).get(d["slug"], []) or []:
             if g != "ON":
                 B[i, G[g]] = 0
@@ -263,7 +266,7 @@ def simulate(S=10000, seed=7, scenario=None):
     oc = cfg["one_nation"]
     if oc.get("method") == "federal2025":
         fed = json.loads((ROOT / oc["federal_file"]).read_text())["seats"]
-        sh = np.array([fed[m["slug"]]["on_share"] for m in meta])
+        sh = np.array([fed[m["slug"]]["on_share"] + oc.get("right_ind_factor", 0) * fed[m["slug"]].get("rind_share", 0) for m in meta])
         zi = np.log(sh / (sh * wts).sum())                       # log of local / Victoria-wide federal share
         eh, el = oc["elasticity"], oc.get("elasticity_low", oc["elasticity"])
         g_hi = np.clip(eh["mean"] + eh["sd"] * rng.standard_normal(S), 0.1, 1.5)

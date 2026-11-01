@@ -34,3 +34,33 @@ Labor 25.0 (26.6), Nationals 6.6 (6.4). Where they differ, and the evidence to c
 
 ## Evidence for the 1 Nov review (v2.0)
 - Roy Morgan seat poll, Bass/Hastings/Morwell/Pakenham, 21–26 Oct, n=283 (SMS): Hastings+Morwell+Pakenham average One Nation 39, Coalition 24, Labor 20, Greens 8, others 9. Says One Nation leads Hastings, Morwell, Pakenham; Liberal leads Bass. Per-seat figures only in a chart image. Candidate for `seat_polls` (about 70 per seat, so weight ~0.1 each).
+
+
+## v2.0 (Sunday review, 1 Nov 2026)
+Replay check: 2022 counts 86/88 winners, 86/88 final two (unchanged).
+
+Adopted
+1. **One Coalition party standing alone** (candidate lists, Tally Room, 31 Oct). In Euroa, Mildura, Morwell and Shepparton only the
+   Nationals are announced; in Bass only the Liberals; in Bendigo East and West only the Nationals. v1.0 still split the 2022 Coalition
+   vote between both. 80% of the absent partner's vote now goes to the one standing, the rest spread across other parties.
+   Recheck on 13 Nov when nominations close.
+2. **One Nation's federal base where a right-leaning independent ran.** Russell Broadbent (ex-Liberal, Monash 2025, about 10%) took
+   protest votes One Nation would otherwise have got. 35% of his share is added to One Nation's federal share before placing it
+   (Narracan +3.2, Bass +1.4, Gippsland South +1.5, Morwell +1.1 points of federal share). The 35% is a judgement, not fitted.
+3. **Roy Morgan seat poll** (Hastings, Morwell, Pakenham; 21-26 Oct; n=283 incl. Bass). Only the three-seat average was published, so
+   each seat gets it with n=70 (weight about 0.08). Small effect by design.
+
+Tested and rejected
+- **Demographic swings** (education, trades, renting, language), fitted on 2022 state to 2025 federal movement. Labor and Coalition: no
+  predictive power out of sample (leave-one-out R² below zero), so it would be fitting noise. Greens: a real pattern (LOO R² 0.39) but
+  mostly state-v-federal differences in the same seats (strong state Greens campaigns), not a 2026 trend. Revisit if a state poll
+  breaks down by demographics.
+- **Safe-seat overconfidence** (e.g. Croydon 94% v Sportsbet 79%): no evidence except the odds, which the rules don't allow as a reason.
+  The replay can't test calibration. Revisit at v3.0 with any seat polls.
+- **Independents not modelled** (Yildiz, Essendon): no vote evidence yet beyond the odds.
+
+Not available: Paul's locked calls and seat-question answers (the ledger needs his passcode; the review session doesn't have it).
+
+Effect: Coalition majority 37% → 41%, hung 59% → 55%, Labor majority 4% → 4%. Middle seat counts unchanged (Coalition 42, Labor 26,
+One Nation 10, Greens 7). Biggest seat moves: Shepparton One Nation 57% → Nationals 54%; Morwell One Nation 69% → Nationals 50/50;
+Mildura One Nation 53% → 45% (Nationals 32%); Narracan Liberal 82% → 64%; Euroa Nationals 83% → 96%; Bass Liberal 82% → 90%.

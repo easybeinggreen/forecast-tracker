@@ -1,6 +1,6 @@
 # Model version. Method changes happen only at the Sunday reviews (v2.0 1 Nov, v3.0 8 Nov, v4.0 15 Nov after
 # nominations close); between reviews only new data flows in (polls, odds, candidates). See MODEL_CHANGELOG.md.
-model_version: "1.0"
+model_version: "2.0"
 
 # Drivers for the 2026 Victorian model. Every number here is an assumption you can change.
 # Statewide primaries come from the Election Tracker poll average unless overridden.
@@ -24,6 +24,9 @@ one_nation:
   # 1.0 = same proportional pattern as 2025; lower = flatter (a bigger party's vote spreads more evenly).
   method: federal2025
   federal_file: data/vic2026/on_federal2025.json
+  # v2.0: where a right-leaning independent ran federally (Broadbent, Monash 2025: about 10%), One Nation's federal
+  # share understates its base. Add this fraction of that independent's share before placing One Nation.
+  right_ind_factor: 0.35
   # Calibrated to two checks: South Australia 2026 (One Nation 22.9% statewide, best seat 37.5%, about 1.6x)
   # caps the top end; Roy Morgan's inner-Melbourne sample (One Nation 2% in Brunswick, Melbourne and
   # Richmond) says the bottom end stays low. So it flattens above the state average and not below it.
@@ -126,9 +129,26 @@ candidates:
     narracan: [IND]                # 2022 independents not standing again (none announced, 30 Oct)
     rowville: [IND]
     south-west-coast: [IND]
+  # v2.0: one Coalition party standing alone (Tally Room candidate lists, 31 Oct). The absent partner's 2022 vote goes
+  # to the one that stands. Recheck when nominations close (13 Nov).
+  merge_share: 0.8    # Coalition voters mostly back the partner when theirs isn't standing (Lib-Nat preference flows run ~80%)
+  merge:
+    bass: {NAT: LIB}
+    bendigo-east: {LIB: NAT}
+    bendigo-west: {LIB: NAT}
+    euroa: {LIB: NAT}
+    mildura: {LIB: NAT}
+    morwell: {LIB: NAT}
+    shepparton: {LIB: NAT}
 
 # Seat polls. Each moves its seat part-way toward the poll: weight = n_eff / (n_eff + seat_poll_prior_n),
 # so a 600-person poll gets about 40%. Add entries as they're published (primaries in percent; LNP = Lib+Nat).
 seat_poll_prior_n: 600
-seat_polls: []
+seat_polls:
+  # Roy Morgan SMS poll of Bass, Hastings, Morwell and Pakenham, 21-26 Oct 2026, n=283 in total. Published only as the
+  # Hastings+Morwell+Pakenham average (ON 39, Coalition 24, ALP 20, GRN 8, other 9), so each seat gets that average
+  # with its own share of the sample (about 70). Weight about 0.08 each.
+  - {seat: hastings, pollster: Roy Morgan, date: "2026-10-26", n: 70, url: "https://www.roymorgan.com/findings/10371-victorian-state-voting-intention-eastern-victoria-seats-october-2026", primaries: {"ON": 39, LNP: 24, ALP: 20, GRN: 8, OTHERS: 9}}
+  - {seat: morwell, pollster: Roy Morgan, date: "2026-10-26", n: 70, url: "https://www.roymorgan.com/findings/10371-victorian-state-voting-intention-eastern-victoria-seats-october-2026", primaries: {"ON": 39, LNP: 24, ALP: 20, GRN: 8, OTHERS: 9}}
+  - {seat: pakenham, pollster: Roy Morgan, date: "2026-10-26", n: 70, url: "https://www.roymorgan.com/findings/10371-victorian-state-voting-intention-eastern-victoria-seats-october-2026", primaries: {"ON": 39, LNP: 24, ALP: 20, GRN: 8, OTHERS: 9}}
 #  - {seat: frankston, pollster: uComms, date: "2026-11-05", n: 650, url: "...", primaries: {ALP: 30, LNP: 32, "ON": 20, GRN: 10, OTHERS: 8}}

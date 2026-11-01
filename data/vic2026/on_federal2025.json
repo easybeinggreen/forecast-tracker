@@ -44,6 +44,7 @@
  "seats": {
   "albert-park": {
    "on_share": 0.02689,
+   "rind_share": 0.0,
    "formal": 36377,
    "places": 17,
    "prims": {
@@ -59,6 +60,7 @@
   },
   "ashwood": {
    "on_share": 0.01743,
+   "rind_share": 0.0,
    "formal": 51164,
    "places": 26,
    "prims": {
@@ -73,6 +75,7 @@
   },
   "bass": {
    "on_share": 0.07125,
+   "rind_share": 0.04048,
    "formal": 48449,
    "places": 28,
    "prims": {
@@ -88,6 +91,7 @@
   },
   "bayswater": {
    "on_share": 0.03773,
+   "rind_share": 0.0,
    "formal": 40446,
    "places": 18,
    "prims": {
@@ -103,6 +107,7 @@
   },
   "bellarine": {
    "on_share": 0.02978,
+   "rind_share": 0.0,
    "formal": 35831,
    "places": 15,
    "prims": {
@@ -118,6 +123,7 @@
   },
   "benambra": {
    "on_share": 0.07658,
+   "rind_share": 0.0,
    "formal": 34067,
    "places": 24,
    "prims": {
@@ -133,6 +139,7 @@
   },
   "bendigo-east": {
    "on_share": 0.04997,
+   "rind_share": 0.0,
    "formal": 37800,
    "places": 28,
    "prims": {
@@ -149,6 +156,7 @@
   },
   "bendigo-west": {
    "on_share": 0.03807,
+   "rind_share": 0.0,
    "formal": 41766,
    "places": 24,
    "prims": {
@@ -165,6 +173,7 @@
   },
   "bentleigh": {
    "on_share": 0.03526,
+   "rind_share": 0.0,
    "formal": 41157,
    "places": 22,
    "prims": {
@@ -179,6 +188,7 @@
   },
   "berwick": {
    "on_share": 0.0669,
+   "rind_share": 0.0,
    "formal": 41541,
    "places": 17,
    "prims": {
@@ -193,6 +203,7 @@
   },
   "box-hill": {
    "on_share": 0.01582,
+   "rind_share": 0.0,
    "formal": 39697,
    "places": 23,
    "prims": {
@@ -207,6 +218,7 @@
   },
   "brighton": {
    "on_share": 0.01615,
+   "rind_share": 0.0,
    "formal": 35480,
    "places": 15,
    "prims": {
@@ -221,6 +233,7 @@
   },
   "broadmeadows": {
    "on_share": 0.04765,
+   "rind_share": 0.0,
    "formal": 31352,
    "places": 20,
    "prims": {
@@ -237,6 +250,7 @@
   },
   "brunswick": {
    "on_share": 0.02277,
+   "rind_share": 0.0,
    "formal": 41287,
    "places": 20,
    "prims": {
@@ -253,6 +267,7 @@
   },
   "bulleen": {
    "on_share": 0.01975,
+   "rind_share": 0.0,
    "formal": 22685,
    "places": 14,
    "prims": {
@@ -267,6 +282,7 @@
   },
   "bundoora": {
    "on_share": 0.05561,
+   "rind_share": 0.0,
    "formal": 61442,
    "places": 21,
    "prims": {
@@ -283,6 +299,7 @@
   },
   "carrum": {
    "on_share": 0.0706,
+   "rind_share": 0.0,
    "formal": 35140,
    "places": 17,
    "prims": {
@@ -299,6 +316,7 @@
   },
   "caulfield": {
    "on_share": 0.01917,
+   "rind_share": 0.0,
    "formal": 12310,
    "places": 12,
    "prims": {
@@ -313,6 +331,7 @@
   },
   "clarinda": {
    "on_share": 0.05332,
+   "rind_share": 0.0,
    "formal": 15624,
    "places": 16,
    "prims": {
@@ -326,6 +345,7 @@
   },
   "cranbourne": {
    "on_share": 0.08482,
+   "rind_share": 0.0,
    "formal": 35179,
    "places": 15,
    "prims": {
@@ -340,6 +360,7 @@
   },
   "croydon": {
    "on_share": 0.03737,
+   "rind_share": 0.0,
    "formal": 30321,
    "places": 18,
    "prims": {
@@ -355,6 +376,7 @@
   },
   "dandenong": {
    "on_share": 0.05245,
+   "rind_share": 0.0,
    "formal": 56665,
    "places": 24,
    "prims": {
@@ -369,6 +391,7 @@
   },
   "eildon": {
    "on_share": 0.07301,
+   "rind_share": 0.0,
    "formal": 29420,
    "places": 38,
    "prims": {
@@ -385,6 +408,7 @@
   },
   "eltham": {
    "on_share": 0.03666,
+   "rind_share": 0.0,
    "formal": 22643,
    "places": 16,
    "prims": {
@@ -401,6 +425,7 @@
   },
   "essendon": {
    "on_share": 0.04917,
+   "rind_share": 0.0,
    "formal": 49463,
    "places": 20,
    "prims": {
@@ -417,6 +442,7 @@
   },
   "eureka": {
    "on_share": 0.10208,
+   "rind_share": 0.0,
    "formal": 29242,
    "places": 26,
    "prims": {
@@ -432,6 +458,7 @@
   },
   "euroa": {
    "on_share": 0.1005,
+   "rind_share": 0.0,
    "formal": 31025,
    "places": 33,
    "prims": {
@@ -449,6 +476,7 @@
   },
   "evelyn": {
    "on_share": 0.0498,
+   "rind_share": 0.0,
    "formal": 30522,
    "places": 17,
    "prims": {
@@ -464,6 +492,7 @@
   },
   "footscray": {
    "on_share": 0.03327,
+   "rind_share": 0.0,
    "formal": 29427,
    "places": 15,
    "prims": {
@@ -480,6 +509,7 @@
   },
   "frankston": {
    "on_share": 0.06007,
+   "rind_share": 0.0,
    "formal": 33130,
    "places": 17,
    "prims": {
@@ -496,6 +526,7 @@
   },
   "geelong": {
    "on_share": 0.07218,
+   "rind_share": 0.0,
    "formal": 44096,
    "places": 17,
    "prims": {
@@ -511,6 +542,7 @@
   },
   "gippsland-east": {
    "on_share": 0.12105,
+   "rind_share": 0.0,
    "formal": 34563,
    "places": 33,
    "prims": {
@@ -524,6 +556,7 @@
   },
   "gippsland-south": {
    "on_share": 0.10838,
+   "rind_share": 0.04428,
    "formal": 35275,
    "places": 43,
    "prims": {
@@ -540,6 +573,7 @@
   },
   "glen-waverley": {
    "on_share": 0.01799,
+   "rind_share": 0.0,
    "formal": 18958,
    "places": 18,
    "prims": {
@@ -554,6 +588,7 @@
   },
   "greenvale": {
    "on_share": 0.03064,
+   "rind_share": 0.0,
    "formal": 17524,
    "places": 13,
    "prims": {
@@ -570,6 +605,7 @@
   },
   "hastings": {
    "on_share": 0.08398,
+   "rind_share": 0.0,
    "formal": 29672,
    "places": 18,
    "prims": {
@@ -586,6 +622,7 @@
   },
   "hawthorn": {
    "on_share": 0.01017,
+   "rind_share": 0.0,
    "formal": 21238,
    "places": 18,
    "prims": {
@@ -600,6 +637,7 @@
   },
   "ivanhoe": {
    "on_share": 0.02864,
+   "rind_share": 0.0,
    "formal": 35228,
    "places": 15,
    "prims": {
@@ -615,6 +653,7 @@
   },
   "kalkallo": {
    "on_share": 0.03536,
+   "rind_share": 0.0,
    "formal": 37722,
    "places": 16,
    "prims": {
@@ -631,6 +670,7 @@
   },
   "kew": {
    "on_share": 0.01072,
+   "rind_share": 0.0,
    "formal": 39556,
    "places": 20,
    "prims": {
@@ -646,6 +686,7 @@
   },
   "kororoit": {
    "on_share": 0.04818,
+   "rind_share": 0.0,
    "formal": 37841,
    "places": 15,
    "prims": {
@@ -660,6 +701,7 @@
   },
   "lara": {
    "on_share": 0.12366,
+   "rind_share": 0.0,
    "formal": 38485,
    "places": 18,
    "prims": {
@@ -675,6 +717,7 @@
   },
   "laverton": {
    "on_share": 0.04215,
+   "rind_share": 0.0,
    "formal": 43625,
    "places": 17,
    "prims": {
@@ -690,6 +733,7 @@
   },
   "lowan": {
    "on_share": 0.08734,
+   "rind_share": 0.0,
    "formal": 36971,
    "places": 44,
    "prims": {
@@ -706,6 +750,7 @@
   },
   "macedon": {
    "on_share": 0.06079,
+   "rind_share": 0.0,
    "formal": 28079,
    "places": 28,
    "prims": {
@@ -723,6 +768,7 @@
   },
   "malvern": {
    "on_share": 0.01352,
+   "rind_share": 0.0,
    "formal": 39647,
    "places": 21,
    "prims": {
@@ -737,6 +783,7 @@
   },
   "melbourne": {
    "on_share": 0.02442,
+   "rind_share": 0.0,
    "formal": 36029,
    "places": 50,
    "prims": {
@@ -753,6 +800,7 @@
   },
   "melton": {
    "on_share": 0.07965,
+   "rind_share": 0.0,
    "formal": 35016,
    "places": 15,
    "prims": {
@@ -767,6 +815,7 @@
   },
   "mildura": {
    "on_share": 0.10765,
+   "rind_share": 0.0,
    "formal": 34082,
    "places": 30,
    "prims": {
@@ -780,6 +829,7 @@
   },
   "mill-park": {
    "on_share": 0.06909,
+   "rind_share": 0.0,
    "formal": 13894,
    "places": 10,
    "prims": {
@@ -794,6 +844,7 @@
   },
   "monbulk": {
    "on_share": 0.05227,
+   "rind_share": 0.0,
    "formal": 21655,
    "places": 25,
    "prims": {
@@ -809,6 +860,7 @@
   },
   "mordialloc": {
    "on_share": 0.04521,
+   "rind_share": 0.0,
    "formal": 37582,
    "places": 18,
    "prims": {
@@ -825,6 +877,7 @@
   },
   "mornington": {
    "on_share": 0.03626,
+   "rind_share": 0.0,
    "formal": 35382,
    "places": 18,
    "prims": {
@@ -841,6 +894,7 @@
   },
   "morwell": {
    "on_share": 0.16008,
+   "rind_share": 0.03004,
    "formal": 44871,
    "places": 22,
    "prims": {
@@ -857,6 +911,7 @@
   },
   "mulgrave": {
    "on_share": 0.0382,
+   "rind_share": 0.0,
    "formal": 31830,
    "places": 20,
    "prims": {
@@ -872,6 +927,7 @@
   },
   "murray-plains": {
    "on_share": 0.11015,
+   "rind_share": 0.0,
    "formal": 36595,
    "places": 37,
    "prims": {
@@ -888,6 +944,7 @@
   },
   "narracan": {
    "on_share": 0.09067,
+   "rind_share": 0.0903,
    "formal": 34962,
    "places": 32,
    "prims": {
@@ -903,6 +960,7 @@
   },
   "narre-warren-north": {
    "on_share": 0.08913,
+   "rind_share": 0.0,
    "formal": 19556,
    "places": 15,
    "prims": {
@@ -917,6 +975,7 @@
   },
   "narre-warren-south": {
    "on_share": 0.07322,
+   "rind_share": 0.0,
    "formal": 32602,
    "places": 20,
    "prims": {
@@ -931,6 +990,7 @@
   },
   "nepean": {
    "on_share": 0.05194,
+   "rind_share": 0.0,
    "formal": 31110,
    "places": 17,
    "prims": {
@@ -945,6 +1005,7 @@
   },
   "niddrie": {
    "on_share": 0.08415,
+   "rind_share": 0.0,
    "formal": 25431,
    "places": 16,
    "prims": {
@@ -961,6 +1022,7 @@
   },
   "northcote": {
    "on_share": 0.03559,
+   "rind_share": 0.0,
    "formal": 40100,
    "places": 17,
    "prims": {
@@ -977,6 +1039,7 @@
   },
   "oakleigh": {
    "on_share": 0.04005,
+   "rind_share": 0.0,
    "formal": 39571,
    "places": 19,
    "prims": {
@@ -991,6 +1054,7 @@
   },
   "ovens-valley": {
    "on_share": 0.07421,
+   "rind_share": 0.0,
    "formal": 36963,
    "places": 31,
    "prims": {
@@ -1007,6 +1071,7 @@
   },
   "pakenham": {
    "on_share": 0.08061,
+   "rind_share": 0.00058,
    "formal": 32612,
    "places": 14,
    "prims": {
@@ -1022,6 +1087,7 @@
   },
   "pascoe-vale": {
    "on_share": 0.03968,
+   "rind_share": 0.0,
    "formal": 19079,
    "places": 19,
    "prims": {
@@ -1037,6 +1103,7 @@
   },
   "point-cook": {
    "on_share": 0.06556,
+   "rind_share": 0.0,
    "formal": 38180,
    "places": 15,
    "prims": {
@@ -1051,6 +1118,7 @@
   },
   "polwarth": {
    "on_share": 0.03426,
+   "rind_share": 0.0,
    "formal": 45005,
    "places": 38,
    "prims": {
@@ -1066,6 +1134,7 @@
   },
   "prahran": {
    "on_share": 0.0227,
+   "rind_share": 0.0,
    "formal": 16959,
    "places": 15,
    "prims": {
@@ -1081,6 +1150,7 @@
   },
   "preston": {
    "on_share": 0.06103,
+   "rind_share": 0.0,
    "formal": 36193,
    "places": 23,
    "prims": {
@@ -1097,6 +1167,7 @@
   },
   "richmond": {
    "on_share": 0.01903,
+   "rind_share": 0.0,
    "formal": 35047,
    "places": 18,
    "prims": {
@@ -1113,6 +1184,7 @@
   },
   "ringwood": {
    "on_share": 0.02211,
+   "rind_share": 0.0,
    "formal": 22933,
    "places": 23,
    "prims": {
@@ -1127,6 +1199,7 @@
   },
   "ripon": {
    "on_share": 0.09986,
+   "rind_share": 0.0,
    "formal": 28490,
    "places": 39,
    "prims": {
@@ -1143,6 +1216,7 @@
   },
   "rowville": {
    "on_share": 0.028,
+   "rind_share": 0.0,
    "formal": 40601,
    "places": 19,
    "prims": {
@@ -1158,6 +1232,7 @@
   },
   "sandringham": {
    "on_share": 0.01859,
+   "rind_share": 0.0,
    "formal": 38361,
    "places": 18,
    "prims": {
@@ -1172,6 +1247,7 @@
   },
   "shepparton": {
    "on_share": 0.10576,
+   "rind_share": 0.0,
    "formal": 39487,
    "places": 29,
    "prims": {
@@ -1185,6 +1261,7 @@
   },
   "south-barwon": {
    "on_share": 0.04676,
+   "rind_share": 0.0,
    "formal": 20488,
    "places": 18,
    "prims": {
@@ -1200,6 +1277,7 @@
   },
   "south-west-coast": {
    "on_share": 0.03462,
+   "rind_share": 0.0,
    "formal": 41223,
    "places": 29,
    "prims": {
@@ -1215,6 +1293,7 @@
   },
   "st-albans": {
    "on_share": 0.05039,
+   "rind_share": 0.0,
    "formal": 30086,
    "places": 15,
    "prims": {
@@ -1229,6 +1308,7 @@
   },
   "sunbury": {
    "on_share": 0.09054,
+   "rind_share": 0.0,
    "formal": 31159,
    "places": 14,
    "prims": {
@@ -1245,6 +1325,7 @@
   },
   "sydenham": {
    "on_share": 0.06932,
+   "rind_share": 0.0,
    "formal": 29429,
    "places": 15,
    "prims": {
@@ -1259,6 +1340,7 @@
   },
   "tarneit": {
    "on_share": 0.05944,
+   "rind_share": 0.0,
    "formal": 31748,
    "places": 14,
    "prims": {
@@ -1273,6 +1355,7 @@
   },
   "thomastown": {
    "on_share": 0.05784,
+   "rind_share": 0.0,
    "formal": 40079,
    "places": 24,
    "prims": {
@@ -1289,6 +1372,7 @@
   },
   "warrandyte": {
    "on_share": 0.02545,
+   "rind_share": 0.0,
    "formal": 62127,
    "places": 28,
    "prims": {
@@ -1304,6 +1388,7 @@
   },
   "wendouree": {
    "on_share": 0.06841,
+   "rind_share": 0.0,
    "formal": 57782,
    "places": 19,
    "prims": {
@@ -1319,6 +1404,7 @@
   },
   "werribee": {
    "on_share": 0.07384,
+   "rind_share": 0.0,
    "formal": 41538,
    "places": 17,
    "prims": {
@@ -1334,6 +1420,7 @@
   },
   "williamstown": {
    "on_share": 0.04871,
+   "rind_share": 0.0,
    "formal": 36710,
    "places": 20,
    "prims": {
@@ -1348,6 +1435,7 @@
   },
   "yan-yean": {
    "on_share": 0.06415,
+   "rind_share": 0.0,
    "formal": 25676,
    "places": 20,
    "prims": {

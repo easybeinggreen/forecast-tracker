@@ -25,6 +25,11 @@ def rows(path):
         yield from csv.DictReader(fh)
 
 
+# Right-leaning independents in 2025 whose vote would otherwise partly have gone to One Nation (model v2.0):
+# Russell Broadbent, Monash, ex-Liberal MP who left the party and ran on anti-mandate, anti-establishment themes.
+RIGHT_IND = {"BROADBENT"}
+
+
 def main():
     geo = json.loads(Path("data/geo/vic_districts_detail.geojson").read_text())
     polys = [shape(f["geometry"]) for f in geo["features"]]
@@ -36,7 +41,7 @@ def main():
            if r["State"] == "VIC" and r["Latitude"] and r["Longitude"]}
 
     on_divs = set()
-    place = defaultdict(lambda: {"on": 0, "formal": 0, "div": None, "g": defaultdict(int)})
+    place = defaultdict(lambda: {"on": 0, "formal": 0, "div": None, "g": defaultdict(int), "rind": 0})
     for r in rows(RAW / "HouseStateFirstPrefsByPollingPlaceDownload-31496-VIC.csv"):
         k = (r["DivisionNm"], r["PollingPlaceID"])
         v = int(r["OrdinaryVotes"] or 0)
@@ -44,6 +49,8 @@ def main():
         place[k]["div"] = r["DivisionNm"]
         if r["Surname"] != "Informal":
             place[k]["g"][GROUP.get(r["PartyAb"], "OTH")] += v
+        if r["Surname"] in RIGHT_IND:
+            place[k]["rind"] += v
         if r["PartyAb"] == "ON":
             place[k]["on"] += v
             on_divs.add(r["DivisionNm"])
@@ -52,7 +59,7 @@ def main():
     for r in rows(RAW / "HouseTppByPollingPlaceDownload-31496.csv"):
         if r["StateAb"] == "VIC":
             tpp[(r["DivisionNm"], r["PollingPlaceID"])] = (int(r["Australian Labor Party Votes"]), int(r["TotalVotes"]))
-    agg = defaultdict(lambda: {"on": 0, "formal": 0, "places": 0, "g": defaultdict(int), "alp": 0, "tpp": 0})
+    agg = defaultdict(lambda: {"on": 0, "formal": 0, "places": 0, "g": defaultdict(int), "alp": 0, "tpp": 0, "rind": 0})
     unplaced = 0
     for (div, ppid), v in place.items():
         if div not in on_divs or ppid not in loc or v["formal"] == 0:
@@ -63,13 +70,13 @@ def main():
             unplaced += 1
             continue
         a = agg[slugs[hit[0]]]
-        a["on"] += v["on"]; a["formal"] += v["formal"]; a["places"] += 1
+        a["on"] += v["on"]; a["formal"] += v["formal"]; a["places"] += 1; a["rind"] += v["rind"]
         for g, n in v["g"].items():
             a["g"][g] += n
         if (div, ppid) in tpp:
             a["alp"] += tpp[(div, ppid)][0]; a["tpp"] += tpp[(div, ppid)][1]
 
-    out = {s: {"on_share": round(a["on"] / a["formal"], 5), "formal": a["formal"], "places": a["places"],
+    out = {s: {"on_share": round(a["on"] / a["formal"], 5), "rind_share": round(a["rind"] / a["formal"], 5), "formal": a["formal"], "places": a["places"],
                "prims": {g: round(100 * n / a["formal"], 1) for g, n in sorted(a["g"].items(), key=lambda kv: -kv[1])},
                "alp_tpp": round(100 * a["alp"] / a["tpp"], 1) if a["tpp"] else None}
            for s, a in sorted(agg.items()) if a["formal"] > 0}
