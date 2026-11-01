@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T10:11:43.527Z",
+  "generated": "2026-11-01T21:29:04.358Z",
   "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
   "methodology": "docs/poll-methodology.md",
   "polls": [
@@ -432,6 +432,39 @@
           "title": "Newspoll: Labor 24, Coalition 33, One Nation 20 in Victoria",
           "published": "2026-10-26",
           "accessed": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "id": "oru-2026-10-greens",
+      "pollster": "online-research-unit",
+      "commissioner": "victorian-greens",
+      "commissioner_type": "party",
+      "fieldwork_start": "2026-10-14",
+      "fieldwork_end": "2026-10-26",
+      "sample_size": 1488,
+      "design_effect": null,
+      "mode": "online",
+      "population": "victorian-electors",
+      "question_notes": "Internal Victorian Greens poll by the Online Research Unit, shared with Guardian Australia; fieldwork 14–26 October 2026, effective sample 1,488, MoE ±3%. Guardian reports L-NP 32, ALP 25, GRN 15, ONP 14 and 2PP L-NP 54–46. Others residual after ALP+LNP+GRN+ONP (14). Party-commissioned — ledgered for transparency, out of the average.",
+      "primaries": {
+        "alp": 25,
+        "lnp": 32,
+        "onp": 14,
+        "grn": 15,
+        "others": 14
+      },
+      "undecided_handling": "not-stated",
+      "eligible_for_average": false,
+      "exclusion_reason": "Party-commissioned internal poll (Victorian Greens). Party / union / advocacy polls are excluded from the tracker average by default under docs/poll-methodology.md; no eligibility_exception applied. Online Research Unit is not on the Victorian media/self allowlist.",
+      "eligibility_exception": null,
+      "sources": [
+        {
+          "url": "https://www.theguardian.com/australia-news/2026/nov/01/is-one-nation-losing-steam-victoria-new-polling-greens-state-election-ntwnfb",
+          "publisher": "The Guardian (Australia)",
+          "title": "Is One Nation losing steam in Victoria? New poll points to possible shift as election nears",
+          "published": "2026-11-01",
+          "accessed": "2026-11-02"
         }
       ]
     },
@@ -1054,6 +1087,45 @@
           "title": "Victorian State Voting Intention: L-NP Coalition and One Nation set for a majority in Victoria's Upper House in November",
           "published": "2026-08-17",
           "accessed": "2026-08-23"
+        }
+      ]
+    },
+    {
+      "id": "roy-morgan-2026-10",
+      "pollster": "roy-morgan",
+      "commissioner": "self",
+      "commissioner_type": "self",
+      "fieldwork_start": "2026-10-26",
+      "fieldwork_end": "2026-10-29",
+      "sample_size": 3610,
+      "design_effect": null,
+      "mode": "sms",
+      "population": "victorian-electors",
+      "question_notes": "Special SMS Roy Morgan survey of Victorian state voting intention (Finding 10373), Victoria-wide cross-section of 3,610 electors, 26–29 Oct 2026. Others = independents (7.5) + other parties (6). Respondent 2PP L-NP 56–44 ALP; ALP 54.5–45.5 ONP; L-NP 74 v ONP not encoded. The release also tabulates an earlier 8–9 Oct SMS wave (L-NP 26, ALP 22.5, ONP 25, GRN 14, IND 7, Oth 5.5) but publishes no sample size for it, so that wave is not ledgered (sample_size required). Supersedes roy-morgan-2026-08 via one-poll-per-pollster de-dupe.",
+      "primaries": {
+        "alp": 22.5,
+        "lnp": 29.5,
+        "onp": 22,
+        "grn": 12.5,
+        "others": 13.5
+      },
+      "undecided_handling": "allocated",
+      "eligible_for_average": true,
+      "exclusion_reason": null,
+      "sources": [
+        {
+          "url": "https://www.roymorgan.com/findings/10373-victorian-state-voting-intention-october-2026",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention: Liberal-National Coalition opens a significant lead one month before the Victorian State Election",
+          "published": "2026-10-30",
+          "accessed": "2026-11-02"
+        },
+        {
+          "url": "https://roymorgan-cms-prod.s3.ap-southeast-2.amazonaws.com/wp-content/uploads/2026/10/30060517/10373-Victorian-State-Voting-Intention-October-2026-1.pdf",
+          "publisher": "Roy Morgan Research",
+          "title": "Victorian State Voting Intention October 2026 (PDF)",
+          "published": "2026-10-30",
+          "accessed": "2026-11-02"
         }
       ]
     }

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T10:11:42.941Z",
+  "generated": "2026-11-01T21:29:03.946Z",
   "elections": [
     {
       "id": "federal-49",
@@ -9,7 +9,7 @@
       "public_path": "/elections/federal/49",
       "house_members": 150,
       "senate_members": 76,
-      "polls": 38,
+      "polls": 40,
       "poll_average_status": "ok",
       "issues": 8,
       "policies": 37,
@@ -66,7 +66,7 @@
       "id": "vic2026",
       "name": "2026 Victorian state election",
       "election_day": "2026-11-28",
-      "candidates": 542,
+      "candidates": 551,
       "files": [
         "election.json",
         "districts.json",
@@ -92,7 +92,7 @@
         "district-results-2022.json",
         "district-results-2022.csv"
       ],
-      "polls": 25,
+      "polls": 27,
       "poll_average_status": "ok",
       "issues": 15,
       "coalitions": 1,

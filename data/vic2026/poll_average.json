@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-31",
+ "as_of": "2026-11-01",
  "method": "recency- and size-weighted, house-effect adjusted, pollster-capped",
  "params": {
   "half_life_days": 30.0,
@@ -8,18 +8,18 @@
   "house_shrink": 2.0
  },
  "primaries": {
-  "alp": 24.5,
-  "lnp": 29.2,
-  "onp": 22.7,
-  "grn": 14.0,
-  "others": 9.5
+  "alp": 24.1,
+  "lnp": 29.8,
+  "onp": 22.3,
+  "grn": 13.7,
+  "others": 10.1
  },
  "unsmoothed": {
-  "alp": 24.6,
+  "alp": 24.0,
   "lnp": 29.5,
-  "onp": 22.5,
-  "grn": 14.0,
-  "others": 9.4
+  "onp": 22.4,
+  "grn": 13.6,
+  "others": 10.5
  },
  "house": {
   "freshwater": {
@@ -30,46 +30,46 @@
    "others": -0.53
   },
   "redbridge-accent": {
-   "alp": -0.47,
-   "lnp": 0.36,
-   "onp": 0.89,
-   "grn": 0.62,
-   "others": -1.39
+   "alp": -0.42,
+   "lnp": 0.31,
+   "onp": 0.93,
+   "grn": 0.66,
+   "others": -1.48
   },
   "resolve": {
-   "alp": 0.65,
-   "lnp": -0.76,
-   "onp": -0.21,
-   "grn": -0.89,
-   "others": 1.2
+   "alp": 0.71,
+   "lnp": -0.81,
+   "onp": -0.17,
+   "grn": -0.84,
+   "others": 1.1
   },
   "roy-morgan": {
-   "alp": 0.07,
-   "lnp": -2.08,
-   "onp": 0.99,
-   "grn": 0.04,
-   "others": 0.98
+   "alp": -0.24,
+   "lnp": -1.8,
+   "onp": 0.79,
+   "grn": -0.24,
+   "others": 1.5
   },
   "demosau": {
-   "alp": -1.09,
-   "lnp": 1.15,
-   "onp": -0.7,
-   "grn": 0.41,
-   "others": 0.23
+   "alp": -1.04,
+   "lnp": 1.1,
+   "onp": -0.67,
+   "grn": 0.45,
+   "others": 0.15
   },
   "redbridge": {
-   "alp": 0.32,
-   "lnp": -0.9,
-   "onp": 1.33,
-   "grn": -0.47,
-   "others": -0.28
+   "alp": 0.4,
+   "lnp": -0.97,
+   "onp": 1.37,
+   "grn": -0.4,
+   "others": -0.4
   },
   "Newspoll / Pyxis": {
-   "alp": 0.56,
-   "lnp": 1.5,
-   "onp": -1.76,
-   "grn": -0.09,
-   "others": -0.2
+   "alp": 0.64,
+   "lnp": 1.42,
+   "onp": -1.71,
+   "grn": -0.02,
+   "others": -0.34
   }
  },
  "polls": [
@@ -79,11 +79,11 @@
    "end": "2026-02-16",
    "weight": 0,
    "house": {
-    "alp": 0.07,
-    "lnp": -2.08,
-    "onp": 0.99,
-    "grn": 0.04,
-    "others": 0.98
+    "alp": -0.24,
+    "lnp": -1.8,
+    "onp": 0.79,
+    "grn": -0.24,
+    "others": 1.5
    }
   },
   {
@@ -105,11 +105,11 @@
    "end": "2026-02-27",
    "weight": 0,
    "house": {
-    "alp": -0.47,
-    "lnp": 0.36,
-    "onp": 0.89,
-    "grn": 0.62,
-    "others": -1.39
+    "alp": -0.42,
+    "lnp": 0.31,
+    "onp": 0.93,
+    "grn": 0.66,
+    "others": -1.48
    }
   },
   {
@@ -131,11 +131,11 @@
    "end": "2026-04-18",
    "weight": 0,
    "house": {
-    "alp": 0.65,
-    "lnp": -0.76,
-    "onp": -0.21,
-    "grn": -0.89,
-    "others": 1.2
+    "alp": 0.71,
+    "lnp": -0.81,
+    "onp": -0.17,
+    "grn": -0.84,
+    "others": 1.1
    }
   },
   {
@@ -144,11 +144,11 @@
    "end": "2026-04-24",
    "weight": 0,
    "house": {
-    "alp": 0.07,
-    "lnp": -2.08,
-    "onp": 0.99,
-    "grn": 0.04,
-    "others": 0.98
+    "alp": -0.24,
+    "lnp": -1.8,
+    "onp": 0.79,
+    "grn": -0.24,
+    "others": 1.5
    }
   },
   {
@@ -170,11 +170,11 @@
    "end": "2026-06-11",
    "weight": 0,
    "house": {
-    "alp": -1.09,
-    "lnp": 1.15,
-    "onp": -0.7,
-    "grn": 0.41,
-    "others": 0.23
+    "alp": -1.04,
+    "lnp": 1.1,
+    "onp": -0.67,
+    "grn": 0.45,
+    "others": 0.15
    }
   },
   {
@@ -183,11 +183,11 @@
    "end": "2026-06-12",
    "weight": 0,
    "house": {
-    "alp": 0.65,
-    "lnp": -0.76,
-    "onp": -0.21,
-    "grn": -0.89,
-    "others": 1.2
+    "alp": 0.71,
+    "lnp": -0.81,
+    "onp": -0.17,
+    "grn": -0.84,
+    "others": 1.1
    }
   },
   {
@@ -196,70 +196,70 @@
    "end": "2026-06-28",
    "weight": 0,
    "house": {
-    "alp": -0.47,
-    "lnp": 0.36,
-    "onp": 0.89,
-    "grn": 0.62,
-    "others": -1.39
+    "alp": -0.42,
+    "lnp": 0.31,
+    "onp": 0.93,
+    "grn": 0.66,
+    "others": -1.48
    }
   },
   {
    "id": "resolve-2026-07-age",
    "pollster": "resolve",
    "end": "2026-07-12",
-   "weight": 0.016,
+   "weight": 0.012,
    "house": {
-    "alp": 0.65,
-    "lnp": -0.76,
-    "onp": -0.21,
-    "grn": -0.89,
-    "others": 1.2
+    "alp": 0.71,
+    "lnp": -0.81,
+    "onp": -0.17,
+    "grn": -0.84,
+    "others": 1.1
    }
   },
   {
    "id": "redbridge-2026-07-trades-hall",
    "pollster": "redbridge",
    "end": "2026-07-14",
-   "weight": 0.042,
+   "weight": 0.032,
    "house": {
-    "alp": 0.32,
-    "lnp": -0.9,
-    "onp": 1.33,
-    "grn": -0.47,
-    "others": -0.28
+    "alp": 0.4,
+    "lnp": -0.97,
+    "onp": 1.37,
+    "grn": -0.4,
+    "others": -0.4
    }
   },
   {
    "id": "newspoll-2026-07",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-07-26",
-   "weight": 0.022,
+   "weight": 0.017,
    "house": {
-    "alp": 0.56,
-    "lnp": 1.5,
-    "onp": -1.76,
-    "grn": -0.09,
-    "others": -0.2
+    "alp": 0.64,
+    "lnp": 1.42,
+    "onp": -1.71,
+    "grn": -0.02,
+    "others": -0.34
    }
   },
   {
    "id": "redbridge-accent-2026-08-afr",
    "pollster": "redbridge-accent",
    "end": "2026-08-01",
-   "weight": 0.025,
+   "weight": 0.019,
    "house": {
-    "alp": -0.47,
-    "lnp": 0.36,
-    "onp": 0.89,
-    "grn": 0.62,
-    "others": -1.39
+    "alp": -0.42,
+    "lnp": 0.31,
+    "onp": 0.93,
+    "grn": 0.66,
+    "others": -1.48
    }
   },
   {
    "id": "freshwater-2026-08",
    "pollster": "freshwater",
    "end": "2026-08-03",
-   "weight": 0.026,
+   "weight": 0.02,
    "house": {
     "alp": -0.05,
     "lnp": 0.74,
@@ -272,85 +272,85 @@
    "id": "roy-morgan-2026-08",
    "pollster": "roy-morgan",
    "end": "2026-08-07",
-   "weight": 0.041,
+   "weight": 0.027,
    "house": {
-    "alp": 0.07,
-    "lnp": -2.08,
-    "onp": 0.99,
-    "grn": 0.04,
-    "others": 0.98
+    "alp": -0.24,
+    "lnp": -1.8,
+    "onp": 0.79,
+    "grn": -0.24,
+    "others": 1.5
    }
   },
   {
    "id": "demosau-2026-08",
    "pollster": "demosau",
    "end": "2026-08-11",
-   "weight": 0.032,
+   "weight": 0.024,
    "house": {
-    "alp": -1.09,
-    "lnp": 1.15,
-    "onp": -0.7,
-    "grn": 0.41,
-    "others": 0.23
+    "alp": -1.04,
+    "lnp": 1.1,
+    "onp": -0.67,
+    "grn": 0.45,
+    "others": 0.15
    }
   },
   {
    "id": "resolve-2026-08-age",
    "pollster": "resolve",
    "end": "2026-08-15",
-   "weight": 0.034,
+   "weight": 0.026,
    "house": {
-    "alp": 0.65,
-    "lnp": -0.76,
-    "onp": -0.21,
-    "grn": -0.89,
-    "others": 1.2
+    "alp": 0.71,
+    "lnp": -0.81,
+    "onp": -0.17,
+    "grn": -0.84,
+    "others": 1.1
    }
   },
   {
    "id": "resolve-2026-09-age",
    "pollster": "resolve",
    "end": "2026-09-12",
-   "weight": 0.066,
+   "weight": 0.05,
    "house": {
-    "alp": 0.65,
-    "lnp": -0.76,
-    "onp": -0.21,
-    "grn": -0.89,
-    "others": 1.2
+    "alp": 0.71,
+    "lnp": -0.81,
+    "onp": -0.17,
+    "grn": -0.84,
+    "others": 1.1
    }
   },
   {
    "id": "redbridge-accent-2026-09-afr",
    "pollster": "redbridge-accent",
    "end": "2026-09-14",
-   "weight": 0.106,
+   "weight": 0.081,
    "house": {
-    "alp": -0.47,
-    "lnp": 0.36,
-    "onp": 0.89,
-    "grn": 0.62,
-    "others": -1.39
+    "alp": -0.42,
+    "lnp": 0.31,
+    "onp": 0.93,
+    "grn": 0.66,
+    "others": -1.48
    }
   },
   {
    "id": "demosau-2026-09",
    "pollster": "demosau",
    "end": "2026-09-20",
-   "weight": 0.08,
+   "weight": 0.061,
    "house": {
-    "alp": -1.09,
-    "lnp": 1.15,
-    "onp": -0.7,
-    "grn": 0.41,
-    "others": 0.23
+    "alp": -1.04,
+    "lnp": 1.1,
+    "onp": -0.67,
+    "grn": 0.45,
+    "others": 0.15
    }
   },
   {
    "id": "freshwater-2026-09",
    "pollster": "freshwater",
    "end": "2026-09-28",
-   "weight": 0.097,
+   "weight": 0.073,
    "house": {
     "alp": -0.05,
     "lnp": 0.74,
@@ -363,43 +363,57 @@
    "id": "redbridge-accent-2026-10-afr",
    "pollster": "redbridge-accent",
    "end": "2026-10-08",
-   "weight": 0.12,
+   "weight": 0.092,
    "house": {
-    "alp": -0.47,
-    "lnp": 0.36,
-    "onp": 0.89,
-    "grn": 0.62,
-    "others": -1.39
+    "alp": -0.42,
+    "lnp": 0.31,
+    "onp": 0.93,
+    "grn": 0.66,
+    "others": -1.48
    }
   },
   {
    "id": "resolve-2026-10-age",
    "pollster": "resolve",
    "end": "2026-10-10",
-   "weight": 0.126,
+   "weight": 0.095,
    "house": {
-    "alp": 0.65,
-    "lnp": -0.76,
-    "onp": -0.21,
-    "grn": -0.89,
-    "others": 1.2
+    "alp": 0.71,
+    "lnp": -0.81,
+    "onp": -0.17,
+    "grn": -0.84,
+    "others": 1.1
    }
   },
   {
    "id": "newspoll-2026-10",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-10-22",
-   "weight": 0.167,
+   "weight": 0.127,
    "house": {
-    "alp": 0.56,
-    "lnp": 1.5,
-    "onp": -1.76,
-    "grn": -0.09,
-    "others": -0.2
+    "alp": 0.64,
+    "lnp": 1.42,
+    "onp": -1.71,
+    "grn": -0.02,
+    "others": -0.34
+   }
+  },
+  {
+   "id": "roy-morgan-2026-10",
+   "pollster": "roy-morgan",
+   "end": "2026-10-29",
+   "weight": 0.244,
+   "house": {
+    "alp": -0.24,
+    "lnp": -1.8,
+    "onp": 0.79,
+    "grn": -0.24,
+    "others": 1.5
    }
   }
  ],
  "included_poll_ids": [
+  "roy-morgan-2026-10",
   "newspoll-2026-10",
   "resolve-2026-10-age",
   "redbridge-accent-2026-10-afr",
@@ -419,143 +433,143 @@
  "trend": [
   {
    "date": "2026-02-16",
-   "alp": 25.43,
-   "lnp": 23.58,
-   "onp": 25.51,
-   "grn": 13.46,
-   "others": 12.02
+   "alp": 25.74,
+   "lnp": 23.3,
+   "onp": 25.71,
+   "grn": 13.74,
+   "others": 11.5
   },
   {
    "date": "2026-02-23",
-   "alp": 26.39,
-   "lnp": 24.65,
-   "onp": 24.49,
-   "grn": 13.14,
-   "others": 11.33
+   "alp": 26.57,
+   "lnp": 24.49,
+   "onp": 24.6,
+   "grn": 13.3,
+   "others": 11.04
   },
   {
    "date": "2026-02-27",
-   "alp": 26.02,
-   "lnp": 25.87,
-   "onp": 23.92,
-   "grn": 12.83,
-   "others": 11.36
+   "alp": 26.1,
+   "lnp": 25.79,
+   "onp": 23.98,
+   "grn": 12.91,
+   "others": 11.22
   },
   {
    "date": "2026-03-23",
-   "alp": 26.39,
-   "lnp": 26.86,
-   "onp": 22.93,
-   "grn": 13.03,
-   "others": 10.79
+   "alp": 26.45,
+   "lnp": 26.81,
+   "onp": 22.97,
+   "grn": 13.08,
+   "others": 10.69
   },
   {
    "date": "2026-04-18",
-   "alp": 26.38,
-   "lnp": 27.95,
-   "onp": 22.29,
-   "grn": 12.22,
-   "others": 11.17
+   "alp": 26.39,
+   "lnp": 27.94,
+   "onp": 22.3,
+   "grn": 12.24,
+   "others": 11.14
   },
   {
    "date": "2026-04-24",
-   "alp": 26.04,
-   "lnp": 27.28,
-   "onp": 22.72,
-   "grn": 12.66,
-   "others": 11.29
+   "alp": 26.16,
+   "lnp": 27.18,
+   "onp": 22.8,
+   "grn": 12.77,
+   "others": 11.09
   },
   {
    "date": "2026-06-08",
-   "alp": 24.73,
-   "lnp": 26.84,
-   "onp": 23.96,
-   "grn": 13.08,
-   "others": 11.4
+   "alp": 24.8,
+   "lnp": 26.78,
+   "onp": 24.0,
+   "grn": 13.14,
+   "others": 11.29
   },
   {
    "date": "2026-06-11",
-   "alp": 23.88,
-   "lnp": 27.49,
-   "onp": 23.88,
-   "grn": 13.57,
-   "others": 11.19
+   "alp": 23.91,
+   "lnp": 27.46,
+   "onp": 23.89,
+   "grn": 13.59,
+   "others": 11.15
   },
   {
    "date": "2026-06-12",
-   "alp": 24.25,
-   "lnp": 27.3,
+   "alp": 24.26,
+   "lnp": 27.29,
    "onp": 23.96,
    "grn": 13.4,
-   "others": 11.1
+   "others": 11.08
   },
   {
    "date": "2026-06-28",
-   "alp": 25.03,
-   "lnp": 26.72,
-   "onp": 24.8,
-   "grn": 13.03,
-   "others": 10.42
+   "alp": 25.01,
+   "lnp": 26.74,
+   "onp": 24.79,
+   "grn": 13.01,
+   "others": 10.45
   },
   {
    "date": "2026-07-12",
-   "alp": 25.46,
-   "lnp": 26.84,
-   "onp": 24.37,
-   "grn": 12.93,
-   "others": 10.4
+   "alp": 25.43,
+   "lnp": 26.87,
+   "onp": 24.35,
+   "grn": 12.91,
+   "others": 10.45
   },
   {
    "date": "2026-07-14",
-   "alp": 25.52,
-   "lnp": 26.86,
-   "onp": 24.73,
-   "grn": 12.8,
-   "others": 10.09
+   "alp": 25.48,
+   "lnp": 26.89,
+   "onp": 24.71,
+   "grn": 12.77,
+   "others": 10.16
   },
   {
    "date": "2026-07-26",
-   "alp": 25.84,
-   "lnp": 27.29,
-   "onp": 24.16,
-   "grn": 12.82,
-   "others": 9.89
+   "alp": 25.79,
+   "lnp": 27.33,
+   "onp": 24.13,
+   "grn": 12.78,
+   "others": 9.97
   },
   {
    "date": "2026-08-01",
-   "alp": 25.49,
-   "lnp": 27.65,
-   "onp": 23.73,
-   "grn": 12.9,
-   "others": 10.22
-  },
-  {
-   "date": "2026-08-03",
-   "alp": 25.42,
-   "lnp": 27.89,
-   "onp": 23.56,
-   "grn": 13.01,
-   "others": 10.13
-  },
-  {
-   "date": "2026-08-07",
-   "alp": 25.51,
-   "lnp": 27.92,
-   "onp": 23.37,
-   "grn": 12.9,
+   "alp": 25.44,
+   "lnp": 27.7,
+   "onp": 23.7,
+   "grn": 12.86,
    "others": 10.31
   },
   {
+   "date": "2026-08-03",
+   "alp": 25.38,
+   "lnp": 27.92,
+   "onp": 23.53,
+   "grn": 12.97,
+   "others": 10.2
+  },
+  {
+   "date": "2026-08-07",
+   "alp": 25.53,
+   "lnp": 27.9,
+   "onp": 23.38,
+   "grn": 12.92,
+   "others": 10.27
+  },
+  {
    "date": "2026-08-11",
-   "alp": 25.33,
-   "lnp": 28.27,
-   "onp": 23.29,
-   "grn": 12.87,
-   "others": 10.25
+   "alp": 25.34,
+   "lnp": 28.26,
+   "onp": 23.3,
+   "grn": 12.88,
+   "others": 10.23
   },
   {
    "date": "2026-08-15",
-   "alp": 25.21,
+   "alp": 25.22,
    "lnp": 28.21,
    "onp": 23.28,
    "grn": 12.87,
@@ -563,59 +577,67 @@
   },
   {
    "date": "2026-09-12",
-   "alp": 25.06,
-   "lnp": 28.32,
+   "alp": 25.05,
+   "lnp": 28.33,
    "onp": 23.28,
-   "grn": 12.88,
-   "others": 10.46
+   "grn": 12.87,
+   "others": 10.47
   },
   {
    "date": "2026-09-14",
-   "alp": 24.94,
-   "lnp": 28.41,
-   "onp": 23.43,
-   "grn": 13.17,
-   "others": 10.06
+   "alp": 24.93,
+   "lnp": 28.42,
+   "onp": 23.42,
+   "grn": 13.15,
+   "others": 10.09
   },
   {
    "date": "2026-09-20",
-   "alp": 25.11,
-   "lnp": 28.47,
-   "onp": 23.02,
-   "grn": 13.25,
-   "others": 10.15
+   "alp": 25.08,
+   "lnp": 28.49,
+   "onp": 23.01,
+   "grn": 13.23,
+   "others": 10.19
   },
   {
    "date": "2026-09-28",
-   "alp": 24.93,
-   "lnp": 28.43,
-   "onp": 22.98,
-   "grn": 13.33,
-   "others": 10.33
+   "alp": 24.91,
+   "lnp": 28.45,
+   "onp": 22.97,
+   "grn": 13.31,
+   "others": 10.36
   },
   {
    "date": "2026-10-08",
-   "alp": 24.91,
-   "lnp": 28.62,
-   "onp": 22.91,
-   "grn": 13.56,
-   "others": 10.0
+   "alp": 24.88,
+   "lnp": 28.64,
+   "onp": 22.9,
+   "grn": 13.54,
+   "others": 10.04
   },
   {
    "date": "2026-10-10",
-   "alp": 24.86,
-   "lnp": 28.65,
-   "onp": 22.95,
-   "grn": 13.91,
-   "others": 9.64
+   "alp": 24.83,
+   "lnp": 28.67,
+   "onp": 22.93,
+   "grn": 13.88,
+   "others": 9.68
   },
   {
    "date": "2026-10-22",
-   "alp": 24.59,
-   "lnp": 29.14,
-   "onp": 22.79,
-   "grn": 14.0,
-   "others": 9.48
+   "alp": 24.56,
+   "lnp": 29.17,
+   "onp": 22.77,
+   "grn": 13.97,
+   "others": 9.54
+  },
+  {
+   "date": "2026-10-29",
+   "alp": 24.09,
+   "lnp": 29.75,
+   "onp": 22.34,
+   "grn": 13.72,
+   "others": 10.11
   }
  ]
 }

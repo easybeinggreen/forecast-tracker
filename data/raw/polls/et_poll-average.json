@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-28T10:11:43.527Z",
+  "generated": "2026-11-01T21:29:04.358Z",
   "methodology": "docs/poll-methodology.md",
   "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
   "parameters": {
@@ -13,78 +13,95 @@
     "min_polls": 2,
     "min_pollsters": 2
   },
-  "as_of": "2026-10-22",
+  "as_of": "2026-10-29",
   "window_days_used": 45,
   "thin_series": false,
   "status": "ok",
   "status_reason": null,
   "included_poll_ids": [
+    "roy-morgan-2026-10",
     "newspoll-2026-10",
     "resolve-2026-10-age",
     "redbridge-accent-2026-10-afr",
     "freshwater-2026-09",
     "demosau-2026-09"
   ],
-  "excluded_from_average": [],
+  "excluded_from_average": [
+    {
+      "id": "oru-2026-10-greens",
+      "pollster": "online-research-unit",
+      "reason": "Party-commissioned internal poll (Victorian Greens). Party / union / advocacy polls are excluded from the tracker average by default under docs/poll-methodology.md; no eligibility_exception applied. Online Research Unit is not on the Victorian media/self allowlist."
+    }
+  ],
   "primaries": {
-    "alp": 24.3,
-    "lnp": 30.4,
-    "onp": 21.8,
-    "grn": 14.6,
-    "others": 8.9
+    "alp": 23.2,
+    "lnp": 29.9,
+    "onp": 21.9,
+    "grn": 13.4,
+    "others": 11.6
   },
   "intervals": {
     "alp": {
-      "estimate": 24.3,
-      "se": 1.24,
-      "low": 21.9,
-      "high": 26.7,
-      "var_sampling_pp2": 0.532,
-      "var_between_pp2": 1
+      "estimate": 23.2,
+      "se": 1.18,
+      "low": 20.9,
+      "high": 25.5,
+      "var_sampling_pp2": 0.308,
+      "var_between_pp2": 1.078
     },
     "lnp": {
-      "estimate": 30.4,
-      "se": 2.31,
-      "low": 25.9,
-      "high": 34.9,
-      "var_sampling_pp2": 0.617,
-      "var_between_pp2": 4.698
+      "estimate": 29.9,
+      "se": 1.56,
+      "low": 26.8,
+      "high": 33,
+      "var_sampling_pp2": 0.365,
+      "var_between_pp2": 2.077
     },
     "onp": {
-      "estimate": 21.8,
-      "se": 1.97,
-      "low": 17.9,
-      "high": 25.7,
-      "var_sampling_pp2": 0.488,
-      "var_between_pp2": 3.379
+      "estimate": 21.9,
+      "se": 1.28,
+      "low": 19.4,
+      "high": 24.4,
+      "var_sampling_pp2": 0.298,
+      "var_between_pp2": 1.344
     },
     "grn": {
-      "estimate": 14.6,
-      "se": 1.17,
-      "low": 12.3,
-      "high": 16.9,
-      "var_sampling_pp2": 0.36,
-      "var_between_pp2": 1
+      "estimate": 13.4,
+      "se": 1.35,
+      "low": 10.8,
+      "high": 16,
+      "var_sampling_pp2": 0.198,
+      "var_between_pp2": 1.616
     },
     "others": {
-      "estimate": 8.9,
-      "se": 1.95,
-      "low": 5.1,
-      "high": 12.7,
-      "var_sampling_pp2": 0.231,
-      "var_between_pp2": 3.567
+      "estimate": 11.6,
+      "se": 2.77,
+      "low": 6.2,
+      "high": 17,
+      "var_sampling_pp2": 0.186,
+      "var_between_pp2": 7.494
     }
   },
   "weights": [
+    {
+      "id": "roy-morgan-2026-10",
+      "pollster": "roy-morgan",
+      "fieldwork_end": "2026-10-29",
+      "sample_size": 3610,
+      "n_eff": 2776.92,
+      "age_days": 0,
+      "decay": 1,
+      "weight": 2776.92
+    },
     {
       "id": "newspoll-2026-10",
       "pollster": "Newspoll / Pyxis",
       "fieldwork_end": "2026-10-22",
       "sample_size": 1017,
       "n_eff": 782.31,
-      "age_days": 0,
-      "decay": 1,
-      "weight": 782.31
+      "age_days": 7,
+      "decay": 0.7937,
+      "weight": 620.92
     },
     {
       "id": "resolve-2026-10-age",
@@ -92,9 +109,9 @@
       "fieldwork_end": "2026-10-10",
       "sample_size": 1000,
       "n_eff": 769.23,
-      "age_days": 12,
-      "decay": 0.673,
-      "weight": 517.65
+      "age_days": 19,
+      "decay": 0.5341,
+      "weight": 410.86
     },
     {
       "id": "redbridge-accent-2026-10-afr",
@@ -102,9 +119,9 @@
       "fieldwork_end": "2026-10-08",
       "sample_size": 1008,
       "n_eff": 775.38,
-      "age_days": 14,
-      "decay": 0.63,
-      "weight": 488.46
+      "age_days": 21,
+      "decay": 0.5,
+      "weight": 387.69
     },
     {
       "id": "freshwater-2026-09",
@@ -112,9 +129,9 @@
       "fieldwork_end": "2026-09-28",
       "sample_size": 1030,
       "n_eff": 792.31,
-      "age_days": 24,
-      "decay": 0.4529,
-      "weight": 358.81
+      "age_days": 31,
+      "decay": 0.3594,
+      "weight": 284.78
     },
     {
       "id": "demosau-2026-09",
@@ -122,9 +139,9 @@
       "fieldwork_end": "2026-09-20",
       "sample_size": 1020,
       "n_eff": 784.62,
-      "age_days": 32,
-      "decay": 0.3478,
-      "weight": 272.86
+      "age_days": 39,
+      "decay": 0.276,
+      "weight": 216.57
     }
   ],
   "bloc_split": {
@@ -150,23 +167,23 @@
     },
     "caveat": "Primary-vote groupings only. Not a two-party preferred result, seat model, or preference forecast. Others are minor parties and independents combined.",
     "core": {
-      "left": 38.9,
-      "right": 52.2,
-      "other": 8.9
+      "left": 36.6,
+      "right": 51.8,
+      "other": 11.6
     },
     "other_split_proportional": {
       "method": "proportional_to_core_blocs",
-      "left": 42.7,
-      "right": 57.3,
-      "left_from_other": 3.8,
-      "right_from_other": 5.1
+      "left": 41.4,
+      "right": 58.6,
+      "left_from_other": 4.8,
+      "right_from_other": 6.8
     },
     "other_split_even": {
       "method": "even_split",
-      "left": 43.4,
-      "right": 56.7,
-      "left_from_other": 4.5,
-      "right_from_other": 4.5
+      "left": 42.4,
+      "right": 57.6,
+      "left_from_other": 5.8,
+      "right_from_other": 5.8
     }
   }
 }
