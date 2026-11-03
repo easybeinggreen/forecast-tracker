@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-01",
+ "as_of": "2026-11-03",
  "method": "recency- and size-weighted, house-effect adjusted, pollster-capped",
  "params": {
   "half_life_days": 30.0,
@@ -12,7 +12,7 @@
   "lnp": 29.8,
   "onp": 22.3,
   "grn": 13.7,
-  "others": 10.1
+  "others": 10.2
  },
  "unsmoothed": {
   "alp": 24.0,
@@ -220,7 +220,7 @@
    "id": "redbridge-2026-07-trades-hall",
    "pollster": "redbridge",
    "end": "2026-07-14",
-   "weight": 0.032,
+   "weight": 0.031,
    "house": {
     "alp": 0.4,
     "lnp": -0.97,
@@ -272,7 +272,7 @@
    "id": "roy-morgan-2026-08",
    "pollster": "roy-morgan",
    "end": "2026-08-07",
-   "weight": 0.027,
+   "weight": 0.028,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,
@@ -311,7 +311,7 @@
    "id": "resolve-2026-09-age",
    "pollster": "resolve",
    "end": "2026-09-12",
-   "weight": 0.05,
+   "weight": 0.049,
    "house": {
     "alp": 0.71,
     "lnp": -0.81,
@@ -324,7 +324,7 @@
    "id": "redbridge-accent-2026-09-afr",
    "pollster": "redbridge-accent",
    "end": "2026-09-14",
-   "weight": 0.081,
+   "weight": 0.08,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -337,7 +337,7 @@
    "id": "demosau-2026-09",
    "pollster": "demosau",
    "end": "2026-09-20",
-   "weight": 0.061,
+   "weight": 0.06,
    "house": {
     "alp": -1.04,
     "lnp": 1.1,
@@ -350,7 +350,7 @@
    "id": "freshwater-2026-09",
    "pollster": "freshwater",
    "end": "2026-09-28",
-   "weight": 0.073,
+   "weight": 0.072,
    "house": {
     "alp": -0.05,
     "lnp": 0.74,
@@ -363,7 +363,7 @@
    "id": "redbridge-accent-2026-10-afr",
    "pollster": "redbridge-accent",
    "end": "2026-10-08",
-   "weight": 0.092,
+   "weight": 0.09,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -376,7 +376,7 @@
    "id": "resolve-2026-10-age",
    "pollster": "resolve",
    "end": "2026-10-10",
-   "weight": 0.095,
+   "weight": 0.094,
    "house": {
     "alp": 0.71,
     "lnp": -0.81,
@@ -389,7 +389,7 @@
    "id": "newspoll-2026-10",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-10-22",
-   "weight": 0.127,
+   "weight": 0.125,
    "house": {
     "alp": 0.64,
     "lnp": 1.42,
@@ -402,7 +402,7 @@
    "id": "roy-morgan-2026-10",
    "pollster": "roy-morgan",
    "end": "2026-10-29",
-   "weight": 0.244,
+   "weight": 0.252,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,

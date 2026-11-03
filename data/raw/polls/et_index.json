@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-01T21:29:03.946Z",
+  "generated": "2026-11-02T21:25:09.694Z",
   "elections": [
     {
       "id": "federal-49",
@@ -66,7 +66,7 @@
       "id": "vic2026",
       "name": "2026 Victorian state election",
       "election_day": "2026-11-28",
-      "candidates": 551,
+      "candidates": 552,
       "files": [
         "election.json",
         "districts.json",
