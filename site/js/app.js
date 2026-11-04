@@ -89,7 +89,7 @@ function renderTop() {
   const b = S.ledger?.budget;
   $("#budget").innerHTML = b
     ? `<span>Stake budget</span><span class="bar" title="${b.committed} of ${b.total} points committed"><i style="width:${(100 * b.committed) / b.total}%"></i></span><span><strong>${b.remaining.toLocaleString("en-AU")}</strong> of ${b.total.toLocaleString("en-AU")} pts left</span>`
-    : `<span>1,000-point stake budget</span>`;
+    : `<span>2,000-point stake budget</span>`;
   $("#unlock").textContent = S.ledger ? "Lock ledger" : "Unlock ledger";
 }
 
@@ -757,7 +757,7 @@ function sportsbetHTML(s) {
     <p class="hint">Odds as of ${new Date(L.as_of).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })} (${d.history.length} snapshot${d.history.length > 1 ? "s" : ""}). Margin on this seat: <b>${(L.margin * 100).toFixed(1)}%</b>. Implied = 1 ÷ odds; fair = with the margin removed. Value = chance × odds − 1, per $1, using your chance if you've set one, otherwise the model's.</p>
     ${sbChart(d, s, name)}
     <div class="sheet-wrap"><table class="sheet sb-t"><thead><tr><th></th><th>Odds</th><th>Implied</th><th>Fair</th><th>Model</th><th>You</th><th>Value</th><th>Trend</th></tr></thead><tbody>${rows}</tbody></table></div>
-    ${best && best.ev > 0.03 ? `<p class="verdict pos">Best value: <b>${name(best.k)} at $${L.odds[best.k].toFixed(2)}</b>: ${pct(best.p)} × ${L.odds[best.k].toFixed(2)} = ${(best.p * L.odds[best.k]).toFixed(2)}, about ${(best.ev * 100).toFixed(0)}c per $1 on average. Quarter-Kelly stake: <b>${Math.max(0, Math.round(250 * best.ev / (L.odds[best.k] - 1)))} points</b>. Only worth it if you believe ${pct(best.p)} (${odds$(best.p)}).</p>`
+    ${best && best.ev > 0.03 ? `<p class="verdict pos">Best value: <b>${name(best.k)} at $${L.odds[best.k].toFixed(2)}</b>: ${pct(best.p)} × ${L.odds[best.k].toFixed(2)} = ${(best.p * L.odds[best.k]).toFixed(2)}, about ${(best.ev * 100).toFixed(0)}c per $1 on average. Quarter-Kelly stake: <b>${Math.max(0, Math.round(500 * best.ev / (L.odds[best.k] - 1)))} points</b>. Only worth it if you believe ${pct(best.p)} (${odds$(best.p)}).</p>`
       : `<p class="verdict">No value at these odds: every price is shorter than ${c || mine ? "your" : "the model's"} chance justifies.</p>`}
     <p class="hint"><a href="${esc(S.sb.url)}" target="_blank" rel="noopener">Sportsbet seat markets ↗</a> · refreshed when you say "update odds"</p>
   </section>`;

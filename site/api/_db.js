@@ -73,5 +73,5 @@ export async function readBody(req) {
   return JSON.parse(Buffer.concat(chunks).toString() || "{}");
 }
 
-export const BUDGET = 1000;
+export const BUDGET = 2000;   // raised from 1,000 on 4 Nov 2026 (agents also start on 2,000)
 export const SEAT_RE = /^(statewide|[a-z]+(-[a-z]+)*)$/;
