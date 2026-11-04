@@ -1,5 +1,5 @@
 // POST /api/predictions -> lock a call. Append-only: a changed mind is a new row, never an edit.
-import { authorised, BUDGET, db, ensureSchema, readBody, SEAT_RE, send } from "./_db.js";
+import { authorised, BUDGET, db, ensureSchema, isState, readBody, SEAT_RE, send, STATE_BUDGET } from "./_db.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { error: "Use POST." });
@@ -27,10 +27,12 @@ export default async function handler(req, res) {
     try {
       await client.query("begin");
       await client.query("lock table vic_predictions in share row exclusive mode");
-      const { rows } = await client.query("select coalesce(sum(stake), 0)::int as c from vic_predictions");
-      if (rows[0].c + stake > BUDGET) {
+      const state = isState(b.seat), pot = state ? STATE_BUDGET : BUDGET;
+      const { rows } = await client.query(
+        `select coalesce(sum(stake), 0)::int as c from vic_predictions where ${state ? "" : "not "}(seat = 'statewide' or seat like 'state-%')`);
+      if (rows[0].c + stake > pot) {
         await client.query("rollback");
-        return send(res, 409, { error: `That stake is more than your remaining ${BUDGET - rows[0].c} points.` });
+        return send(res, 409, { error: `That stake is more than your remaining ${pot - rows[0].c} ${state ? "statewide " : ""}points.` });
       }
       const ins = await client.query(
         `insert into vic_predictions (seat, probs, backed, stake, price_p, price_source, model_probs, adjustments, note, sb_odds, sb_status, model_version)

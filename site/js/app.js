@@ -90,7 +90,7 @@ function renderTop() {
   const b = S.ledger?.budget;
   $("#budget").innerHTML = b
     ? `<span>Stake budget</span><span class="bar" title="${b.committed} of ${b.total} points committed"><i style="width:${(100 * b.committed) / b.total}%"></i></span><span><strong>${b.remaining.toLocaleString("en-AU")}</strong> of ${b.total.toLocaleString("en-AU")} pts left</span>`
-    : `<span>2,000-point stake budget</span>`;
+    : `<span>2,000 points for seats, 500 for statewide</span>`;
   $("#unlock").textContent = S.ledger ? "Lock ledger" : "Unlock ledger";
 }
 
@@ -440,7 +440,7 @@ function renderLedger() {
   const ev = P.reduce((a, r) => a + (r.stake && r.price_p ? Number(r.stake) * (Number(r.probs[r.backed]) / Number(r.price_p) - 1) : 0), 0);
   const called = new Set(P.map((p) => p.seat)).size;
   el.innerHTML = `<div class="ledger-grid">
-      <div><div class="v">${S.ledger.budget.remaining.toLocaleString("en-AU")}</div><div class="l">Points left to stake</div></div>
+      <div><div class="v">${S.ledger.budget.remaining.toLocaleString("en-AU")}</div><div class="l">Seat points left to stake${S.ledger.state_budget ? ` <span class="dim">· statewide ${S.ledger.state_budget.remaining} of ${S.ledger.state_budget.total}</span>` : ""}</div></div>
       <div><div class="v">${S.ledger.budget.committed.toLocaleString("en-AU")}</div><div class="l">Points committed</div></div>
       <div><div class="v">${called}</div><div class="l">Seats called</div></div>
       <div><div class="v ${ev >= 0 ? "pos" : "neg"}">${ev >= 0 ? "+" : "−"}${Math.abs(ev).toFixed(0)}</div><div class="l">Expected profit, by your own odds</div></div></div>
@@ -787,6 +787,7 @@ function marketHTML(slug, outs) {
     </form><p class="err" id="mkt-err" role="alert"></p></section>`;
 }
 
+const potFor = (slug) => (slug === "statewide" || slug.startsWith("state-")) ? (S.ledger.state_budget || { total: 500, committed: 0, remaining: 500 }) : S.ledger.budget;
 function lockHTML(slug, outs) {
   if (!S.ledger) return `<section class="d-sec"><h3>Lock your call</h3><p class="locked-out">Unlock your ledger to lock a call and stake points.</p><div class="row-end" style="justify-content:flex-start"><button class="btn" type="button" data-act="unlock">Unlock ledger</button></div></section>`;
   const hist = callsFor(slug);
@@ -797,7 +798,7 @@ function lockHTML(slug, outs) {
       <p class="lock-sum" id="lock-sum"></p>
       <div class="lock-row">
         <label>Stake on<select name="backed">${outs.map((k) => `<option value="${k}">${esc(outName(k))}</option>`).join("")}</select></label>
-        <label>Points (${S.ledger.budget.remaining} left)<input name="stake" type="number" min="0" max="${S.ledger.budget.remaining}" step="1" value="0"></label>
+        ${(() => { const bg = potFor(slug); return `<label>Points (${bg.remaining} ${slug === "statewide" ? "statewide " : ""}left)<input name="stake" type="number" min="0" max="${bg.remaining}" step="1" value="0"></label>`; })()}
       </div>
       <div class="sb-row">
         <label>Sportsbet odds for this outcome <span class="dim">(decimal, at this moment)</span><input name="sb_odds" type="number" min="1.01" step="0.01" placeholder="e.g. 2.50"></label>
@@ -908,7 +909,7 @@ function bindLock() {
         await loadLedger();
         const sec = $("#lock-form")?.closest(".d-sec");
         if (sec) {
-          sec.insertAdjacentHTML("afterbegin", `<div class="locked-card" role="status"><b>Locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : `Your probabilities are recorded`}. ${S.ledger.budget.remaining.toLocaleString("en-AU")} points left.
+          sec.insertAdjacentHTML("afterbegin", `<div class="locked-card" role="status"><b>Locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : `Your probabilities are recorded`}. ${potFor(S.seat).remaining.toLocaleString("en-AU")} ${S.seat === "statewide" ? "statewide " : ""}points left.
             <div class="row-end" style="justify-content:flex-start;margin-top:8px"><button class="btn" type="button" data-act="close">← Back to the count room</button><button class="btn btn-quiet" type="button" data-act="to-ledger">See my ledger</button></div></div>`);
           sec.scrollIntoView({ block: "start", behavior: "smooth" });
         }

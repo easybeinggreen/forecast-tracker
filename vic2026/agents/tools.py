@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 AGENTS = {"local": 1.0, "numbers": 0.25, "market": 0.5}     # agent -> Kelly limit
 BUDGET = 2000
+STATE_BUDGET = 500   # separate pot for statewide markets once they are added (seat keys starting "state-")
 SITE = ROOT / "site/data"
 SB_RAW = ROOT / "data/raw/sportsbet"
 

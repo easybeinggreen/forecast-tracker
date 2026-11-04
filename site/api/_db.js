@@ -74,4 +74,6 @@ export async function readBody(req) {
 }
 
 export const BUDGET = 2000;   // raised from 1,000 on 4 Nov 2026 (agents also start on 2,000)
+export const STATE_BUDGET = 500;   // separate pot for statewide markets (who governs, majority/hung, seat totals), from 4 Nov 2026
+export const isState = (seat) => seat === "statewide" || String(seat).startsWith("state-");
 export const SEAT_RE = /^(statewide|[a-z]+(-[a-z]+)*)$/;
