@@ -481,6 +481,12 @@ function openSeat(slug) {
   d.setAttribute("aria-hidden", "false"); $("#scrim").hidden = false;
   d.scrollTop = 0; d.focus();
 }
+function toast(html, ms = 6000) {
+  let t = $("#toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+  t.innerHTML = html; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), ms);
+}
 function closeSeat() {
   S.seat = null;
   $("#drawer").setAttribute("aria-hidden", "true"); $("#scrim").hidden = true;
@@ -906,13 +912,13 @@ function bindLock() {
         await api("/api/predictions", { method: "POST", body: JSON.stringify({ seat: S.seat, probs, backed, stake, price_p: pr.p, price_source: pr.src, model_probs,
           adjustments: adjusted() ? { shifts: S.shifts, flows: S.flows, answers: Object.entries(S.answers || {}).map(([i, j]) => ({ q: seatBy(S.seat)?.questions?.[i]?.q, a: seatBy(S.seat)?.questions?.[i]?.options[j]?.label })) } : null, note: f.elements.note.value,
           model_version: S.F.model_version, sb_odds: f.elements.sb_odds.value || null, sb_status: f.elements.sb_none.checked ? "not_offered" : null }) });
+        const seat = S.seat, name = seat === "statewide" ? "Statewide" : seatBy(seat).name;
+        closeSeat();
         await loadLedger();
-        const sec = $("#lock-form")?.closest(".d-sec");
-        if (sec) {
-          sec.insertAdjacentHTML("afterbegin", `<div class="locked-card" role="status"><b>Locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : `Your probabilities are recorded`}. ${potFor(S.seat).remaining.toLocaleString("en-AU")} ${S.seat === "statewide" ? "statewide " : ""}points left.
-            <div class="row-end" style="justify-content:flex-start;margin-top:8px"><button class="btn" type="button" data-act="close">← Back to the count room</button><button class="btn btn-quiet" type="button" data-act="to-ledger">See my ledger</button></div></div>`);
-          sec.scrollIntoView({ block: "start", behavior: "smooth" });
-        }
+        // Back in the chamber: the seat is now green, flash it once so the eye finds it.
+        $("#chamber").scrollIntoView({ behavior: "smooth", block: "center" });
+        document.querySelector(`#chamber [data-slug="${seat}"]`)?.closest(".seat-g")?.classList.add("just-locked");
+        toast(`<b>${esc(name)} locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : "Your probabilities are recorded"}. ${potFor(seat).remaining.toLocaleString("en-AU")} ${seat === "statewide" ? "statewide " : ""}points left. <button class="btn btn-quiet" type="button" data-act="to-ledger">See my ledger</button>`);
       } catch (x) { err.textContent = x.message; f.querySelector("button[type=submit]").disabled = false; }
     });
   }
@@ -978,6 +984,7 @@ function wire() {
     const qb = e.target.closest("[data-q]"); if (qb) answerQ(Number(qb.dataset.q), Number(qb.dataset.o));
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
+  document.addEventListener("click", (e) => { if (e.target.closest("#toast [data-act=to-ledger]")) { $("#toast").classList.remove("show"); $("#ledger").scrollIntoView({ behavior: "smooth", block: "start" }); } });
   $("#changes").addEventListener("click", (e) => { const b = e.target.closest("[data-open-seat]"); if (b) openSeat(b.dataset.openSeat); });
   drawer.addEventListener("toggle", (e) => { if (e.target.classList?.contains("model-more")) S.moreOpen = e.target.open; }, true);
   drawer.addEventListener("input", (e) => {
