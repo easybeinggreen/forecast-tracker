@@ -1,5 +1,7 @@
 # Forecast tracker
 
+> **Victorian election 2026 (Count Room dashboard, model, ledger, agents):** see [`vic2026/README.md`](vic2026/README.md).
+
 A daily collector for the **AI Philanthropy Inflow Forecast**. It records crowd odds (Manifold, Polymarket, Metaculus), IPO filings on SEC EDGAR, and news volume (GDELT) in a Postgres database (Neon), alongside your own dated forecasts, so the two can be compared and scored.
 
 ```
