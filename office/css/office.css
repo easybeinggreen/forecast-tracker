@@ -78,3 +78,9 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 #seat-table .stack.tpp { height: 6px; }
 #seat-table .stack.none { height: 10px; border: 1px dashed var(--rule); }
 .guide-cell .model-cell.thin b { display: none; }
+.seg.mini button small { display: block; font-size: 10px; color: inherit; opacity: .7; line-height: 1.1; }
+.seg.mini { border-radius: 10px; } .seg.mini button { border-radius: 8px; line-height: 1.2; }
+.seg.mini button { white-space: nowrap; padding: 3px 7px; }
+#seat-table .stack { width: 100px; }
+#seat-table select.pick { max-width: 140px; }
+#seat-table th, #seat-table td { padding-left: 8px; padding-right: 8px; }

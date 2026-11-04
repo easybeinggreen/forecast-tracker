@@ -14,8 +14,10 @@ const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hi
 const BANKROLL = 1000;
 const CLOSE = new Date("2026-11-27T07:00:00Z"); // 6pm Melbourne, Fri 27 Nov
 // How sure: scored with a quadratic (Brier) rule, scaled so a 50/50 guess scores 0. Honest is best:
-// Weak pays best for calls you'd get right 55–67% of the time, Likely 67–82%, Safe above 82%.
-const CONF = { weak: { label: "Weak", p: 0.6 }, likely: { label: "Likely", p: 0.75 }, safe: { label: "Safe", p: 0.9 } };
+// Each band is scored at one chance; where two bands tie is halfway between their chances, which sets the band edges.
+// So an honest player picks the band their own chance falls in.
+const CONF = { weak: { label: "Weak", p: 0.58, range: "51–66%" }, likely: { label: "Likely", p: 0.75, range: "67–83%" },
+  safe: { label: "Safe", p: 0.92, range: "84–94%" }, ultra: { label: "Ultra safe", p: 0.98, range: "95% +" } };
 const judge = (p, right) => Math.round(400 * ((right ? 1 - (1 - p) ** 2 : 1 - p ** 2) - 0.75));
 const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
@@ -143,7 +145,7 @@ function renderApp() {
             <th scope="col" class="num"><button type="button" data-sort="margin">Margin</button></th>
             <th scope="col"><button type="button" data-sort="sure" id="guide-h">Guide</button></th>
             <th scope="col">Your pick</th>
-            <th scope="col">How sure</th>
+            <th scope="col">How sure (your chance)</th>
             <th scope="col">Bet</th>
             <th scope="col"></th>
           </tr></thead>
@@ -170,12 +172,12 @@ const latestOdds = () => S.D.seats.map((s) => s.sportsbet?.as_of).filter(Boolean
 function renderAll() { renderTop(); renderChamber(); renderTable(); if ($("#maps")?.open) renderMap(); }
 
 function rulesHTML() {
-  const row = (k) => { const c = CONF[k], r = judge(c.p, true), w = judge(c.p, false); return `<tr><td><b>${c.label}</b></td><td class="p">+${r}</td><td class="n">${w}</td><td>${{ weak: "about 6 in 10", likely: "7 or 8 in 10", safe: "9 in 10 or better" }[k]}</td></tr>`; };
+  const row = (k) => { const c = CONF[k], r = judge(c.p, true), w = judge(c.p, false); return `<tr><td><b>${c.label}</b></td><td class="p">+${r}</td><td class="n">${w}</td><td>${c.range}</td></tr>`; };
   return `<div class="three">
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can.</p></div>
-    <div><h3>2. Best judgement</h3><p>Each pick also says how sure you are. A right call wins points and a wrong one loses them. The surer you say you are, the more you win when right and the more you lose when wrong.</p>
-      <table class="sc"><tr><th></th><th>Right</th><th>Wrong</th><th>Use it for calls you'd get right</th></tr>${row("weak")}${row("likely")}${row("safe")}</table>
-      <p>So the way to win is to be honest: "Safe" on a seat you're only fairly sure of costs you over time. Highest total wins.</p></div>
+    <div><h3>2. Best judgement</h3><p>No bet needed: every seat you call counts. With each pick you give your chance that it wins, as one of four bands. A right call wins points, a wrong one loses them, and the higher your chance the more is at stake.</p>
+      <table class="sc"><tr><th></th><th>Right</th><th>Wrong</th><th>Your chance it wins</th></tr>${Object.keys(CONF).map(row).join("")}</table>
+      <p>The way to win is to be honest: choose the band your real chance falls in. Overstating it costs you over many seats; understating it leaves points behind. Highest total wins.</p></div>
     <div><h3>3. Best bets</h3><p>You have ${n0(BANKROLL)} play points to bet, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet where you think it has it wrong; skip the rest. Most points at the end wins.</p></div>
   </div>
   <div class="foot-note"><p>One set of picks counts for all three. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
@@ -205,7 +207,7 @@ function fed2025(s) {
 }
 const NO_TPP = "No two-party figure: Labor v Coalition wasn't the real contest here (Greens or independent in the top two).";
 function seatColour(s, view = S.view) {
-  if (view === "mine") { const p = S.picks[s.slug]; return p ? { p: p.pick, op: 0.45 + 0.55 * (CONF[p.conf].p - 0.5) / 0.4 } : { p: "unset", op: 1 }; }
+  if (view === "mine") { const p = S.picks[s.slug]; return p ? { p: p.pick, op: 0.45 + 0.55 * Math.min(1, (CONF[p.conf].p - 0.5) / 0.45) } : { p: "unset", op: 1 }; }
   if (view === "2022") return { p: s.mp.party, op: 0.35 + 0.65 * Math.min(1, (s.margin?.value ?? 10) / 12) };
   if (view === "2025") { const f = fed2025(s); return f ? { p: f.k, op: f.tpp ? 0.35 + 0.65 * Math.min(1, f.m / 12) : 0.3 } : { p: "unset", op: 1 }; }
   const f = sbFair(s); return f ? { p: f[0][0], op: 0.3 + 0.7 * Math.min(1, Math.max(0, (f[0][1] - 0.34) / 0.6)) } : { p: "unset", op: 1 };
@@ -321,7 +323,7 @@ const stackHTML = (parts, lead, cls = "") => `<span class="stack${cls}" aria-hid
 function pickCells(s) {
   const d = S.draft[s.slug] || {}, f = sbFair(s) || [];
   const sel = `<select class="pick" data-slug="${s.slug}" data-f="pick" aria-label="Your pick for ${esc(s.name)}"><option value="">Choose…</option>${f.map(([k, v]) => `<option value="${k}"${d.pick === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("")}</select>`;
-  const conf = `<span class="seg mini">${Object.entries(CONF).map(([k, c]) => `<button type="button" data-slug="${s.slug}" data-conf="${k}" aria-pressed="${d.conf === k}">${c.label}</button>`).join("")}</span>`;
+  const conf = `<span class="seg mini">${Object.entries(CONF).map(([k, c]) => `<button type="button" data-slug="${s.slug}" data-conf="${k}" aria-pressed="${d.conf === k}" title="${c.label}: ${c.range}">${c.label.replace("Ultra safe", "Ultra")}<small>${c.range.replace("%", "")}</small></button>`).join("")}</span>`;
   const st = `<input class="stake" data-slug="${s.slug}" data-f="stake" inputmode="numeric" placeholder="0" value="${d.stake ?? ""}" aria-label="Points to bet"><span class="pays" data-pays="${s.slug}">${paysText(s, d)}</span>`;
   const ready = d.pick && d.conf;
   return { sel, conf, st, lock: `<button class="btn" type="button" data-lock="${s.slug}" ${ready ? "" : "disabled"} title="${ready ? "Lock this pick. It can't be changed." : "Choose a winner and how sure you are first"}">Lock</button><div class="row-err" data-err="${s.slug}"></div>` };
