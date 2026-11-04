@@ -12,6 +12,11 @@ on:
 permissions:
   contents: write
 
+# One referee at a time: agents often push within minutes of each other.
+concurrency:
+  group: agents-referee
+  cancel-in-progress: false
+
 jobs:
   referee:
     runs-on: ubuntu-latest
@@ -49,4 +54,4 @@ jobs:
           mkdir -p data/agents && cp referee.txt data/agents/referee_last.txt
           git add site/data/agents_status.json data/agents/referee_last.txt
           git diff --cached --quiet || git commit -m "referee: status"
-          git pull --rebase -q origin main && git push
+          for i in 1 2 3 4; do git pull --rebase -q origin main && git push && break; sleep $((i * 10)); done
