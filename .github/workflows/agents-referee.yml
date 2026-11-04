@@ -1,0 +1,52 @@
+name: Agents referee
+
+# Runs whenever an agent pushes calls. Checks every ledger against agents/RULES.md (stakes, Kelly limits, odds, append-only,
+# agents touching only their own folder). Rule-breaking agent commits are reverted. Then updates the dashboard's
+# status line (agent names and last run time only; no picks).
+on:
+  push:
+    branches: [main]
+    paths: ["data/agents/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  referee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check the rules
+        id: check
+        run: |
+          set +e
+          BEFORE="${{ github.event.before }}"
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then BEFORE="HEAD~1"; fi
+          python -m vic2026.agents.tools referee "$BEFORE" HEAD > referee.txt
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          echo "before=$BEFORE" >> "$GITHUB_OUTPUT"
+          cat referee.txt
+      - name: Revert rule-breaking agent commits
+        if: steps.check.outputs.code != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for sha in $(git rev-list "${{ steps.check.outputs.before }}..HEAD" --grep '^agent:'); do
+            git revert --no-edit "$sha" || git revert --abort
+          done
+          python -m vic2026.agents.tools referee || true
+      - name: Update status line
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python -m vic2026.agents.tools status
+          mkdir -p data/agents && cp referee.txt data/agents/referee_last.txt
+          git add site/data/agents_status.json data/agents/referee_last.txt
+          git diff --cached --quiet || git commit -m "referee: status"
+          git pull --rebase -q origin main && git push

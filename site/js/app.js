@@ -50,6 +50,7 @@ async function boot() {
   ]);
   S.news = news;
   S.sb = await fetch("data/sportsbet.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.agents = await fetch("data/agents_status.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.mk = await fetch("data/markets.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.changes = await fetch("data/changes.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const raw = await fetch("data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
@@ -77,7 +78,7 @@ async function loadLedger() {
 }
 
 function renderAll() {
-  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage(); renderMine(); renderChanges(); renderPolls();
+  renderTop(); renderChamber(); renderMap(); renderOutcome(); renderTable(); renderLedger(); renderCoverage(); renderMine(); renderChanges(); renderPolls(); renderAgents();
   if (S.F.parties) $("#party-grid").innerHTML = partyCards(S.F);
   $("#foot-model").textContent = `Model run ${S.F.generated} from ${S.F.simulations.toLocaleString("en-AU")} simulated elections, each with a full preference count in all 88 seats.`;
 }
@@ -306,6 +307,13 @@ document.addEventListener("click", (e) => {
   const tb = $(".polls-t"); tb.classList.toggle("all");
   e.target.textContent = tb.classList.contains("all") ? "Show fewer" : `Show all ${S.changes.polls.length} polls`;
 });
+
+// Agents playing along: show only that they're running. Picks, stakes and scores stay hidden until after the count.
+function renderAgents() {
+  const el = $("#agents-line"); if (!el) return;
+  const A = S.agents?.agents || [], runs = A.map((a) => a.last_run).filter(Boolean).sort();
+  el.textContent = A.length ? `${A.length} agents playing along (the local, the numbers punter, the market reader)${runs.length ? `, last run ${new Date(runs.at(-1)).toLocaleString("en-AU", { weekday: "short", hour: "numeric", minute: "2-digit" })}` : ", first run pending"}. Their calls stay sealed until after the count.` : "";
+}
 
 function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => p.seat !== "statewide").map((p) => p.seat)); }
 
