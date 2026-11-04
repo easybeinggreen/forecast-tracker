@@ -6,6 +6,7 @@ stays out, so the game page has nothing to leak.
     python -m vic2026.build.export_office
 """
 import json
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -34,10 +35,16 @@ def main():
                        for n in news.get("seats", {}).get(s["slug"], [])[:NEWS_PER_SEAT]]
         seats.append(row)
 
-    out = {"generated": F.get("generated"), "election_date": F.get("election_date"),
+    photos = json.loads((SITE / "photos.json").read_text()) if (SITE / "photos.json").exists() else {}
+    mps = {s["mp"]["name"] for s in F["seats"]}
+    out = {"photos": {k: v for k, v in photos.items() if k in mps}, "generated": F.get("generated"), "election_date": F.get("election_date"),
            "party_names": F.get("party_names"), "sportsbet_url": sb.get("url"), "seats": seats}
     DEST.parent.mkdir(parents=True, exist_ok=True)
     DEST.write_text(json.dumps(out, separators=(",", ":")))
+    # Same look and map as Count Room: copy the shared stylesheet, map helpers and boundaries (nothing model-related).
+    shutil.copy(ROOT / "site" / "css" / "app.css", ROOT / "office" / "css" / "app.css")
+    shutil.copy(ROOT / "site" / "js" / "map.js", ROOT / "office" / "js" / "map.js")
+    shutil.copy(SITE / "vic_districts.topojson", DEST.parent / "vic_districts.topojson")
     print(f"office.json: {len(seats)} seats, {DEST.stat().st_size // 1024} KB")
 
 
