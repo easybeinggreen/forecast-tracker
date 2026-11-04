@@ -70,3 +70,11 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 .preview-note { background: #FFF6DA; color: #4a3c00; border: 1px solid #EBD58C; border-radius: 8px; padding: 8px 12px; font-size: 13px; margin-bottom: 14px; }
 
 @media (max-width: 900px) { .first .three { grid-template-columns: 1fr; } }
+
+/* your challenge panel: four counters, two by two */
+.ledger-grid.stats2 { grid-template-columns: 1fr 1fr; margin-bottom: 8px; }
+/* guide bars: top row decides the seat, thin row is the vote behind it */
+#seat-table .stack.two { height: 10px; }
+#seat-table .stack.tpp { height: 6px; }
+#seat-table .stack.none { height: 10px; border: 1px dashed var(--rule); }
+.guide-cell .model-cell.thin b { display: none; }
