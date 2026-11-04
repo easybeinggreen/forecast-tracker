@@ -462,7 +462,7 @@ th.fedc { font-style: italic; }
 #chamber .seat-g.just-locked .ring { animation: lockpulse 1.6s ease-out 2; transform-box: fill-box; transform-origin: center; }
 @keyframes lockpulse { 0% { stroke-width: 3; transform: scale(1); } 40% { stroke-width: 6; transform: scale(1.35); } 100% { stroke-width: 3; transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { #chamber .seat-g.just-locked .ring { animation: none; } }
-.district.called { stroke: var(--good); stroke-width: 2.2; }
+.district.called { stroke: var(--ink); stroke-width: 1.8; }
 .seat-chip.called { border: 2px solid var(--good); font-weight: 600; }
 .target.called { border: 2px solid var(--good); }
 .seatname.called { color: var(--good); font-weight: 600; }

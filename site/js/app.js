@@ -107,8 +107,23 @@ function chamberLayout(n = 88, rows = 6) {
   return out.sort((p, q) => q.a - p.a || p.ri - q.ri);
 }
 
+// 2025 federal result, rebuilt on this state seat's booths: Labor v Coalition by two-party preferred where those are the
+// top two on primaries, otherwise the leader on primaries (e.g. Greens seats).
+function fed2025Winner(seat) {
+  const f = seat.fed2025; if (!f?.prims) return { p: "unset", op: 1 };
+  const top = Object.entries(f.prims).sort((a, b) => b[1] - a[1]);
+  const two = top.slice(0, 2).map(([k]) => k), coal = two.find((k) => k === "LIB" || k === "NAT");
+  if (two.includes("ALP") && coal && f.alp_tpp != null) return { p: f.alp_tpp >= 50 ? "ALP" : coal, op: 0.35 + 0.65 * Math.min(1, Math.abs(f.alp_tpp - 50) / 12) };
+  return { p: top[0][0], op: 0.35 + 0.65 * Math.min(1, (top[0][1] - top[1][1]) / 15) };
+}
 function seatParty(seat) {
   if (S.mode === "held") return { p: seat.mp.party, op: 1 };
+  if (S.mode === "fed2025") return fed2025Winner(seat);
+  if (S.mode === "sb") {
+    const f = S.sb?.seats?.[seat.slug]?.latest?.fair; if (!f) return { p: "unset", op: 1 };
+    const [p, v] = fav(f);
+    return { p, op: 0.3 + 0.7 * Math.min(1, Math.max(0, (v - 0.34) / 0.6)) };
+  }
   if (S.mode === "mine") { const c = lastCall(seat.slug); return c?.backed ? { p: c.backed, op: 0.35 + 0.65 * Math.min(1, Math.max(0, (Number(c.probs[c.backed]) - 0.34) / 0.6)) } : { p: "unset", op: 1 }; }
   const [p, v] = fav(seat.model.win);
   return { p, op: 0.3 + 0.7 * Math.min(1, Math.max(0, (v - 0.34) / 0.6)) };
@@ -144,6 +159,8 @@ function renderChamber() {
        <text class="tally" x="${cx + 74}" y="${cy - 50}" text-anchor="middle" font-size="46" style="fill:${col("LIB")}">${lnp}</text><text class="tally-sub" x="${cx + 74}" y="${cy - 26}" text-anchor="middle">Coalition</text>`;
   svg.innerHTML = `<line class="maj" x1="${cx}" y1="${cy - R - 24}" x2="${cx}" y2="${cy - R * 0.36}"/><text class="maj-label" x="${cx}" y="${cy - R - 30}" text-anchor="middle">45 seats to govern</text>${circles}${big}`;
   const desc = { held: "Each dot is a seat, coloured by the party that holds it now (by-elections and defections included).",
+    fed2025: "Each dot is coloured by who won the 2025 federal vote on this seat's booths (two-party preferred where Labor and the Coalition were the top two; otherwise the primary-vote leader). Fainter dots were closer.",
+    sb: "Each dot is coloured by Sportsbet's favourite at the latest odds snapshot, margin removed. Fainter dots are less certain.",
     model: "Each dot is coloured by the model's favourite. Fainter dots are less certain. Counting favourites is not the same as the expected seat total on the right.",
     mine: "Your locked calls. Empty dots are seats you haven't called yet." }[S.mode];
   $("#chamber-desc").textContent = desc;
@@ -191,7 +208,7 @@ function renderMap() {
   $("#map-vic").insertAdjacentHTML("beforeend", `<rect x="${a[0].toFixed(1)}" y="${a[1].toFixed(1)}" width="${(b[0] - a[0]).toFixed(1)}" height="${(b[1] - a[1]).toFixed(1)}" fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="3 2" pointer-events="none"/>`);
   const lc = col(S.lens === "LNP" ? "LIB" : S.lens);
   $("#map-cap").innerHTML = S.lens === "fav"
-    ? "Colours follow the chamber's setting above. In model view, fainter means less certain. The dashed box on the state map is the Melbourne close-up."
+    ? "Colours follow the chamber's setting above (2022, 2025 federal, Sportsbet, model or your calls). Fainter means less certain or closer. The dashed box on the state map is the Melbourne close-up."
     : `<span class="ramp"><span>0%</span><i style="background:linear-gradient(90deg, color-mix(in srgb, ${lc} 4%, var(--sheet)), ${lc})"></i><span>100%</span></span> Stronger colour means a higher chance. Hover any district for every party's chance; click to open its calculator.`;
 }
 
