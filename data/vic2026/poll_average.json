@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-03",
+ "as_of": "2026-11-04",
  "method": "recency- and size-weighted, house-effect adjusted, pollster-capped",
  "params": {
   "half_life_days": 30.0,
@@ -8,7 +8,7 @@
   "house_shrink": 2.0
  },
  "primaries": {
-  "alp": 24.1,
+  "alp": 24.0,
   "lnp": 29.8,
   "onp": 22.3,
   "grn": 13.7,
@@ -233,7 +233,7 @@
    "id": "newspoll-2026-07",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-07-26",
-   "weight": 0.017,
+   "weight": 0.016,
    "house": {
     "alp": 0.64,
     "lnp": 1.42,
@@ -272,7 +272,7 @@
    "id": "roy-morgan-2026-08",
    "pollster": "roy-morgan",
    "end": "2026-08-07",
-   "weight": 0.028,
+   "weight": 0.029,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,
@@ -285,7 +285,7 @@
    "id": "demosau-2026-08",
    "pollster": "demosau",
    "end": "2026-08-11",
-   "weight": 0.024,
+   "weight": 0.023,
    "house": {
     "alp": -1.04,
     "lnp": 1.1,
@@ -324,7 +324,7 @@
    "id": "redbridge-accent-2026-09-afr",
    "pollster": "redbridge-accent",
    "end": "2026-09-14",
-   "weight": 0.08,
+   "weight": 0.079,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -402,7 +402,7 @@
    "id": "roy-morgan-2026-10",
    "pollster": "roy-morgan",
    "end": "2026-10-29",
-   "weight": 0.252,
+   "weight": 0.257,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,
