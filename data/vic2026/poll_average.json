@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-04",
+ "as_of": "2026-11-05",
  "method": "recency- and size-weighted, house-effect adjusted, pollster-capped",
  "params": {
   "half_life_days": 30.0,
@@ -337,7 +337,7 @@
    "id": "demosau-2026-09",
    "pollster": "demosau",
    "end": "2026-09-20",
-   "weight": 0.06,
+   "weight": 0.059,
    "house": {
     "alp": -1.04,
     "lnp": 1.1,
@@ -363,7 +363,7 @@
    "id": "redbridge-accent-2026-10-afr",
    "pollster": "redbridge-accent",
    "end": "2026-10-08",
-   "weight": 0.09,
+   "weight": 0.089,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -376,7 +376,7 @@
    "id": "resolve-2026-10-age",
    "pollster": "resolve",
    "end": "2026-10-10",
-   "weight": 0.094,
+   "weight": 0.093,
    "house": {
     "alp": 0.71,
     "lnp": -0.81,
@@ -389,7 +389,7 @@
    "id": "newspoll-2026-10",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-10-22",
-   "weight": 0.125,
+   "weight": 0.124,
    "house": {
     "alp": 0.64,
     "lnp": 1.42,
@@ -402,7 +402,7 @@
    "id": "roy-morgan-2026-10",
    "pollster": "roy-morgan",
    "end": "2026-10-29",
-   "weight": 0.257,
+   "weight": 0.261,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,
