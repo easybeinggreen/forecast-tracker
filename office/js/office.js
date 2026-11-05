@@ -13,12 +13,13 @@ const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"])
 const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hill":"BH","gippsland-east":"GE","gippsland-south":"GS","glen-waverley":"GW","mill-park":"MP","murray-plains":"MuP","narre-warren-north":"NN","narre-warren-south":"NS","ovens-valley":"OV","pascoe-vale":"PV","point-cook":"PC","south-barwon":"SB","south-west-coast":"SW","st-albans":"SA","yan-yean":"YY","ashwood":"As","bass":"Ba","bayswater":"By","bellarine":"Bl","benambra":"Bn","bentleigh":"Bt","berwick":"Bk","brighton":"Bg","broadmeadows":"Bd","brunswick":"Br","bulleen":"Bu","bundoora":"Bo","carrum":"Ca","caulfield":"Cf","clarinda":"Cl","cranbourne":"Cr","croydon":"Cy","dandenong":"Da","eildon":"Ei","eltham":"El","essendon":"Es","eureka":"Eu","euroa":"Er","evelyn":"Ev","footscray":"Fo","frankston":"Fr","geelong":"Gl","greenvale":"Gv","hastings":"Ha","hawthorn":"Hw","ivanhoe":"Iv","kalkallo":"Ka","kew":"Ke","kororoit":"Ko","lara":"La","laverton":"Lv","lowan":"Lo","macedon":"Ma","malvern":"Mv","melbourne":"Me","melton":"Mt","mildura":"Mi","monbulk":"Mo","mordialloc":"Md","mornington":"Mn","morwell":"Mw","mulgrave":"Mu","narracan":"Na","nepean":"Ne","niddrie":"Ni","northcote":"No","oakleigh":"Oa","pakenham":"Pa","polwarth":"Po","prahran":"Pr","preston":"Ps","richmond":"Ri","ringwood":"Rw","ripon":"Rp","rowville":"Ro","sandringham":"Sd","shepparton":"Sh","sunbury":"Su","sydenham":"Sy","tarneit":"Ta","thomastown":"Th","warrandyte":"Wa","wendouree":"We","werribee":"Wr","williamstown":"Wi"};
 const BANKROLL = 1000;
 const CLOSE = new Date("2026-11-27T07:00:00Z"); // 6pm Melbourne, Fri 27 Nov
-// How sure: scored with a quadratic (Brier) rule, scaled so a 50/50 guess scores 0. Honest is best:
+// How sure: scored with a quadratic (Brier) rule. Honest is best:
 // Each band is scored at one chance; where two bands tie is halfway between their chances, which sets the band edges.
 // So an honest player picks the band their own chance falls in.
 const CONF = { weak: { label: "Weak", p: 0.58, range: "51–66%" }, likely: { label: "Likely", p: 0.75, range: "67–83%" },
   safe: { label: "Safe", p: 0.92, range: "84% +" } };
-const judge = (p, right) => Math.round(400 * ((right ? 1 - (1 - p) ** 2 : 1 - p ** 2) - 0.75));
+// Brier accuracy out of 100: every call scores, nothing goes negative, and honest bands still score best on average.
+const judge = (p, right) => Math.round(100 * (right ? 1 - (1 - p) ** 2 : 1 - p ** 2));
 const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
@@ -172,12 +173,12 @@ const latestOdds = () => S.D.seats.map((s) => s.sportsbet?.as_of).filter(Boolean
 function renderAll() { renderTop(); renderChamber(); renderTable(); if ($("#maps")?.open) renderMap(); }
 
 function rulesHTML() {
-  const row = (k) => { const c = CONF[k], r = judge(c.p, true), w = judge(c.p, false); return `<tr><td><b>${c.label}</b></td><td class="p">+${r}</td><td class="n">${w}</td><td>${c.range}</td></tr>`; };
+  const row = (k) => { const c = CONF[k], r = judge(c.p, true), w = judge(c.p, false); return `<tr><td><b>${c.label}</b></td><td class="p">+${r}</td><td>+${w}</td><td>${c.range}</td></tr>`; };
   return `<div class="three">
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can.</p></div>
-    <div><h3>2. Best judgement</h3><p>No bet needed: every seat you call counts. With each pick you give your chance that it wins, as one of three bands. A right call wins points, a wrong one loses them, and the higher your chance the more is at stake.</p>
-      <table class="sc"><tr><th></th><th>Right</th><th>Wrong</th><th>Your chance it wins</th></tr>${Object.keys(CONF).map(row).join("")}</table>
-      <p>The way to win is to be honest: choose the band your real chance falls in. Overstating it costs you over many seats; understating it leaves points behind. Highest total wins.</p></div>
+    <div><h3>2. Best judgement</h3><p>No bet needed. With each pick you give your chance that it wins, as one of three bands. Every call earns points and you never lose any: a right call earns more, and how much more depends on how sure you said you were.</p>
+      <table class="sc"><tr><th></th><th>If right</th><th>If wrong</th><th>Your chance it wins</th></tr>${Object.keys(CONF).map(row).join("")}</table>
+      <p>Safe pays most when you're right but least when you're wrong, so the way to win is to be honest: choose the band your real chance falls in. Call every seat; an uncalled seat scores nothing. Highest total wins.</p></div>
     <div><h3>3. Best bets</h3><p>You have ${n0(BANKROLL)} play points to bet, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet where you think it has it wrong; skip the rest. Most points at the end wins.</p></div>
   </div>
   <div class="foot-note"><p>One set of picks counts for all three. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
