@@ -17,7 +17,7 @@ const CLOSE = new Date("2026-11-27T07:00:00Z"); // 6pm Melbourne, Fri 27 Nov
 // Each band is scored at one chance; where two bands tie is halfway between their chances, which sets the band edges.
 // So an honest player picks the band their own chance falls in.
 const CONF = { weak: { label: "Weak", p: 0.58, range: "51–66%" }, likely: { label: "Likely", p: 0.75, range: "67–83%" },
-  safe: { label: "Safe", p: 0.92, range: "84–94%" }, ultra: { label: "Ultra safe", p: 0.98, range: "95% +" } };
+  safe: { label: "Safe", p: 0.92, range: "84% +" } };
 const judge = (p, right) => Math.round(400 * ((right ? 1 - (1 - p) ** 2 : 1 - p ** 2) - 0.75));
 const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
@@ -175,7 +175,7 @@ function rulesHTML() {
   const row = (k) => { const c = CONF[k], r = judge(c.p, true), w = judge(c.p, false); return `<tr><td><b>${c.label}</b></td><td class="p">+${r}</td><td class="n">${w}</td><td>${c.range}</td></tr>`; };
   return `<div class="three">
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can.</p></div>
-    <div><h3>2. Best judgement</h3><p>No bet needed: every seat you call counts. With each pick you give your chance that it wins, as one of four bands. A right call wins points, a wrong one loses them, and the higher your chance the more is at stake.</p>
+    <div><h3>2. Best judgement</h3><p>No bet needed: every seat you call counts. With each pick you give your chance that it wins, as one of three bands. A right call wins points, a wrong one loses them, and the higher your chance the more is at stake.</p>
       <table class="sc"><tr><th></th><th>Right</th><th>Wrong</th><th>Your chance it wins</th></tr>${Object.keys(CONF).map(row).join("")}</table>
       <p>The way to win is to be honest: choose the band your real chance falls in. Overstating it costs you over many seats; understating it leaves points behind. Highest total wins.</p></div>
     <div><h3>3. Best bets</h3><p>You have ${n0(BANKROLL)} play points to bet, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet where you think it has it wrong; skip the rest. Most points at the end wins.</p></div>
