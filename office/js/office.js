@@ -1,6 +1,7 @@
 // Count Room Team Challenge: Victorian election 2026.
 // Players see seat data and Sportsbet chances only; nothing from the model is in office.json.
 import { decodeTopo, projector, bboxOf, pathOf } from "./map.js";
+import { locatorSVG, insideShell, renderInside, placeHTML, resultsHTML, changesHTML } from "./seatx.js";
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -331,15 +332,96 @@ function renderTable() {
   }).join("") || `<tr class="empty-row"><td colspan="8">No seats match. Clear the search or pick another filter.</td></tr>`;
 }
 
-// ---------------------------------------------------------------- seat page (to be redesigned)
+// ---------------------------------------------------------------- seat page: Count Room's sections, minus the model
+const GROUP = { FF: "RMIN", FPV: "RMIN", DLP: "RMIN", LDP: "RMIN", SFF: "RMIN", AVP: "RMIN", HAP: "RMIN", AJP: "PROG", VS: "PROG", REA: "PROG", LCV: "PROG", DHJ: "OTH", ND: "OTH", TMP: "OTH", CPP: "OTH" };
+const groupOf = (code) => GROUP[code] || code;
+const initials = (n) => n.replace(/\(.*?\)|[^A-Za-z\s'-]/g, "").split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 function openSeat(slug) { S.seat = slug; renderDrawer(); const d = $("#drawer"); d.setAttribute("aria-hidden", "false"); $("#scrim").hidden = false; d.scrollTop = 0; d.focus(); }
 function closeSeat() { if (!S.seat) return; S.seat = null; $("#drawer").setAttribute("aria-hidden", "true"); $("#scrim").hidden = true; }
+function avatar(name, party) {
+  const ph = photo(name);
+  if (!ph) return `<div class="monogram" style="background:${col(party)}" aria-hidden="true">${esc(initials(name))}</div>`;
+  return `<figure class="avatar"><img src="${esc(ph.img)}" alt="${esc(name)}" style="border-color:${col(party)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')">
+    <figcaption><a href="${esc(ph.file || ph.page)}" target="_blank" rel="noopener" title="${esc(ph.credit)}, ${esc(ph.license)}">Photo: ${esc(ph.license)}</a></figcaption></figure>`;
+}
+// Sportsbet's chance for each candidate over time, margin removed. No odds, no model.
+function sbChart(s) {
+  const d = s.sportsbet, H = d?.history; if (!H?.length) return "";
+  const fair = (h) => { const tot = Object.values(h.odds).reduce((a, o) => a + 1 / o, 0); return Object.fromEntries(Object.entries(h.odds).map(([k, o]) => [k, 1 / o / tot])); };
+  const F_ = H.map((h) => ({ t: Date.parse(h.t), f: fair(h) }));
+  const keys = Object.keys(d.odds).filter((k) => k !== "OTH" && Math.max(...F_.map((x) => x.f[k] || 0)) >= 0.04);
+  const W = 560, Ht = 170, L = 34, R = 130, T = 10, B = 24, t0 = F_[0].t, t1 = Math.max(F_.at(-1).t, t0 + 864e5);
+  const X = (t) => L + ((t - t0) / (t1 - t0)) * (W - L - R), Y = (v) => T + (1 - v) * (Ht - T - B);
+  const fd = (t) => new Date(t).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
+  let g = [0, 0.25, 0.5, 0.75, 1].map((v) => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" class="vg"/><text x="${L - 4}" y="${Y(v) + 3}" class="vt" text-anchor="end">${v * 100}%</text>`).join("");
+  g += `<text x="${L}" y="${Ht - 6}" class="vt">${fd(t0)}</text><text x="${W - R}" y="${Ht - 6}" class="vt" text-anchor="end">${fd(t1)}</text>`;
+  const ends = [];
+  for (const k of keys) {
+    const pts = F_.filter((x) => x.f[k] != null).map((x) => [X(x.t), Y(x.f[k])]); if (pts.length === 1) pts.push([X(t1), pts[0][1]]);
+    g += `<path d="${pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join("")}" fill="none" style="stroke:${col(k)}" stroke-width="2"/>`;
+    g += F_.filter((x) => x.f[k] != null).map((x) => `<circle cx="${X(x.t).toFixed(1)}" cy="${Y(x.f[k]).toFixed(1)}" r="2.5" style="fill:${col(k)}"><title>${fd(x.t)}: ${esc(outName(s, k))} ${pct(x.f[k])}</title></circle>`).join("");
+    ends.push({ k, y: Y(F_.at(-1).f[k] ?? 0) });
+  }
+  ends.sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 12) ends[i].y = ends[i - 1].y + 12;
+  g += ends.map((e) => `<text x="${W - R + 10}" y="${e.y + 3}" class="vt sbl" style="fill:${col(e.k)}">${esc(outName(s, e.k))} ${pct(F_.at(-1).f[e.k])}</text>`).join("");
+  return `<figure class="sb-chart"><svg viewBox="0 0 ${W} ${Ht}" role="img" aria-label="Sportsbet chances over time">${g}</svg>
+    <figcaption class="hint">Sportsbet's chance for each candidate, bookmaker margin removed, at each snapshot.${H.length < 3 ? " Few snapshots so far, so the lines are flat until the market moves." : ""}</figcaption></figure>`;
+}
+function sbSec(s) {
+  const d = s.sportsbet; if (!d) return "";
+  const keys = Object.keys(d.odds).sort((a, b) => d.odds[a] - d.odds[b]);
+  return `<section class="d-sec" aria-labelledby="h-sb"><h3 id="h-sb">What Sportsbet thinks</h3>
+    ${sbChart(s)}
+    <div class="sheet-wrap"><table class="sheet sb-t"><thead><tr><th></th><th>Chance</th><th>A 100-point bet pays</th></tr></thead><tbody>
+    ${keys.map((k) => `<tr><td>${k === "OTH" ? "" : `<span class="sw" style="background:${col(k)}"></span> `}${esc(outName(s, k))}</td><td class="num"><b>${pct(d.fair[k])}</b></td><td class="num">${n0(100 * d.odds[k])}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="hint">As of ${new Date(d.as_of).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}. Your bet is priced when you lock.</p></section>`;
+}
+function newsSec(s) {
+  const items = s.news || [];
+  if (!items.length) return "";
+  return `<section class="d-sec" aria-labelledby="h-news"><h3 id="h-news">In the news</h3><p class="hint">Recent headlines mentioning the seat or ${esc(s.mp.name)}.</p>
+    <ul class="news-list">${items.map((n) => `<li><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a> <span class="dim">${esc(n.source || "")}${n.date ? `, ${esc(String(n.date).slice(0, 10))}` : ""}</span></li>`).join("")}</ul></section>`;
+}
+function pickSec(s) {
+  const p = S.picks[s.slug];
+  if (p) return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3><p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</p><p class="hint">Locked ${new Date(p.created_at).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}. Locked picks are final.</p></section>`;
+  const c = pickCells(s);
+  return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3>
+    <div class="pick-form"><label>Who wins ${esc(s.name)}?${c.sel}</label><label>Bet (optional)${c.st}</label>${c.lock}</div>
+    <p class="hint">Points left to bet: ${n0(BANKROLL - Object.values(S.picks).reduce((a, x) => a + x.stake, 0))}. Locked picks are final.</p></section>`;
+}
 function renderDrawer() {
-  const s = seatBy(S.seat), p = S.picks[s.slug], c = p ? null : pickCells(s);
-  $("#drawer").innerHTML = `<div class="d-head"><div><h2 id="d-title" style="font-size:22px">${esc(s.name)}</h2><p class="caption">${esc(s.profile?.kind || "")} ${esc(s.mp.name)}, ${PARTY[s.mp.party]}.</p></div><button class="close back" type="button" data-act="close">← Back</button></div>
-    <section class="d-sec"><h3>Your pick</h3>${p ? `<p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet` : " · no bet"}</p>`
-      : `<table class="sc"><tr><td>Winner</td><td>${c.sel}</td></tr><tr><td>Bet</td><td>${c.st}</td></tr><tr><td></td><td>${c.lock}</td></tr></table>`}</section>
-    <section class="d-sec"><div class="tip" style="position:static;display:block;box-shadow:none;border:0;padding:0;max-width:none">${tipHTML(s.slug)}</div><p class="caption">The full seat page is still to come.</p></section>`;
+  const s = seatBy(S.seat), p = S.picks[s.slug];
+  $("#drawer").innerHTML = `
+    <div class="d-head">
+      ${avatar(s.mp.name, s.mp.party)}
+      <div><h2 id="d-title">${esc(s.name)}</h2>
+        <p>${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? ", retiring at this election" : ""}</p>
+        <p>${s.margin ? `Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs} (2022)` : ""}${p ? ` · <b>Your pick: ${esc(outName(s, p.pick))}</b>` : ` · <button class="linkish" type="button" data-act="to-pick">Make your pick ↓</button>`}</p></div>
+      <button class="close back" type="button" data-act="close" aria-label="Back to the chamber">← Chamber</button>
+    </div>
+    ${placeHTML(s, locatorSVG(S.geo, s.slug), PARTY)}
+    ${resultsHTML(s, PARTY)}
+    ${insideShell(s.slug)}
+    ${changesHTML(s, PARTY)}
+    ${newsSec(s)}
+    ${sbSec(s)}
+    ${pickSec(s)}`;
+  loadInside(s);
+}
+const boothCache = {};
+async function loadInside(s) {
+  const el = $("#inside"); if (!el) return;
+  try {
+    boothCache[s.slug] ||= window.OFFICE_BOOTHS?.[s.slug] || await (await fetch(`data/booths/${s.slug}.json`)).json();
+    if (S.seat === s.slug) renderInside($("#inside"), boothCache[s.slug], s, PARTY, groupOf);
+  } catch { el.innerHTML = '<p class="hint">Polling-place results not available for this seat.</p>'; }
+}
+function showOnMap(slug) {
+  closeSeat(); const m = $("#maps"); m.open = true; renderMap();
+  m.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.querySelectorAll(`.district[data-slug="${slug}"]`).forEach((x) => { x.classList.add("flash"); setTimeout(() => x.classList.remove("flash"), 4000); });
 }
 
 // ---------------------------------------------------------------- events
@@ -351,6 +433,8 @@ function onClick(e) {
   const so = t.closest("#seat-table th button"); if (so) { const k = so.dataset.sort; S.dir = S.sort === k ? -S.dir : k === "sure" ? -1 : 1; S.sort = k; renderTable(); return; }
   const o = t.closest("[data-open]") || t.closest("#chamber .seat") || t.closest(".district"); if (o) { openSeat(o.dataset.open || o.dataset.slug); return; }
   if (t.closest("[data-act=close]")) { closeSeat(); return; }
+  if (t.closest("[data-act=show-on-map]")) { showOnMap(S.seat); return; }
+  if (t.closest("[data-act=to-pick]")) { $("#pick-sec")?.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   const l = t.closest("[data-lock]"); if (l) lock(l.dataset.lock);
 }
 function onInput(e) {

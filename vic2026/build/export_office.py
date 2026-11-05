@@ -26,11 +26,14 @@ def main():
     seats = []
     for s in F["seats"]:
         row = {k: s.get(k) for k in SEAT_KEYS if s.get(k) is not None}
+        if row.get("place"):  # the Tally Room assessment is a prediction; keep the Wikipedia background only
+            row["place"] = {k: v for k, v in row["place"].items() if k not in ("assessment", "tr_url")}
         row["links"] = [l for l in row.get("links", []) if "tallyroom" not in l.get("url", "")]  # Tally Room carries predictions
         latest = sb.get("seats", {}).get(s["slug"], {}).get("latest")
         if latest:
+            d = sb["seats"][s["slug"]]
             row["sportsbet"] = {"as_of": latest["as_of"], "odds": latest["odds"], "fair": latest.get("fair"),
-                                "names": sb["seats"][s["slug"]].get("names", {})}
+                                "names": d.get("names", {}), "history": [{"t": h["t"], "odds": h["odds"]} for h in d.get("history", [])]}
         row["news"] = [{k: n.get(k) for k in ("title", "source", "url", "date") if n.get(k)}
                        for n in news.get("seats", {}).get(s["slug"], [])[:NEWS_PER_SEAT]]
         seats.append(row)
@@ -43,7 +46,11 @@ def main():
     DEST.write_text(json.dumps(out, separators=(",", ":")))
     # Same look and map as Count Room: copy the shared stylesheet, map helpers and boundaries (nothing model-related).
     shutil.copy(ROOT / "site" / "css" / "app.css", ROOT / "office" / "css" / "app.css")
-    shutil.copy(ROOT / "site" / "js" / "map.js", ROOT / "office" / "js" / "map.js")
+    for js in ("map.js", "seatx.js"):
+        shutil.copy(ROOT / "site" / "js" / js, ROOT / "office" / "js" / js)
+    # Polling-place results (2022 state, 2025 federal) for the booth map; no model numbers in these files.
+    shutil.rmtree(DEST.parent / "booths", ignore_errors=True)
+    shutil.copytree(SITE / "booths", DEST.parent / "booths")
     shutil.copy(SITE / "vic_districts.topojson", DEST.parent / "vic_districts.topojson")
     print(f"office.json: {len(seats)} seats, {DEST.stat().st_size // 1024} KB")
 
