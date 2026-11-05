@@ -18,7 +18,7 @@ const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
-const S = { D: null, geo: null, me: null, picks: {}, view: "sb", mapView: "sb", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
+const S = { D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
 const seatBy = (slug) => S.D.seats.find((s) => s.slug === slug);
 const outName = (s, k) => s.sportsbet?.names?.[k] || PARTY[k] || k;
 const photo = (name) => S.D.photos?.[name];
@@ -86,8 +86,8 @@ function renderSignin(mode) {
 }
 
 // ---------------------------------------------------------------- page
-const VIEWS = [["sb", "Sportsbet"], ["2022", "2022 result"], ["2025", "2025 federal"], ["mine", "My picks"]];
-const viewSeg = (attr = "view", cur = S.view) => `<div class="seg" role="group" aria-label="Colour seats by">${VIEWS.map(([k, l]) => `<button type="button" data-${attr}="${k}" aria-pressed="${cur === k}">${l}</button>`).join("")}</div>`;
+const VIEWS = [["2022", "2022 result"], ["2025", "2025 federal"], ["sb", "2026 Sportsbet"], ["mine", "My picks"]];
+const viewSeg = (attr = "view", cur = S.view, list = VIEWS) => `<div class="seg" role="group" aria-label="Colour seats by">${list.map(([k, l]) => `<button type="button" data-${attr}="${k}" aria-pressed="${cur === k}">${l}</button>`).join("")}</div>`;
 
 function renderApp() {
   const seen = store.get("team.seen-rules");
@@ -112,7 +112,7 @@ function renderApp() {
       <div class="outcome-panel"><div class="panel-head"><h2>Your challenge</h2></div><div class="ledger-grid stats2" id="stats"></div><p class="caption" id="stats-note"></p></div>
     </section>
 
-    <details class="maps" id="maps"><summary><div class="panel-head"><h2>Where the seats are</h2><span class="more"></span></div></summary>
+    <details class="maps" id="maps"><summary><div class="panel-head"><h2>Constituency map</h2><span class="more"></span></div></summary>
       <div class="panel-head" style="justify-content:flex-start">${viewSeg("mapview", S.mapView)}</div>
       <div class="map-grid">
         <figure class="map-fig"><div class="map-wrap" id="wrap-vic"><svg id="map-vic" role="img" aria-label="Map of Victoria's 88 districts"></svg><div class="tip" hidden></div></div><figcaption>Victoria</figcaption></figure>
@@ -131,12 +131,11 @@ function renderApp() {
           <label class="search"><span class="sr">Find a seat</span><input id="search" type="search" placeholder="Find a seat or MP"></label>
         </div>
       </div>
-      <p class="caption" style="margin:-4px 0 10px">The guide follows the view you choose above the chamber. Your pick and bet stay put whichever view you're on.</p>
+      <div class="list-view">${viewSeg("listview", S.listView, VIEWS.filter(([k]) => k !== "mine"))}<span class="caption">Your pick and bet stay put whichever view you're on.</span></div>
       <div class="table-wrap">
         <table id="seat-table">
           <thead><tr>
             <th scope="col"><button type="button" data-sort="name">Seat</button></th>
-            <th scope="col">Sitting MP</th>
             <th scope="col" class="num"><button type="button" data-sort="margin">Margin</button></th>
             <th scope="col"><button type="button" data-sort="sure" id="guide-h">Guide</button></th>
             <th scope="col">Your pick</th>
@@ -204,9 +203,9 @@ function seatColour(s, view = S.view) {
 // The guide: top row is what decides the seat for the chosen view, second row the vote behind it.
 const pr = (obj) => Object.entries(obj || {}).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, v / 100]);
 function guideRows(s) {
-  const v = S.view === "mine" ? "sb" : S.view, t = tpp22(s);
+  const v = S.listView, t = tpp22(s);
   const two22 = t ? { parts: [[t.a, t.av / 100], [t.b, t.bv / 100]], lead: null, text: `${SHORT[t.a]} ${t.av.toFixed(1)} v ${SHORT[t.b] || t.b} ${t.bv.toFixed(1)}`, sub: "2022 two-party", tpp: true } : null;
-  if (v === "sb") { const f = sbFair(s); return [f ? { parts: f.filter(([, x]) => x >= 0.01), lead: f[0][0], text: `${SHORT[f[0][0]] || f[0][0]} ${pct(f[0][1])}`, sub: "Sportsbet chance" } : null, two22]; }
+  if (v === "sb") { const f = sbFair(s); return [two22, f ? { parts: f.filter(([, x]) => x >= 0.01), lead: f[0][0], text: `${SHORT[f[0][0]] || f[0][0]} ${pct(f[0][1])}`, sub: "2026 Sportsbet chance", thin: true } : null]; }
   if (v === "2022") return [two22, { parts: pr(s.prims_2022_grouped), lead: null, text: "", sub: "2022 primary vote", thin: true }];
   const f = fed2025(s); if (!f) return [null, null];
   const prim = { parts: pr(s.fed2025.prims), lead: null, text: "", sub: "2025 primary vote", thin: true };
@@ -214,7 +213,7 @@ function guideRows(s) {
     : { parts: [], text: "No two-party", sub: "not Labor v Coalition here", none: true }, prim];
 }
 function sureOf(s) {
-  const v = S.view === "mine" ? "sb" : S.view;
+  const v = S.listView;
   if (v === "sb") return sbFair(s)?.[0][1] ?? 0;
   if (v === "2022") return 0.5 + (s.margin?.value ?? 0) / 100;
   const f = fed2025(s); return f?.tpp ? f.tppv / 100 : 0.5;
@@ -228,8 +227,8 @@ function tipHTML(slug, view = S.view) {
   if (view === "2022") body = `<p class="muted" style="margin-top:6px">2022 primary vote</p>${rows(Object.entries(s.prims_2022_grouped || {}).sort((a, b) => b[1] - a[1]).slice(0, 4), (v) => v.toFixed(1) + "%")}`;
   else if (view === "2025") { const f = fed2025(s); body = f ? `<p class="muted" style="margin-top:6px">2025 federal vote on these booths</p>${rows(f.top.slice(0, 4), (v) => v.toFixed(1) + "%")}<p class="muted">${f.tpp ? `Two-party: ${PARTY[f.k]} ${f.tppv.toFixed(1)}%` : NO_TPP}</p>` : ""; }
   else { const f = sbFair(s); body = f ? `<p class="muted" style="margin-top:6px">Sportsbet chance</p>${rows(f.filter(([, v]) => v >= 0.01).slice(0, 4), pct)}` : ""; }
-  return `${ph ? `<img class="tip-img" src="${esc(ph.img)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<h4>${esc(s.name)}</h4><p class="muted">${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? " (retiring)" : ""}</p>
-    ${s.margin ? `<p class="muted">Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs}</p>` : ""}${body}
+  return `<h4>${esc(s.name)}</h4>${s.margin ? `<p class="muted">2022: ${PARTY[s.held_2022] || s.held_2022} by ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs}</p>` : ""}${body}
+    <p class="muted" style="margin-top:6px;font-size:11.5px">MP: ${esc(s.mp.name)}${s.mp.retiring ? " (retiring)" : ""}</p>
     ${p ? `<p class="muted" style="margin-top:6px">Your pick: <b>${esc(outName(s, p.pick))}</b>${p.stake ? `, ${p.stake} pts bet` : ""}</p>` : ""}`;
 }
 function wireTips(wrap, sel, view) {
@@ -319,17 +318,16 @@ function pickCells(s) {
 function paysText(s, d) { const o = d.pick ? s.sportsbet?.odds?.[d.pick] : null, st = Number(d.stake || 0); return o && st ? `pays ${n0(st * o)} if right` : ""; }
 function renderTable() {
   document.querySelectorAll("#seat-table th button").forEach((b) => (b.dataset.sort === S.sort ? b.setAttribute("aria-sort", S.dir > 0 ? "ascending" : "descending") : b.removeAttribute("aria-sort")));
-  $("#guide-h").textContent = { sb: "Guide: Sportsbet", "2022": "Guide: 2022 result", "2025": "Guide: 2025 federal", mine: "Guide: Sportsbet" }[S.view];
+  $("#guide-h").textContent = { sb: "Guide: 2026 Sportsbet", "2022": "Guide: 2022 result", "2025": "Guide: 2025 federal" }[S.listView];
   $("#seat-table tbody").innerHTML = rows().map((s) => {
     const p = S.picks[s.slug];
-    const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}">${esc(s.name)}</button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}</td>
-      <td><span class="mp"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? '<span class="tag">retiring</span>' : ""}</span></td>
+    const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}">${esc(s.name)}</button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
       <td class="num">${s.margin ? `${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span>` : "—"}</td>
       <td><div class="guide-cell">${guideRows(s).filter(Boolean).map((r) => `<span class="model-cell${r.thin ? " thin" : ""}">${r.none ? `<span class="stack none"></span>` : stackHTML(r.parts, r.lead, r.tpp ? " two" : r.thin ? " tpp" : "")}${r.text ? `<b>${r.text}</b>` : ""}<span class="sub">${r.sub}</span></span>`).join("")}</div></td>`;
     if (p) return `<tr>${head}<td colspan="3"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</span></td></tr>`;
     const c = pickCells(s);
     return `<tr>${head}<td>${c.sel}</td><td>${c.st}</td><td>${c.lock}</td></tr>`;
-  }).join("") || `<tr class="empty-row"><td colspan="8">No seats match. Clear the search or pick another filter.</td></tr>`;
+  }).join("") || `<tr class="empty-row"><td colspan="7">No seats match. Clear the search or pick another filter.</td></tr>`;
 }
 
 // ---------------------------------------------------------------- seat page: Count Room's sections, minus the model
@@ -427,7 +425,8 @@ function showOnMap(slug) {
 // ---------------------------------------------------------------- events
 function onClick(e) {
   const t = e.target;
-  const v = t.closest("[data-view]"); if (v) { S.view = v.dataset.view; document.querySelectorAll("[data-view]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === S.view))); renderChamber(); renderTable(); if ($("#maps").open) renderMap(); return; }
+  const v = t.closest("[data-view]"); if (v) { S.view = v.dataset.view; document.querySelectorAll("[data-view]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === S.view))); renderChamber(); return; }
+  const lv = t.closest("[data-listview]"); if (lv) { S.listView = lv.dataset.listview; document.querySelectorAll("[data-listview]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.listview === S.listView))); renderTable(); return; }
   const mv = t.closest("[data-mapview]"); if (mv) { S.mapView = mv.dataset.mapview; document.querySelectorAll("[data-mapview]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mapview === S.mapView))); renderMap(); return; }
   const f = t.closest("[data-filter]"); if (f) { S.filter = f.dataset.filter; document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b === f))); renderTable(); return; }
   const so = t.closest("#seat-table th button"); if (so) { const k = so.dataset.sort; S.dir = S.sort === k ? -S.dir : k === "sure" ? -1 : 1; S.sort = k; renderTable(); return; }
