@@ -99,3 +99,13 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 .mp-s .sw { width: 7px; height: 7px; margin-right: 4px; }
 #seat-table { min-width: 0; width: 100%; }
 .guide-cell .model-cell.thin b { display: inline; font-weight: 600; font-size: 12.5px; }
+.why { display: grid; gap: 6px; margin-top: 14px; }
+.why label { font-size: 13px; font-weight: 600; }
+.why label .dim { font-weight: 400; }
+.why textarea { font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 8px; resize: vertical; background: var(--sheet); color: var(--ink); }
+.why-bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.why-bar .btn[data-lock] { margin-left: auto; }
+.why-bar [aria-pressed="true"] { background: var(--ALP); color: #fff; border-color: var(--ALP); }
+.why-locked { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--ink-3); background: var(--sheet); font-size: 14px; white-space: pre-wrap; }
+td.act { white-space: nowrap; }
+.why-btn { padding: 6px 10px; margin-right: 6px; font-size: 13px; }

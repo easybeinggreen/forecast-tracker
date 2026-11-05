@@ -169,7 +169,7 @@ function rulesHTML() {
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p></div>
     <div><h3>2. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
   </div>
-  <div class="foot-note"><p>One set of picks counts for both. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
+  <div class="foot-note"><p>One set of picks counts for both. Add your reasoning to any pick, typed or dictated; everyone's reasoning is revealed after the count. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
 
 function renderTop() {
@@ -313,7 +313,7 @@ function pickCells(s) {
   const sel = `<select class="pick" data-slug="${s.slug}" data-f="pick" aria-label="Your pick for ${esc(s.name)}"><option value="">Choose…</option>${f.map(([k, v]) => `<option value="${k}"${d.pick === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("")}</select>`;
   const st = `<input class="stake" data-slug="${s.slug}" data-f="stake" inputmode="numeric" placeholder="0" value="${d.stake ?? ""}" aria-label="Points to bet"><span class="pays" data-pays="${s.slug}">${paysText(s, d)}</span>`;
   const ready = !!d.pick;
-  return { sel, st, lock: `<button class="btn" type="button" data-lock="${s.slug}" ${ready ? "" : "disabled"} title="${ready ? "Lock this pick. It can't be changed." : "Choose a winner first"}">Lock</button><div class="row-err" data-err="${s.slug}"></div>` };
+  return { sel, st, why: `<button class="btn btn-quiet why-btn" type="button" data-why="${s.slug}" title="Add your reasoning (type or dictate)">${d.why ? "Why ✓" : "Why?"}</button>`, lock: `<button class="btn" type="button" data-lock="${s.slug}" ${ready ? "" : "disabled"} title="${ready ? "Lock this pick. It can't be changed." : "Choose a winner first"}">Lock</button><div class="row-err" data-err="${s.slug}"></div>` };
 }
 function paysText(s, d) { const o = d.pick ? s.sportsbet?.odds?.[d.pick] : null, st = Number(d.stake || 0); return o && st ? `pays ${n0(st * o)} if right` : ""; }
 function renderTable() {
@@ -324,9 +324,9 @@ function renderTable() {
     const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}">${esc(s.name)}</button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
       <td class="num">${s.margin ? `${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span>` : "—"}</td>
       <td><div class="guide-cell">${guideRows(s).filter(Boolean).map((r) => `<span class="model-cell${r.thin ? " thin" : ""}">${r.none ? `<span class="stack none"></span>` : stackHTML(r.parts, r.lead, r.tpp ? " two" : r.thin ? " tpp" : "")}${r.text ? `<b>${r.text}</b>` : ""}<span class="sub">${r.sub}</span></span>`).join("")}</div></td>`;
-    if (p) return `<tr>${head}<td colspan="3"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</span></td></tr>`;
+    if (p) return `<tr>${head}<td colspan="3"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}${p.why ? ` · <span class="dim" title="${esc(p.why)}">with reasoning</span>` : ""}</span></td></tr>`;
     const c = pickCells(s);
-    return `<tr>${head}<td>${c.sel}</td><td>${c.st}</td><td>${c.lock}</td></tr>`;
+    return `<tr>${head}<td>${c.sel}</td><td>${c.st}</td><td class="act">${c.why}${c.lock}</td></tr>`;
   }).join("") || `<tr class="empty-row"><td colspan="7">No seats match. Clear the search or pick another filter.</td></tr>`;
 }
 
@@ -335,7 +335,7 @@ const GROUP = { FF: "RMIN", FPV: "RMIN", DLP: "RMIN", LDP: "RMIN", SFF: "RMIN", 
 const groupOf = (code) => GROUP[code] || code;
 const initials = (n) => n.replace(/\(.*?\)|[^A-Za-z\s'-]/g, "").split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 function openSeat(slug) { S.seat = slug; renderDrawer(); const d = $("#drawer"); d.setAttribute("aria-hidden", "false"); $("#scrim").hidden = false; d.scrollTop = 0; d.focus(); }
-function closeSeat() { if (!S.seat) return; S.seat = null; $("#drawer").setAttribute("aria-hidden", "true"); $("#scrim").hidden = true; }
+function closeSeat() { stopDictation(); if (!S.seat) return; S.seat = null; $("#drawer").setAttribute("aria-hidden", "true"); $("#scrim").hidden = true; }
 function avatar(name, party) {
   const ph = photo(name);
   if (!ph) return `<div class="monogram" style="background:${col(party)}" aria-hidden="true">${esc(initials(name))}</div>`;
@@ -383,10 +383,15 @@ function newsSec(s) {
 }
 function pickSec(s) {
   const p = S.picks[s.slug];
-  if (p) return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3><p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</p><p class="hint">Locked ${new Date(p.created_at).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}. Locked picks are final.</p></section>`;
-  const c = pickCells(s);
+  if (p) return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3><p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</p>${p.why ? `<blockquote class="why-locked">${esc(p.why)}</blockquote>` : ""}<p class="hint">Locked ${new Date(p.created_at).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}. Locked picks are final.</p></section>`;
+  const c = pickCells(s), d = S.draft[s.slug] || {};
   return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3>
-    <div class="pick-form"><label>Who wins ${esc(s.name)}?${c.sel}</label><label>Bet (optional)${c.st}</label>${c.lock}</div>
+    <div class="pick-form"><label>Who wins ${esc(s.name)}?${c.sel}</label><label>Bet (optional)${c.st}</label></div>
+    <div class="why">
+      <label for="why-${s.slug}">Why? <span class="dim">Your reasoning, locked with your pick and revealed after the count</span></label>
+      <textarea id="why-${s.slug}" data-slug="${s.slug}" data-f="why" rows="4" maxlength="2000" placeholder="e.g. Teal candidate is strong locally, Liberal margin is only 3%, and the Greens will preference her.">${esc(d.why || "")}</textarea>
+      <div class="why-bar">${SpeechRec ? `<button class="btn btn-quiet" type="button" data-dictate="${s.slug}" aria-pressed="false">🎤 Dictate</button>` : `<span class="hint">Tip: use your keyboard's microphone to dictate.</span>`}<span class="hint" data-dictate-status="${s.slug}"></span>${c.lock}</div>
+    </div>
     <p class="hint">Points left to bet: ${n0(BANKROLL - Object.values(S.picks).reduce((a, x) => a + x.stake, 0))}. Locked picks are final.</p></section>`;
 }
 function renderDrawer() {
@@ -422,6 +427,28 @@ function showOnMap(slug) {
   document.querySelectorAll(`.district[data-slug="${slug}"]`).forEach((x) => { x.classList.add("flash"); setTimeout(() => x.classList.remove("flash"), 4000); });
 }
 
+// ---------------------------------------------------------------- dictation (browser speech recognition; Chrome, Edge, Safari)
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null;
+function stopDictation() { if (rec) { rec.onend = null; rec.stop(); rec = null; document.querySelectorAll("[data-dictate]").forEach((b) => { b.setAttribute("aria-pressed", "false"); b.textContent = "🎤 Dictate"; }); } }
+function toggleDictation(btn) {
+  if (rec) return stopDictation();
+  const slug = btn.dataset.dictate, ta = $(`#why-${slug}`), status = document.querySelector(`[data-dictate-status="${slug}"]`), d = (S.draft[slug] ||= {});
+  rec = new SpeechRec(); rec.lang = "en-AU"; rec.continuous = true; rec.interimResults = true;
+  const base = () => (d.why ? d.why.replace(/\s*$/, " ") : "");
+  let start = base();
+  rec.onresult = (e) => {
+    let fin = "", tmp = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) (e.results[i].isFinal ? (fin += e.results[i][0].transcript) : (tmp += e.results[i][0].transcript));
+    if (fin) { start = (start + fin.trim() + ". ").replace(/^\s+/, ""); d.why = start; }
+    ta.value = start + tmp;
+  };
+  rec.onerror = (e) => { status.textContent = e.error === "not-allowed" ? "Microphone blocked. Allow it in your browser, or type instead." : `Dictation stopped (${e.error}).`; stopDictation(); };
+  rec.onend = () => stopDictation();
+  try { rec.start(); btn.setAttribute("aria-pressed", "true"); btn.textContent = "■ Stop"; status.textContent = "Listening… speak your reasoning."; }
+  catch { status.textContent = "Dictation isn't available here. Type instead."; rec = null; }
+}
+
 // ---------------------------------------------------------------- events
 function onClick(e) {
   const t = e.target;
@@ -434,12 +461,15 @@ function onClick(e) {
   if (t.closest("[data-act=close]")) { closeSeat(); return; }
   if (t.closest("[data-act=show-on-map]")) { showOnMap(S.seat); return; }
   if (t.closest("[data-act=to-pick]")) { $("#pick-sec")?.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+  const w = t.closest("[data-why]"); if (w) { openSeat(w.dataset.why); setTimeout(() => { $("#pick-sec")?.scrollIntoView({ block: "start" }); $(`#why-${w.dataset.why}`)?.focus(); }, 50); return; }
+  const dc = t.closest("[data-dictate]"); if (dc) { toggleDictation(dc); return; }
   const l = t.closest("[data-lock]"); if (l) lock(l.dataset.lock);
 }
 function onInput(e) {
   const t = e.target, slug = t.dataset?.slug; if (!t.dataset?.f || !slug) return;
   const d = (S.draft[slug] ||= {});
   if (t.dataset.f === "stake") { t.value = t.value.replace(/\D/g, ""); d.stake = t.value; document.querySelectorAll(`[data-pays="${slug}"]`).forEach((x) => (x.textContent = paysText(seatBy(slug), d))); return; }
+  if (t.dataset.f === "why") { d.why = t.value; return; }
   d.pick = t.value; refreshRow(slug);
 }
 function refreshRow(slug) { renderTable(); if (S.seat === slug) renderDrawer(); }
@@ -448,7 +478,8 @@ async function lock(slug) {
   const err = (m) => document.querySelectorAll(`[data-err="${slug}"]`).forEach((x) => (x.textContent = m));
   if (!d.pick) return err("Choose a winner first.");
   try {
-    const r = await api("pick", { seat: slug, pick: d.pick, stake });
+    stopDictation();
+    const r = await api("pick", { seat: slug, pick: d.pick, stake, why: (d.why || "").trim() });
     S.picks[slug] = r.pick; delete S.draft[slug];
     closeSeat(); renderTop(); renderChamber(slug); renderTable(); if ($("#maps").open) renderMap();
     toast(`<b>${esc(s.name)} locked.</b> ${esc(outName(s, d.pick))}${stake ? `, ${stake} points bet` : ", no bet"}. ${88 - Object.keys(S.picks).length} seats to go.`);
