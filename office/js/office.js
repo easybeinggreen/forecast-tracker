@@ -13,13 +13,6 @@ const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"])
 const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hill":"BH","gippsland-east":"GE","gippsland-south":"GS","glen-waverley":"GW","mill-park":"MP","murray-plains":"MuP","narre-warren-north":"NN","narre-warren-south":"NS","ovens-valley":"OV","pascoe-vale":"PV","point-cook":"PC","south-barwon":"SB","south-west-coast":"SW","st-albans":"SA","yan-yean":"YY","ashwood":"As","bass":"Ba","bayswater":"By","bellarine":"Bl","benambra":"Bn","bentleigh":"Bt","berwick":"Bk","brighton":"Bg","broadmeadows":"Bd","brunswick":"Br","bulleen":"Bu","bundoora":"Bo","carrum":"Ca","caulfield":"Cf","clarinda":"Cl","cranbourne":"Cr","croydon":"Cy","dandenong":"Da","eildon":"Ei","eltham":"El","essendon":"Es","eureka":"Eu","euroa":"Er","evelyn":"Ev","footscray":"Fo","frankston":"Fr","geelong":"Gl","greenvale":"Gv","hastings":"Ha","hawthorn":"Hw","ivanhoe":"Iv","kalkallo":"Ka","kew":"Ke","kororoit":"Ko","lara":"La","laverton":"Lv","lowan":"Lo","macedon":"Ma","malvern":"Mv","melbourne":"Me","melton":"Mt","mildura":"Mi","monbulk":"Mo","mordialloc":"Md","mornington":"Mn","morwell":"Mw","mulgrave":"Mu","narracan":"Na","nepean":"Ne","niddrie":"Ni","northcote":"No","oakleigh":"Oa","pakenham":"Pa","polwarth":"Po","prahran":"Pr","preston":"Ps","richmond":"Ri","ringwood":"Rw","ripon":"Rp","rowville":"Ro","sandringham":"Sd","shepparton":"Sh","sunbury":"Su","sydenham":"Sy","tarneit":"Ta","thomastown":"Th","warrandyte":"Wa","wendouree":"We","werribee":"Wr","williamstown":"Wi"};
 const BANKROLL = 1000;
 const CLOSE = new Date("2026-11-27T07:00:00Z"); // 6pm Melbourne, Fri 27 Nov
-// How sure: scored with a quadratic (Brier) rule. Honest is best:
-// Each band is scored at one chance; where two bands tie is halfway between their chances, which sets the band edges.
-// So an honest player picks the band their own chance falls in.
-const CONF = { weak: { label: "Weak", p: 0.58, range: "51–66%" }, likely: { label: "Likely", p: 0.75, range: "67–83%" },
-  safe: { label: "Safe", p: 0.92, range: "84% +" } };
-// Brier accuracy out of 100: every call scores, nothing goes negative, and honest bands still score best on average.
-const judge = (p, right) => Math.round(100 * (right ? 1 - (1 - p) ** 2 : 1 - p ** 2));
 const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
@@ -137,7 +130,7 @@ function renderApp() {
           <label class="search"><span class="sr">Find a seat</span><input id="search" type="search" placeholder="Find a seat or MP"></label>
         </div>
       </div>
-      <p class="caption" style="margin:-4px 0 10px">The guide follows the view you choose above the chamber. Your pick, how sure you are and your bet stay put whichever view you're on.</p>
+      <p class="caption" style="margin:-4px 0 10px">The guide follows the view you choose above the chamber. Your pick and bet stay put whichever view you're on.</p>
       <div class="table-wrap">
         <table id="seat-table">
           <thead><tr>
@@ -146,7 +139,6 @@ function renderApp() {
             <th scope="col" class="num"><button type="button" data-sort="margin">Margin</button></th>
             <th scope="col"><button type="button" data-sort="sure" id="guide-h">Guide</button></th>
             <th scope="col">Your pick</th>
-            <th scope="col">How sure (your chance)</th>
             <th scope="col">Bet</th>
             <th scope="col"></th>
           </tr></thead>
@@ -173,15 +165,11 @@ const latestOdds = () => S.D.seats.map((s) => s.sportsbet?.as_of).filter(Boolean
 function renderAll() { renderTop(); renderChamber(); renderTable(); if ($("#maps")?.open) renderMap(); }
 
 function rulesHTML() {
-  const row = (k) => { const c = CONF[k], r = judge(c.p, true), w = judge(c.p, false); return `<tr><td><b>${c.label}</b></td><td class="p">+${r}</td><td>+${w}</td><td>${c.range}</td></tr>`; };
-  return `<div class="three">
-    <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can.</p></div>
-    <div><h3>2. Best judgement</h3><p>No bet needed. With each pick you give your chance that it wins, as one of three bands. Every call earns points and you never lose any: a right call earns more, and how much more depends on how sure you said you were.</p>
-      <table class="sc"><tr><th></th><th>If right</th><th>If wrong</th><th>Your chance it wins</th></tr>${Object.keys(CONF).map(row).join("")}</table>
-      <p>Safe pays most when you're right but least when you're wrong, so the way to win is to be honest: choose the band your real chance falls in. Call every seat; an uncalled seat scores nothing. Highest total wins.</p></div>
-    <div><h3>3. Best bets</h3><p>You have ${n0(BANKROLL)} play points to bet, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet where you think it has it wrong; skip the rest. Most points at the end wins.</p></div>
+  return `<div class="three two">
+    <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p></div>
+    <div><h3>2. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
   </div>
-  <div class="foot-note"><p>One set of picks counts for all three. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
+  <div class="foot-note"><p>One set of picks counts for both. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
 
 function renderTop() {
@@ -192,9 +180,8 @@ function renderTop() {
     <div><div class="v">${P.length}</div><div class="l">Seats called · ${88 - P.length ? `${88 - P.length} to go` : "all 88 done"}</div></div>
     <div><div class="v">${n0(BANKROLL - staked)}</div><div class="l">Points left to bet, of ${n0(BANKROLL)}</div></div>
     <div><div class="v">${bets.length}</div><div class="l">Bets placed · ${n0(bets.reduce((a, p) => a + p.stake * p.odds, 0))} back if all win</div></div>
-    <div><div class="v">${P.length ? `+${P.reduce((a, p) => a + judge(CONF[p.conf].p, true), 0)}` : "0"}</div><div class="l">Judgement points if every call is right</div></div>`;
-  const by = Object.keys(CONF).map((k) => `${CONF[k].label} ${P.filter((p) => p.conf === k).length}`).join(" · ");
-  $("#stats-note").textContent = P.length ? `How sure you've been: ${by}. Picks close 6pm Friday 27 November.` : "Nothing locked yet. Choose a winner in the table below, or click a seat in the chamber.";
+    <div><div class="v">${P.filter((p) => p.pick !== sbFair(seatBy(p.seat))?.[0][0]).length}</div><div class="l">Picks against Sportsbet's favourite</div></div>`;
+  $("#stats-note").textContent = P.length ? `Picks close 6pm Friday 27 November. Locked picks are final.` : "Nothing locked yet. Choose a winner in the table below, or click a seat in the chamber.";
 }
 
 // ---------------------------------------------------------------- what each view says about a seat
@@ -208,7 +195,7 @@ function fed2025(s) {
 }
 const NO_TPP = "No two-party figure: Labor v Coalition wasn't the real contest here (Greens or independent in the top two).";
 function seatColour(s, view = S.view) {
-  if (view === "mine") { const p = S.picks[s.slug]; return p ? { p: p.pick, op: 0.45 + 0.55 * Math.min(1, (CONF[p.conf].p - 0.5) / 0.45) } : { p: "unset", op: 1 }; }
+  if (view === "mine") { const p = S.picks[s.slug]; return p ? { p: p.pick, op: 1 } : { p: "unset", op: 1 }; }
   if (view === "2022") return { p: s.mp.party, op: 0.35 + 0.65 * Math.min(1, (s.margin?.value ?? 10) / 12) };
   if (view === "2025") { const f = fed2025(s); return f ? { p: f.k, op: f.tpp ? 0.35 + 0.65 * Math.min(1, f.m / 12) : 0.3 } : { p: "unset", op: 1 }; }
   const f = sbFair(s); return f ? { p: f[0][0], op: 0.3 + 0.7 * Math.min(1, Math.max(0, (f[0][1] - 0.34) / 0.6)) } : { p: "unset", op: 1 };
@@ -242,7 +229,7 @@ function tipHTML(slug, view = S.view) {
   else { const f = sbFair(s); body = f ? `<p class="muted" style="margin-top:6px">Sportsbet chance</p>${rows(f.filter(([, v]) => v >= 0.01).slice(0, 4), pct)}` : ""; }
   return `${ph ? `<img class="tip-img" src="${esc(ph.img)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}<h4>${esc(s.name)}</h4><p class="muted">${esc(s.mp.name)}, ${PARTY[s.mp.party]}${s.mp.retiring ? " (retiring)" : ""}</p>
     ${s.margin ? `<p class="muted">Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs}</p>` : ""}${body}
-    ${p ? `<p class="muted" style="margin-top:6px">Your pick: <b>${esc(outName(s, p.pick))}</b>, ${CONF[p.conf].label}${p.stake ? `, ${p.stake} pts bet` : ""}</p>` : ""}`;
+    ${p ? `<p class="muted" style="margin-top:6px">Your pick: <b>${esc(outName(s, p.pick))}</b>${p.stake ? `, ${p.stake} pts bet` : ""}</p>` : ""}`;
 }
 function wireTips(wrap, sel, view) {
   if (!wrap) return;
@@ -259,7 +246,7 @@ function wireTips(wrap, sel, view) {
 const CAPTION = { sb: "Coloured by Sportsbet's favourite (bookmaker margin removed). Fainter = less certain.",
   "2022": "Coloured by who won in 2022 (by-elections included). Fainter = closer two-party margin.",
   "2025": "Coloured by who won the 2025 federal two-party vote on this seat's booths. Where Labor v Coalition wasn't the real contest (Greens or teal seats), the faint colour is just the primary-vote leader.",
-  mine: "Your locked picks. Fainter = less sure. Empty = not called yet." };
+  mine: "Your locked picks. Empty dots are seats you haven't called yet." };
 
 // ---------------------------------------------------------------- chamber
 let layout;
@@ -324,10 +311,9 @@ const stackHTML = (parts, lead, cls = "") => `<span class="stack${cls}" aria-hid
 function pickCells(s) {
   const d = S.draft[s.slug] || {}, f = sbFair(s) || [];
   const sel = `<select class="pick" data-slug="${s.slug}" data-f="pick" aria-label="Your pick for ${esc(s.name)}"><option value="">Choose…</option>${f.map(([k, v]) => `<option value="${k}"${d.pick === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("")}</select>`;
-  const conf = `<span class="seg mini">${Object.entries(CONF).map(([k, c]) => `<button type="button" data-slug="${s.slug}" data-conf="${k}" aria-pressed="${d.conf === k}" title="${c.label}: ${c.range}">${c.label.replace("Ultra safe", "Ultra")}<small>${c.range.replace("%", "")}</small></button>`).join("")}</span>`;
   const st = `<input class="stake" data-slug="${s.slug}" data-f="stake" inputmode="numeric" placeholder="0" value="${d.stake ?? ""}" aria-label="Points to bet"><span class="pays" data-pays="${s.slug}">${paysText(s, d)}</span>`;
-  const ready = d.pick && d.conf;
-  return { sel, conf, st, lock: `<button class="btn" type="button" data-lock="${s.slug}" ${ready ? "" : "disabled"} title="${ready ? "Lock this pick. It can't be changed." : "Choose a winner and how sure you are first"}">Lock</button><div class="row-err" data-err="${s.slug}"></div>` };
+  const ready = !!d.pick;
+  return { sel, st, lock: `<button class="btn" type="button" data-lock="${s.slug}" ${ready ? "" : "disabled"} title="${ready ? "Lock this pick. It can't be changed." : "Choose a winner first"}">Lock</button><div class="row-err" data-err="${s.slug}"></div>` };
 }
 function paysText(s, d) { const o = d.pick ? s.sportsbet?.odds?.[d.pick] : null, st = Number(d.stake || 0); return o && st ? `pays ${n0(st * o)} if right` : ""; }
 function renderTable() {
@@ -339,9 +325,9 @@ function renderTable() {
       <td><span class="mp"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? '<span class="tag">retiring</span>' : ""}</span></td>
       <td class="num">${s.margin ? `${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span>` : "—"}</td>
       <td><div class="guide-cell">${guideRows(s).filter(Boolean).map((r) => `<span class="model-cell${r.thin ? " thin" : ""}">${r.none ? `<span class="stack none"></span>` : stackHTML(r.parts, r.lead, r.tpp ? " two" : r.thin ? " tpp" : "")}${r.text ? `<b>${r.text}</b>` : ""}<span class="sub">${r.sub}</span></span>`).join("")}</div></td>`;
-    if (p) return `<tr>${head}<td colspan="4"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b> · ${CONF[p.conf].label}${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</span></td></tr>`;
+    if (p) return `<tr>${head}<td colspan="3"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</span></td></tr>`;
     const c = pickCells(s);
-    return `<tr>${head}<td>${c.sel}</td><td>${c.conf}</td><td>${c.st}</td><td>${c.lock}</td></tr>`;
+    return `<tr>${head}<td>${c.sel}</td><td>${c.st}</td><td>${c.lock}</td></tr>`;
   }).join("") || `<tr class="empty-row"><td colspan="8">No seats match. Clear the search or pick another filter.</td></tr>`;
 }
 
@@ -351,8 +337,8 @@ function closeSeat() { if (!S.seat) return; S.seat = null; $("#drawer").setAttri
 function renderDrawer() {
   const s = seatBy(S.seat), p = S.picks[s.slug], c = p ? null : pickCells(s);
   $("#drawer").innerHTML = `<div class="d-head"><div><h2 id="d-title" style="font-size:22px">${esc(s.name)}</h2><p class="caption">${esc(s.profile?.kind || "")} ${esc(s.mp.name)}, ${PARTY[s.mp.party]}.</p></div><button class="close back" type="button" data-act="close">← Back</button></div>
-    <section class="d-sec"><h3>Your pick</h3>${p ? `<p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b> · ${CONF[p.conf].label}${p.stake ? ` · ${p.stake} pts bet` : " · no bet"}</p>`
-      : `<table class="sc"><tr><td>Winner</td><td>${c.sel}</td></tr><tr><td>How sure</td><td>${c.conf}</td></tr><tr><td>Bet</td><td>${c.st}</td></tr><tr><td></td><td>${c.lock}</td></tr></table>`}</section>
+    <section class="d-sec"><h3>Your pick</h3>${p ? `<p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet` : " · no bet"}</p>`
+      : `<table class="sc"><tr><td>Winner</td><td>${c.sel}</td></tr><tr><td>Bet</td><td>${c.st}</td></tr><tr><td></td><td>${c.lock}</td></tr></table>`}</section>
     <section class="d-sec"><div class="tip" style="position:static;display:block;box-shadow:none;border:0;padding:0;max-width:none">${tipHTML(s.slug)}</div><p class="caption">The full seat page is still to come.</p></section>`;
 }
 
@@ -365,7 +351,6 @@ function onClick(e) {
   const so = t.closest("#seat-table th button"); if (so) { const k = so.dataset.sort; S.dir = S.sort === k ? -S.dir : k === "sure" ? -1 : 1; S.sort = k; renderTable(); return; }
   const o = t.closest("[data-open]") || t.closest("#chamber .seat") || t.closest(".district"); if (o) { openSeat(o.dataset.open || o.dataset.slug); return; }
   if (t.closest("[data-act=close]")) { closeSeat(); return; }
-  const c = t.closest("[data-conf]"); if (c) { (S.draft[c.dataset.slug] ||= {}).conf = c.dataset.conf; refreshRow(c.dataset.slug); return; }
   const l = t.closest("[data-lock]"); if (l) lock(l.dataset.lock);
 }
 function onInput(e) {
@@ -378,12 +363,12 @@ function refreshRow(slug) { renderTable(); if (S.seat === slug) renderDrawer(); 
 async function lock(slug) {
   const d = S.draft[slug] || {}, stake = Number(d.stake || 0), s = seatBy(slug);
   const err = (m) => document.querySelectorAll(`[data-err="${slug}"]`).forEach((x) => (x.textContent = m));
-  if (!d.pick || !d.conf) return err("Choose a winner and how sure you are.");
+  if (!d.pick) return err("Choose a winner first.");
   try {
-    const r = await api("pick", { seat: slug, pick: d.pick, conf: d.conf, stake });
+    const r = await api("pick", { seat: slug, pick: d.pick, stake });
     S.picks[slug] = r.pick; delete S.draft[slug];
     closeSeat(); renderTop(); renderChamber(slug); renderTable(); if ($("#maps").open) renderMap();
-    toast(`<b>${esc(s.name)} locked.</b> ${esc(outName(s, d.pick))}, ${CONF[d.conf].label.toLowerCase()}${stake ? `, ${stake} points bet` : ", no bet"}. ${88 - Object.keys(S.picks).length} seats to go.`);
+    toast(`<b>${esc(s.name)} locked.</b> ${esc(outName(s, d.pick))}${stake ? `, ${stake} points bet` : ", no bet"}. ${88 - Object.keys(S.picks).length} seats to go.`);
   } catch (x) { err(x.message); }
 }
 function toast(html) { const t = $("#toast"); t.innerHTML = html; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 5000); }

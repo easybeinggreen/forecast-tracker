@@ -84,3 +84,4 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 #seat-table .stack { width: 100px; }
 #seat-table select.pick { max-width: 140px; }
 #seat-table th, #seat-table td { padding-left: 8px; padding-right: 8px; }
+.first .three.two { grid-template-columns: 1fr 1fr; }
