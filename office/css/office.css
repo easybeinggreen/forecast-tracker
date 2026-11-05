@@ -115,3 +115,7 @@ td.act { white-space: nowrap; }
 details.pickmore { border-top: 1px solid var(--rule); padding: 8px 0; }
 details.pickmore > summary { cursor: pointer; font-weight: 600; font-size: 13.5px; }
 details.pickmore[open] > summary { margin-bottom: 10px; }
+.seatname.link { color: var(--focus); }
+.seatname.link .go { display: inline-block; transition: transform .15s; color: var(--ink-3); }
+.seatname.link:hover .go { transform: translateX(3px); color: var(--focus); }
+.tip-go { margin: 6px 0 0; font-size: 12px; font-weight: 600; color: var(--focus); }

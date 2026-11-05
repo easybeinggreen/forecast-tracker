@@ -150,7 +150,7 @@ function renderApp() {
           <label class="search"><span class="sr">Find a seat</span><input id="search" type="search" placeholder="Find a seat or MP"></label>
         </div>
       </div>
-      <div class="list-view">${viewSeg("listview", S.listView, VIEWS.filter(([k]) => k !== "mine"))}<span class="caption">Your pick and bet stay put whichever view you're on.</span></div>
+      <div class="list-view">${viewSeg("listview", S.listView, VIEWS.filter(([k]) => k !== "mine"))}<span class="caption"><b>Click a seat name for its full page:</b> history, booth map, candidates, news and Sportsbet. Your pick and bet stay put whichever view you're on.</span></div>
       <div class="table-wrap">
         <table id="seat-table">
           <thead><tr>
@@ -188,7 +188,7 @@ function rulesHTML() {
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p></div>
     <div><h3>2. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
   </div>
-  <div class="foot-note"><p>One set of picks counts for both. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
+  <div class="foot-note"><p>Click any seat (in the chamber, map or list) for its full page of history, booth results, candidates and news. One set of picks counts for both. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
 
 function renderTop() {
@@ -247,7 +247,7 @@ function tipHTML(slug, view = S.view) {
   else if (view === "2025") { const f = fed2025(s); body = f ? `<p class="muted" style="margin-top:6px">2025 federal vote on these booths</p>${rows(f.top.slice(0, 4), (v) => v.toFixed(1) + "%")}<p class="muted">${f.tpp ? `Two-party: ${PARTY[f.k]} ${f.tppv.toFixed(1)}%` : NO_TPP}</p>` : ""; }
   else { const f = sbFair(s); body = f ? `<p class="muted" style="margin-top:6px">Sportsbet chance</p>${rows(f.filter(([, v]) => v >= 0.01).slice(0, 4), pct)}` : ""; }
   return `<h4>${esc(s.name)}</h4>${s.margin ? `<p class="muted">2022: ${PARTY[s.held_2022] || s.held_2022} by ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs}</p>` : ""}${body}
-    <p class="muted" style="margin-top:6px;font-size:11.5px">MP: ${esc(s.mp.name)}${s.mp.retiring ? " (retiring)" : ""}</p>
+    <p class="muted" style="margin-top:6px;font-size:11.5px">MP: ${esc(s.mp.name)}${s.mp.retiring ? " (retiring)" : ""}</p><p class="tip-go">Click for the full seat page ›</p>
     ${p ? `<p class="muted" style="margin-top:6px">Your pick: <b>${esc(outName(s, p.pick))}</b>${p.stake ? `, ${p.stake} pts bet` : ""}</p>` : ""}`;
 }
 function wireTips(wrap, sel, view) {
@@ -294,7 +294,7 @@ function renderChamber(pulse) {
     : `<text class="tally" x="${cx - 74}" y="${cy - 50}" text-anchor="middle" font-size="46" style="fill:${col("ALP")}">${tally.ALP || 0}</text><text class="tally-sub" x="${cx - 74}" y="${cy - 26}" text-anchor="middle">Labor</text><text class="tally" x="${cx + 74}" y="${cy - 50}" text-anchor="middle" font-size="46" style="fill:${col("LIB")}">${lnp}</text><text class="tally-sub" x="${cx + 74}" y="${cy - 26}" text-anchor="middle">Coalition</text>`;
   const svg = $("#chamber"); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.innerHTML = `<line class="maj" x1="${cx}" y1="${cy - R - 24}" x2="${cx}" y2="${cy - R * 0.36}"/><text class="maj-label" x="${cx}" y="${cy - R - 30}" text-anchor="middle">45 seats to govern</text>${circles}${big}`;
-  $("#chamber-desc").textContent = CAPTION[S.view];
+  $("#chamber-desc").textContent = CAPTION[S.view] + " Click a seat for its full page.";
   $("#legend").innerHTML = ORDER.filter((p) => tally[p]).map((p) => `<li><span class="sw" style="background:${p === "unset" ? "transparent;border:1px solid var(--rule)" : col(p)}"></span>${p === "unset" ? "Not called" : PARTY[p]} ${tally[p]}</li>`).join("");
 }
 
@@ -340,7 +340,7 @@ function renderTable() {
   $("#guide-h").textContent = { sb: "Guide: 2026 Sportsbet", "2022": "Guide: 2022 result", "2025": "Guide: 2025 federal" }[S.listView];
   $("#seat-table tbody").innerHTML = rows().map((s) => {
     const p = S.picks[s.slug];
-    const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}">${esc(s.name)}</button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
+    const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}" title="Open the full seat page">${esc(s.name)} <span class="go" aria-hidden="true">›</span></button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
       <td class="num">${s.margin ? `${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span>` : "—"}</td>
       <td><div class="guide-cell">${guideRows(s).filter(Boolean).map((r) => `<span class="model-cell${r.thin ? " thin" : ""}">${r.none ? `<span class="stack none"></span>` : stackHTML(r.parts, r.lead, r.tpp ? " two" : r.thin ? " tpp" : "")}${r.text ? `<b>${r.text}</b>` : ""}<span class="sub">${r.sub}</span></span>`).join("")}</div></td>`;
     if (p) return `<tr>${head}<td colspan="2"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.changes ? ` <span class="dim">(changed ${p.changes}×)</span>` : ""}${p.stake ? ` · ${p.stake} pts bet` : " · no bet"}</span></td>
