@@ -18,14 +18,14 @@ const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
-const S = { D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
+const S = { more: {}, calls: [], bets: [], D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
 const seatBy = (slug) => S.D.seats.find((s) => s.slug === slug);
 const outName = (s, k) => s.sportsbet?.names?.[k] || PARTY[k] || k;
 const photo = (name) => S.D.photos?.[name];
 
 // ---------------------------------------------------------------- API (preview mode keeps everything in the page)
 const PREVIEW = !!window.OFFICE_DEMO;
-const mem = {};
+const mem = { calls: [], bets: [] };
 async function api(path, body) {
   if (PREVIEW) return previewApi(path, body);
   const r = await fetch(`/api/${path}`, { method: body ? "POST" : "GET", headers: { "content-type": "application/json", authorization: `Bearer ${store.get("team.token") || ""}` }, body: body ? JSON.stringify(body) : undefined });
@@ -39,13 +39,19 @@ function previewApi(path, b) {
     if (!team) throw new Error("That team code isn't right. Try alliance or aimates.");
     return { token: "preview", player: { name: b.name || "You", team } };
   }
-  if (path === "me") return S.me ? { player: S.me, picks: Object.values(mem) } : {};
-  if (path === "pick") {
-    if (mem[b.seat]) throw new Error("You've already locked this seat.");
-    const staked = Object.values(mem).reduce((a, p) => a + p.stake, 0);
+  if (path === "me") return S.me ? { player: S.me, calls: [...mem.calls], bets: [...mem.bets] } : {};
+  const now = new Date().toISOString(), sb = seatBy(b.seat)?.sportsbet;
+  if (path === "call") {
+    const last = mem.calls.filter((c) => c.seat === b.seat).at(-1);
+    if (last && last.pick === b.pick) throw new Error("That's already your call.");
+    if (last && !b.why) throw new Error("Say what changed, in a line.");
+    const c = { seat: b.seat, pick: b.pick, why: b.why || "", created_at: now }; mem.calls.push(c); return { call: c };
+  }
+  if (path === "bet") {
+    const staked = mem.bets.reduce((a, x) => a + x.stake, 0);
+    if (!(b.stake > 0)) throw new Error("Enter the points to bet.");
     if (staked + b.stake > BANKROLL) throw new Error(`You have ${BANKROLL - staked} points left to bet.`);
-    const sb = seatBy(b.seat).sportsbet;
-    return { pick: (mem[b.seat] = { ...b, odds: sb?.odds?.[b.pick] ?? null, odds_as_of: sb?.as_of, created_at: new Date().toISOString() }) };
+    const x = { seat: b.seat, pick: b.pick, stake: b.stake, odds: sb?.odds?.[b.pick] ?? null, odds_as_of: sb?.as_of, created_at: now }; mem.bets.push(x); return { bet: x };
   }
 }
 
@@ -55,11 +61,24 @@ async function boot() {
   const topo = window.OFFICE_TOPO || await fetch("data/vic_districts.topojson").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (topo) S.geo = decodeTopo(topo, "districts");
   if (!PREVIEW && store.get("team.token")) {
-    try { const r = await api("me"); if (r.player) { S.me = r.player; setPicks(r.picks); return renderApp(); } } catch {}
+    try { const r = await api("me"); if (r.player) { S.me = r.player; setPicks(r); return renderApp(); } } catch {}
   }
   renderSignin("join");
 }
-const setPicks = (list) => { S.picks = Object.fromEntries((list || []).map((p) => [p.seat, p])); };
+// Calls and bets are append-only; a seat's current state is derived from them. The latest call is the one that counts.
+const setPicks = (r) => { S.calls = r.calls || []; S.bets = r.bets || []; derive(); };
+function derive() {
+  S.picks = {};
+  for (const c of S.calls) (S.picks[c.seat] ||= { seat: c.seat, calls: [], bets: [] }).calls.push(c);
+  for (const b of S.bets) (S.picks[b.seat] ||= { seat: b.seat, calls: [], bets: [] }).bets.push(b);
+  for (const p of Object.values(S.picks)) {
+    const last = p.calls.at(-1);
+    Object.assign(p, { pick: last?.pick, why: last?.why, created_at: p.calls[0]?.created_at, changes: Math.max(0, p.calls.length - 1),
+      stake: p.bets.reduce((a, b) => a + b.stake, 0), pays: p.bets.reduce((a, b) => a + b.stake * b.odds, 0) });
+  }
+  for (const k of Object.keys(S.picks)) if (!S.picks[k].pick) delete S.picks[k];
+}
+const staked = () => (S.bets || []).reduce((a, b) => a + b.stake, 0);
 
 function renderSignin(mode) {
   $("#app").innerHTML = `<div class="signin">
@@ -80,7 +99,7 @@ function renderSignin(mode) {
     try {
       const r = await api(mode, { name: f.name.value.trim(), pin: f.pin.value, code: f.code?.value });
       store.set("team.token", r.token); S.me = r.player;
-      setPicks((await api("me")).picks); renderApp();
+      setPicks(await api("me")); renderApp();
     } catch (x) { $("#signin-err").textContent = x.message; }
   };
 }
@@ -169,17 +188,17 @@ function rulesHTML() {
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p></div>
     <div><h3>2. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
   </div>
-  <div class="foot-note"><p>One set of picks counts for both. Add your reasoning to any pick, typed or dictated; everyone's reasoning is revealed after the count. A locked pick is final. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
+  <div class="foot-note"><p>One set of picks counts for both. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
 
 function renderTop() {
-  const P = Object.values(S.picks), staked = P.reduce((a, p) => a + p.stake, 0), bets = P.filter((p) => p.stake);
+  const P = Object.values(S.picks), bets = S.bets || [];
   const days = Math.max(0, Math.ceil((CLOSE - Date.now()) / 864e5));
   $("#countdown").textContent = `Picks close in ${days} day${days === 1 ? "" : "s"}`;
   $("#stats").innerHTML = `
     <div><div class="v">${P.length}</div><div class="l">Seats called · ${88 - P.length ? `${88 - P.length} to go` : "all 88 done"}</div></div>
-    <div><div class="v">${n0(BANKROLL - staked)}</div><div class="l">Points left to bet, of ${n0(BANKROLL)}</div></div>
-    <div><div class="v">${bets.length}</div><div class="l">Bets placed · ${n0(bets.reduce((a, p) => a + p.stake * p.odds, 0))} back if all win</div></div>
+    <div><div class="v">${n0(BANKROLL - staked())}</div><div class="l">Points left to bet, of ${n0(BANKROLL)}</div></div>
+    <div><div class="v">${bets.length}</div><div class="l">Bets placed · ${n0(bets.reduce((a, b) => a + b.stake * b.odds, 0))} back if all win</div></div>
     <div><div class="v">${P.filter((p) => p.pick !== sbFair(seatBy(p.seat))?.[0][0]).length}</div><div class="l">Picks against Sportsbet's favourite</div></div>`;
   $("#stats-note").textContent = P.length ? `Picks close 6pm Friday 27 November. Locked picks are final.` : "Nothing locked yet. Choose a winner in the table below, or click a seat in the chamber.";
 }
@@ -324,7 +343,8 @@ function renderTable() {
     const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}">${esc(s.name)}</button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
       <td class="num">${s.margin ? `${s.margin.value.toFixed(1)}<span class="dim"> v ${esc(s.margin.vs)}</span>` : "—"}</td>
       <td><div class="guide-cell">${guideRows(s).filter(Boolean).map((r) => `<span class="model-cell${r.thin ? " thin" : ""}">${r.none ? `<span class="stack none"></span>` : stackHTML(r.parts, r.lead, r.tpp ? " two" : r.thin ? " tpp" : "")}${r.text ? `<b>${r.text}</b>` : ""}<span class="sub">${r.sub}</span></span>`).join("")}</div></td>`;
-    if (p) return `<tr>${head}<td colspan="3"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}${p.why ? ` · <span class="dim" title="${esc(p.why)}">with reasoning</span>` : ""}</span></td></tr>`;
+    if (p) return `<tr>${head}<td colspan="2"><span class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.changes ? ` <span class="dim">(changed ${p.changes}×)</span>` : ""}${p.stake ? ` · ${p.stake} pts bet` : " · no bet"}</span></td>
+      <td class="act"><button class="btn btn-quiet why-btn" type="button" data-more="${s.slug}" data-mode="change">Change call</button><button class="btn btn-quiet why-btn" type="button" data-more="${s.slug}" data-mode="bet">Add bet</button></td></tr>`;
     const c = pickCells(s);
     return `<tr>${head}<td>${c.sel}</td><td>${c.st}</td><td class="act">${c.why}${c.lock}</td></tr>`;
   }).join("") || `<tr class="empty-row"><td colspan="7">No seats match. Clear the search or pick another filter.</td></tr>`;
@@ -383,16 +403,39 @@ function newsSec(s) {
 }
 function pickSec(s) {
   const p = S.picks[s.slug];
-  if (p) return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3><p class="lockd">✓ <b>${esc(outName(s, p.pick))}</b>${p.stake ? ` · ${p.stake} pts bet, pays ${n0(p.stake * p.odds)} if right` : " · no bet"}</p>${p.why ? `<blockquote class="why-locked">${esc(p.why)}</blockquote>` : ""}<p class="hint">Locked ${new Date(p.created_at).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}. Locked picks are final.</p></section>`;
+  if (p) return calledSec(s, p);
   const c = pickCells(s), d = S.draft[s.slug] || {};
   return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3>
     <div class="pick-form"><label>Who wins ${esc(s.name)}?${c.sel}</label><label>Bet (optional)${c.st}</label></div>
     <div class="why">
       <label for="why-${s.slug}">Why? <span class="dim">Your reasoning, locked with your pick and revealed after the count</span></label>
       <textarea id="why-${s.slug}" data-slug="${s.slug}" data-f="why" rows="4" maxlength="2000" placeholder="e.g. Teal candidate is strong locally, Liberal margin is only 3%, and the Greens will preference her.">${esc(d.why || "")}</textarea>
-      <div class="why-bar">${SpeechRec ? `<button class="btn btn-quiet" type="button" data-dictate="${s.slug}" aria-pressed="false">🎤 Dictate</button>` : `<span class="hint">Tip: use your keyboard's microphone to dictate.</span>`}<span class="hint" data-dictate-status="${s.slug}"></span>${c.lock}</div>
+      <div class="why-bar">${dictateBar(`why-${s.slug}`, c.lock)}
     </div>
-    <p class="hint">Points left to bet: ${n0(BANKROLL - Object.values(S.picks).reduce((a, x) => a + x.stake, 0))}. Locked picks are final.</p></section>`;
+    <p class="hint">Points left to bet: ${n0(BANKROLL - staked())}. You can change your call or add bets later; the call standing at close is the one that counts.</p></section>`;
+}
+const when = (t) => new Date(t).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
+const dictateBar = (id, extra = "") => `<div class="why-bar">${SpeechRec ? `<button class="btn btn-quiet" type="button" data-dictate="${id}" aria-pressed="false">🎤 Dictate</button>` : `<span class="hint">Tip: use your keyboard's microphone to dictate.</span>`}<span class="hint" data-dictate-status="${id}"></span>${extra}</div>`;
+function calledSec(s, p) {
+  const d = S.draft[s.slug] || {}, outs = (sbFair(s) || []).map(([k]) => k);
+  const events = [...p.calls.map((c, i) => ({ t: c.created_at, html: `${i ? "Changed call to" : "Called"} <b>${esc(outName(s, c.pick))}</b>${c.why ? `<blockquote class="why-locked">${esc(c.why)}</blockquote>` : ""}` })),
+    ...p.bets.map((b) => ({ t: b.created_at, html: `Bet <b>${b.stake} pts</b> on ${esc(outName(s, b.pick))}, pays ${n0(b.stake * b.odds)} if right` }))].sort((a, b) => a.t.localeCompare(b.t));
+  const opt = (sel, skip) => outs.filter((k) => k !== skip).map((k) => `<option value="${k}"${sel === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("");
+  const bo = d.bpick ? s.sportsbet?.odds?.[d.bpick] : null;
+  return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your call: ${esc(outName(s, p.pick))}</h3>
+    <ol class="trail">${events.map((e) => `<li><span class="dim">${when(e.t)}</span> ${e.html}</li>`).join("")}</ol>
+    <details class="pickmore" ${S.more?.[s.slug] === "change" ? "open" : ""}><summary>Change your call</summary>
+      <div class="pick-form"><label>New call<select class="pick" data-slug="${s.slug}" data-f="cpick"><option value="">Choose…</option>${opt(d.cpick, p.pick)}</select></label></div>
+      <div class="why"><label for="cwhy-${s.slug}">What changed? <span class="dim">Required; shown with your call trail after the count</span></label>
+        <textarea id="cwhy-${s.slug}" data-slug="${s.slug}" data-f="cwhy" rows="2" maxlength="1000" placeholder="e.g. Nominations closed and the independent didn't stand.">${esc(d.cwhy || "")}</textarea>
+        ${dictateBar(`cwhy-${s.slug}`, `<button class="btn" type="button" data-change="${s.slug}">Change call</button>`)}<span class="row-err" data-err-c="${s.slug}"></span></div>
+    </details>
+    <details class="pickmore" ${S.more?.[s.slug] === "bet" ? "open" : ""}><summary>Add a bet</summary>
+      <div class="pick-form"><label>On<select class="pick" data-slug="${s.slug}" data-f="bpick">${opt(d.bpick || p.pick)}</select></label>
+        <label>Points<input class="stake" data-slug="${s.slug}" data-f="bstake" inputmode="numeric" placeholder="0" value="${d.bstake ?? ""}"><span class="pays" data-bpays="${s.slug}">${bo && d.bstake ? `pays ${n0(d.bstake * bo)} if right` : ""}</span></label>
+        <button class="btn" type="button" data-addbet="${s.slug}">Add bet</button></div><span class="row-err" data-err-b="${s.slug}"></span>
+      <p class="hint">Priced at Sportsbet's odds now. Earlier bets stand at their own price. Points left: ${n0(BANKROLL - staked())}.</p>
+    </details></section>`;
 }
 function renderDrawer() {
   const s = seatBy(S.seat), p = S.picks[s.slug];
@@ -433,15 +476,14 @@ let rec = null;
 function stopDictation() { if (rec) { rec.onend = null; rec.stop(); rec = null; document.querySelectorAll("[data-dictate]").forEach((b) => { b.setAttribute("aria-pressed", "false"); b.textContent = "🎤 Dictate"; }); } }
 function toggleDictation(btn) {
   if (rec) return stopDictation();
-  const slug = btn.dataset.dictate, ta = $(`#why-${slug}`), status = document.querySelector(`[data-dictate-status="${slug}"]`), d = (S.draft[slug] ||= {});
+  const id = btn.dataset.dictate, ta = document.getElementById(id), status = document.querySelector(`[data-dictate-status="${id}"]`);
   rec = new SpeechRec(); rec.lang = "en-AU"; rec.continuous = true; rec.interimResults = true;
-  const base = () => (d.why ? d.why.replace(/\s*$/, " ") : "");
-  let start = base();
+  let start = ta.value ? ta.value.replace(/\s*$/, " ") : "";
   rec.onresult = (e) => {
     let fin = "", tmp = "";
     for (let i = e.resultIndex; i < e.results.length; i++) (e.results[i].isFinal ? (fin += e.results[i][0].transcript) : (tmp += e.results[i][0].transcript));
-    if (fin) { start = (start + fin.trim() + ". ").replace(/^\s+/, ""); d.why = start; }
-    ta.value = start + tmp;
+    if (fin) start = (start + fin.trim() + ". ").replace(/^\s+/, "");
+    ta.value = start + tmp; ta.dispatchEvent(new Event("input", { bubbles: true }));
   };
   rec.onerror = (e) => { status.textContent = e.error === "not-allowed" ? "Microphone blocked. Allow it in your browser, or type instead." : `Dictation stopped (${e.error}).`; stopDictation(); };
   rec.onend = () => stopDictation();
@@ -462,6 +504,9 @@ function onClick(e) {
   if (t.closest("[data-act=show-on-map]")) { showOnMap(S.seat); return; }
   if (t.closest("[data-act=to-pick]")) { $("#pick-sec")?.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   const w = t.closest("[data-why]"); if (w) { openSeat(w.dataset.why); setTimeout(() => { $("#pick-sec")?.scrollIntoView({ block: "start" }); $(`#why-${w.dataset.why}`)?.focus(); }, 50); return; }
+  const mo = t.closest("[data-more]"); if (mo) { S.more = { [mo.dataset.more]: mo.dataset.mode }; openSeat(mo.dataset.more); setTimeout(() => $("#pick-sec")?.scrollIntoView({ block: "start" }), 50); return; }
+  const ch = t.closest("[data-change]"); if (ch) { changeCall(ch.dataset.change); return; }
+  const ab = t.closest("[data-addbet]"); if (ab) { addBet(ab.dataset.addbet); return; }
   const dc = t.closest("[data-dictate]"); if (dc) { toggleDictation(dc); return; }
   const l = t.closest("[data-lock]"); if (l) lock(l.dataset.lock);
 }
@@ -469,7 +514,9 @@ function onInput(e) {
   const t = e.target, slug = t.dataset?.slug; if (!t.dataset?.f || !slug) return;
   const d = (S.draft[slug] ||= {});
   if (t.dataset.f === "stake") { t.value = t.value.replace(/\D/g, ""); d.stake = t.value; document.querySelectorAll(`[data-pays="${slug}"]`).forEach((x) => (x.textContent = paysText(seatBy(slug), d))); return; }
-  if (t.dataset.f === "why") { d.why = t.value; return; }
+  if (t.dataset.f === "why" || t.dataset.f === "cwhy") { d[t.dataset.f] = t.value; return; }
+  if (t.dataset.f === "bstake") { t.value = t.value.replace(/\D/g, ""); d.bstake = t.value; const o = d.bpick || S.picks[slug]?.pick, odds = seatBy(slug).sportsbet?.odds?.[o]; document.querySelectorAll(`[data-bpays="${slug}"]`).forEach((x) => (x.textContent = odds && d.bstake ? `pays ${n0(d.bstake * odds)} if right` : "")); return; }
+  if (t.dataset.f === "cpick" || t.dataset.f === "bpick") { d[t.dataset.f] = t.value; return; }
   d.pick = t.value; refreshRow(slug);
 }
 function refreshRow(slug) { renderTable(); if (S.seat === slug) renderDrawer(); }
@@ -479,10 +526,28 @@ async function lock(slug) {
   if (!d.pick) return err("Choose a winner first.");
   try {
     stopDictation();
-    const r = await api("pick", { seat: slug, pick: d.pick, stake, why: (d.why || "").trim() });
-    S.picks[slug] = r.pick; delete S.draft[slug];
+    if (stake && staked() + stake > BANKROLL) return err(`You have ${BANKROLL - staked()} points left to bet.`);
+    const r = await api("call", { seat: slug, pick: d.pick, why: (d.why || "").trim() }); S.calls.push(r.call);
+    if (stake) { const b = await api("bet", { seat: slug, pick: d.pick, stake }); S.bets.push(b.bet); }
+    derive(); delete S.draft[slug];
     closeSeat(); renderTop(); renderChamber(slug); renderTable(); if ($("#maps").open) renderMap();
     toast(`<b>${esc(s.name)} locked.</b> ${esc(outName(s, d.pick))}${stake ? `, ${stake} points bet` : ", no bet"}. ${88 - Object.keys(S.picks).length} seats to go.`);
+  } catch (x) { err(x.message); }
+}
+async function changeCall(slug) {
+  const d = S.draft[slug] || {}, s = seatBy(slug), err = (m) => document.querySelectorAll(`[data-err-c="${slug}"]`).forEach((x) => (x.textContent = m));
+  if (!d.cpick) return err("Choose the new call.");
+  if (!(d.cwhy || "").trim()) return err("Say what changed, in a line.");
+  try { stopDictation(); const r = await api("call", { seat: slug, pick: d.cpick, why: d.cwhy.trim() }); S.calls.push(r.call); derive(); delete S.draft[slug]; S.more = {};
+    closeSeat(); renderTop(); renderChamber(slug); renderTable(); if ($("#maps").open) renderMap();
+    toast(`<b>${esc(s.name)}:</b> call changed to ${esc(outName(s, r.call.pick))}.`);
+  } catch (x) { err(x.message); }
+}
+async function addBet(slug) {
+  const s = seatBy(slug), d = S.draft[slug] || {}, pick = d.bpick || S.picks[slug].pick, stake = Number(d.bstake || 0), err = (m) => document.querySelectorAll(`[data-err-b="${slug}"]`).forEach((x) => (x.textContent = m));
+  try { const r = await api("bet", { seat: slug, pick, stake }); S.bets.push(r.bet); derive(); delete S.draft[slug]; S.more = {};
+    closeSeat(); renderTop(); renderTable();
+    toast(`<b>${esc(s.name)}:</b> ${stake} points on ${esc(outName(s, pick))}, pays ${n0(stake * r.bet.odds)} if right.`);
   } catch (x) { err(x.message); }
 }
 function toast(html) { const t = $("#toast"); t.innerHTML = html; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 5000); }

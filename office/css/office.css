@@ -109,3 +109,9 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 .why-locked { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--ink-3); background: var(--sheet); font-size: 14px; white-space: pre-wrap; }
 td.act { white-space: nowrap; }
 .why-btn { padding: 6px 10px; margin-right: 6px; font-size: 13px; }
+.trail { list-style: none; padding: 0; margin: 6px 0 12px; font-size: 13.5px; display: grid; gap: 6px; }
+.trail li { border-left: 2px solid var(--rule); padding-left: 10px; }
+.trail .why-locked { margin: 4px 0 0; }
+details.pickmore { border-top: 1px solid var(--rule); padding: 8px 0; }
+details.pickmore > summary { cursor: pointer; font-weight: 600; font-size: 13.5px; }
+details.pickmore[open] > summary { margin-bottom: 10px; }
