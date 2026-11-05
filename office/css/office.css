@@ -119,3 +119,20 @@ details.pickmore[open] > summary { margin-bottom: 10px; }
 .seatname.link .go { display: inline-block; transition: transform .15s; color: var(--ink-3); }
 .seatname.link:hover .go { transform: translateX(3px); color: var(--focus); }
 .tip-go { margin: 6px 0 0; font-size: 12px; font-weight: 600; color: var(--focus); }
+.sub-hint { margin: 2px 0 0; font-size: 13px; color: var(--ink-2); }
+.overall { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: 18px 22px; margin: 18px 0; }
+.bigt th[scope=row] { font-weight: 700; white-space: nowrap; vertical-align: middle; }
+.bigt th[scope=row] .dim { display: block; font-weight: 400; font-size: 12px; }
+.bigt td { vertical-align: middle; width: 42%; }
+.bigbar { display: grid; gap: 4px; }
+.stack.wide { position: relative; width: 100%; height: 14px; display: flex; }
+.stack.wide .maj45 { position: absolute; left: calc(45 / 88 * 100%); top: -3px; bottom: -3px; border-left: 2px dashed var(--ink); }
+.bigtxt { display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: 12px; color: var(--ink-2); }
+.bigtxt .sw { width: 8px; height: 8px; margin-right: 3px; }
+.gov { border-top: 1px solid var(--rule); margin-top: 12px; padding-top: 12px; }
+.gov h3 { margin: 0 0 4px; }
+.gov .d-sec { padding: 0; border: 0; }
+/* the seat list: header stays put while you scroll */
+.seats .table-wrap { overflow: visible; }
+#seat-table thead th { position: sticky; top: 0; z-index: 3; background: var(--sheet); box-shadow: 0 1px 0 var(--rule); }
+.stack.none { border: 1px dashed var(--rule); }

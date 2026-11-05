@@ -7,8 +7,8 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const PARTY = { ALP: "Labor", LIB: "Liberal", NAT: "Nationals", GRN: "Greens", ON: "One Nation", IND: "Independent",
   RMIN: "Other right", PROG: "Other progressive", OTH: "Any other" };
-const SHORT = { ALP: "ALP", LIB: "LIB", NAT: "NAT", GRN: "GRN", ON: "ON", IND: "IND", RMIN: "RMIN", PROG: "PROG", OTH: "OTH" };
-const col = (p) => `var(--${p in PARTY ? p : "NONE"})`;
+const SHORT = { FIELD: "field", LNP: "LNP", OTHERS: "OTH", ALP: "ALP", LIB: "LIB", NAT: "NAT", GRN: "GRN", ON: "ON", IND: "IND", RMIN: "RMIN", PROG: "PROG", OTH: "OTH" };
+const col = (p) => (p === "FIELD" ? "var(--rule)" : p === "LNP" ? "var(--LIB)" : p === "OTHERS" ? "var(--OTH)" : `var(--${p in PARTY ? p : "NONE"})`);
 const ORDER = ["GRN", "ALP", "IND", "PROG", "OTH", "unset", "RMIN", "ON", "LIB", "NAT"];
 const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"]);
 const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hill":"BH","gippsland-east":"GE","gippsland-south":"GS","glen-waverley":"GW","mill-park":"MP","murray-plains":"MuP","narre-warren-north":"NN","narre-warren-south":"NS","ovens-valley":"OV","pascoe-vale":"PV","point-cook":"PC","south-barwon":"SB","south-west-coast":"SW","st-albans":"SA","yan-yean":"YY","ashwood":"As","bass":"Ba","bayswater":"By","bellarine":"Bl","benambra":"Bn","bentleigh":"Bt","berwick":"Bk","brighton":"Bg","broadmeadows":"Bd","brunswick":"Br","bulleen":"Bu","bundoora":"Bo","carrum":"Ca","caulfield":"Cf","clarinda":"Cl","cranbourne":"Cr","croydon":"Cy","dandenong":"Da","eildon":"Ei","eltham":"El","essendon":"Es","eureka":"Eu","euroa":"Er","evelyn":"Ev","footscray":"Fo","frankston":"Fr","geelong":"Gl","greenvale":"Gv","hastings":"Ha","hawthorn":"Hw","ivanhoe":"Iv","kalkallo":"Ka","kew":"Ke","kororoit":"Ko","lara":"La","laverton":"Lv","lowan":"Lo","macedon":"Ma","malvern":"Mv","melbourne":"Me","melton":"Mt","mildura":"Mi","monbulk":"Mo","mordialloc":"Md","mornington":"Mn","morwell":"Mw","mulgrave":"Mu","narracan":"Na","nepean":"Ne","niddrie":"Ni","northcote":"No","oakleigh":"Oa","pakenham":"Pa","polwarth":"Po","prahran":"Pr","preston":"Ps","richmond":"Ri","ringwood":"Rw","ripon":"Rp","rowville":"Ro","sandringham":"Sd","shepparton":"Sh","sunbury":"Su","sydenham":"Sy","tarneit":"Ta","thomastown":"Th","warrandyte":"Wa","wendouree":"We","werribee":"Wr","williamstown":"Wi"};
@@ -18,8 +18,18 @@ const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
-const S = { more: {}, calls: [], bets: [], D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
-const seatBy = (slug) => S.D.seats.find((s) => s.slug === slug);
+const S = { more: {}, calls: [], bets: [], D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", order: null, sortView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
+const seatBy = (slug) => (slug === "statewide" ? govSeat() : S.D.seats.find((s) => s.slug === slug));
+// "Who forms government?" behaves like a seat: one call, optional bets, priced from the Kalshi market with its margin removed.
+let _gov;
+function govSeat() {
+  if (_gov) return _gov;
+  const g = S.D.statewide?.government || { p: {} }, tot = Object.values(g.p).reduce((a, b) => a + b, 0) || 1;
+  const fair = Object.fromEntries(Object.entries(g.p).map(([k, v]) => [k, v / tot]));
+  return (_gov = { slug: "statewide", name: "Who forms government", mp: { name: "", party: "" },
+    sportsbet: { fair, odds: Object.fromEntries(Object.entries(fair).map(([k, v]) => [k, Math.round((1 / v) * 100) / 100])), names: { LNP: "Coalition", ALP: "Labor", ON: "One Nation" }, as_of: g.as_of } });
+}
+const seatPicks = () => Object.values(S.picks).filter((p) => p.seat !== "statewide");
 const outName = (s, k) => s.sportsbet?.names?.[k] || PARTY[k] || k;
 const photo = (name) => S.D.photos?.[name];
 
@@ -131,6 +141,8 @@ function renderApp() {
       <div class="outcome-panel"><div class="panel-head"><h2>Your challenge</h2></div><div class="ledger-grid stats2" id="stats"></div><p class="caption" id="stats-note"></p></div>
     </section>
 
+    <section class="overall" id="big" aria-labelledby="big-title"></section>
+
     <details class="maps" id="maps"><summary><div class="panel-head"><h2>Constituency map</h2><span class="more"></span></div></summary>
       <div class="panel-head" style="justify-content:flex-start">${viewSeg("mapview", S.mapView)}</div>
       <div class="map-grid">
@@ -142,7 +154,7 @@ function renderApp() {
 
     <section class="seats" aria-labelledby="seats-title">
       <div class="panel-head">
-        <h2 id="seats-title">Every seat</h2>
+        <div><h2 id="seats-title">Every seat</h2><p class="sub-hint">Click a seat for its full page: history, booth map, candidates, news and Sportsbet.</p></div>
         <div class="toolbar">
           <div class="chips" role="group" aria-label="Show">
             ${[["all", "All 88"], ["todo", "Still to call"], ["called", "Called"], ["close", "Close contests"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${S.filter === k}">${l}</button>`).join("")}
@@ -150,7 +162,7 @@ function renderApp() {
           <label class="search"><span class="sr">Find a seat</span><input id="search" type="search" placeholder="Find a seat or MP"></label>
         </div>
       </div>
-      <div class="list-view">${viewSeg("listview", S.listView, VIEWS.filter(([k]) => k !== "mine"))}<span class="caption"><b>Click a seat name for its full page:</b> history, booth map, candidates, news and Sportsbet. Your pick and bet stay put whichever view you're on.</span></div>
+      <div class="list-view">${viewSeg("listview", S.listView)}<span class="caption">Switching view keeps the seats in the same order. Your pick and bet stay put whichever view you're on.</span></div>
       <div class="table-wrap">
         <table id="seat-table">
           <thead><tr>
@@ -181,7 +193,7 @@ function renderApp() {
   renderAll();
 }
 const latestOdds = () => S.D.seats.map((s) => s.sportsbet?.as_of).filter(Boolean).sort().at(-1);
-function renderAll() { renderTop(); renderChamber(); renderTable(); if ($("#maps")?.open) renderMap(); }
+function renderAll() { renderTop(); renderChamber(); renderBig(); renderTable(); if ($("#maps")?.open) renderMap(); }
 
 function rulesHTML() {
   return `<div class="three two">
@@ -192,7 +204,7 @@ function rulesHTML() {
 }
 
 function renderTop() {
-  const P = Object.values(S.picks), bets = S.bets || [];
+  const P = seatPicks(), bets = S.bets || [];
   const days = Math.max(0, Math.ceil((CLOSE - Date.now()) / 864e5));
   $("#countdown").textContent = `Picks close in ${days} day${days === 1 ? "" : "s"}`;
   $("#stats").innerHTML = `
@@ -219,23 +231,34 @@ function seatColour(s, view = S.view) {
   if (view === "2025") { const f = fed2025(s); return f ? { p: f.k, op: f.tpp ? 0.35 + 0.65 * Math.min(1, f.m / 12) : 0.3 } : { p: "unset", op: 1 }; }
   const f = sbFair(s); return f ? { p: f[0][0], op: 0.3 + 0.7 * Math.min(1, Math.max(0, (f[0][1] - 0.34) / 0.6)) } : { p: "unset", op: 1 };
 }
-// The guide: top row is what decides the seat for the chosen view, second row the vote behind it.
+// The guide, same shape in every view: top row is the head-to-head, bottom row the full split behind it.
 const pr = (obj) => Object.entries(obj || {}).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, v / 100]);
-function guideRows(s) {
-  const v = S.listView, t = tpp22(s);
-  const two22 = t ? { parts: [[t.a, t.av / 100], [t.b, t.bv / 100]], lead: null, text: `${SHORT[t.a]} ${t.av.toFixed(1)} v ${SHORT[t.b] || t.b} ${t.bv.toFixed(1)}`, sub: "2022 two-party", tpp: true } : null;
-  if (v === "sb") { const f = sbFair(s); return [two22, f ? { parts: f.filter(([, x]) => x >= 0.01), lead: f[0][0], text: `${SHORT[f[0][0]] || f[0][0]} ${pct(f[0][1])}`, sub: "2026 Sportsbet chance", thin: true } : null]; }
-  if (v === "2022") return [two22, { parts: pr(s.prims_2022_grouped), lead: null, text: "", sub: "2022 primary vote", thin: true }];
-  const f = fed2025(s); if (!f) return [null, null];
-  const prim = { parts: pr(s.fed2025.prims), lead: null, text: "", sub: "2025 primary vote", thin: true };
-  return [f.tpp ? { parts: [[f.k, f.tppv / 100], [f.o, 1 - f.tppv / 100]], lead: null, text: `${SHORT[f.k]} ${f.tppv.toFixed(1)} v ${SHORT[f.o]} ${(100 - f.tppv).toFixed(1)}`, sub: "2025 two-party", tpp: true }
-    : { parts: [], text: "No two-party", sub: "not Labor v Coalition here", none: true }, prim];
+const h2h = (a, av, b, bv, sub) => ({ parts: [[a, av / 100], [b, bv / 100]], text: `${SHORT[a] || a} ${av.toFixed(av < 10 ? 1 : 0)} v ${SHORT[b] || b} ${bv.toFixed(bv < 10 ? 1 : 0)}`, sub, tpp: true });
+function guideRows(s, v = S.listView) {
+  const t = tpp22(s);
+  if (v === "2022") return [t && h2h(t.a, t.av, t.b, t.bv, "2022 two-party"), { parts: pr(s.prims_2022_grouped), sub: "2022 primary vote", thin: true }];
+  if (v === "2025") {
+    const f = fed2025(s); if (!f) return [null, null];
+    const prim = { parts: pr(s.fed2025.prims), sub: "2025 primary vote", thin: true };
+    if (f.tpp) return [h2h(f.k, f.tppv, f.o, 100 - f.tppv, "2025 two-party"), prim];
+    const [[a, av], [b, bv]] = f.top; // no two-party count here: show the top two on primaries, scaled to 100
+    return [h2h(a, (100 * av) / (av + bv), b, (100 * bv) / (av + bv), "top two on primaries (no two-party count)"), prim];
+  }
+  if (v === "sb") {
+    const f = sbFair(s); if (!f) return [null, null];
+    return [h2h(f[0][0], 100 * f[0][1], "FIELD", 100 * (1 - f[0][1]), "Sportsbet: favourite v the field"), { parts: f.filter(([, x]) => x >= 0.01), sub: "Sportsbet chance, every candidate", thin: true }];
+  }
+  const p = S.picks[s.slug], f = sbFair(s);
+  if (!p) return [{ parts: [], text: "Not called yet", sub: "", none: true }, f ? { parts: f.filter(([, x]) => x >= 0.01), sub: "Sportsbet chance, every candidate", thin: true } : null];
+  const ch = s.sportsbet?.fair?.[p.pick] ?? 0;
+  return [{ parts: [[p.pick, 1]], text: `${SHORT[p.pick] || p.pick}${p.stake ? ` · ${p.stake} pts` : ""}`, sub: "your call", tpp: true },
+    { parts: [[p.pick, ch], ["FIELD", 1 - ch]], text: `${pct(ch)}`, sub: "Sportsbet's chance for your call", thin: true }];
 }
-function sureOf(s) {
-  const v = S.listView;
+function sureOf(s, v = S.listView) {
   if (v === "sb") return sbFair(s)?.[0][1] ?? 0;
   if (v === "2022") return 0.5 + (s.margin?.value ?? 0) / 100;
-  const f = fed2025(s); return f?.tpp ? f.tppv / 100 : 0.5;
+  if (v === "mine") { const p = S.picks[s.slug]; return p ? s.sportsbet?.fair?.[p.pick] ?? 0 : -1; }
+  const f = fed2025(s); if (!f) return 0.5; return f.tpp ? f.tppv / 100 : f.top[0][1] / (f.top[0][1] + f.top[1][1]);
 }
 const tpp22 = (s) => (s.margin ? { a: s.held_2022, av: 50 + s.margin.value, b: s.margin.vs, bv: 50 - s.margin.value } : null);
 
@@ -288,7 +311,7 @@ function renderChamber(pulse) {
     const light = x.op > 0.6 && !DARK_TEXT.has(x.p);
     return `<g class="seat-g${called ? " called" : ""}${pulse === x.s.slug ? " pulse" : ""}"><circle class="seat${x.p === "unset" ? " unset" : ""}" tabindex="0" role="button" aria-label="${esc(x.s.name)}" data-slug="${x.s.slug}" cx="${X}" cy="${Y}" r="${dot}" style="${x.p === "unset" ? "" : `fill:${col(x.p)};opacity:${x.op.toFixed(2)}`}"></circle>${called ? `<circle class="ring" cx="${X}" cy="${Y}" r="${dot + 3.5}"/>` : ""}<text class="ab${light ? " light" : ""}" x="${X}" y="${Y}" dy="0.35em" text-anchor="middle" font-size="${ab.length > 2 ? 9.5 : 11.5}">${ab}</text></g>`;
   }).join("");
-  const n = Object.keys(S.picks).length, lnp = (tally.LIB || 0) + (tally.NAT || 0);
+  const n = seatPicks().length, lnp = (tally.LIB || 0) + (tally.NAT || 0);
   const big = S.view === "mine"
     ? `<text class="tally" x="${cx}" y="${cy - 52}" text-anchor="middle" font-size="44">${n}</text><text class="tally-sub" x="${cx}" y="${cy - 28}" text-anchor="middle">seats called, ${88 - n ? `${88 - n} to go` : "all 88 done"}</text>`
     : `<text class="tally" x="${cx - 74}" y="${cy - 50}" text-anchor="middle" font-size="46" style="fill:${col("ALP")}">${tally.ALP || 0}</text><text class="tally-sub" x="${cx - 74}" y="${cy - 26}" text-anchor="middle">Labor</text><text class="tally" x="${cx + 74}" y="${cy - 50}" text-anchor="middle" font-size="46" style="fill:${col("LIB")}">${lnp}</text><text class="tally-sub" x="${cx + 74}" y="${cy - 26}" text-anchor="middle">Coalition</text>`;
@@ -296,6 +319,43 @@ function renderChamber(pulse) {
   svg.innerHTML = `<line class="maj" x1="${cx}" y1="${cy - R - 24}" x2="${cx}" y2="${cy - R * 0.36}"/><text class="maj-label" x="${cx}" y="${cy - R - 30}" text-anchor="middle">45 seats to govern</text>${circles}${big}`;
   $("#chamber-desc").textContent = CAPTION[S.view] + " Click a seat for its full page.";
   $("#legend").innerHTML = ORDER.filter((p) => tally[p]).map((p) => `<li><span class="sw" style="background:${p === "unset" ? "transparent;border:1px solid var(--rule)" : col(p)}"></span>${p === "unset" ? "Not called" : PARTY[p]} ${tally[p]}</li>`).join("");
+}
+
+// ---------------------------------------------------------------- the overall result
+function tallyOf(fn) { const t = {}; for (const s of S.D.seats) { const k = fn(s); if (k) t[k] = (t[k] || 0) + 1; } return t; }
+const COAL = (k) => (k === "LIB" || k === "NAT" ? "LNP" : k);
+function stackRow(entries, total, label) {
+  const list = entries.filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);
+  return `<div class="bigbar"><span class="stack wide" aria-hidden="true">${list.map(([k, v]) => `<i style="width:${(100 * v) / total}%;background:${col(k)}"></i>`).join("")}${label === "seats" ? '<b class="maj45" title="45 seats to govern"></b>' : ""}</span>
+    <span class="bigtxt">${list.map(([k, v]) => `<span><span class="sw" style="background:${col(k)}"></span>${SHORT[k] || k} <b>${label === "seats" ? v : v.toFixed(0)}</b></span>`).join("")}</span></div>`;
+}
+function renderBig() {
+  const W = S.D.statewide; if (!W) return;
+  const vote22 = Object.entries(W.y2022);
+  const f = W.fed2025.prims, vote25 = Object.entries({ ALP: f.ALP, LNP: (f.LIB || 0) + (f.NAT || 0), GRN: f.GRN, ON: f.ON, OTHERS: 100 - f.ALP - (f.LIB || 0) - (f.NAT || 0) - f.GRN - f.ON });
+  const pp = W.polls.primaries, votePoll = Object.entries({ ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others });
+  const s22 = tallyOf((s) => COAL(s.held_2022)), s25 = tallyOf((s) => COAL(fed2025(s)?.k)), ssb = tallyOf((s) => COAL(sbFair(s)?.[0][0])), smine = tallyOf((s) => COAL(S.picks[s.slug]?.pick));
+  const n = seatPicks().length;
+  const row = (lab, sub, vote, seats) => `<tr><th scope="row">${lab}<span class="dim">${sub}</span></th><td>${vote ? stackRow(vote, 100, "vote") : '<span class="dim">—</span>'}</td><td>${seats}</td></tr>`;
+  const gov = govSeat(), gp = S.picks.statewide, d = S.draft.statewide || {};
+  const c = gp ? null : pickCells(gov);
+  const polls = W.polls.list.map((x) => `<tr><td><a href="${esc(x.source_url)}" target="_blank" rel="noopener">${esc(x.pollster)}</a></td><td>${esc(x.fieldwork_end)}</td><td class="num">${esc(x.sample_size)}</td>${["alp", "lnp", "onp", "grn", "others"].map((k) => `<td class="num">${esc(x[k])}</td>`).join("")}</tr>`).join("");
+  $("#big").innerHTML = `<div class="panel-head"><div><h2 id="big-title">The overall result</h2><p class="sub-hint">Statewide vote and seats, side by side. Polls aren't published seat by seat, so they show the vote only.</p></div></div>
+    <div class="table-wrap"><table class="sheet bigt"><thead><tr><th></th><th>Statewide primary vote (%)</th><th>Seats won or leading (45 to govern)</th></tr></thead><tbody>
+      ${row("2022 result", "Victorian election", vote22, stackRow(Object.entries(s22), 88, "seats"))}
+      ${row("2025 federal", "Victorian booths", vote25, stackRow(Object.entries(s25), 88, "seats"))}
+      ${row("2026 polls", `Election Tracker average, ${esc(W.polls.as_of)}`, votePoll, '<span class="dim">Not published seat by seat</span>')}
+      ${row("2026 Sportsbet", "favourite in each seat", null, stackRow(Object.entries(ssb), 88, "seats"))}
+      ${row("My calls", `${n} of 88 called`, null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No calls yet</span>')}
+    </tbody></table></div>
+    <details class="pickmore polls-d"><summary>The latest published polls</summary><div class="table-wrap"><table class="sheet"><thead><tr><th>Pollster</th><th>Fieldwork ended</th><th class="num">Sample</th><th class="num">ALP</th><th class="num">LNP</th><th class="num">ON</th><th class="num">GRN</th><th class="num">Oth</th></tr></thead><tbody>${polls}</tbody></table></div>
+      <p class="hint">Primary vote, %. Media and self-funded polls only (party polls left out), as listed by Election Tracker.</p></details>
+    <div class="gov">
+      <h3>Who forms government?</h3>
+      <p class="hint">An extra call, and you can bet on it from the same ${n0(BANKROLL)} points. Priced from the Kalshi prediction market: ${Object.entries(gov.sportsbet.fair).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${gov.sportsbet.names[k]} ${pct(v)}`).join(", ")}. It breaks ties in "most seats right".</p>
+      ${gp ? calledSec(gov, gp) : `<div class="pick-form"><label>Your call${c.sel}</label><label>Bet (optional)${c.st}</label></div>
+        <div class="why"><label for="why-statewide">Why?</label><textarea id="why-statewide" data-slug="statewide" data-f="why" rows="2" maxlength="2000" placeholder="e.g. One Nation preferences flow strongly to the Coalition in the outer suburbs.">${esc(d.why || "")}</textarea>${dictateBar("why-statewide", c.lock)}</div>`}
+    </div>`;
 }
 
 // ---------------------------------------------------------------- map (folded)
@@ -323,10 +383,13 @@ function rows() {
   if (S.filter === "todo") list = list.filter((s) => !S.picks[s.slug]);
   if (S.filter === "called") list = list.filter((s) => S.picks[s.slug]);
   if (S.filter === "close") list = list.filter((s) => { const f = sbFair(s); return f && f[0][1] < 0.6; });
-  const key = { name: (s) => s.name, margin: (s) => s.margin?.value ?? 99, sure: (s) => sureOf(s) }[S.sort];
-  return list.sort((a, b) => S.dir * (key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0));
-}
-const stackHTML = (parts, lead, cls = "") => `<span class="stack${cls}" aria-hidden="true">${parts.map(([k, v]) => `<i class="${k === lead ? "lead" : ""}" style="width:${v * 100}%;background:${col(k)}"></i>`).join("")}</span>`;
+  if (!S.order) {
+    const v = S.sortView || S.listView;
+    const key = { name: (s) => s.name, margin: (s) => s.margin?.value ?? 99, sure: (s) => sureOf(s, v) }[S.sort];
+    S.order = Object.fromEntries([...S.D.seats].sort((a, b) => S.dir * (key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0) || a.name.localeCompare(b.name)).map((s, i) => [s.slug, i]));
+  }
+  return list.sort((a, b) => S.order[a.slug] - S.order[b.slug]);
+}const stackHTML = (parts, lead, cls = "") => `<span class="stack${cls}" aria-hidden="true">${parts.map(([k, v]) => `<i class="${k === lead ? "lead" : ""}" style="width:${v * 100}%;background:${col(k)}"></i>`).join("")}</span>`;
 function pickCells(s) {
   const d = S.draft[s.slug] || {}, f = sbFair(s) || [];
   const sel = `<select class="pick" data-slug="${s.slug}" data-f="pick" aria-label="Your pick for ${esc(s.name)}"><option value="">Choose…</option>${f.map(([k, v]) => `<option value="${k}"${d.pick === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("")}</select>`;
@@ -337,7 +400,7 @@ function pickCells(s) {
 function paysText(s, d) { const o = d.pick ? s.sportsbet?.odds?.[d.pick] : null, st = Number(d.stake || 0); return o && st ? `pays ${n0(st * o)} if right` : ""; }
 function renderTable() {
   document.querySelectorAll("#seat-table th button").forEach((b) => (b.dataset.sort === S.sort ? b.setAttribute("aria-sort", S.dir > 0 ? "ascending" : "descending") : b.removeAttribute("aria-sort")));
-  $("#guide-h").textContent = { sb: "Guide: 2026 Sportsbet", "2022": "Guide: 2022 result", "2025": "Guide: 2025 federal" }[S.listView];
+  $("#guide-h").textContent = { sb: "2026 Sportsbet", "2022": "2022 result", "2025": "2025 federal", mine: "My calls" }[S.listView] + (S.sort === "sure" ? ` (sorted by ${({ sb: "2026 Sportsbet", "2022": "2022 result", "2025": "2025 federal", mine: "my calls" })[S.sortView || S.listView]})` : "");
   $("#seat-table tbody").innerHTML = rows().map((s) => {
     const p = S.picks[s.slug];
     const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}" title="Open the full seat page">${esc(s.name)} <span class="go" aria-hidden="true">›</span></button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
@@ -422,7 +485,7 @@ function calledSec(s, p) {
     ...p.bets.map((b) => ({ t: b.created_at, html: `Bet <b>${b.stake} pts</b> on ${esc(outName(s, b.pick))}, pays ${n0(b.stake * b.odds)} if right` }))].sort((a, b) => a.t.localeCompare(b.t));
   const opt = (sel, skip) => outs.filter((k) => k !== skip).map((k) => `<option value="${k}"${sel === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("");
   const bo = d.bpick ? s.sportsbet?.odds?.[d.bpick] : null;
-  return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your call: ${esc(outName(s, p.pick))}</h3>
+  return `<section class="d-sec" ${s.slug === "statewide" ? "" : 'id="pick-sec"'}><h3>Your call: ${esc(outName(s, p.pick))}</h3>
     <ol class="trail">${events.map((e) => `<li><span class="dim">${when(e.t)}</span> ${e.html}</li>`).join("")}</ol>
     <details class="pickmore" ${S.more?.[s.slug] === "change" ? "open" : ""}><summary>Change your call</summary>
       <div class="pick-form"><label>New call<select class="pick" data-slug="${s.slug}" data-f="cpick"><option value="">Choose…</option>${opt(d.cpick, p.pick)}</select></label></div>
@@ -498,7 +561,7 @@ function onClick(e) {
   const lv = t.closest("[data-listview]"); if (lv) { S.listView = lv.dataset.listview; document.querySelectorAll("[data-listview]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.listview === S.listView))); renderTable(); return; }
   const mv = t.closest("[data-mapview]"); if (mv) { S.mapView = mv.dataset.mapview; document.querySelectorAll("[data-mapview]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mapview === S.mapView))); renderMap(); return; }
   const f = t.closest("[data-filter]"); if (f) { S.filter = f.dataset.filter; document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b === f))); renderTable(); return; }
-  const so = t.closest("#seat-table th button"); if (so) { const k = so.dataset.sort; S.dir = S.sort === k ? -S.dir : k === "sure" ? -1 : 1; S.sort = k; renderTable(); return; }
+  const so = t.closest("#seat-table th button"); if (so) { const k = so.dataset.sort; S.dir = S.sort === k ? -S.dir : k === "sure" ? -1 : 1; S.sort = k; S.sortView = S.listView; S.order = null; renderTable(); return; }
   const o = t.closest("[data-open]") || t.closest("#chamber .seat") || t.closest(".district"); if (o) { openSeat(o.dataset.open || o.dataset.slug); return; }
   if (t.closest("[data-act=close]")) { closeSeat(); return; }
   if (t.closest("[data-act=show-on-map]")) { showOnMap(S.seat); return; }
@@ -519,7 +582,7 @@ function onInput(e) {
   if (t.dataset.f === "cpick" || t.dataset.f === "bpick") { d[t.dataset.f] = t.value; return; }
   d.pick = t.value; refreshRow(slug);
 }
-function refreshRow(slug) { renderTable(); if (S.seat === slug) renderDrawer(); }
+function refreshRow(slug) { if (slug === "statewide") return renderBig(); renderTable(); if (S.seat === slug) renderDrawer(); }
 async function lock(slug) {
   const d = S.draft[slug] || {}, stake = Number(d.stake || 0), s = seatBy(slug);
   const err = (m) => document.querySelectorAll(`[data-err="${slug}"]`).forEach((x) => (x.textContent = m));
@@ -530,8 +593,8 @@ async function lock(slug) {
     const r = await api("call", { seat: slug, pick: d.pick, why: (d.why || "").trim() }); S.calls.push(r.call);
     if (stake) { const b = await api("bet", { seat: slug, pick: d.pick, stake }); S.bets.push(b.bet); }
     derive(); delete S.draft[slug];
-    closeSeat(); renderTop(); renderChamber(slug); renderTable(); if ($("#maps").open) renderMap();
-    toast(`<b>${esc(s.name)} locked.</b> ${esc(outName(s, d.pick))}${stake ? `, ${stake} points bet` : ", no bet"}. ${88 - Object.keys(S.picks).length} seats to go.`);
+    closeSeat(); renderTop(); renderChamber(slug); renderTable(); renderBig(); if ($("#maps").open) renderMap();
+    toast(`<b>${esc(s.name)} locked.</b> ${esc(outName(s, d.pick))}${stake ? `, ${stake} points bet` : ", no bet"}. ${88 - seatPicks().length} seats to go.`);
   } catch (x) { err(x.message); }
 }
 async function changeCall(slug) {
@@ -539,14 +602,14 @@ async function changeCall(slug) {
   if (!d.cpick) return err("Choose the new call.");
   if (!(d.cwhy || "").trim()) return err("Say what changed, in a line.");
   try { stopDictation(); const r = await api("call", { seat: slug, pick: d.cpick, why: d.cwhy.trim() }); S.calls.push(r.call); derive(); delete S.draft[slug]; S.more = {};
-    closeSeat(); renderTop(); renderChamber(slug); renderTable(); if ($("#maps").open) renderMap();
+    closeSeat(); renderTop(); renderChamber(slug); renderTable(); renderBig(); if ($("#maps").open) renderMap();
     toast(`<b>${esc(s.name)}:</b> call changed to ${esc(outName(s, r.call.pick))}.`);
   } catch (x) { err(x.message); }
 }
 async function addBet(slug) {
   const s = seatBy(slug), d = S.draft[slug] || {}, pick = d.bpick || S.picks[slug].pick, stake = Number(d.bstake || 0), err = (m) => document.querySelectorAll(`[data-err-b="${slug}"]`).forEach((x) => (x.textContent = m));
   try { const r = await api("bet", { seat: slug, pick, stake }); S.bets.push(r.bet); derive(); delete S.draft[slug]; S.more = {};
-    closeSeat(); renderTop(); renderTable();
+    closeSeat(); renderTop(); renderTable(); renderBig();
     toast(`<b>${esc(s.name)}:</b> ${stake} points on ${esc(outName(s, pick))}, pays ${n0(stake * r.bet.odds)} if right.`);
   } catch (x) { err(x.message); }
 }

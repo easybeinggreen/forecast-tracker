@@ -40,7 +40,25 @@ def main():
 
     photos = json.loads((SITE / "photos.json").read_text()) if (SITE / "photos.json").exists() else {}
     mps = {s["mp"]["name"] for s in F["seats"]}
-    out = {"photos": {k: v for k, v in photos.items() if k in mps}, "generated": F.get("generated"), "election_date": F.get("election_date"),
+    # Statewide picture: 2022 result, 2025 federal (Vic), the published polls and their public average, and the
+    # prediction-market price on who wins (used to price the overall-result bet). Nothing from our model.
+    import csv
+    polls_dir = ROOT / "data" / "raw" / "polls"
+    avg = json.loads((polls_dir / "et_poll-average.json").read_text())
+    polls = sorted(csv.DictReader(open(polls_dir / "et_polls.csv")), key=lambda r: r["fieldwork_end"], reverse=True)
+    mk = json.loads((SITE / "markets.json").read_text())
+    who = [m for m in mk["markets"] if m["source"] == "Kalshi" and "win the 2026 Victorian state election" in m.get("title", "")]
+    code = {"Liberals and Nationals": "LNP", "Australian Labor Party": "ALP", "One Nation": "ON"}
+    statewide = {
+        "y2022": F["why_statewide"]["2022"],
+        "fed2025": F["fed2025_vic"],
+        "polls": {"source": "Election Tracker average", "as_of": avg["as_of"], "primaries": avg["primaries"],
+                  "list": [{k: r[k] for k in ("pollster", "commissioner", "fieldwork_end", "sample_size", "alp", "lnp", "onp", "grn", "others", "source_url")}
+                           for r in polls if r.get("eligible_for_average") == "true"][:8]},
+        "government": {"source": "Kalshi", "as_of": mk["fetched"], "url": who[0]["url"] if who else None,
+                       "p": {code[m["outcome"]]: m["p"] for m in who if m["outcome"] in code}},
+    }
+    out = {"statewide": statewide, "photos": {k: v for k, v in photos.items() if k in mps}, "generated": F.get("generated"), "election_date": F.get("election_date"),
            "party_names": F.get("party_names"), "sportsbet_url": sb.get("url"), "seats": seats}
     DEST.parent.mkdir(parents=True, exist_ok=True)
     DEST.write_text(json.dumps(out, separators=(",", ":")))
