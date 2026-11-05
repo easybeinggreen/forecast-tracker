@@ -1,4 +1,4 @@
-// Count Room Team Challenge: Victorian election 2026.
+// Ballot Miner: Victorian election 2026.
 // Players see seat data and Sportsbet chances only; nothing from the model is in office.json.
 import { decodeTopo, projector, bboxOf, pathOf } from "./map.js";
 import { locatorSVG, insideShell, renderInside, placeHTML, resultsHTML, changesHTML } from "./seatx.js";
@@ -64,7 +64,7 @@ const setPicks = (list) => { S.picks = Object.fromEntries((list || []).map((p) =
 function renderSignin(mode) {
   $("#app").innerHTML = `<div class="signin">
     ${PREVIEW ? `<div class="preview-note"><b>Preview.</b> Nothing is saved. Any name and PIN; team code <b>alliance</b> or <b>aimates</b>.</div>` : ""}
-    <div class="brand"><svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><path d="M3 18a13 13 0 0 1 26 0"/><circle cx="16" cy="18" r="2.6"/></svg><div><h1>Count Room Team Challenge</h1><p class="sub">Victorian election, Saturday 28 November 2026</p></div></div>
+    <div class="brand"><svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><path d="M3 18a13 13 0 0 1 26 0"/><path class="inner" d="M10.5 18a5.5 5.5 0 0 1 11 0"/></svg><div><h1>Ballot Miner</h1><p class="sub">Victorian election, Saturday 28 November 2026</p></div></div>
     <div class="seg" style="margin-top:18px"><button type="button" data-mode="join" aria-pressed="${mode === "join"}">First time: I have a team code</button><button type="button" data-mode="login" aria-pressed="${mode === "login"}">I've joined before</button></div>
     <form id="signin-f">
       ${mode === "join" ? `<label>Team code<input name="code" autocomplete="off" required></label>` : ""}
@@ -93,8 +93,8 @@ function renderApp() {
   const seen = store.get("team.seen-rules");
   $("#app").innerHTML = `
   <header class="top">
-    <div class="brand"><svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><path d="M3 18a13 13 0 0 1 26 0"/><circle cx="16" cy="18" r="2.6"/></svg>
-      <div><h1>Count Room Team Challenge</h1><p class="sub">Victorian election, Saturday 28 November 2026</p></div></div>
+    <div class="brand"><svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><path d="M3 18a13 13 0 0 1 26 0"/><path class="inner" d="M10.5 18a5.5 5.5 0 0 1 11 0"/></svg>
+      <div><h1>Ballot Miner</h1><p class="sub">Victorian election, Saturday 28 November 2026</p></div></div>
     <p class="countdown" id="countdown"></p>
     <div class="who">${PREVIEW ? '<span class="preview-note" style="margin:0;padding:3px 10px">Preview: nothing is saved</span>' : ""}<b>${esc(S.me.name)}</b><span class="team">${esc(S.me.team)}</span><button class="btn btn-quiet" type="button" id="signout">Sign out</button></div>
   </header>

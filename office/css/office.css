@@ -93,3 +93,4 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 .pick-form label { display: grid; gap: 4px; font-size: 13px; font-weight: 600; }
 .pick-form select.pick { max-width: 240px; min-width: 200px; }
 #pick-sec { background: var(--hover); border-radius: 10px; padding: 14px 16px; margin: 16px 22px 30px; }
+.brand-mark path.inner { stroke: var(--ALP); stroke-width: 3; }
