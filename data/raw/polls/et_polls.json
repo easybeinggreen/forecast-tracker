@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T01:31:15.922Z",
+  "generated": "2026-11-05T21:29:20.741Z",
   "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
   "methodology": "docs/poll-methodology.md",
   "polls": [
@@ -348,6 +348,39 @@
           "title": "Victorian election: DemosAU poll, election guide and seat projection model (1 Oct update: Freshwater)",
           "published": "2026-10-01",
           "accessed": "2026-10-04"
+        }
+      ]
+    },
+    {
+      "id": "growth-intelligence-2026-11-herald-sun",
+      "pollster": "growth-intelligence-centre",
+      "commissioner": "herald-sun",
+      "commissioner_type": "media",
+      "fieldwork_start": "2026-10-19",
+      "fieldwork_end": "2026-11-01",
+      "sample_size": 1289,
+      "design_effect": null,
+      "mode": "other",
+      "population": "victorian-electors",
+      "question_notes": "Herald Sun \"Lighthouse Political Monitor\" Victorian state voting intention, conducted by Growth Intelligence Centre (News Corp's internal research and data analytics operation). Campaign tracking poll run as weekly surveys and published as a two-week rolling average; this release covers 19 Oct – 1 Nov 2026, n=1,289. Reported primaries L-NP 31, ALP 23, ONP 22, GRN 14; Others is the residual after ALP+LNP+ONP+GRN (10), not a published figure. No 2PP reported in the source read. Net favourability Carroll −21, Wilson +9 (not encoded). Survey mode and weighting not stated in the source read, so mode recorded as \"other\".",
+      "primaries": {
+        "alp": 23,
+        "lnp": 31,
+        "onp": 22,
+        "grn": 14,
+        "others": 10
+      },
+      "undecided_handling": "not-stated",
+      "eligible_for_average": false,
+      "exclusion_reason": "Growth Intelligence Centre is not on the Victorian pollster allowlist in docs/poll-methodology.md (adding a pollster needs an allowlist edit), and the source read does not state survey mode or method (rule H). Ledgered for transparency; out of the average pending a maintainer allowlist decision.",
+      "eligibility_exception": null,
+      "sources": [
+        {
+          "url": "https://www.pollbludger.net/2026/11/06/victorian-election-minus-three-weeks/",
+          "publisher": "The Poll Bludger",
+          "title": "Victorian election minus three weeks",
+          "published": "2026-11-06",
+          "accessed": "2026-11-06"
         }
       ]
     },

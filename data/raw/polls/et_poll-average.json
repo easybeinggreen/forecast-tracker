@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T01:31:15.922Z",
+  "generated": "2026-11-05T21:29:20.741Z",
   "methodology": "docs/poll-methodology.md",
   "caveat": "Bands reflect sampling uncertainty and disagreement among recent polls, not a forecast of election day. They do not model preference flows, turnout, or late swings. Party, union and advocacy-commissioned polls are excluded from the average by default; rare documented exceptions only.",
   "parameters": {
@@ -27,6 +27,11 @@
     "demosau-2026-09"
   ],
   "excluded_from_average": [
+    {
+      "id": "growth-intelligence-2026-11-herald-sun",
+      "pollster": "growth-intelligence-centre",
+      "reason": "Growth Intelligence Centre is not on the Victorian pollster allowlist in docs/poll-methodology.md (adding a pollster needs an allowlist edit), and the source read does not state survey mode or method (rule H). Ledgered for transparency; out of the average pending a maintainer allowlist decision."
+    },
     {
       "id": "oru-2026-10-greens",
       "pollster": "online-research-unit",
