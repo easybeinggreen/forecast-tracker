@@ -41,8 +41,12 @@ review uses the latest snapshot instead).
    and how they compare with the model. Paul's locked calls need his passcode, so value against them is shown on each
    seat page rather than in the report.
 
-Statewide markets (who forms government, hung parliament, seat totals) are **to be added** once Paul sends the
-`/betting/politics/vic-politics` page; they'll go into the same snapshot and a statewide section.
+**Statewide markets** (same request): fetch `https://www.sportsbet.com.au/betting/politics/vic-politics` (Paul may need
+to paste it), then the four market pages it links: sworn-in government, seat totals (Coalition/Labor/One Nation/Greens
+over/unders), hung parliament, type of government formed. Save as `data/raw/sportsbet_state/<stamp>.json`
+(`{"t", "markets": {"state-govt": {...}, ...}, "lines": {...}}`, keys as in `build/sportsbet_state.py`); `export_site`
+rebuilds `site/data/sportsbet_state.json` with model chances. Shown under Betting and markets → Statewide markets;
+bets come from the 500-point statewide pot. If a line moves (e.g. Coalition 47.5 → 46.5), the new line is recorded.
 
 ### Seat notes and questions
 - Coverage: `vic2026/config/research.yaml` (statement + link + paywalled flag per article). Shown as "What the coverage says".
@@ -115,4 +119,4 @@ Rules: `agents/RULES.md`; personas: `agents/personas/`.
   files `G54A`, `G54B`, `G60A`, `G60B`, `G40`.
 - No Tally Room page saved for Narre Warren North, Narre Warren South, South-West Coast.
 - Local issues are sourced for only a handful of seats so far.
-- Statewide Sportsbet markets not yet captured.
+- Agents can't yet bet the statewide markets (their tool checks seat snapshots only).
