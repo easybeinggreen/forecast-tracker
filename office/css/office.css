@@ -136,3 +136,10 @@ details.pickmore[open] > summary { margin-bottom: 10px; }
 .seats .table-wrap { overflow: visible; }
 #seat-table thead th { position: sticky; top: 0; z-index: 3; background: var(--sheet); box-shadow: 0 1px 0 var(--rule); }
 .stack.none { border: 1px dashed var(--rule); }
+.vote-grid { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: flex-end; margin: 8px 0; }
+.vote-grid label { display: grid; gap: 3px; font-size: 13px; font-weight: 600; }
+.vote-grid label .dim { font-weight: 400; font-size: 11.5px; }
+.vote-grid input { width: 72px; }
+.vote-tot { font-size: 13px; font-weight: 700; color: var(--bad); padding-bottom: 18px; }
+.vote-tot.ok { color: var(--good); }
+.first .three { grid-template-columns: repeat(3, 1fr); }

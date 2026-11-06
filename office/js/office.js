@@ -18,7 +18,7 @@ const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
-const S = { more: {}, calls: [], bets: [], D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", order: null, sortView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
+const S = { more: {}, calls: [], bets: [], votes: [], D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", order: null, sortView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
 const seatBy = (slug) => (slug === "statewide" ? govSeat() : S.D.seats.find((s) => s.slug === slug));
 // "Who forms government?" behaves like a seat: one call, optional bets, priced from the Kalshi market with its margin removed.
 let _gov;
@@ -35,7 +35,7 @@ const photo = (name) => S.D.photos?.[name];
 
 // ---------------------------------------------------------------- API (preview mode keeps everything in the page)
 const PREVIEW = !!window.OFFICE_DEMO;
-const mem = { calls: [], bets: [] };
+const mem = { calls: [], bets: [], votes: [] };
 async function api(path, body) {
   if (PREVIEW) return previewApi(path, body);
   const r = await fetch(`/api/${path}`, { method: body ? "POST" : "GET", headers: { "content-type": "application/json", authorization: `Bearer ${store.get("team.token") || ""}` }, body: body ? JSON.stringify(body) : undefined });
@@ -49,7 +49,12 @@ function previewApi(path, b) {
     if (!team) throw new Error("That team code isn't right. Try alliance or aimates.");
     return { token: "preview", player: { name: b.name || "You", team } };
   }
-  if (path === "me") return S.me ? { player: S.me, calls: [...mem.calls], bets: [...mem.bets] } : {};
+  if (path === "me") return S.me ? { player: S.me, calls: [...mem.calls], bets: [...mem.bets], votes: [...mem.votes] } : {};
+  if (path === "vote") {
+    const tot = VOTE_KEYS.reduce((a, k) => a + Number(b.vote[k] || 0), 0);
+    if (Math.abs(tot - 100) > 0.05) throw new Error(`Your numbers add to ${tot.toFixed(1)}; they need to add to 100.`);
+    const v = { vote: b.vote, why: b.why || "", created_at: new Date().toISOString() }; mem.votes.push(v); return { vote: v };
+  }
   const now = new Date().toISOString(), sb = seatBy(b.seat)?.sportsbet;
   if (path === "call") {
     const last = mem.calls.filter((c) => c.seat === b.seat).at(-1);
@@ -76,7 +81,8 @@ async function boot() {
   renderSignin("join");
 }
 // Calls and bets are append-only; a seat's current state is derived from them. The latest call is the one that counts.
-const setPicks = (r) => { S.calls = r.calls || []; S.bets = r.bets || []; derive(); };
+const setPicks = (r) => { S.calls = r.calls || []; S.bets = r.bets || []; S.votes = r.votes || []; derive(); };
+const VOTE_KEYS = ["ALP", "LNP", "ON", "GRN", "OTHERS"], VOTE_NAMES = { ALP: "Labor", LNP: "Coalition", ON: "One Nation", GRN: "Greens", OTHERS: "Others" };
 function derive() {
   S.picks = {};
   for (const c of S.calls) (S.picks[c.seat] ||= { seat: c.seat, calls: [], bets: [] }).calls.push(c);
@@ -196,11 +202,12 @@ const latestOdds = () => S.D.seats.map((s) => s.sportsbet?.as_of).filter(Boolean
 function renderAll() { renderTop(); renderChamber(); renderBig(); renderTable(); if ($("#maps")?.open) renderMap(); }
 
 function rulesHTML() {
-  return `<div class="three two">
-    <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p></div>
-    <div><h3>2. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
+  return `<div class="three">
+    <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p><p><b>Did you beat the bookies?</b> Your score is shown against Sportsbet's favourites at close.</p></div>
+    <div><h3>2. Beat the pollsters</h3><p>Forecast the statewide primary vote: Labor, Coalition, One Nation, Greens and Others, adding to 100. You're scored on your average miss against the real result. The benchmark is the final published poll average. No betting needed.</p></div>
+    <div><h3>3. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
   </div>
-  <div class="foot-note"><p>Click any seat (in the chamber, map or list) for its full page of history, booth results, candidates and news. One set of picks counts for both. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
+  <div class="foot-note"><p>Click any seat (in the chamber, map or list) for its full page of history, booth results, candidates and news. Your seat calls count for contests 1 and 3. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
 
 function renderTop() {
@@ -337,6 +344,7 @@ function renderBig() {
   const s22 = tallyOf((s) => COAL(s.held_2022)), s25 = tallyOf((s) => COAL(fed2025(s)?.k)), ssb = tallyOf((s) => COAL(sbFair(s)?.[0][0])), smine = tallyOf((s) => COAL(S.picks[s.slug]?.pick));
   const n = seatPicks().length;
   const row = (lab, sub, vote, seats) => `<tr><th scope="row">${lab}<span class="dim">${sub}</span></th><td>${vote ? stackRow(vote, 100, "vote") : '<span class="dim">—</span>'}</td><td>${seats}</td></tr>`;
+  const myVote = (S.votes || []).at(-1);
   const gov = govSeat(), gp = S.picks.statewide, d = S.draft.statewide || {};
   const c = gp ? null : pickCells(gov);
   const polls = W.polls.list.map((x) => `<tr><td><a href="${esc(x.source_url)}" target="_blank" rel="noopener">${esc(x.pollster)}</a></td><td>${esc(x.fieldwork_end)}</td><td class="num">${esc(x.sample_size)}</td>${["alp", "lnp", "onp", "grn", "others"].map((k) => `<td class="num">${esc(x[k])}</td>`).join("")}</tr>`).join("");
@@ -346,8 +354,9 @@ function renderBig() {
       ${row("2025 federal", "Victorian booths", vote25, stackRow(Object.entries(s25), 88, "seats"))}
       ${row("2026 polls", `Election Tracker average, ${esc(W.polls.as_of)}`, votePoll, '<span class="dim">Not published seat by seat</span>')}
       ${row("2026 Sportsbet", "favourite in each seat", null, stackRow(Object.entries(ssb), 88, "seats"))}
-      ${row("My calls", `${n} of 88 called`, null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No calls yet</span>')}
+      ${row("Mine", `vote forecast; ${n} of 88 seats called`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No calls yet</span>')}
     </tbody></table></div>
+    ${voteForm(myVote)}
     <details class="pickmore polls-d"><summary>The latest published polls</summary><div class="table-wrap"><table class="sheet"><thead><tr><th>Pollster</th><th>Fieldwork ended</th><th class="num">Sample</th><th class="num">ALP</th><th class="num">LNP</th><th class="num">ON</th><th class="num">GRN</th><th class="num">Oth</th></tr></thead><tbody>${polls}</tbody></table></div>
       <p class="hint">Primary vote, %. Media and self-funded polls only (party polls left out), as listed by Election Tracker.</p></details>
     <div class="gov">
@@ -356,6 +365,24 @@ function renderBig() {
       ${gp ? calledSec(gov, gp) : `<div class="pick-form"><label>Your call${c.sel}</label><label>Bet (optional)${c.st}</label></div>
         <div class="why"><label for="why-statewide">Why?</label><textarea id="why-statewide" data-slug="statewide" data-f="why" rows="2" maxlength="2000" placeholder="e.g. One Nation preferences flow strongly to the Coalition in the outer suburbs.">${esc(d.why || "")}</textarea>${dictateBar("why-statewide", c.lock)}</div>`}
     </div>`;
+}
+
+function voteForm(myVote) {
+  const dv = (S.draft.vote ||= myVote ? { ...myVote.vote } : {}), tot = VOTE_KEYS.reduce((a, k) => a + Number(dv[k] || 0), 0), pp = S.D.statewide.polls.primaries;
+  const poll = { ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others };
+  return `<div class="gov vote-f"><h3>Beat the pollsters: your statewide vote</h3>
+    <p class="hint">Your forecast of each group's statewide primary vote, adding to 100. Scored on your average miss; the benchmark is the final poll average at close. ${myVote ? `You can update it until close; the latest counts. Last set ${when(myVote.created_at)}.` : ""}</p>
+    <div class="vote-grid">${VOTE_KEYS.map((k) => `<label><span><span class="sw" style="background:${col(k)}"></span>${VOTE_NAMES[k]}</span><input class="stake" data-vote="${k}" inputmode="decimal" value="${dv[k] ?? ""}" placeholder="${poll[k]}"><span class="dim">polls ${poll[k]}</span></label>`).join("")}
+      <div class="vote-tot ${Math.abs(tot - 100) < 0.05 ? "ok" : ""}" id="vote-tot">Total ${tot.toFixed(1)}${Math.abs(tot - 100) < 0.05 ? " ✓" : " (needs 100)"}</div></div>
+    <div class="why"><label for="why-vote">Why? <span class="dim">optional</span></label><textarea id="why-vote" data-slug="vote" data-f="why" rows="2" maxlength="2000" placeholder="e.g. Polls overstate One Nation; Labor recovers in the last fortnight.">${esc(S.draft.vote_why || "")}</textarea>
+      ${dictateBar("why-vote", `<button class="btn" type="button" id="vote-save">${myVote ? "Update my forecast" : "Lock my forecast"}</button>`)}<span class="row-err" id="vote-err"></span></div>
+  </div>`;
+}
+async function saveVote() {
+  const dv = S.draft.vote || {}, vote = Object.fromEntries(VOTE_KEYS.map((k) => [k, Number(dv[k] || 0)]));
+  try { stopDictation(); const r = await api("vote", { vote, why: (S.draft.vote_why || "").trim() }); S.votes.push(r.vote); S.draft.vote = null; S.draft.vote_why = "";
+    renderBig(); toast(`<b>Statewide vote forecast saved.</b> ${VOTE_KEYS.map((k) => `${SHORT[k] || k} ${vote[k]}`).join(" · ")}`);
+  } catch (x) { $("#vote-err").textContent = x.message; }
 }
 
 // ---------------------------------------------------------------- map (folded)
@@ -568,12 +595,17 @@ function onClick(e) {
   if (t.closest("[data-act=to-pick]")) { $("#pick-sec")?.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   const w = t.closest("[data-why]"); if (w) { openSeat(w.dataset.why); setTimeout(() => { $("#pick-sec")?.scrollIntoView({ block: "start" }); $(`#why-${w.dataset.why}`)?.focus(); }, 50); return; }
   const mo = t.closest("[data-more]"); if (mo) { S.more = { [mo.dataset.more]: mo.dataset.mode }; openSeat(mo.dataset.more); setTimeout(() => $("#pick-sec")?.scrollIntoView({ block: "start" }), 50); return; }
+  if (t.closest("#vote-save")) { saveVote(); return; }
   const ch = t.closest("[data-change]"); if (ch) { changeCall(ch.dataset.change); return; }
   const ab = t.closest("[data-addbet]"); if (ab) { addBet(ab.dataset.addbet); return; }
   const dc = t.closest("[data-dictate]"); if (dc) { toggleDictation(dc); return; }
   const l = t.closest("[data-lock]"); if (l) lock(l.dataset.lock);
 }
 function onInput(e) {
+  if (e.target.dataset?.vote) { const t = e.target; t.value = t.value.replace(/[^0-9.]/g, ""); (S.draft.vote ||= {})[t.dataset.vote] = t.value;
+    const tot = VOTE_KEYS.reduce((a, k) => a + Number(S.draft.vote[k] || 0), 0), el = $("#vote-tot"), ok = Math.abs(tot - 100) < 0.05;
+    el.textContent = `Total ${tot.toFixed(1)}${ok ? " ✓" : " (needs 100)"}`; el.classList.toggle("ok", ok); return; }
+  if (e.target.id === "why-vote") { S.draft.vote_why = e.target.value; return; }
   const t = e.target, slug = t.dataset?.slug; if (!t.dataset?.f || !slug) return;
   const d = (S.draft[slug] ||= {});
   if (t.dataset.f === "stake") { t.value = t.value.replace(/\D/g, ""); d.stake = t.value; document.querySelectorAll(`[data-pays="${slug}"]`).forEach((x) => (x.textContent = paysText(seatBy(slug), d))); return; }
