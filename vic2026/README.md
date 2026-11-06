@@ -119,4 +119,3 @@ Rules: `agents/RULES.md`; personas: `agents/personas/`.
   files `G54A`, `G54B`, `G60A`, `G60B`, `G40`.
 - No Tally Room page saved for Narre Warren North, Narre Warren South, South-West Coast.
 - Local issues are sourced for only a handful of seats so far.
-- Agents can't yet bet the statewide markets (their tool checks seat snapshots only).

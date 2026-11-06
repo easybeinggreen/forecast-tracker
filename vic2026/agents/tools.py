@@ -17,9 +17,30 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 AGENTS = {"local": 1.0, "numbers": 0.25, "market": 0.5}     # agent -> Kelly limit
 BUDGET = 2000
-STATE_BUDGET = 500   # separate pot for statewide markets once they are added (seat keys starting "state-")
+STATE_BUDGET = 500   # separate pot for statewide markets (keys starting "state-", e.g. state-govt, state-hung)
 SITE = ROOT / "site/data"
 SB_RAW = ROOT / "data/raw/sportsbet"
+SB_STATE = ROOT / "data/raw/sportsbet_state"
+
+
+def is_state(seat):
+    return str(seat or "").startswith("state-")
+
+
+def pot(seat):
+    return STATE_BUDGET if is_state(seat) else BUDGET
+
+
+def all_snapshots():
+    """stem -> {market: odds}. Statewide snapshots are keyed 'state/<stem>'."""
+    out = {p.stem: json.loads(p.read_text())["seats"] for p in SB_RAW.glob("*.json")}
+    out.update({f"state/{p.stem}": json.loads(p.read_text())["markets"] for p in SB_STATE.glob("*.json")})
+    return out
+
+
+def latest_state_snapshot():
+    f = sorted(SB_STATE.glob("*.json"))[-1]
+    return f"state/{f.stem}", json.loads(f.read_text())["markets"]
 
 
 def ledger(agent):
@@ -47,7 +68,8 @@ def kelly(p, odds):
 
 
 def check_call(c, agent, snaps, spent):
-    """Return a list of rule problems for one call (empty = fine). `snaps` maps snapshot stem -> seats."""
+    """Return a list of rule problems for one call (empty = fine). `snaps` maps snapshot stem -> markets;
+    `spent` is what the agent has already staked from this call's pot (seats 2,000 or statewide 500)."""
     errs = []
     seats = snaps.get(c.get("snapshot"))
     if seats is None:
@@ -64,7 +86,7 @@ def check_call(c, agent, snaps, spent):
     elif abs(sum(probs.values()) - 1) > 0.011:
         errs.append(f"{s}: chances add to {sum(probs.values()):.3f}, not 1")
     ft = c.get("final_two")
-    if not (isinstance(ft, list) and len(ft) == 2):
+    if not is_state(s) and not (isinstance(ft, list) and len(ft) == 2):
         errs.append(f"{s}: final_two must name two outcomes")
     stake = c.get("stake", 0)
     if not isinstance(stake, (int, float)) or stake < 0:
@@ -78,13 +100,13 @@ def check_call(c, agent, snaps, spent):
                 errs.append(f"{s}: odds {c.get('odds')} don't match snapshot {odds[b]}")
             if probs[b] * odds[b] <= 1:
                 errs.append(f"{s}: no edge (chance {probs[b]:.2f} × odds {odds[b]} ≤ 1)")
-            cap = AGENTS[agent] * kelly(probs[b], odds[b]) * BUDGET
+            cap = AGENTS[agent] * kelly(probs[b], odds[b]) * pot(s)
             if stake > cap + 0.5:
                 errs.append(f"{s}: stake {stake} above Kelly limit {cap:.0f}")
         if not (c.get("reason") or "").strip():
             errs.append(f"{s}: a stake needs a reason")
-        if spent + stake > BUDGET:
-            errs.append(f"{s}: stake takes total over {BUDGET} points")
+        if spent + stake > pot(s):
+            errs.append(f"{s}: stake takes total over {pot(s)} {'statewide ' if is_state(s) else ''}points")
     return errs
 
 
@@ -95,10 +117,11 @@ def brief(agent):
     mine = {}
     for c in calls:
         mine.setdefault(c["seat"], []).append(c)
-    spent = sum(c.get("stake", 0) for c in calls)
+    spent = sum(c.get("stake", 0) for c in calls if not is_state(c["seat"]))
+    sspent = sum(c.get("stake", 0) for c in calls if is_state(c["seat"]))
     stem, _ = latest_snapshot()
     pa = F.get("poll_avg") or {}
-    print(f"Agent: {agent}  Kelly limit {AGENTS[agent]}  points staked {spent:.0f} of {BUDGET}  calls so far {len(calls)}")
+    print(f"Agent: {agent}  Kelly limit {AGENTS[agent]}  seat points staked {spent:.0f} of {BUDGET}  statewide {sspent:.0f} of {STATE_BUDGET}  calls so far {len(calls)}")
     print(f"Latest Sportsbet snapshot: {stem}  Model version {F.get('model_version')}  Poll average {pa.get('primaries')} (as of {pa.get('as_of')})")
     print(f"Statewide model: Coalition majority {F['summary']['p_lnp_majority']:.0%}, hung {F['summary']['p_hung']:.0%}, Labor majority {F['summary']['p_alp_majority']:.0%}")
     print("Seat | held | margin 2022 | model (top 3) | Sportsbet now (prev) | your last call")
@@ -112,6 +135,14 @@ def brief(agent):
         last = mine.get(s["slug"], [])
         lc = f"{last[-1]['probs']} staked {sum(c.get('stake', 0) for c in last):.0f}" if last else "—"
         print(f"{s['slug']} | {s['mp']['party']}{' (retiring)' if s['mp'].get('retiring') else ''} | {s['margin']['value']} v {s['margin']['vs']} | {top} | {mv} | {lc}")
+    sf = SITE / "sportsbet_state.json"
+    if sf.exists():
+        M = json.loads(sf.read_text())["markets"]
+        print("\nStatewide markets (bet with seat key below; 500-point statewide pot; no final_two needed):")
+        for key, m in M.items():
+            last = mine.get(key, [])
+            print(f"{key} | {m['name']} | " + ", ".join(f"{k} ({m['labels'].get(k, k)}) {o:.2f} [fair {m['latest']['fair'][k]:.0%}, model {m['model'].get(k, 0):.0%}]" for k, o in m["latest"]["odds"].items())
+                  + (f" | your last: {last[-1]['probs']} staked {sum(c.get('stake', 0) for c in last):.0f}" if last else ""))
     print("\nFull detail per seat (profile, candidates, coverage, booths) is in site/data/forecast.json and site/data/booths/<seat>.json.")
 
 
@@ -122,8 +153,10 @@ def place(agent, path):
     if isinstance(new, dict):
         new = [new]
     stem, seats = latest_snapshot()
+    sstem, smk = latest_state_snapshot() if SB_STATE.exists() and any(SB_STATE.glob("*.json")) else (None, {})
     calls = read_calls(agent)
-    spent = sum(c.get("stake", 0) for c in calls)
+    spent = {"seat": sum(c.get("stake", 0) for c in calls if not is_state(c["seat"])),
+             "state": sum(c.get("stake", 0) for c in calls if is_state(c["seat"]))}
     f = ledger(agent)
     f.parent.mkdir(parents=True, exist_ok=True)
     text = f.read_text(encoding="utf-8") if f.exists() else ""
@@ -135,13 +168,18 @@ def place(agent, path):
         c = {k: c.get(k) for k in ("seat", "probs", "final_two", "backed", "stake", "reason", "gut", "sources")}
         c["stake"] = round(float(c.get("stake") or 0), 2)
         c["sources"] = c.get("sources") or []
-        c.update({"agent": agent, "n": n0 + len(out) + 1, "t": now, "snapshot": stem,
-                  "odds": seats.get(c["seat"], {}).get(c.get("backed")) if c["stake"] > 0 else None})
-        errs = check_call(c, agent, {stem: seats}, spent)
+        st = is_state(c["seat"])
+        snap, mk = (sstem, smk) if st else (stem, seats)
+        if st:
+            c.pop("final_two", None) if not c.get("final_two") else None
+        c.update({"agent": agent, "n": n0 + len(out) + 1, "t": now, "snapshot": snap,
+                  "odds": mk.get(c["seat"], {}).get(c.get("backed")) if c["stake"] > 0 else None})
+        kind = "state" if st else "seat"
+        errs = check_call(c, agent, {snap: mk}, spent[kind])
         if errs:
             problems += [f"call {i + 1}: {e}" for e in errs]
             continue
-        spent += c["stake"]
+        spent[kind] += c["stake"]
         c["prev"] = prev
         line = json.dumps(c, ensure_ascii=False, sort_keys=True)
         prev = line_hash(line)
@@ -152,7 +190,7 @@ def place(agent, path):
     with f.open("a", encoding="utf-8") as fh:
         for line in out:
             fh.write(line + "\n")
-    print(f"Placed {len(out)} calls for {agent}; points staked {spent:.0f} of {BUDGET}.")
+    print(f"Placed {len(out)} calls for {agent}; staked {spent['seat']:.0f} of {BUDGET} seat points, {spent['state']:.0f} of {STATE_BUDGET} statewide.")
 
 
 def git(*a):
@@ -162,13 +200,13 @@ def git(*a):
 def referee(rev_from=None, rev_to="HEAD"):
     """Check every ledger. With a git range, also check append-only and that agent commits touched only their folder."""
     problems = []
-    snaps = {p.stem: json.loads(p.read_text())["seats"] for p in SB_RAW.glob("*.json")}
+    snaps = all_snapshots()
     for agent in AGENTS:
         f = ledger(agent)
         if not f.exists():
             continue
         lines = [l for l in f.read_text(encoding="utf-8").splitlines() if l.strip()]
-        prev, spent, last_t = "genesis", 0.0, ""
+        prev, spent, last_t = "genesis", {"seat": 0.0, "state": 0.0}, ""
         for i, l in enumerate(lines, 1):
             try:
                 c = json.loads(l)
@@ -180,9 +218,10 @@ def referee(rev_from=None, rev_to="HEAD"):
                 problems.append(f"{agent}: line {i} breaks the hash chain (an earlier line was changed or removed)")
             if (c.get("t") or "") < last_t:
                 problems.append(f"{agent}: line {i} is dated before the line above it")
-            for e in check_call(c, agent, snaps, spent):
+            kind = "state" if is_state(c.get("seat")) else "seat"
+            for e in check_call(c, agent, snaps, spent[kind]):
                 problems.append(f"{agent}: line {i}: {e}")
-            spent += c.get("stake") or 0
+            spent[kind] += c.get("stake") or 0
             prev, last_t = line_hash(l), c.get("t") or last_t
     if rev_from:
         for sha in git("rev-list", f"{rev_from}..{rev_to}").split():
