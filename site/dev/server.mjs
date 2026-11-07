@@ -20,7 +20,14 @@ createServer(async (req, res) => {
       return res.end(JSON.stringify({ error: "No such endpoint" }));
     }
   }
-  const p = normalize(join(root, url.pathname === "/" ? "index.html" : url.pathname));
+  // Same routing as Vercel: redirects first (vercel.json), then clean URLs and folder index pages.
+  const cfg = JSON.parse(await readFile(join(root, "vercel.json"), "utf8"));
+  const hit = (cfg.redirects || []).find((r) => r.source === url.pathname || (r.source.endsWith("/:path*") && url.pathname.startsWith(r.source.slice(0, -7))));
+  if (hit) { res.statusCode = 307; res.setHeader("location", hit.destination); return res.end(); }
+  let path = url.pathname;
+  if (path.endsWith("/")) path += "index.html";
+  else if (!extname(path)) path += ".html";
+  const p = normalize(join(root, path));
   if (!p.startsWith(root)) { res.statusCode = 403; return res.end(); }
   try {
     const body = await readFile(p);

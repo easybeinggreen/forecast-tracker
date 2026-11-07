@@ -1,4 +1,4 @@
-"""Build office/data/office.json for the Office Cup: the seat data players may see, and nothing from the model.
+"""Build site/play/data/office.json for Ballot Miner: the seat data players may see, and nothing from the model.
 
 Whitelist only. Anything the model produced (chances, swings, why-text, bands, Paul's research notes, seat questions)
 stays out, so the game page has nothing to leak.
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site" / "data"
-DEST = ROOT / "office" / "data" / "office.json"
+DEST = ROOT / "site" / "play" / "data" / "office.json"
 
 SEAT_KEYS = ["slug", "name", "region", "mp", "held_2022", "margin", "primaries_2022", "prims_2022_grouped",
              "final_two_2022", "fed2025", "candidates_2026", "demo", "demo_vic", "place", "profile", "history", "links"]
@@ -139,9 +139,9 @@ def main():
     DEST.parent.mkdir(parents=True, exist_ok=True)
     DEST.write_text(json.dumps(out, separators=(",", ":")))
     # Same look and map as Count Room: copy the shared stylesheet, map helpers and boundaries (nothing model-related).
-    shutil.copy(ROOT / "site" / "css" / "app.css", ROOT / "office" / "css" / "app.css")
+    shutil.copy(ROOT / "site" / "css" / "app.css", ROOT / "site" / "play" / "css" / "app.css")
     for js in ("map.js",):  # seatx.js: Ballot Miner keeps its own copy (seat page differs from Count Room)
-        shutil.copy(ROOT / "site" / "js" / js, ROOT / "office" / "js" / js)
+        shutil.copy(ROOT / "site" / "js" / js, ROOT / "site" / "play" / "js" / js)
     # Polling-place results (2022 state, 2025 federal) for the booth map; no model numbers in these files.
     shutil.rmtree(DEST.parent / "booths", ignore_errors=True)
     shutil.copytree(SITE / "booths", DEST.parent / "booths")

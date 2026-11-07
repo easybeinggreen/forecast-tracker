@@ -1,15 +1,20 @@
 :root {
-  --paper: #F3F5F2;
+  /* Ballot Miner palette A, "coal and gold": charcoal ink, warm paper, one gold accent. Party colours below are unchanged. */
+  --paper: #F4F1E8;
   --sheet: #FFFFFF;
-  --ink: #1D232B;
-  --ink-2: #4B5561;
-  --ink-3: #737D88;
-  --rule: #D8DDD6;
-  --rule-2: #E9ECE7;
+  --ink: #1E252C;
+  --ink-2: #4A535C;
+  --ink-3: #737A82;
+  --rule: #D9D3C3;
+  --rule-2: #EAE5D8;
   --focus: #1D4E9E;
   --good: #1F7A4D;
   --bad: #B3261E;
-  --hover: #EEF1EC;
+  --hover: #EFEBE0;
+  --gold: #C9A227;
+  --gold-ink: #7A5F0E;
+  --band: #1E252C;
+  --band-ink: #F4F1E8;
 
   --ALP: #D72638; --LIB: #1D4E9E; --NAT: #4AA3D0; --GRN: #2B7A3B; --ON: #EC8C1C; --IND: #8257B8;
   --RMIN: #8C8F93; --PROG: #A9ADB1; --OTH: #BEC2C6; --NONE: #DADDD8;
@@ -23,16 +28,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #14181D; --sheet: #1B2027; --ink: #E8ECEF; --ink-2: #B4BCC5; --ink-3: #8A949E;
-    --rule: #2D343D; --rule-2: #252B33; --focus: #7FA7EA; --good: #5BC28C; --bad: #F2867E; --hover: #222830;
+    --paper: #15191D; --sheet: #1D2228; --ink: #ECE8DE; --ink-2: #BDB7AA; --ink-3: #8F8A80;
+    --rule: #322F2A; --rule-2: #26262A; --focus: #7FA7EA; --good: #5BC28C; --bad: #F2867E; --hover: #24272B;
+    --gold: #D9B43E; --gold-ink: #E3C35C; --band: #0E1215; --band-ink: #ECE8DE;
     --ALP: #F0505F; --LIB: #5B8BE0; --NAT: #6CC0E8; --GRN: #4FAE5E; --ON: #F29A3A; --IND: #A78BE0;
     --RMIN: #7D838A; --PROG: #666C73; --OTH: #555B62; --NONE: #343A42;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #14181D; --sheet: #1B2027; --ink: #E8ECEF; --ink-2: #B4BCC5; --ink-3: #8A949E;
-  --rule: #2D343D; --rule-2: #252B33; --focus: #7FA7EA; --good: #5BC28C; --bad: #F2867E; --hover: #222830;
+  --paper: #15191D; --sheet: #1D2228; --ink: #ECE8DE; --ink-2: #BDB7AA; --ink-3: #8F8A80;
+  --rule: #322F2A; --rule-2: #26262A; --focus: #7FA7EA; --good: #5BC28C; --bad: #F2867E; --hover: #24272B;
+  --gold: #D9B43E; --gold-ink: #E3C35C; --band: #0E1215; --band-ink: #ECE8DE;
   --ALP: #F0505F; --LIB: #5B8BE0; --NAT: #6CC0E8; --GRN: #4FAE5E; --ON: #F29A3A; --IND: #A78BE0;
   --RMIN: #7D838A; --PROG: #666C73; --OTH: #555B62; --NONE: #343A42;
   color-scheme: dark;
@@ -62,7 +69,8 @@ code { font-size: 0.92em; background: var(--rule-2); padding: 1px 5px; border-ra
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark { width: 40px; height: 25px; }
 .brand-mark path { fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linecap: round; }
-.brand-mark circle { fill: var(--ALP); }
+.brand-mark circle { fill: var(--gold); }
+.brand-mark path.inner { stroke: var(--gold); }
 .brand h1 { font-size: 22px; font-variation-settings: "wdth" 75; font-weight: 800; letter-spacing: -0.02em; }
 .sub { color: var(--ink-2); font-size: 13px; }
 .countdown { color: var(--ink-2); font-size: 13px; justify-self: end; }

@@ -93,7 +93,7 @@ input.stake { font: inherit; font-size: 13px; width: 62px; padding: 4px 6px; bor
 .pick-form label { display: grid; gap: 4px; font-size: 13px; font-weight: 600; }
 .pick-form select.pick { max-width: 240px; min-width: 200px; }
 #pick-sec { background: var(--hover); border-radius: 10px; padding: 14px 16px; margin: 16px 22px 30px; }
-.brand-mark path.inner { stroke: var(--ALP); stroke-width: 3; }
+.brand-mark path.inner { stroke: var(--gold); stroke-width: 3; }
 .list-view { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: -4px 0 12px; }
 .mp-s { display: block; font-size: 11.5px; color: var(--ink-3); margin-top: 2px; white-space: nowrap; }
 .mp-s .sw { width: 7px; height: 7px; margin-right: 4px; }
@@ -164,6 +164,10 @@ details.pickmore[open] > summary { margin-bottom: 10px; }
 .chal-t b { font-size: 22px; font-weight: 800; font-variation-settings: "wdth" 75; line-height: 1.1; }
 .chal-t .dim { font-size: 12.5px; }
 /* Statewide v seat-by-seat bands */
-.band { margin: 34px 0 10px; padding: 10px 16px; background: var(--ink); color: var(--paper); border-radius: var(--radius-m); font-size: 18px; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
-.band span { font-size: 13.5px; font-weight: 500; opacity: .8; }
+.band { margin: 34px 0 10px; padding: 10px 16px; background: var(--band); color: var(--band-ink); border-radius: var(--radius-m); font-size: 18px; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.band span { font-size: 13.5px; font-weight: 500; color: var(--gold); }
 .stack.wide i { cursor: default; }
+.lede-in { font-size: 14px; color: var(--ink-2); margin: 14px 0 0; }
+.signin-foot { font-size: 12.5px; color: var(--ink-3); margin: 14px 0 0; border-top: 1px solid var(--rule-2); padding-top: 10px; }
+.signin-foot a { color: var(--gold-ink); }
+.signin { border-top: 4px solid var(--gold); }

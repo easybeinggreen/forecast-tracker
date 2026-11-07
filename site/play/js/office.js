@@ -30,7 +30,7 @@ const PREVIEW = !!window.OFFICE_DEMO;
 const mem = { calls: [], bets: [], votes: [] };
 async function api(path, body) {
   if (PREVIEW) return previewApi(path, body);
-  const r = await fetch(`/api/${path}`, { method: body ? "POST" : "GET", headers: { "content-type": "application/json", authorization: `Bearer ${store.get("team.token") || ""}` }, body: body ? JSON.stringify(body) : undefined });
+  const r = await fetch(`/api/game?a=${path}`, { method: body ? "POST" : "GET", headers: { "content-type": "application/json", authorization: `Bearer ${store.get("team.token") || ""}` }, body: body ? JSON.stringify(body) : undefined });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(j.error || `Request failed (${r.status})`);
   return j;
@@ -66,13 +66,13 @@ function previewApi(path, b) {
 
 // ---------------------------------------------------------------- boot
 async function boot() {
-  S.D = window.OFFICE_DATA || await (await fetch("data/office.json")).json();
-  const topo = window.OFFICE_TOPO || await fetch("data/vic_districts.topojson").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.D = window.OFFICE_DATA || await (await fetch("/play/data/office.json")).json();
+  const topo = window.OFFICE_TOPO || await fetch("/play/data/vic_districts.topojson").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (topo) S.geo = decodeTopo(topo, "districts");
   if (!PREVIEW && store.get("team.token")) {
     try { const r = await api("me"); if (r.player) { S.me = r.player; setPicks(r); return renderApp(); } } catch {}
   }
-  renderSignin("join");
+  renderSignin(store.get("team.joined") ? "login" : "join");
 }
 // Calls and bets are append-only; a seat's current state is derived from them. The latest call is the one that counts.
 const setPicks = (r) => { S.calls = r.calls || []; S.bets = r.bets || []; S.votes = r.votes || []; derive(); };
@@ -97,6 +97,7 @@ function renderSignin(mode) {
   $("#app").innerHTML = `<div class="signin">
     ${PREVIEW ? `<div class="preview-note"><b>Preview.</b> Nothing is saved. Any name and PIN; team code <b>alliance</b> or <b>aimates</b>.</div>` : ""}
     <div class="brand"><svg class="brand-mark" viewBox="0 0 32 20" aria-hidden="true"><path d="M3 18a13 13 0 0 1 26 0"/><path class="inner" d="M10.5 18a5.5 5.5 0 0 1 11 0"/></svg><div><h1>Ballot Miner</h1><p class="sub">Victorian election, Saturday 28 November 2026</p></div></div>
+    <p class="lede-in">Call the statewide vote, pick all 88 seats, and back your picks with play points. Picks close 6pm Friday 27 November.</p>
     <div class="seg" style="margin-top:18px"><button type="button" data-mode="join" aria-pressed="${mode === "join"}">First time: I have a team code</button><button type="button" data-mode="login" aria-pressed="${mode === "login"}">I've joined before</button></div>
     <form id="signin-f">
       ${mode === "join" ? `<label>Team code<input name="code" autocomplete="off" required></label>` : ""}
@@ -104,14 +105,15 @@ function renderSignin(mode) {
       <label>${mode === "join" ? "Choose a PIN (4 to 6 digits)" : "Your PIN"}<input name="pin" type="password" inputmode="numeric" pattern="[0-9]{4,6}" maxlength="6" required></label>
       <button class="btn" type="submit">${mode === "join" ? "Join the challenge" : "Sign in"}</button>
       <p class="err" id="signin-err" role="alert"></p>
-    </form></div>`;
+    </form>
+    <p class="signin-foot">${mode === "join" ? "You'll stay signed in on this device. Forgot your PIN? Ask the organiser to reset it." : "Forgot your PIN? Ask the organiser to reset it."}${PREVIEW ? "" : ` · <a href="/admin">Sign in as admin</a>`}</p></div>`;
   document.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = () => renderSignin(b.dataset.mode)));
   $("#signin-f").onsubmit = async (e) => {
     e.preventDefault();
     const f = e.target;
     try {
       const r = await api(mode, { name: f.name.value.trim(), pin: f.pin.value, code: f.code?.value });
-      store.set("team.token", r.token); S.me = r.player;
+      store.set("team.token", r.token); store.set("team.joined", true); S.me = r.player;
       setPicks(await api("me")); renderApp();
     } catch (x) { $("#signin-err").textContent = x.message; }
   };
@@ -581,7 +583,7 @@ const boothCache = {};
 async function loadInside(s) {
   const el = $("#inside"); if (!el) return;
   try {
-    boothCache[s.slug] ||= window.OFFICE_BOOTHS?.[s.slug] || await (await fetch(`data/booths/${s.slug}.json`)).json();
+    boothCache[s.slug] ||= window.OFFICE_BOOTHS?.[s.slug] || await (await fetch(`/play/data/booths/${s.slug}.json`)).json();
     if (S.seat === s.slug) renderInside($("#inside"), boothCache[s.slug], s, PARTY, groupOf);
   } catch { el.innerHTML = '<p class="hint">Polling-place results not available for this seat.</p>'; }
 }

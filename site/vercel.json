@@ -1,6 +1,21 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/", "destination": "/play/", "permanent": false },
+    { "source": "/index", "destination": "/play/", "permanent": false },
+    { "source": "/data/forecast.json", "destination": "/play/", "permanent": false },
+    { "source": "/data/changes.json", "destination": "/play/", "permanent": false },
+    { "source": "/data/agents_status.json", "destination": "/play/", "permanent": false },
+    { "source": "/data/sportsbet_state.json", "destination": "/play/", "permanent": false },
+    { "source": "/dev/:path*", "destination": "/play/", "permanent": false },
+    { "source": "/README.md", "destination": "/play/", "permanent": false }
+  ],
+  "functions": {
+    "api/admin.js": { "includeFiles": "data/*.json" },
+    "api/game.js": { "includeFiles": "play/data/office.json" }
+  },
   "headers": [
-    { "source": "/data/(.*)", "headers": [{ "key": "cache-control", "value": "public, max-age=300, must-revalidate" }] }
+    { "source": "/data/(.*)", "headers": [{ "key": "cache-control", "value": "public, max-age=300, must-revalidate" }] },
+    { "source": "/play/data/(.*)", "headers": [{ "key": "cache-control", "value": "public, max-age=300, must-revalidate" }] }
   ]
 }

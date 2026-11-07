@@ -1,6 +1,7 @@
 // Shared database + auth helpers for the ledger API (Vercel Node functions).
 import crypto from "node:crypto";
 import pg from "pg";
+import { isAdmin } from "./_auth.js";
 
 pg.types.setTypeParser(1082, (v) => v); // keep DATE columns as plain YYYY-MM-DD strings
 
@@ -52,7 +53,9 @@ export async function ensureSchema() {
   return ready;
 }
 
+// Ledger writes: the passcode header (Count Room's unlock box) or the admin sign-in cookie.
 export function authorised(req) {
+  if (isAdmin(req)) return true;
   const want = process.env.LEDGER_PASSCODE || "";
   const got = String(req.headers["x-ledger-passcode"] || "");
   if (!want || got.length !== want.length) return false;

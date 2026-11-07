@@ -53,18 +53,20 @@ async function api(path, opts = {}) {
 
 // ---------------------------------------------------------------- boot
 async function boot() {
-  S.F = await (await fetch("data/forecast.json")).json();
+  const fr = await fetch("/api/admin?a=file&name=forecast");
+  if (fr.status === 401) { location.href = "/admin?next=/count-room"; return; } // model data is for the signed-in admin only
+  S.F = await fr.json();
   const [topo, news] = await Promise.all([
-    fetch("data/vic_districts.topojson").then((r) => (r.ok ? r.json() : null)).catch(() => null),
-    fetch("data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch("/data/vic_districts.topojson").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch("/data/news.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   S.news = news;
-  S.sb = await fetch("data/sportsbet.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  S.sbs = await fetch("data/sportsbet_state.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  S.agents = await fetch("data/agents_status.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  S.mk = await fetch("data/markets.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  S.changes = await fetch("data/changes.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  const raw = await fetch("data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  S.sb = await fetch("/data/sportsbet.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.sbs = await fetch("/api/admin?a=file&name=sportsbet_state").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.agents = await fetch("/api/admin?a=file&name=agents_status").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.mk = await fetch("/data/markets.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.changes = await fetch("/api/admin?a=file&name=changes").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const raw = await fetch("/data/photos.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const key = (n) => n.toLowerCase().replace(/\s+/g, " ").trim();
   const byKey = Object.fromEntries(Object.entries(raw).map(([k, v]) => [key(k), v]));
   S.F.photos = new Proxy(byKey, { get: (o, n) => (typeof n === "string" ? o[key(n)] : undefined) });
@@ -616,7 +618,7 @@ const boothCache = {};
 async function loadInside(s) {
   const el = $("#inside"); if (!el) return;
   try {
-    boothCache[s.slug] ||= await (await fetch(`data/booths/${s.slug}.json`)).json();
+    boothCache[s.slug] ||= await (await fetch(`/data/booths/${s.slug}.json`)).json();
     if (S.seat === s.slug) renderInside($("#inside"), boothCache[s.slug], s, PARTY, groupOf);
   } catch { el.innerHTML = '<p class="hint">Polling-place results not available for this seat.</p>'; }
 }

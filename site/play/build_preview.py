@@ -1,6 +1,6 @@
-"""Bundle office/ into one self-contained preview page (nothing saved; any name and PIN).
+"""Bundle site/play/ into one self-contained preview page (nothing saved; any name and PIN).
 
-    python3 office/build_preview.py OUT.html
+    python3 site/play/build_preview.py OUT.html
 """
 import json
 import re
@@ -22,7 +22,7 @@ def module(name):
 
 html = (ROOT / "index.html").read_text()
 css = (ROOT / "css" / "app.css").read_text() + "\n" + (ROOT / "css" / "office.css").read_text()
-html = re.sub(r'\s*<link rel="stylesheet" href="css/app.css">\s*<link rel="stylesheet" href="css/office.css">', f"\n  <style>{css}</style>", html)
+html = re.sub(r'\s*<link rel="stylesheet" href="/play/css/app.css">\s*<link rel="stylesheet" href="/play/css/office.css">', f"\n  <style>{css}</style>", html)
 
 data = (ROOT / "data" / "office.json").read_text()
 topo = (ROOT / "data" / "vic_districts.topojson").read_text()
@@ -41,6 +41,6 @@ imports = re.findall(r"^import \{(.*?)\} from \"\./(\w+)\.js\";$", main, flags=r
 main = re.sub(r"^import .*?;\n", "", main, flags=re.M)
 heads = [f"const {{ {names.strip()} }} = __{mod};" for names, mod in imports]
 script = "\n".join(parts + heads + [main])
-html = html.replace('<script type="module" src="js/office.js"></script>', f"{inline}<script type=\"module\">{script}</script>")
+html = html.replace('<script type="module" src="/play/js/office.js"></script>', f"{inline}<script type=\"module\">{script}</script>")
 out.write_text(html)
 print(f"{out}: {out.stat().st_size // 1024} KB")
