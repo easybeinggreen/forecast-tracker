@@ -13,6 +13,7 @@ const ORDER = ["GRN", "ALP", "IND", "PROG", "OTH", "unset", "RMIN", "ON", "LIB",
 const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"]);
 const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hill":"BH","gippsland-east":"GE","gippsland-south":"GS","glen-waverley":"GW","mill-park":"MP","murray-plains":"MuP","narre-warren-north":"NN","narre-warren-south":"NS","ovens-valley":"OV","pascoe-vale":"PV","point-cook":"PC","south-barwon":"SB","south-west-coast":"SW","st-albans":"SA","yan-yean":"YY","ashwood":"As","bass":"Ba","bayswater":"By","bellarine":"Bl","benambra":"Bn","bentleigh":"Bt","berwick":"Bk","brighton":"Bg","broadmeadows":"Bd","brunswick":"Br","bulleen":"Bu","bundoora":"Bo","carrum":"Ca","caulfield":"Cf","clarinda":"Cl","cranbourne":"Cr","croydon":"Cy","dandenong":"Da","eildon":"Ei","eltham":"El","essendon":"Es","eureka":"Eu","euroa":"Er","evelyn":"Ev","footscray":"Fo","frankston":"Fr","geelong":"Gl","greenvale":"Gv","hastings":"Ha","hawthorn":"Hw","ivanhoe":"Iv","kalkallo":"Ka","kew":"Ke","kororoit":"Ko","lara":"La","laverton":"Lv","lowan":"Lo","macedon":"Ma","malvern":"Mv","melbourne":"Me","melton":"Mt","mildura":"Mi","monbulk":"Mo","mordialloc":"Md","mornington":"Mn","morwell":"Mw","mulgrave":"Mu","narracan":"Na","nepean":"Ne","niddrie":"Ni","northcote":"No","oakleigh":"Oa","pakenham":"Pa","polwarth":"Po","prahran":"Pr","preston":"Ps","richmond":"Ri","ringwood":"Rw","ripon":"Rp","rowville":"Ro","sandringham":"Sd","shepparton":"Sh","sunbury":"Su","sydenham":"Sy","tarneit":"Ta","thomastown":"Th","warrandyte":"Wa","wendouree":"We","werribee":"Wr","williamstown":"Wi"};
 const BANKROLL = 1000;
+const SEAT_CAP = 100; // most points on any one seat (or the government question), all bets there combined
 const CLOSE = new Date("2026-11-27T07:00:00Z"); // 6pm Melbourne, Fri 27 Nov
 const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
@@ -66,6 +67,8 @@ function previewApi(path, b) {
     const staked = mem.bets.reduce((a, x) => a + x.stake, 0);
     if (!(b.stake > 0)) throw new Error("Enter the points to bet.");
     if (staked + b.stake > BANKROLL) throw new Error(`You have ${BANKROLL - staked} points left to bet.`);
+    const onSeat = mem.bets.filter((x) => x.seat === b.seat).reduce((a, x) => a + x.stake, 0);
+    if (onSeat + b.stake > SEAT_CAP) throw new Error(capMsg(onSeat));
     const x = { seat: b.seat, pick: b.pick, stake: b.stake, odds: sb?.odds?.[b.pick] ?? null, odds_as_of: sb?.as_of, created_at: now }; mem.bets.push(x); return { bet: x };
   }
 }
@@ -95,6 +98,9 @@ function derive() {
   for (const k of Object.keys(S.picks)) if (!S.picks[k].pick) delete S.picks[k];
 }
 const staked = () => (S.bets || []).reduce((a, b) => a + b.stake, 0);
+const stakedOn = (slug) => (S.bets || []).filter((b) => b.seat === slug).reduce((a, b) => a + b.stake, 0);
+const roomOn = (slug) => Math.max(0, Math.min(SEAT_CAP - stakedOn(slug), BANKROLL - staked()));
+function capMsg(on) { return on ? `Up to ${SEAT_CAP} points a seat. You have ${on} on this one, so ${Math.max(0, SEAT_CAP - on)} more at most.` : `Up to ${SEAT_CAP} points a seat.`; }
 
 function renderSignin(mode) {
   $("#app").innerHTML = `<div class="signin">
@@ -205,7 +211,7 @@ function rulesHTML() {
   return `<div class="three">
     <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p><p><b>Did you beat the bookies?</b> Your score is shown against Sportsbet's favourites at close.</p></div>
     <div><h3>2. Beat the pollsters</h3><p>Forecast the statewide primary vote: Labor, Coalition, One Nation, Greens and Others, adding to 100. You're scored on your average miss against the real result. The benchmark is the final published poll average. No betting needed.</p></div>
-    <div><h3>3. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. Bet more where you're surer, bet where you think the bookies have it wrong, and skip the rest. Most points at the end wins.</p></div>
+    <div><h3>3. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. You can put up to ${SEAT_CAP} points on any one seat, so spreading your bets is part of the game. Bet where you think the bookies have it wrong and skip the rest. Most points at the end wins.</p></div>
   </div>
   <div class="foot-note"><p>Click any seat (in the chamber, map or list) for its full page of history, booth results, candidates and news. Your seat calls count for contests 1 and 3. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
@@ -361,7 +367,7 @@ function renderBig() {
       <p class="hint">Primary vote, %. Media and self-funded polls only (party polls left out), as listed by Election Tracker.</p></details>
     <div class="gov">
       <h3>Who forms government?</h3>
-      <p class="hint">An extra call, and you can bet on it from the same ${n0(BANKROLL)} points. Priced from the Kalshi prediction market: ${Object.entries(gov.sportsbet.fair).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${gov.sportsbet.names[k]} ${pct(v)}`).join(", ")}. It breaks ties in "most seats right".</p>
+      <p class="hint">An extra call, and you can bet up to ${SEAT_CAP} on it from the same ${n0(BANKROLL)} points. Priced from the Kalshi prediction market: ${Object.entries(gov.sportsbet.fair).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${gov.sportsbet.names[k]} ${pct(v)}`).join(", ")}. It breaks ties in "most seats right".</p>
       ${gp ? calledSec(gov, gp) : `<div class="pick-form"><label>Your call${c.sel}</label><label>Bet (optional)${c.st}</label></div>
         <div class="why"><label for="why-statewide">Why?</label><textarea id="why-statewide" data-slug="statewide" data-f="why" rows="2" maxlength="2000" placeholder="e.g. One Nation preferences flow strongly to the Coalition in the outer suburbs.">${esc(d.why || "")}</textarea>${dictateBar("why-statewide", c.lock)}</div>`}
     </div>`;
@@ -502,7 +508,7 @@ function pickSec(s) {
       <textarea id="why-${s.slug}" data-slug="${s.slug}" data-f="why" rows="4" maxlength="2000" placeholder="e.g. Teal candidate is strong locally, Liberal margin is only 3%, and the Greens will preference her.">${esc(d.why || "")}</textarea>
       <div class="why-bar">${dictateBar(`why-${s.slug}`, c.lock)}
     </div>
-    <p class="hint">Points left to bet: ${n0(BANKROLL - staked())}. You can change your call or add bets later; the call standing at close is the one that counts.</p></section>`;
+    <p class="hint">Points left to bet: ${n0(BANKROLL - staked())}, up to ${SEAT_CAP} on this seat. You can change your call or add bets later; the call standing at close is the one that counts.</p></section>`;
 }
 const when = (t) => new Date(t).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
 const dictateBar = (id, extra = "") => `<div class="why-bar">${SpeechRec ? `<button class="btn btn-quiet" type="button" data-dictate="${id}" aria-pressed="false">🎤 Dictate</button>` : `<span class="hint">Tip: use your keyboard's microphone to dictate.</span>`}<span class="hint" data-dictate-status="${id}"></span>${extra}</div>`;
@@ -524,7 +530,7 @@ function calledSec(s, p) {
       <div class="pick-form"><label>On<select class="pick" data-slug="${s.slug}" data-f="bpick">${opt(d.bpick || p.pick)}</select></label>
         <label>Points<input class="stake" data-slug="${s.slug}" data-f="bstake" inputmode="numeric" placeholder="0" value="${d.bstake ?? ""}"><span class="pays" data-bpays="${s.slug}">${bo && d.bstake ? `pays ${n0(d.bstake * bo)} if right` : ""}</span></label>
         <button class="btn" type="button" data-addbet="${s.slug}">Add bet</button></div><span class="row-err" data-err-b="${s.slug}"></span>
-      <p class="hint">Priced at Sportsbet's odds now. Earlier bets stand at their own price. Points left: ${n0(BANKROLL - staked())}.</p>
+      <p class="hint">Priced at Sportsbet's odds now. Earlier bets stand at their own price. You can add up to ${n0(roomOn(s.slug))} more here (${SEAT_CAP} a seat).</p>
     </details></section>`;
 }
 function renderDrawer() {
@@ -622,6 +628,7 @@ async function lock(slug) {
   try {
     stopDictation();
     if (stake && staked() + stake > BANKROLL) return err(`You have ${BANKROLL - staked()} points left to bet.`);
+    if (stake && stakedOn(slug) + stake > SEAT_CAP) return err(capMsg(stakedOn(slug)));
     const r = await api("call", { seat: slug, pick: d.pick, why: (d.why || "").trim() }); S.calls.push(r.call);
     if (stake) { const b = await api("bet", { seat: slug, pick: d.pick, stake }); S.bets.push(b.bet); }
     derive(); delete S.draft[slug];
@@ -640,6 +647,7 @@ async function changeCall(slug) {
 }
 async function addBet(slug) {
   const s = seatBy(slug), d = S.draft[slug] || {}, pick = d.bpick || S.picks[slug].pick, stake = Number(d.bstake || 0), err = (m) => document.querySelectorAll(`[data-err-b="${slug}"]`).forEach((x) => (x.textContent = m));
+  if (stake && stakedOn(slug) + stake > SEAT_CAP) return err(capMsg(stakedOn(slug)));
   try { const r = await api("bet", { seat: slug, pick, stake }); S.bets.push(r.bet); derive(); delete S.draft[slug]; S.more = {};
     closeSeat(); renderTop(); renderTable(); renderBig();
     toast(`<b>${esc(s.name)}:</b> ${stake} points on ${esc(outName(s, pick))}, pays ${n0(stake * r.bet.odds)} if right.`);
