@@ -118,7 +118,10 @@ function renderSignin(mode) {
 }
 
 // ---------------------------------------------------------------- page
-const VIEWS = [["2022", "2022 result"], ["2025", "2025 federal"], ["sb", "2026 Sportsbet"], ["mine", "My picks"]];
+const VIEWS = [["2022", "2022 state"], ["2025", "2025 federal"], ["sb", "2026 Sportsbet"], ["mine", "2026 my picks"]];
+// The seat list also has a polls view: regional polls aren't seat results, so the chamber and map don't colour by them.
+const LIST_VIEWS = [...VIEWS.slice(0, 3), ["polls", "2026 polls"], VIEWS[3]];
+const VIEW_NAME = Object.fromEntries(LIST_VIEWS);
 const viewSeg = (attr = "view", cur = S.view, list = VIEWS) => `<div class="seg" role="group" aria-label="Colour seats by">${list.map(([k, l]) => `<button type="button" data-${attr}="${k}" aria-pressed="${cur === k}">${l}</button>`).join("")}</div>`;
 
 function renderApp() {
@@ -168,7 +171,7 @@ function renderApp() {
           <label class="search"><span class="sr">Find a seat</span><input id="search" type="search" placeholder="Find a seat or MP"></label>
         </div>
       </div>
-      <div class="list-view">${viewSeg("listview", S.listView)}<span class="caption">Switching view keeps the seats in the same order. Your pick and bet stay put whichever view you're on.</span></div>
+      <div class="list-view">${viewSeg("listview", S.listView, LIST_VIEWS)}<span class="caption">Switching view keeps the seats in the same order. Your pick and bet stay put whichever view you're on.</span></div>
       <div class="table-wrap">
         <table id="seat-table">
           <thead><tr>
@@ -249,8 +252,16 @@ function guideRows(s, v = S.listView) {
     const f = fed2025(s); if (!f) return [null, null];
     const prim = { parts: pr(s.fed2025.prims), sub: "2025 primary vote", thin: true };
     if (f.tpp) return [h2h(f.k, f.tppv, f.o, 100 - f.tppv, "2025 two-party"), prim];
-    const [[a, av], [b, bv]] = f.top; // no two-party count here: show the top two on primaries, scaled to 100
-    return [h2h(a, (100 * av) / (av + bv), b, (100 * bv) / (av + bv), "top two on primaries (no two-party count)"), prim];
+    // Labor v Coalition wasn't the real contest here (Greens or an independent in the top two): no two-party figure exists, so show none.
+    return [{ parts: [], text: "No two-party count", sub: `top two were ${SHORT[f.top[0][0]] || f.top[0][0]} and ${SHORT[f.top[1][0]] || f.top[1][0]}`, none: true }, prim];
+  }
+  if (v === "polls") {
+    const P = s.polls || {}, seat = P.seat?.[0];
+    const reg = (P.regional || []).filter((q) => ["ALP", "LNP", "ON", "GRN"].every((k) => q.primaries[k] != null)).at(-1) || (P.regional || []).at(-1); // latest with all four parties
+    const fill = (o) => { const x = { ...o }; if (x.OTHERS == null) x.OTHERS = Math.max(0, 100 - ["ALP", "LNP", "ON", "GRN"].reduce((a, k) => a + (x[k] || 0), 0)); return x; };
+    const lead = (o) => Object.entries(o).filter(([k]) => k !== "OTHERS").sort((a, b) => b[1] - a[1]).slice(0, 2).map(([k, v]) => `${SHORT[k] || k} ${Math.round(v)}`).join(" · ");
+    return [seat ? { parts: pr(fill(seat.primaries)), text: lead(seat.primaries), sub: `seat poll, about ${seat.n} people` } : reg ? { parts: pr(fill(reg.primaries)), text: lead(reg.primaries), sub: `${P.region} (region, not seat)` } : null,
+      seat && reg ? { parts: pr(fill(reg.primaries)), sub: `${P.region} (region)`, thin: true } : null];
   }
   if (v === "sb") {
     const f = sbFair(s); if (!f) return [null, null];
@@ -266,6 +277,7 @@ function sureOf(s, v = S.listView) {
   if (v === "sb") return sbFair(s)?.[0][1] ?? 0;
   if (v === "2022") return 0.5 + (s.margin?.value ?? 0) / 100;
   if (v === "mine") { const p = S.picks[s.slug]; return p ? s.sportsbet?.fair?.[p.pick] ?? 0 : -1; }
+  if (v === "polls") { const q = guideRows(s, "polls")[0]?.parts && Object.fromEntries(guideRows(s, "polls")[0].parts.filter(([k]) => k !== "OTHERS").map(([k, x]) => [k, 100 * x])); if (!q) return 0; const v2 = Object.values(q).sort((a, b) => b - a); return 0.5 + ((v2[0] || 0) - (v2[1] || 0)) / 100; }
   const f = fed2025(s); if (!f) return 0.5; return f.tpp ? f.tppv / 100 : f.top[0][1] / (f.top[0][1] + f.top[1][1]);
 }
 const tpp22 = (s) => s.tcp_2022 || (s.margin ? { a: s.held_2022, av: 50 + s.margin.value, b: s.margin.vs, bv: 50 - s.margin.value } : null);
@@ -360,11 +372,11 @@ function renderBig() {
   const outcome = n === 88 && lead ? (lead[1] >= 45 ? `${VOTE_NAMES[lead[0]] || PARTY[lead[0]] || lead[0]} majority (${lead[1]} seats)` : `Hung parliament: ${VOTE_NAMES[lead[0]] || PARTY[lead[0]] || lead[0]} largest on ${lead[1]}`) : "";
   $("#big").innerHTML = `<div class="panel-head"><div><h2 id="big-title">The statewide result</h2><p class="sub-hint">Votes and seats differ: in 2022 Labor won 37% of the vote but 56 of 88 seats. Hover a bar for exact figures.</p></div></div>
     <div class="table-wrap"><table class="sheet bigt"><thead><tr><th></th><th>Primary vote (%)</th><th>Seats won (45 to govern)</th></tr></thead><tbody>
-      ${row("2022 result", "Victorian election", vote22, stackRow(Object.entries(s22), 88, "seats"))}
+      ${row("2022 state", "Victorian election", vote22, stackRow(Object.entries(s22), 88, "seats"))}
       ${row("2025 federal", "Victorian booths", vote25, stackRow(Object.entries(s25), 88, "seats"))}
       ${row(`2026 polls ${pollSel}`, `${esc(pc.sub)}${pc.url ? ` · <a href="${esc(pc.url)}" target="_blank" rel="noopener">source</a>` : ""}`, Object.entries(pc.vote), '<span class="dim">Not published seat by seat</span>')}
       ${row("2026 Sportsbet", "favourite in each seat", null, stackRow(Object.entries(ssb), 88, "seats"), "No vote market")}
-      ${row("2026 My forecast", `${n} of 88 seats picked${outcome ? ` · <b>${esc(outcome)}</b>` : ""}`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No seats picked yet</span>', "Not set: Call the vote below")}
+      ${row("2026 my forecast", `${n} of 88 seats picked${outcome ? ` · <b>${esc(outcome)}</b>` : ""}`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No seats picked yet</span>', "Not set: Call the vote below")}
     </tbody></table></div>
     ${voteForm(myVote)}`;
 }
@@ -374,7 +386,7 @@ function voteForm(myVote) {
   const poll = { ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others };
   return `<div class="gov vote-f" id="vote-sec"><h3>1. Call the vote</h3>
     <p class="hint">Your forecast of each group's share of the statewide primary vote, adding to 100. Your score is your average miss in points across the five groups (over or under counts the same); lower is better. Beat the pollsters by missing by less than the final poll average. ${myVote ? `You can update it until close; the latest counts. Last set ${when(myVote.created_at)}.` : ""}</p>
-    <div class="vote-grid">${VOTE_KEYS.map((k) => `<label><span><span class="sw" style="background:${col(k)}"></span>${VOTE_NAMES[k]}</span><input class="stake" data-vote="${k}" inputmode="decimal" value="${dv[k] ?? ""}" placeholder="${poll[k]}"><span class="dim">poll average ${poll[k]}</span></label>`).join("")}
+    <div class="vote-grid">${VOTE_KEYS.map((k) => `<label><span><span class="sw" style="background:${col(k)}"></span>${VOTE_NAMES[k]}</span><input class="stake" data-vote="${k}" inputmode="decimal" value="${dv[k] ?? ""}" aria-label="${VOTE_NAMES[k]}, % of the vote"><span class="dim">poll average ${poll[k]}</span></label>`).join("")}
       <div class="vote-tot ${Math.abs(tot - 100) < 0.05 ? "ok" : ""}" id="vote-tot">Total ${tot.toFixed(1)}${Math.abs(tot - 100) < 0.05 ? " ✓" : " (needs 100)"}</div></div>
     <div class="why"><label for="why-vote">Why? <span class="dim">optional</span></label><textarea id="why-vote" data-slug="vote" data-f="why" rows="2" maxlength="2000" placeholder="e.g. Polls overstate One Nation; Labor recovers in the last fortnight.">${esc(S.draft.vote_why || "")}</textarea>
       ${dictateBar("why-vote", `<button class="btn" type="button" id="vote-save">${myVote ? "Update my forecast" : "Lock my forecast"}</button>`)}<span class="row-err" id="vote-err"></span></div>
@@ -429,7 +441,7 @@ function pickCells(s) {
 function paysText(s, d) { const o = d.pick ? s.sportsbet?.odds?.[d.pick] : null, st = Number(d.stake || 0); return o && st ? `pays ${n0(st * o)} if right` : ""; }
 function renderTable() {
   document.querySelectorAll("#seat-table th button").forEach((b) => (b.dataset.sort === S.sort ? b.setAttribute("aria-sort", S.dir > 0 ? "ascending" : "descending") : b.removeAttribute("aria-sort")));
-  $("#guide-h").textContent = { sb: "2026 Sportsbet", "2022": "2022 result", "2025": "2025 federal", mine: "My calls" }[S.listView] + (S.sort === "sure" ? ` (sorted by ${({ sb: "2026 Sportsbet", "2022": "2022 result", "2025": "2025 federal", mine: "my calls" })[S.sortView || S.listView]})` : "");
+  $("#guide-h").textContent = VIEW_NAME[S.listView] + (S.sort === "sure" ? ` (sorted by ${VIEW_NAME[S.sortView || S.listView]})` : "");
   $("#seat-table tbody").innerHTML = rows().map((s) => {
     const p = S.picks[s.slug];
     const head = `<td>${p ? `<span class="ring-dot" style="background:${col(p.pick)}"></span>` : ""}<button class="seatname link" type="button" data-open="${s.slug}" title="Open the full seat page">${esc(s.name)} <span class="go" aria-hidden="true">›</span></button>${s.region === "regional" ? '<span class="tag">regional</span>' : ""}<span class="mp-s"><span class="sw" style="background:${col(s.mp.party)}"></span>${esc(s.mp.name)}${s.mp.retiring ? ", retiring" : ""}</span></td>
