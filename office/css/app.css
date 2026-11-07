@@ -590,3 +590,9 @@ th.fedc { font-style: italic; }
 .polls-t tr.more { display: none; }
 .polls-t.all tr.more { display: table-row; }
 .polls-more { margin: 8px 0 0; }
+.state-mkts { margin: 4px 0 18px; }
+.state-mkts h3 { margin: 0 0 6px; }
+.sm-o { display: inline-block; margin: 0 14px 3px 0; white-space: nowrap; }
+.sm-o.val { text-decoration: underline; text-decoration-color: var(--ink-3); text-underline-offset: 3px; }
+.state-mkts .sheet td:nth-child(2), .state-mkts .sheet th:nth-child(2) { text-align: left; white-space: normal; }
+.state-mkts .sheet td:first-child { white-space: nowrap; }

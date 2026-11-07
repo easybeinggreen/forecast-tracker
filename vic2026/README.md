@@ -36,7 +36,7 @@ review uses the latest snapshot instead).
 2. Check all 88 seats came back; flag any seat whose book total is under 100% or over 130% as a misread.
 3. Save the lines to a scratch file, then `python -m vic2026.build.sportsbet --add <file> <ISO time with offset>`,
    e.g. `2026-11-04T09:06+00:00` (the dashboard parses it; a bare `T0906` breaks the charts).
-4. `python -m vic2026.build.export_site`, commit "Sportsbet snapshot <date>", push.
+4. `python -m vic2026.build.export_site` then `python -m vic2026.build.export_office` (Ballot Miner player data), commit "Sportsbet snapshot <date>", push.
 5. Report: favourites that changed, biggest moves (chance with margin removed **and** decimal odds, e.g. "46% ($1.83)"),
    and how they compare with the model. Paul's locked calls need his passcode, so value against them is shown on each
    seat page rather than in the report.
