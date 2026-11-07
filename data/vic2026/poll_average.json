@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-04",
+ "as_of": "2026-11-06",
  "method": "recency- and size-weighted, house-effect adjusted, pollster-capped",
  "params": {
   "half_life_days": 30.0,
@@ -246,7 +246,7 @@
    "id": "redbridge-accent-2026-08-afr",
    "pollster": "redbridge-accent",
    "end": "2026-08-01",
-   "weight": 0.019,
+   "weight": 0.018,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -259,7 +259,7 @@
    "id": "freshwater-2026-08",
    "pollster": "freshwater",
    "end": "2026-08-03",
-   "weight": 0.02,
+   "weight": 0.019,
    "house": {
     "alp": -0.05,
     "lnp": 0.74,
@@ -272,7 +272,7 @@
    "id": "roy-morgan-2026-08",
    "pollster": "roy-morgan",
    "end": "2026-08-07",
-   "weight": 0.029,
+   "weight": 0.03,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,
@@ -298,7 +298,7 @@
    "id": "resolve-2026-08-age",
    "pollster": "resolve",
    "end": "2026-08-15",
-   "weight": 0.026,
+   "weight": 0.025,
    "house": {
     "alp": 0.71,
     "lnp": -0.81,
@@ -311,7 +311,7 @@
    "id": "resolve-2026-09-age",
    "pollster": "resolve",
    "end": "2026-09-12",
-   "weight": 0.049,
+   "weight": 0.048,
    "house": {
     "alp": 0.71,
     "lnp": -0.81,
@@ -324,7 +324,7 @@
    "id": "redbridge-accent-2026-09-afr",
    "pollster": "redbridge-accent",
    "end": "2026-09-14",
-   "weight": 0.079,
+   "weight": 0.078,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -337,7 +337,7 @@
    "id": "demosau-2026-09",
    "pollster": "demosau",
    "end": "2026-09-20",
-   "weight": 0.06,
+   "weight": 0.059,
    "house": {
     "alp": -1.04,
     "lnp": 1.1,
@@ -350,7 +350,7 @@
    "id": "freshwater-2026-09",
    "pollster": "freshwater",
    "end": "2026-09-28",
-   "weight": 0.072,
+   "weight": 0.071,
    "house": {
     "alp": -0.05,
     "lnp": 0.74,
@@ -363,7 +363,7 @@
    "id": "redbridge-accent-2026-10-afr",
    "pollster": "redbridge-accent",
    "end": "2026-10-08",
-   "weight": 0.09,
+   "weight": 0.089,
    "house": {
     "alp": -0.42,
     "lnp": 0.31,
@@ -376,7 +376,7 @@
    "id": "resolve-2026-10-age",
    "pollster": "resolve",
    "end": "2026-10-10",
-   "weight": 0.094,
+   "weight": 0.092,
    "house": {
     "alp": 0.71,
     "lnp": -0.81,
@@ -389,7 +389,7 @@
    "id": "newspoll-2026-10",
    "pollster": "Newspoll / Pyxis",
    "end": "2026-10-22",
-   "weight": 0.125,
+   "weight": 0.123,
    "house": {
     "alp": 0.64,
     "lnp": 1.42,
@@ -402,7 +402,7 @@
    "id": "roy-morgan-2026-10",
    "pollster": "roy-morgan",
    "end": "2026-10-29",
-   "weight": 0.257,
+   "weight": 0.265,
    "house": {
     "alp": -0.24,
     "lnp": -1.8,

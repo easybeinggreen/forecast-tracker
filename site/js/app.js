@@ -31,7 +31,17 @@ const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hi
 const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"]);
 const STATEWIDE = { slug: "statewide", name: "Statewide result" };
 const STATE_OUT = { LNP_MAJ: "Coalition majority", HUNG: "Hung parliament", ALP_MAJ: "Labor majority" };
-const outName = (k) => STATE_OUT[k] || PARTY[k] || k;
+const isStateSlug = (slug) => slug === "statewide" || String(slug || "").startsWith("state-");
+const stateMkt = (slug) => S.sbs?.markets?.[slug];
+const outNameFor = (slug, k) => stateMkt(slug)?.labels?.[k] || STATE_OUT[k] || PARTY[k] || k;
+const outName = (k) => outNameFor(S.seat, k);
+const slugName = (slug) => slug === "statewide" ? "Statewide" : stateMkt(slug) ? `Statewide: ${stateMkt(slug).name}` : seatBy(slug)?.name || slug;
+// model chances for whatever the drawer is showing: a seat, the old statewide call, or a statewide market
+function modelProbsFor(slug) {
+  if (slug === "statewide") { const sm = S.F.summary; return { LNP_MAJ: sm.p_lnp_majority, HUNG: sm.p_hung, ALP_MAJ: sm.p_alp_majority }; }
+  if (stateMkt(slug)) return stateMkt(slug).model;
+  return seatBy(slug).model.win;
+}
 const outCol = (k) => ({ LNP_MAJ: col("LIB"), HUNG: "var(--ink-3)", ALP_MAJ: col("ALP") }[k] || col(k));
 
 async function api(path, opts = {}) {
@@ -50,6 +60,7 @@ async function boot() {
   ]);
   S.news = news;
   S.sb = await fetch("data/sportsbet.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  S.sbs = await fetch("data/sportsbet_state.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.agents = await fetch("data/agents_status.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.mk = await fetch("data/markets.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
   S.changes = await fetch("data/changes.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
@@ -229,6 +240,7 @@ function renderOutcome() {
   $("#dist").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribution of Coalition seat totals"><g class="axis"><line x1="0" x2="${W}" y1="${H - 17.5}" y2="${H - 17.5}"/>${ticks.join("")}</g>${bars}<line x1="${mx}" x2="${mx}" y1="4" y2="${H - 18}" stroke="var(--ink-3)" stroke-dasharray="3 3"/><text x="${mx + 4}" y="12" font-size="10.5" fill="var(--ink-2)">majority</text></svg>`;
   $("#dist-cap").textContent = `Coalition seat totals across ${n.toLocaleString("en-AU")} simulated elections. Solid bars reach a majority.`;
 
+  if ($("#state-mkts")) $("#state-mkts").innerHTML = stateMarketsHTML();
   $("#markets").innerHTML = `<h3>What the markets say</h3>${liveMarkets() || `<table>${S.F.markets.map((m) => `<tr><td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>: ${esc(m.what)}<div class="muted">${esc(m.note)}, ${esc(m.as_of)}</div></td><td class="num">${pct(m.p)}</td></tr>`).join("")}</table>`}
     <table><tr><td><b>This model:</b> Coalition largest party<div class="muted">Majority in ${pct(sm.p_lnp_majority)} of simulations</div></td><td class="num">${pct(sm.p_lnp_largest)}</td></tr>
     ${(() => { const o = (S.ledger?.odds || []).filter((r) => r.seat === "statewide").at(-1); return o ? `<tr><td><b>${esc(o.source)}</b> (you recorded, ${esc(o.as_of || "")})<div class="muted">${Object.entries(o.odds).map(([k, v]) => `${esc(outName(k))} $${Number(v).toFixed(2)}`).join(" · ")}</div></td><td class="num">${pct(Number(Object.entries(o.implied).sort((a, b) => b[1] - a[1])[0][1]))}</td></tr>` : ""; })()}</table>`;
@@ -315,13 +327,13 @@ function renderAgents() {
   el.textContent = A.length ? `${A.length} agents playing along (the local, the numbers punter, the market reader)${runs.length ? `, last run ${new Date(runs.at(-1)).toLocaleString("en-AU", { weekday: "short", hour: "numeric", minute: "2-digit" })}` : ", first run pending"}. Their calls stay sealed until after the count.` : "";
 }
 
-function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => p.seat !== "statewide").map((p) => p.seat)); }
+function calledSet() { return new Set((S.ledger?.predictions || []).filter((p) => !isStateSlug(p.seat)).map((p) => p.seat)); }
 
 // Your picture: the model with your latest call swapped in for each seat you've called.
 const PIC = [["Coalition", ["LIB", "NAT"], "LIB"], ["Labor", ["ALP"], "ALP"], ["One Nation", ["ON"], "ON"], ["Greens", ["GRN"], "GRN"], ["Independents", ["IND"], "IND"]];
 function blended(preds) {
   const latest = {};
-  for (const r of preds) if (r.seat !== "statewide") latest[r.seat] = r;
+  for (const r of preds) if (!isStateSlug(r.seat)) latest[r.seat] = r;
   const exp = Object.fromEntries(PIC.map(([n]) => [n, 0])), favs = Object.fromEntries(PIC.map(([n]) => [n, 0]));
   let differ = 0;
   for (const s of S.F.seats) {
@@ -337,7 +349,7 @@ function blended(preds) {
 function renderMine() {
   const el = $("#mine"); if (!el) return;
   if (!S.ledger) { el.innerHTML = `<h3>Your picture</h3><p class="hint">Unlock your ledger to see the statewide result your calls add up to.</p>`; return; }
-  const P = S.ledger.predictions.filter((r) => r.seat !== "statewide").sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  const P = S.ledger.predictions.filter((r) => !isStateSlug(r.seat)).sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   const model = blended([]), mine = blended(P);
   const sw = S.ledger.predictions.filter((r) => r.seat === "statewide").at(-1);
   const rows = PIC.map(([n, , c]) => { const a = model.exp[n], b = mine.exp[n], d = b - a;
@@ -454,8 +466,8 @@ function renderLedger() {
         <div><div class="v ${sev >= 0 ? "pos" : "neg"}">${sev >= 0 ? "+" : "−"}$${Math.abs(sev).toFixed(0)}</div><div class="l">Expected profit, by your odds</div></div>
         <div><div class="v">${none}${unk ? ` <small>+${unk}</small>` : ""}</div><div class="l">Not offered${unk ? " (+ not checked)" : ""}</div></div></div></div>`; })()}
     ${P.length ? `<div class="table-wrap" style="margin:0"><table><thead><tr><th>Locked</th><th>Seat</th><th>Call</th><th class="num">Price</th><th class="num">Stake</th><th class="num">Returns if right</th><th class="num">Sportsbet</th><th>Why</th></tr></thead><tbody>
-      ${[...P].reverse().map((r) => `<tr><td>${new Date(r.created_at).toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" })}</td><td>${esc(r.seat === "statewide" ? "Statewide" : seatBy(r.seat)?.name || r.seat)}</td>
-        <td>${r.backed ? `${esc(outName(r.backed))} ${pct(Number(r.probs[r.backed]))}` : "Probabilities only"}</td>
+      ${[...P].reverse().map((r) => `<tr><td>${new Date(r.created_at).toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" })}</td><td>${esc(slugName(r.seat))}</td>
+        <td>${r.backed ? `${esc(outNameFor(r.seat, r.backed))} ${pct(Number(r.probs[r.backed]))}` : "Probabilities only"}</td>
         <td class="num">${r.price_p ? `${pct(Number(r.price_p))} <span class="dim">${esc(r.price_source || "")}</span>` : "—"}</td>
         <td class="num">${r.stake}</td><td class="num">${r.stake && r.price_p ? Math.round(Number(r.stake) / Number(r.price_p)) : "—"}</td>
         <td class="num">${r.sb_odds ? `$${Number(r.sb_odds).toFixed(2)} <span class="dim">→ $${Math.round(Number(r.stake) * Number(r.sb_odds))}</span>` : r.sb_status === "not_offered" ? '<span class="dim">not offered</span>' : '<span class="dim">—</span>'}</td><td>${esc(r.note || "")}</td></tr>`).join("")}
@@ -473,7 +485,7 @@ function openParty(code) {
   d.scrollTop = 0; d.focus();
 }
 function openSeat(slug) {
-  if (slug !== "statewide" && !seatBy(slug)) return;
+  if (slug !== "statewide" && !stateMkt(slug) && !seatBy(slug)) return;
   S.seat = slug; S.shifts = {}; S.flows = {}; S.answers = {}; S.calc = null; S.central = null;
   history.replaceState(null, "", `#seat=${slug}`);
   renderDrawer();
@@ -534,6 +546,7 @@ function currentProbs(seat) {
 function renderDrawer() {
   const d = $("#drawer");
   if (S.seat === "statewide") { d.innerHTML = statewideHTML(); bindLock(); return; }
+  if (stateMkt(S.seat)) { d.innerHTML = stateMarketHTML(S.seat); bindLock(); return; }
   if (S.seat.startsWith("party:")) { d.innerHTML = partyHTML(S.seat.slice(6), S.F, S.news, PARTY, calledSet()).replace("<!--research-->", researchHTML(S.F.research_by_party?.[S.seat.slice(6)])); return; }
   const s = seatBy(S.seat);
   const slots = s.model.sim.slots;
@@ -792,13 +805,13 @@ function lockHTML(slug, outs) {
   if (!S.ledger) return `<section class="d-sec"><h3>Lock your call</h3><p class="locked-out">Unlock your ledger to lock a call and stake points.</p><div class="row-end" style="justify-content:flex-start"><button class="btn" type="button" data-act="unlock">Unlock ledger</button></div></section>`;
   const hist = callsFor(slug);
   return `<section class="d-sec" aria-labelledby="h-lock"><h3 id="h-lock">Lock your call</h3>
-    <p class="hint">Your own probability for each outcome. Prefilled from the ${slug === "statewide" ? "model" : "calculator"}; change any you disagree with. Once locked it can't be edited.</p>
+    <p class="hint">Your own probability for each outcome. Prefilled from the ${isStateSlug(slug) ? "model" : "calculator"}; change any you disagree with. Once locked it can't be edited.</p>
     <form id="lock-form">
       <div class="lock-grid">${outs.map((k) => `<label>${esc(outName(k))}<input name="p-${k}" inputmode="numeric" data-out="${k}"></label>`).join("")}</div>
       <p class="lock-sum" id="lock-sum"></p>
       <div class="lock-row">
         <label>Stake on<select name="backed">${outs.map((k) => `<option value="${k}">${esc(outName(k))}</option>`).join("")}</select></label>
-        ${(() => { const bg = potFor(slug); return `<label>Points (${bg.remaining} ${slug === "statewide" ? "statewide " : ""}left)<input name="stake" type="number" min="0" max="${bg.remaining}" step="1" value="0"></label>`; })()}
+        ${(() => { const bg = potFor(slug); return `<label>Points (${bg.remaining} ${isStateSlug(slug) ? "statewide " : ""}left)<input name="stake" type="number" min="0" max="${bg.remaining}" step="1" value="0"></label>`; })()}
       </div>
       <div class="sb-row">
         <label>Sportsbet odds for this outcome <span class="dim">(decimal, at this moment)</span><input name="sb_odds" type="number" min="1.01" step="0.01" placeholder="e.g. 2.50"></label>
@@ -827,13 +840,41 @@ function statewideHTML() {
     ${marketHTML("statewide", outs)}${lockHTML("statewide", outs)}`;
 }
 
+// A statewide Sportsbet market: odds, chance with margin removed, model, value; then the lock form (500-point pot)
+function stateMarketHTML(slug) {
+  const m = stateMkt(slug), L = m.latest, outs = Object.keys(L.odds);
+  const prev = m.history.length > 1 ? m.history.at(-2).odds : null;
+  const best = outs.map((k) => ({ k, ev: (m.model[k] || 0) * L.odds[k] - 1 })).sort((a, b) => b.ev - a.ev)[0];
+  return `<div class="d-head"><div class="monogram" style="background:var(--ink)">88</div>
+      <div><h2 id="d-title">${esc(m.name)}</h2><p>Statewide market, Sportsbet. Bets come from your separate 500-point statewide pot.</p></div>
+      <button class="close back" type="button" data-act="close" aria-label="Back to the count room">← Count room</button></div>
+    <section class="d-sec"><h3>Sportsbet v the model</h3>
+      <div class="sheet-wrap"><table class="sheet"><thead><tr><th></th><th class="num">Odds</th><th class="num">Sportsbet chance</th><th class="num">Model</th><th class="num">Value at model's chance</th></tr></thead><tbody>
+      ${outs.map((k) => { const ev = (m.model[k] || 0) * L.odds[k] - 1;
+        return `<tr><td>${esc(outNameFor(slug, k))}</td><td class="num">$${L.odds[k].toFixed(2)}${prev && prev[k] && prev[k] !== L.odds[k] ? ` <span class="dim">(was $${prev[k].toFixed(2)})</span>` : ""}</td><td class="num">${pct(L.fair[k])}</td><td class="num">${pct(m.model[k] || 0)}</td><td class="num ${ev > 0 ? "pos" : "dim"}">${ev > 0 ? `+${Math.round(ev * 100)}c per $1` : "none"}</td></tr>`; }).join("")}
+      </tbody></table></div>
+      <p class="hint">Sportsbet chance has the bookmaker's ${Math.round(L.margin * 100)}% margin removed. Value = model's chance × odds − 1, the expected profit per $1 if the model is right. ${best.ev > 0 ? `The model's best value here is ${esc(outNameFor(slug, best.k))} at $${L.odds[best.k].toFixed(2)}: check whether you trust the model on this before backing it.` : "The model sees no value at these prices."}
+      ${slug === "state-govt" || slug === "state-type" ? " The model assumes the larger of Coalition and Labor forms government in a hung parliament; crossbench deals could go the other way, so treat its minority-government chances as rough." : ""}</p>
+    </section>
+    ${lockHTML(slug, outs)}`;
+}
+function stateMarketsHTML() {
+  const M = S.sbs?.markets; if (!M) return "";
+  return `<div class="state-mkts"><h3>Statewide markets <span class="dim">Sportsbet, ${new Date(S.sbs.as_of).toLocaleDateString("en-AU", { day: "numeric", month: "short" })}</span></h3>
+    <div class="sheet-wrap"><table class="sheet"><thead><tr><th>Market</th><th>Outcomes: odds (Sportsbet chance · model)</th><th></th></tr></thead><tbody>
+    ${Object.entries(M).map(([slug, m]) => `<tr><td><b>${esc(m.name)}</b></td><td>${Object.keys(m.latest.odds).map((k) => `<span class="sm-o${(m.model[k] || 0) * m.latest.odds[k] > 1.1 ? " val" : ""}">${esc(outNameFor(slug, k))} $${m.latest.odds[k].toFixed(2)} <span class="dim">(${pct(m.latest.fair[k])} · ${pct(m.model[k] || 0)})</span></span>`).join("")}</td>
+      <td><button class="btn btn-ghost" type="button" data-open-seat="${slug}">Bet</button></td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="caption">Underlined: the model's chance × odds is above 1.1. Bets come from your separate 500-point statewide pot.</p></div>`;
+}
+
 function lockOutcomes() { return [...document.querySelectorAll("#lock-form [data-out]")].map((i) => i.dataset.out); }
 
 function refreshLockDefaults(force = true) {
   const f = $("#lock-form"); if (!f) return;
   const outs = lockOutcomes();
   let src;
-  if (S.seat === "statewide") { const sm = S.F.summary; src = { LNP_MAJ: sm.p_lnp_majority, HUNG: sm.p_hung, ALP_MAJ: sm.p_alp_majority }; }
+  if (isStateSlug(S.seat)) src = modelProbsFor(S.seat);
   else src = currentProbs(seatBy(S.seat));
   const raw = outs.map((k) => (src[k] || 0) * 100);
   const tot = raw.reduce((a, v) => a + v, 0) || 1;
@@ -846,16 +887,20 @@ function refreshLockDefaults(force = true) {
 }
 
 function priceFor(slug, k) {
+  const sm = stateMkt(slug)?.latest;
+  if (sm && sm.odds[k]) return { p: 1 / sm.odds[k], src: "Sportsbet", odds: sm.odds[k] };
   const sb = S.sb?.seats?.[slug]?.latest;
   if (sb && sb.odds[k]) return { p: 1 / sb.odds[k], src: "Sportsbet", odds: sb.odds[k] };
   const o = lastOdds(slug);
   if (o && o.odds?.[k]) return { p: 1 / Number(o.odds[k]), src: o.source, odds: Number(o.odds[k]) };
   if (o && o.implied[k] != null) return { p: Number(o.implied[k]), src: o.source };
-  const m = slug === "statewide" ? { LNP_MAJ: S.F.summary.p_lnp_majority, HUNG: S.F.summary.p_hung, ALP_MAJ: S.F.summary.p_alp_majority }[k] : seatBy(slug).model.win[k];
+  const m = modelProbsFor(slug)[k];
   return { p: Math.min(0.99, Math.max(0.01, m || 0.01)), src: "model" };
 }
 
 function sbRecorded(slug, k) {
+  const sm = stateMkt(slug)?.latest;
+  if (sm && sm.odds[k]) return sm.odds[k];
   const sb = S.sb?.seats?.[slug]?.latest;
   if (sb && sb.odds[k]) return sb.odds[k];
   const o = (S.ledger?.odds || []).filter((r) => r.seat === slug && /sportsbet/i.test(r.source || "")).at(-1);
@@ -900,7 +945,7 @@ function bindLock() {
       if (Math.abs(total - 1) > 0.005) { err.textContent = "Your probabilities need to add up to 100%."; return; }
       const backed = f.elements.backed.value, stake = Math.floor(Number(f.elements.stake.value || 0));
       const pr = priceFor(S.seat, backed);
-      const model_probs = S.seat === "statewide" ? { LNP_MAJ: S.F.summary.p_lnp_majority, HUNG: S.F.summary.p_hung, ALP_MAJ: S.F.summary.p_alp_majority } : seatBy(S.seat).model.win;
+      const model_probs = modelProbsFor(S.seat);
       try {
         f.querySelector("button[type=submit]").disabled = true;
         await api("/api/predictions", { method: "POST", body: JSON.stringify({ seat: S.seat, probs, backed, stake, price_p: pr.p, price_source: pr.src, model_probs,
@@ -909,7 +954,7 @@ function bindLock() {
         await loadLedger();
         const sec = $("#lock-form")?.closest(".d-sec");
         if (sec) {
-          sec.insertAdjacentHTML("afterbegin", `<div class="locked-card" role="status"><b>Locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : `Your probabilities are recorded`}. ${potFor(S.seat).remaining.toLocaleString("en-AU")} ${S.seat === "statewide" ? "statewide " : ""}points left.
+          sec.insertAdjacentHTML("afterbegin", `<div class="locked-card" role="status"><b>Locked.</b> ${stake ? `${stake} points on ${esc(outName(backed))} at ${pct(pr.p)}` : `Your probabilities are recorded`}. ${potFor(S.seat).remaining.toLocaleString("en-AU")} ${isStateSlug(S.seat) ? "statewide " : ""}points left.
             <div class="row-end" style="justify-content:flex-start;margin-top:8px"><button class="btn" type="button" data-act="close">← Back to the count room</button><button class="btn btn-quiet" type="button" data-act="to-ledger">See my ledger</button></div></div>`);
           sec.scrollIntoView({ block: "start", behavior: "smooth" });
         }
@@ -979,6 +1024,7 @@ function wire() {
   });
   document.addEventListener("click", (e) => { const b = e.target.closest("[data-party]"); if (b) openParty(b.dataset.party); });
   $("#changes").addEventListener("click", (e) => { const b = e.target.closest("[data-open-seat]"); if (b) openSeat(b.dataset.openSeat); });
+  $("#state-mkts")?.addEventListener("click", (e) => { const b = e.target.closest("[data-open-seat]"); if (b) openSeat(b.dataset.openSeat); });
   drawer.addEventListener("toggle", (e) => { if (e.target.classList?.contains("model-more")) S.moreOpen = e.target.open; }, true);
   drawer.addEventListener("input", (e) => {
     const t = e.target;

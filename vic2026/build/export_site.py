@@ -315,3 +315,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    from vic2026.build.sportsbet_state import build as build_state
+    build_state()

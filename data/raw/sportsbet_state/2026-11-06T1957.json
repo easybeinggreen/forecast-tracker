@@ -1,0 +1,11 @@
+{"t": "2026-11-06T19:57+00:00", "source": "https://www.sportsbet.com.au/betting/politics/vic-politics",
+ "markets": {
+  "state-govt": {"COAL": 1.08, "ALP": 11.00, "OTH": 13.00},
+  "state-type": {"COAL_MAJ": 1.45, "COAL_MIN": 3.75, "ALP_MAJ": 46.00, "ALP_MIN": 10.00, "OTH": 11.50},
+  "state-hung": {"YES": 2.70, "NO": 1.45},
+  "state-coal-seats": {"OVER": 1.68, "UNDER": 2.15},
+  "state-alp-seats": {"OVER": 2.05, "UNDER": 1.74},
+  "state-on-seats": {"OVER": 2.10, "UNDER": 1.70},
+  "state-grn-seats": {"OVER": 1.98, "UNDER": 1.80}
+ },
+ "lines": {"state-coal-seats": 47.5, "state-alp-seats": 25.5, "state-on-seats": 9.5, "state-grn-seats": 4.5}}
