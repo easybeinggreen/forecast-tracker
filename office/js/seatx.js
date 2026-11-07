@@ -83,6 +83,36 @@ export function insideShell(slug) {
     <div id="inside" data-slug="${slug}"><p class="hint">Loading polling places…</p></div></section>`;
 }
 
+let insideBase = "plain";
+// Roads-and-towns view: MapLibre with free OpenFreeMap tiles (no account or key), the seat boundary and the same booth dots.
+let mlLoading;
+function loadMapLibre() {
+  if (window.maplibregl) return Promise.resolve();
+  return (mlLoading ||= new Promise((ok, bad) => {
+    const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css"; document.head.appendChild(css);
+    const js = document.createElement("script"); js.src = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"; js.onload = ok; js.onerror = bad; document.head.appendChild(js);
+  }));
+}
+function cssColour(v) { const m = /var\((--[\w-]+)\)/.exec(v); return m ? getComputedStyle(document.documentElement).getPropertyValue(m[1]).trim() || "#888" : v; }
+async function streetMap(box, polys, dots, bbox) {
+  box.innerHTML = '<p class="hint">Loading the map…</p>';
+  try { await loadMapLibre(); } catch { box.innerHTML = '<p class="hint">The street map could not load here.</p>'; return; }
+  box.innerHTML = "";
+  const map = new maplibregl.Map({ container: box, style: "https://tiles.openfreemap.org/styles/positron", bounds: [[bbox[0], bbox[1]], [bbox[2], bbox[3]]], fitBoundsOptions: { padding: 20 }, attributionControl: { compact: true }, cooperativeGestures: true });
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+  map.on("load", () => {
+    map.addSource("seat", { type: "geojson", data: { type: "Feature", geometry: { type: "MultiPolygon", coordinates: polys } } });
+    map.addLayer({ id: "seat-fill", type: "fill", source: "seat", paint: { "fill-color": "#1D232B", "fill-opacity": 0.04 } });
+    map.addLayer({ id: "seat-line", type: "line", source: "seat", paint: { "line-color": "#1D232B", "line-width": 2 } });
+    const feats = dots.filter((d) => d.lon != null).map((d, i) => ({ type: "Feature", properties: { i, c: cssColour(d.fill), o: d.op, r: d.r * 0.8 }, geometry: { type: "Point", coordinates: [d.lon, d.lat] } }));
+    map.addSource("booths", { type: "geojson", data: { type: "FeatureCollection", features: feats } });
+    map.addLayer({ id: "booths", type: "circle", source: "booths", paint: { "circle-color": ["get", "c"], "circle-opacity": ["get", "o"], "circle-radius": ["get", "r"], "circle-stroke-color": "#fff", "circle-stroke-width": 0.5 } });
+    const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: "240px" });
+    map.on("mousemove", "booths", (e) => { map.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML(dots[e.features[0].properties.i].html).addTo(map); });
+    map.on("mouseleave", "booths", () => { map.getCanvas().style.cursor = ""; pop.remove(); });
+  });
+}
+
 export function renderInside(el, B, s, PARTY, groupOf, lens = "tcp") {
   const v = B.vec2022, fed = B.fed2025 || [];
   const cands = v ? v.cands.map((c) => ({ ...c, g: groupOf(c.party) })) : [];
@@ -116,7 +146,7 @@ export function renderInside(el, B, s, PARTY, groupOf, lens = "tcp") {
         tip = `${v.tcp.map((n, i) => `${esc(n.split(",")[0])} ${(100 * b.tcp[i] / (a + c)).toFixed(0)}%`).join(" v ")}`;
       } else { fill = "var(--ink-3)"; op = 0.4; tip = "No final-two count"; }
       const [px, py] = proj([b.x, b.y]);
-      return { px, py, r, fill, op, html: `<b>${esc(b.n)}</b><br>${t.toLocaleString("en-AU")} votes<br>${tip}<br><span class="muted">Top: ${top}</span>` };
+      return { lon: b.x, lat: b.y, px, py, r, fill, op, html: `<b>${esc(b.n)}</b><br>${t.toLocaleString("en-AU")} votes<br>${tip}<br><span class="muted">Top: ${top}</span>` };
     });
     const g2 = lens.startsWith("p:") ? lens.slice(2) : null;
     legend = g2 ? `Darker = higher ${esc(PARTY[g2])} share (strongest booth darkest).`
@@ -127,9 +157,9 @@ export function renderInside(el, B, s, PARTY, groupOf, lens = "tcp") {
     dots = fed.map((b) => {
       const [px, py] = proj([b.x, b.y]);
       const r = 3 + 11 * Math.sqrt(b.f / maxF);
-      if (lens === "fon") return { px, py, r, fill: col("ON"), op: 0.12 + 0.88 * (b.on / maxOn), html: `<b>${esc(b.n)}</b><br>${b.f.toLocaleString("en-AU")} votes<br>One Nation ${(100 * b.on).toFixed(1)}%` };
+      if (lens === "fon") return { lon: b.x, lat: b.y, px, py, r, fill: col("ON"), op: 0.12 + 0.88 * (b.on / maxOn), html: `<b>${esc(b.n)}</b><br>${b.f.toLocaleString("en-AU")} votes<br>One Nation ${(100 * b.on).toFixed(1)}%` };
       const a = b.alp ?? 0.5;
-      return { px, py, r, fill: a >= 0.5 ? col("ALP") : col("LIB"), op: 0.25 + 0.75 * Math.min(1, Math.abs(a - 0.5) / 0.25), html: `<b>${esc(b.n)}</b><br>${b.f.toLocaleString("en-AU")} votes<br>Labor ${(100 * a).toFixed(1)}% v Coalition ${(100 * (1 - a)).toFixed(1)}%` };
+      return { lon: b.x, lat: b.y, px, py, r, fill: a >= 0.5 ? col("ALP") : col("LIB"), op: 0.25 + 0.75 * Math.min(1, Math.abs(a - 0.5) / 0.25), html: `<b>${esc(b.n)}</b><br>${b.f.toLocaleString("en-AU")} votes<br>Labor ${(100 * a).toFixed(1)}% v Coalition ${(100 * (1 - a)).toFixed(1)}%` };
     });
     legend = lens === "fon" ? "Darker = higher One Nation share at the 2025 federal election." : "Red = Labor ahead, blue = Coalition ahead, two-party, 2025 federal election.";
   }
@@ -143,11 +173,23 @@ export function renderInside(el, B, s, PARTY, groupOf, lens = "tcp") {
         return `<tr><td>${esc(b.n)}${b.x == null ? ' <span class="dim">(not mapped)</span>' : ""}</td><td>${t.toLocaleString("en-AU")}</td><td>${esc(PARTY[cands[i]?.g] || cands[i]?.party || "")} ${t ? (100 * b.v[i] / t).toFixed(0) : 0}%</td>${b.tcp ? b.tcp.map((n) => `<td>${(100 * n / tt).toFixed(1)}%</td>`).join("") : "<td>—</td><td>—</td>"}</tr>`; }).join("")}
     </tbody></table></div></details>`;
   })() : "";
-  el.innerHTML = `<label class="lens">Show <select id="booth-lens">${lenses.map(([k, l]) => `<option value="${k}"${k === lens ? " selected" : ""}>${l}</option>`).join("")}</select></label>
-    <div class="booth-wrap"><svg viewBox="0 0 ${W} ${H}" class="booth-map" role="img" aria-label="Polling places in ${esc(s.name)}">
+  // Biggest towns first; skip a label that would overlap one already placed.
+  const towns = [];
+  for (const [n, x, y] of s.towns || []) {
+    const [px, py] = proj([x, y]), w = 6.4 * n.length;
+    // try right-above, right-below, left-above, left-below of the dot
+    const spot = [[px + 5, py - 5], [px + 5, py + 13], [px - 5 - w, py - 5], [px - 5 - w, py + 13]]
+      .find(([lx, ly]) => lx > 0 && lx + w < W && !towns.some((t) => lx < t.lx + t.w && lx + w > t.lx && Math.abs(ly - t.ly) < 13));
+    if (spot) towns.push({ n, px, py, w, lx: spot[0], ly: spot[1] });
+  }
+  el.innerHTML = `<div class="inside-bar"><label class="lens">Show <select id="booth-lens">${lenses.map(([k, l]) => `<option value="${k}"${k === lens ? " selected" : ""}>${l}</option>`).join("")}</select></label>
+    <span class="seg" role="group" aria-label="Map style"><button type="button" data-base="plain" aria-pressed="${insideBase === "plain"}">Plain</button><button type="button" data-base="street" aria-pressed="${insideBase === "street"}">Roads and towns</button></span></div>
+    <div class="booth-wrap"${insideBase === "street" ? " hidden" : ""}><svg viewBox="0 0 ${W} ${H}" class="booth-map" role="img" aria-label="Polling places in ${esc(s.name)}">
       <path d="${outline}" class="seat-outline"/>
       ${dots.map((d, i) => `<circle cx="${d.px.toFixed(1)}" cy="${d.py.toFixed(1)}" r="${d.r.toFixed(1)}" style="fill:${d.fill};fill-opacity:${d.op.toFixed(2)}" data-i="${i}"/>`).join("")}
+      ${towns.map((t) => `<g class="town"><circle cx="${t.px.toFixed(1)}" cy="${t.py.toFixed(1)}" r="2"/><text x="${t.lx.toFixed(1)}" y="${t.ly.toFixed(1)}">${esc(t.n)}</text></g>`).join("")}
     </svg><div class="tip" hidden></div></div>
+    <div class="street-map" id="street-map"${insideBase === "street" ? "" : " hidden"}></div>
     <p class="hint">${legend} ${fedLens ? `${fed.length} federal polling places inside the boundary.` : `${placed} of ${v?.booths.length || 0} voting centres mapped (located by matching names to the AEC's polling places). Polling-day booths took ${boothVotes.toLocaleString("en-AU")} votes in 2022; early, postal and absent votes aren't tied to a place.`}</p>
     ${table}`;
   const wrap = el.querySelector(".booth-wrap"), tip = wrap.querySelector(".tip");
@@ -160,6 +202,8 @@ export function renderInside(el, B, s, PARTY, groupOf, lens = "tcp") {
   });
   wrap.addEventListener("mouseleave", () => (tip.hidden = true));
   el.querySelector("#booth-lens").addEventListener("change", (e) => renderInside(el, B, s, PARTY, groupOf, e.target.value));
+  el.querySelectorAll("[data-base]").forEach((b) => (b.onclick = () => { insideBase = b.dataset.base; renderInside(el, B, s, PARTY, groupOf, lens); }));
+  if (insideBase === "street") streetMap(el.querySelector("#street-map"), polys, dots, [x0, y0, x1, y1]);
 }
 
 // ---------------------------------------------------------------- the place: locator, people, history, topics, links
@@ -172,8 +216,7 @@ function demoHTML(d, vic) {
     return `<tr><td>${label}</td><td class="num"><b>${unit === "$" ? "$" + fmtN(Math.round(v)) : fmt(v) + unit}</b></td><td class="num dim">${ref == null ? "" : unit === "$" ? "$" + fmtN(Math.round(ref)) : fmt(ref) + unit}</td>
       <td class="bar-cell">${ref == null ? "" : `<span class="dev"><i style="${diff >= 0 ? "left:50%" : `right:50%`};width:${Math.min(50, Math.abs(diff) / (Math.abs(ref) || 1) * 50)}%"></i></span>`}</td></tr>`;
   };
-  return `<h4>Who lives here <span class="dim">(2021 Census)</span></h4>
-    <div class="sheet-wrap"><table class="sheet demo"><thead><tr><th></th><th>Here</th><th>Victoria</th><th>vs Victoria</th></tr></thead><tbody>
+  return `<div class="sheet-wrap"><table class="sheet demo"><thead><tr><th></th><th>Here</th><th>Victoria</th><th>vs Victoria</th></tr></thead><tbody>
     ${row("People", d.pop, null, "", fmtN)}
     ${row("Median age", d.age, vic.age, " yrs")}
     ${row("Median household income (weekly)", d.inc, vic.inc, "$")}
@@ -250,18 +293,35 @@ export function changesHTML(s, PARTY) {
     ${c}</section>`;
 }
 
-export function placeHTML(s, locator, PARTY) {
+// The five census figures where this seat differs most from Victoria, scaled by how much seats vary on each.
+const KEY_STATS = [["age", "Median age", (v) => `${Math.round(v)}`], ["inc", "Household income", (v) => `$${fmtN(Math.round(v))} a week`],
+  ["born_os", "Born overseas", (v) => `${v.toFixed(0)}%`], ["lang", "Other language at home", (v) => `${v.toFixed(0)}%`],
+  ["uni", "University degree", (v) => `${v.toFixed(0)}%`], ["cert", "Trade or certificate", (v) => `${v.toFixed(0)}%`],
+  ["rent", "Renting", (v) => `${v.toFixed(0)}%`], ["own", "Own home outright", (v) => `${v.toFixed(0)}%`],
+  ["kids", "Couples with children", (v) => `${v.toFixed(0)}%`], ["christian", "Christian", (v) => `${v.toFixed(0)}%`],
+  ["norel", "No religion", (v) => `${v.toFixed(0)}%`], ["atsi", "First Nations", (v) => `${v.toFixed(1)}%`]];
+function keyStatsHTML(s, all) {
+  const d = s.demo, vic = s.demo_vic || {};
+  if (!d) return "";
+  const sd = (k) => { const xs = (all || []).map((x) => x.demo?.[k]).filter((x) => x != null); if (xs.length < 2) return Math.abs(vic[k] || 1) || 1;
+    const m = xs.reduce((a, b) => a + b, 0) / xs.length; return Math.sqrt(xs.reduce((a, b) => a + (b - m) ** 2, 0) / xs.length) || 1; };
+  const top = KEY_STATS.filter(([k]) => d[k] != null && vic[k] != null).map((r) => [...r, Math.abs(d[r[0]] - vic[r[0]]) / sd(r[0])]).sort((a, b) => b[3] - a[3]).slice(0, 5);
+  return `<h4>Who lives here (census 2021)</h4>
+    <dl class="key-stats">${top.map(([k, lab, f]) => `<div><dt>${lab}</dt><dd>${f(d[k])} <span class="dim">(Victoria ${f(vic[k])})</span></dd></div>`).join("")}</dl>`;
+}
+
+export function placeHTML(s, locator, PARTY, all) {
   const P = s.place || {}, Q = s.profile || {};
   const wiki = (s.links || []).find((l) => l.label === "Wikipedia");
   return `<section class="d-sec place" aria-labelledby="h-place">
     <h3 id="h-place">The place</h3>
     <div class="place-grid">${locator}<div>
       ${Q.kind ? `<p class="lede-s"><b>${esc(Q.kind)}</b> ${Q.work ? esc(Q.work) : ""}</p>` : ""}
-      ${Q.people ? `<p class="lede-s">${esc(Q.people)}</p>` : ""}
+      ${keyStatsHTML(s, all)}
       ${Q.issues?.length ? `<h4>Local issues</h4><ul class="issues">${Q.issues.map((i) => `<li>${esc(i.text)} <a class="dim" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source)}${i.paywalled ? " (paywalled)" : ""}</a></li>`).join("")}</ul>` : ""}
       ${P.assessment ? `<blockquote class="quote small"><p>${esc(P.assessment)}</p><footer><a href="${esc(P.tr_url)}" target="_blank" rel="noopener">The Tally Room's assessment</a></footer></blockquote>` : ""}
       ${P.blurb ? `<details class="more-s"><summary>Background (Wikipedia)</summary><p>${esc(P.blurb)}${P.created ? ` Created ${esc(P.created)}.` : ""} ${wiki ? `<a class="dim" href="${esc(wiki.url)}" target="_blank" rel="noopener">Wikipedia</a>` : ""}</p></details>` : ""}
     </div></div>
-    <details class="more-s"><summary>All census figures (2021)</summary>${demoHTML(s.demo, s.demo_vic || {})}</details>
+    <details class="more-s"><summary>All census figures (2021), ${fmtN(s.demo?.pop || 0)} people</summary>${demoHTML(s.demo, s.demo_vic || {})}</details>
   </section>`;
 }

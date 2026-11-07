@@ -13,24 +13,15 @@ const ORDER = ["GRN", "ALP", "IND", "PROG", "OTH", "unset", "RMIN", "ON", "LIB",
 const DARK_TEXT = new Set(["NAT", "ON", "unset", "OTH", "RMIN", "PROG", "NONE"]);
 const ABBR = {"albert-park":"AP","bendigo-east":"BE","bendigo-west":"BW","box-hill":"BH","gippsland-east":"GE","gippsland-south":"GS","glen-waverley":"GW","mill-park":"MP","murray-plains":"MuP","narre-warren-north":"NN","narre-warren-south":"NS","ovens-valley":"OV","pascoe-vale":"PV","point-cook":"PC","south-barwon":"SB","south-west-coast":"SW","st-albans":"SA","yan-yean":"YY","ashwood":"As","bass":"Ba","bayswater":"By","bellarine":"Bl","benambra":"Bn","bentleigh":"Bt","berwick":"Bk","brighton":"Bg","broadmeadows":"Bd","brunswick":"Br","bulleen":"Bu","bundoora":"Bo","carrum":"Ca","caulfield":"Cf","clarinda":"Cl","cranbourne":"Cr","croydon":"Cy","dandenong":"Da","eildon":"Ei","eltham":"El","essendon":"Es","eureka":"Eu","euroa":"Er","evelyn":"Ev","footscray":"Fo","frankston":"Fr","geelong":"Gl","greenvale":"Gv","hastings":"Ha","hawthorn":"Hw","ivanhoe":"Iv","kalkallo":"Ka","kew":"Ke","kororoit":"Ko","lara":"La","laverton":"Lv","lowan":"Lo","macedon":"Ma","malvern":"Mv","melbourne":"Me","melton":"Mt","mildura":"Mi","monbulk":"Mo","mordialloc":"Md","mornington":"Mn","morwell":"Mw","mulgrave":"Mu","narracan":"Na","nepean":"Ne","niddrie":"Ni","northcote":"No","oakleigh":"Oa","pakenham":"Pa","polwarth":"Po","prahran":"Pr","preston":"Ps","richmond":"Ri","ringwood":"Rw","ripon":"Rp","rowville":"Ro","sandringham":"Sd","shepparton":"Sh","sunbury":"Su","sydenham":"Sy","tarneit":"Ta","thomastown":"Th","warrandyte":"Wa","wendouree":"We","werribee":"Wr","williamstown":"Wi"};
 const BANKROLL = 1000;
-const SEAT_CAP = 100; // most points on any one seat (or the government question), all bets there combined
+const SEAT_CAP = 100; // most points on any one seat, all bets there combined
 const CLOSE = new Date("2026-11-27T07:00:00Z"); // 6pm Melbourne, Fri 27 Nov
 const pct = (v) => `${Math.round(v * 100)}%`;
 const n0 = (v) => Math.round(v).toLocaleString("en-AU");
 const store = { get: (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
 const S = { more: {}, calls: [], bets: [], votes: [], D: null, geo: null, me: null, picks: {}, view: "2022", mapView: "2022", listView: "2022", order: null, sortView: "2022", filter: "all", sort: "sure", dir: -1, q: "", seat: null, draft: {} };
-const seatBy = (slug) => (slug === "statewide" ? govSeat() : S.D.seats.find((s) => s.slug === slug));
-// "Who forms government?" behaves like a seat: one call, optional bets, priced from the Kalshi market with its margin removed.
-let _gov;
-function govSeat() {
-  if (_gov) return _gov;
-  const g = S.D.statewide?.government || { p: {} }, tot = Object.values(g.p).reduce((a, b) => a + b, 0) || 1;
-  const fair = Object.fromEntries(Object.entries(g.p).map(([k, v]) => [k, v / tot]));
-  return (_gov = { slug: "statewide", name: "Who forms government", mp: { name: "", party: "" },
-    sportsbet: { fair, odds: Object.fromEntries(Object.entries(fair).map(([k, v]) => [k, Math.round((1 / v) * 100) / 100])), names: { LNP: "Coalition", ALP: "Labor", ON: "One Nation" }, as_of: g.as_of } });
-}
-const seatPicks = () => Object.values(S.picks).filter((p) => p.seat !== "statewide");
+const seatBy = (slug) => S.D.seats.find((s) => s.slug === slug);
+const seatPicks = () => Object.values(S.picks);
 const outName = (s, k) => s.sportsbet?.names?.[k] || PARTY[k] || k;
 const photo = (name) => S.D.photos?.[name];
 
@@ -181,8 +172,8 @@ function renderApp() {
             <th scope="col"><button type="button" data-sort="name">Seat</button></th>
             <th scope="col" class="num"><button type="button" data-sort="margin">Margin</button></th>
             <th scope="col"><button type="button" data-sort="sure" id="guide-h">Guide</button></th>
-            <th scope="col">Your pick</th>
-            <th scope="col">Bet</th>
+            <th scope="col">2. Pick the seats</th>
+            <th scope="col">3. Back your picks</th>
             <th scope="col"></th>
           </tr></thead>
           <tbody></tbody>
@@ -209,11 +200,11 @@ function renderAll() { renderTop(); renderChamber(); renderBig(); renderTable();
 
 function rulesHTML() {
   return `<div class="three">
-    <div><h3>1. Most seats right</h3><p>Pick the winner in each seat. One point for every seat you get right. A seat you don't call can't score, so call as many as you can. No betting needed.</p><p><b>Did you beat the bookies?</b> Your score is shown against Sportsbet's favourites at close.</p></div>
-    <div><h3>2. Beat the pollsters</h3><p>Forecast the statewide primary vote: Labor, Coalition, One Nation, Greens and Others, adding to 100. You're scored on your average miss against the real result. The benchmark is the final published poll average. No betting needed.</p></div>
-    <div><h3>3. Best bets (optional)</h3><p>You have ${n0(BANKROLL)} play points to back your judgement, on any seats you choose. A bet pays out at Sportsbet's price when you lock it: 100 points on a pick it gives a 40% chance pays about 240 if it wins. You can put up to ${SEAT_CAP} points on any one seat, so spreading your bets is part of the game. Bet where you think the bookies have it wrong and skip the rest. Most points at the end wins.</p></div>
+    <div><h3>1. Call the vote</h3><p>Forecast each group's share of the statewide primary vote (Labor, Coalition, One Nation, Greens, Others), adding to 100.</p><p>Your miss for each group is the gap in points between your number and the actual result; over or under counts the same. Your score is the average of the five misses. Lower is better. Example: you say Labor 25; if Labor gets 23 or 27, that's a miss of 2.</p><p><b>Beat the pollsters:</b> get a smaller average miss than the final poll average.</p></div>
+    <div><h3>2. Pick the seats</h3><p>Pick the winner in each of the 88 seats. One point for every seat you get right. A seat you don't pick can't score, so pick as many as you can.</p><p><b>Beat the bookies:</b> get more right than Sportsbet's favourites at close.</p></div>
+    <div><h3>3. Back your picks (optional)</h3><p>You have ${n0(BANKROLL)} play points to bet on any seats you choose, up to ${SEAT_CAP} on any one seat. A bet pays at Sportsbet's price when you place it: 100 points on a pick it gives a 40% chance pays about 250 if it wins. Bet where you think the bookies have it wrong and skip the rest. Most points at the end wins.</p></div>
   </div>
-  <div class="foot-note"><p>Click any seat (in the chamber, map or list) for its full page of history, booth results, candidates and news. Your seat calls count for contests 1 and 3. Add your reasoning to any pick, typed or dictated. You can change a call before close (say what changed) and add bets, but bets already placed stand. The call standing at close is the one scored; ties go to whoever changed fewer calls. Everyone's calls, changes and reasoning are revealed after the count. Nobody sees anyone else's picks, or the leaderboards, until the count. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
+  <div class="foot-note"><p>Click any seat (in the chamber, map or list) for its full page of history, booth results, polls, candidates and news. Add your reasoning to any pick, typed or dictated. You can change a pick before close (say what changed) and add bets, but bets already placed stand. The pick standing at close is the one scored; ties go to whoever changed fewer picks. Nobody sees anyone else's picks, or the leaderboards, until the count; then everyone's picks, changes and reasoning are revealed. Picks close at <b>6pm Friday 27 November</b> (Melbourne time). Leaderboards for Alliance, AI Mates and everyone together.</p></div>`;
 }
 
 function renderTop() {
@@ -342,43 +333,43 @@ function stackRow(entries, total, label) {
   return `<div class="bigbar"><span class="stack wide" aria-hidden="true">${list.map(([k, v]) => `<i style="width:${(100 * v) / total}%;background:${col(k)}"></i>`).join("")}${label === "seats" ? '<b class="maj45" title="45 seats to govern"></b>' : ""}</span>
     <span class="bigtxt">${list.map(([k, v]) => `<span><span class="sw" style="background:${col(k)}"></span>${SHORT[k] || k} <b>${label === "seats" ? v : v.toFixed(0)}</b></span>`).join("")}</span></div>`;
 }
+const POLLSTER = (k) => ({ "roy-morgan": "Roy Morgan", "newspoll": "Newspoll", "redbridge": "RedBridge", "resolve": "Resolve", "yougov": "YouGov", "ucomms": "uComms", "demos-au": "DemosAU", "freshwater": "Freshwater", "essential": "Essential" }[k] || k.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()));
+const fmtDay = (d) => new Date(d).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
+function pollChoice(W) {
+  const sel = S.pollSel ?? "avg";
+  if (sel === "avg") { const pp = W.polls.primaries; return { sub: `Election Tracker average, ${fmtDay(W.polls.as_of)}`, vote: { ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others } }; }
+  const x = W.polls.list[Number(sel)];
+  return { sub: `${POLLSTER(x.pollster)}, ended ${fmtDay(x.fieldwork_end)}, ${n0(Number(x.sample_size) || 0)} people`, vote: { ALP: +x.alp, LNP: +x.lnp, ON: +x.onp, GRN: +x.grn, OTHERS: +x.others }, url: x.source_url };
+}
 function renderBig() {
   const W = S.D.statewide; if (!W) return;
   const vote22 = Object.entries(W.y2022);
   const f = W.fed2025.prims, vote25 = Object.entries({ ALP: f.ALP, LNP: (f.LIB || 0) + (f.NAT || 0), GRN: f.GRN, ON: f.ON, OTHERS: 100 - f.ALP - (f.LIB || 0) - (f.NAT || 0) - f.GRN - f.ON });
-  const pp = W.polls.primaries, votePoll = Object.entries({ ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others });
+  const pc = pollChoice(W);
   const s22 = tallyOf((s) => COAL(s.held_2022)), s25 = tallyOf((s) => COAL(fed2025(s)?.k)), ssb = tallyOf((s) => COAL(sbFair(s)?.[0][0])), smine = tallyOf((s) => COAL(S.picks[s.slug]?.pick));
   const n = seatPicks().length;
   const row = (lab, sub, vote, seats) => `<tr><th scope="row">${lab}<span class="dim">${sub}</span></th><td>${vote ? stackRow(vote, 100, "vote") : '<span class="dim">—</span>'}</td><td>${seats}</td></tr>`;
   const myVote = (S.votes || []).at(-1);
-  const gov = govSeat(), gp = S.picks.statewide, d = S.draft.statewide || {};
-  const c = gp ? null : pickCells(gov);
-  const polls = W.polls.list.map((x) => `<tr><td><a href="${esc(x.source_url)}" target="_blank" rel="noopener">${esc(x.pollster)}</a></td><td>${esc(x.fieldwork_end)}</td><td class="num">${esc(x.sample_size)}</td>${["alp", "lnp", "onp", "grn", "others"].map((k) => `<td class="num">${esc(x[k])}</td>`).join("")}</tr>`).join("");
-  $("#big").innerHTML = `<div class="panel-head"><div><h2 id="big-title">The overall result</h2><p class="sub-hint">Statewide vote and seats, side by side. Polls aren't published seat by seat, so they show the vote only.</p></div></div>
-    <div class="table-wrap"><table class="sheet bigt"><thead><tr><th></th><th>Statewide primary vote (%)</th><th>Seats won or leading (45 to govern)</th></tr></thead><tbody>
+  const pollSel = `<select class="poll-sel" id="poll-sel" aria-label="Which poll"><option value="avg"${(S.pollSel ?? "avg") === "avg" ? " selected" : ""}>Average of all polls</option>${W.polls.list.map((x, i) => `<option value="${i}"${String(S.pollSel) === String(i) ? " selected" : ""}>${esc(POLLSTER(x.pollster))}, ${fmtDay(x.fieldwork_end)}</option>`).join("")}</select>`;
+  const lead = Object.entries(smine).sort((a, b) => b[1] - a[1])[0];
+  const outcome = n === 88 && lead ? (lead[1] >= 45 ? `${VOTE_NAMES[lead[0]] || PARTY[lead[0]] || lead[0]} majority (${lead[1]} seats)` : `Hung parliament: ${VOTE_NAMES[lead[0]] || PARTY[lead[0]] || lead[0]} largest on ${lead[1]}`) : "";
+  $("#big").innerHTML = `<div class="panel-head"><div><h2 id="big-title">The overall result</h2><p class="sub-hint">Share of the vote on the left, seats won on the right. They differ: in 2022 Labor won 37% of the vote but 56 of 88 seats. Polls aren't published seat by seat, so they show the vote only.</p></div></div>
+    <div class="table-wrap"><table class="sheet bigt"><thead><tr><th></th><th>Statewide primary vote (%)</th><th>Seats won (45 to govern)</th></tr></thead><tbody>
       ${row("2022 result", "Victorian election", vote22, stackRow(Object.entries(s22), 88, "seats"))}
       ${row("2025 federal", "Victorian booths", vote25, stackRow(Object.entries(s25), 88, "seats"))}
-      ${row("2026 polls", `Election Tracker average, ${esc(W.polls.as_of)}`, votePoll, '<span class="dim">Not published seat by seat</span>')}
+      ${row(`2026 polls ${pollSel}`, `${esc(pc.sub)}${pc.url ? ` · <a href="${esc(pc.url)}" target="_blank" rel="noopener">source</a>` : ""}`, Object.entries(pc.vote), '<span class="dim">Not published seat by seat</span>')}
       ${row("2026 Sportsbet", "favourite in each seat", null, stackRow(Object.entries(ssb), 88, "seats"))}
-      ${row("Mine", `vote forecast; ${n} of 88 seats called`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No calls yet</span>')}
+      ${row("Mine", `1. your vote · 2. ${n} of 88 seats picked${outcome ? ` · <b>${esc(outcome)}</b>` : ""}`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No picks yet</span>')}
     </tbody></table></div>
-    ${voteForm(myVote)}
-    <details class="pickmore polls-d"><summary>The latest published polls</summary><div class="table-wrap"><table class="sheet"><thead><tr><th>Pollster</th><th>Fieldwork ended</th><th class="num">Sample</th><th class="num">ALP</th><th class="num">LNP</th><th class="num">ON</th><th class="num">GRN</th><th class="num">Oth</th></tr></thead><tbody>${polls}</tbody></table></div>
-      <p class="hint">Primary vote, %. Media and self-funded polls only (party polls left out), as listed by Election Tracker.</p></details>
-    <div class="gov">
-      <h3>Who forms government?</h3>
-      <p class="hint">An extra call, and you can bet up to ${SEAT_CAP} on it from the same ${n0(BANKROLL)} points. Priced from the Kalshi prediction market: ${Object.entries(gov.sportsbet.fair).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${gov.sportsbet.names[k]} ${pct(v)}`).join(", ")}. It breaks ties in "most seats right".</p>
-      ${gp ? calledSec(gov, gp) : `<div class="pick-form"><label>Your call${c.sel}</label><label>Bet (optional)${c.st}</label></div>
-        <div class="why"><label for="why-statewide">Why?</label><textarea id="why-statewide" data-slug="statewide" data-f="why" rows="2" maxlength="2000" placeholder="e.g. One Nation preferences flow strongly to the Coalition in the outer suburbs.">${esc(d.why || "")}</textarea>${dictateBar("why-statewide", c.lock)}</div>`}
-    </div>`;
+    ${voteForm(myVote)}`;
 }
 
 function voteForm(myVote) {
   const dv = (S.draft.vote ||= myVote ? { ...myVote.vote } : {}), tot = VOTE_KEYS.reduce((a, k) => a + Number(dv[k] || 0), 0), pp = S.D.statewide.polls.primaries;
   const poll = { ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others };
-  return `<div class="gov vote-f"><h3>Beat the pollsters: your statewide vote</h3>
-    <p class="hint">Your forecast of each group's statewide primary vote, adding to 100. Scored on your average miss; the benchmark is the final poll average at close. ${myVote ? `You can update it until close; the latest counts. Last set ${when(myVote.created_at)}.` : ""}</p>
-    <div class="vote-grid">${VOTE_KEYS.map((k) => `<label><span><span class="sw" style="background:${col(k)}"></span>${VOTE_NAMES[k]}</span><input class="stake" data-vote="${k}" inputmode="decimal" value="${dv[k] ?? ""}" placeholder="${poll[k]}"><span class="dim">polls ${poll[k]}</span></label>`).join("")}
+  return `<div class="gov vote-f"><h3>1. Call the vote</h3>
+    <p class="hint">Your forecast of each group's share of the statewide primary vote, adding to 100. Your score is your average miss in points across the five groups (over or under counts the same); lower is better. Beat the pollsters by missing by less than the final poll average. ${myVote ? `You can update it until close; the latest counts. Last set ${when(myVote.created_at)}.` : ""}</p>
+    <div class="vote-grid">${VOTE_KEYS.map((k) => `<label><span><span class="sw" style="background:${col(k)}"></span>${VOTE_NAMES[k]}</span><input class="stake" data-vote="${k}" inputmode="decimal" value="${dv[k] ?? ""}" placeholder="${poll[k]}"><span class="dim">poll average ${poll[k]}</span></label>`).join("")}
       <div class="vote-tot ${Math.abs(tot - 100) < 0.05 ? "ok" : ""}" id="vote-tot">Total ${tot.toFixed(1)}${Math.abs(tot - 100) < 0.05 ? " ✓" : " (needs 100)"}</div></div>
     <div class="why"><label for="why-vote">Why? <span class="dim">optional</span></label><textarea id="why-vote" data-slug="vote" data-f="why" rows="2" maxlength="2000" placeholder="e.g. Polls overstate One Nation; Labor recovers in the last fortnight.">${esc(S.draft.vote_why || "")}</textarea>
       ${dictateBar("why-vote", `<button class="btn" type="button" id="vote-save">${myVote ? "Update my forecast" : "Lock my forecast"}</button>`)}<span class="row-err" id="vote-err"></span></div>
@@ -493,22 +484,38 @@ function sbSec(s) {
 }
 function newsSec(s) {
   const items = s.news || [];
-  if (!items.length) return "";
-  return `<section class="d-sec" aria-labelledby="h-news"><h3 id="h-news">In the news</h3><p class="hint">Recent headlines mentioning the seat or ${esc(s.mp.name)}.</p>
-    <ul class="news-list">${items.map((n) => `<li><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a> <span class="dim">${esc(n.source || "")}${n.date ? `, ${esc(String(n.date).slice(0, 10))}` : ""}</span></li>`).join("")}</ul></section>`;
+  const tag = (n) => (n.rel === 2 ? "names the seat or a candidate" : "names a town or the region");
+  return `<section class="d-sec" aria-labelledby="h-news"><h3 id="h-news">In the news</h3>
+    <p class="hint">Headlines from the last fortnight that name ${esc(s.name)}, a candidate, or a town in the seat in an election story. Paywall labels are by publisher; some articles may be free.</p>
+    ${items.length ? `<ul class="news-list">${items.map((n) => `<li><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a> <span class="dim">${esc(n.source || "")}${n.date ? `, ${esc(fmtDay(n.date))}` : ""}${n.paywalled ? " · paywalled" : ""} · ${tag(n)}</span></li>`).join("")}</ul>`
+      : `<p class="muted">No local election headlines in the last fortnight.</p>`}</section>`;
+}
+function pollsSec(s) {
+  const P = s.polls; if (!P?.regional?.length && !P?.seat?.length) return "";
+  const pp = S.D.statewide.polls.primaries, avg = { LNP: pp.lnp, ALP: pp.alp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others };
+  const fill = (v) => { const o = { ...v }; const t = VOTE_KEYS.filter((k) => k !== "OTHERS").reduce((a, k) => a + (o[k] || 0), 0); if (o.OTHERS == null) o.OTHERS = Math.max(0, 100 - t); return Object.entries(o).filter(([k]) => VOTE_KEYS.includes(k)); };
+  const row = (lab, sub, v) => `<tr><th scope="row">${lab}<span class="dim">${sub}</span></th><td>${stackRow(fill(v), 100, "vote")}</td></tr>`;
+  return `<section class="d-sec" aria-labelledby="h-polls"><h3 id="h-polls">2026 polls</h3>
+    <p class="hint">Polls aren't published for most seats. These are for the region this seat sits in (${esc(P.region)}, an Upper House region), which may be how people plan to vote for the Upper House. Around 250–360 people per region, so expect several points of error.</p>
+    <div class="table-wrap"><table class="sheet bigt"><tbody>
+      ${(P.seat || []).map((q) => row(`Seat poll`, `${esc(q.pollster)}, ${fmtDay(q.date)} · about ${q.n} people here · <a href="${esc(q.url)}" target="_blank" rel="noopener">source</a>`, q.primaries)).join("")}
+      ${P.regional.map((q) => row(esc(P.region), `${esc(q.source)} · <a href="${esc(q.url)}" target="_blank" rel="noopener">source</a>`, q.primaries)).join("")}
+      ${row("Victoria", `poll average, ${fmtDay(S.D.statewide.polls.as_of)}`, avg)}
+    </tbody></table></div>
+    ${P.seat?.length ? `<p class="hint">The seat poll was published as one combined figure for Hastings, Morwell and Pakenham, so each of those seats shows the same numbers.</p>` : ""}</section>`;
 }
 function pickSec(s) {
   const p = S.picks[s.slug];
   if (p) return calledSec(s, p);
   const c = pickCells(s), d = S.draft[s.slug] || {};
   return `<section class="d-sec" id="pick-sec" aria-labelledby="h-pick"><h3 id="h-pick">Your pick</h3>
-    <div class="pick-form"><label>Who wins ${esc(s.name)}?${c.sel}</label><label>Bet (optional)${c.st}</label></div>
+    <div class="pick-form"><label>2. Pick the seats: who wins ${esc(s.name)}?${c.sel}</label><label>3. Back your picks (optional)${c.st}</label></div>
     <div class="why">
-      <label for="why-${s.slug}">Why? <span class="dim">Your reasoning, locked with your pick and revealed after the count</span></label>
+      <label for="why-${s.slug}">Why? <span class="dim">Your reasoning, for both; locked with your pick and revealed after the count</span></label>
       <textarea id="why-${s.slug}" data-slug="${s.slug}" data-f="why" rows="4" maxlength="2000" placeholder="e.g. Teal candidate is strong locally, Liberal margin is only 3%, and the Greens will preference her.">${esc(d.why || "")}</textarea>
       <div class="why-bar">${dictateBar(`why-${s.slug}`, c.lock)}
     </div>
-    <p class="hint">Points left to bet: ${n0(BANKROLL - staked())}, up to ${SEAT_CAP} on this seat. You can change your call or add bets later; the call standing at close is the one that counts.</p></section>`;
+    <p class="hint">Points left to bet: ${n0(BANKROLL - staked())}, up to ${SEAT_CAP} on this seat. You can change your pick or add bets later; the pick standing at close is the one that counts.</p></section>`;
 }
 const when = (t) => new Date(t).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
 const dictateBar = (id, extra = "") => `<div class="why-bar">${SpeechRec ? `<button class="btn btn-quiet" type="button" data-dictate="${id}" aria-pressed="false">🎤 Dictate</button>` : `<span class="hint">Tip: use your keyboard's microphone to dictate.</span>`}<span class="hint" data-dictate-status="${id}"></span>${extra}</div>`;
@@ -518,15 +525,15 @@ function calledSec(s, p) {
     ...p.bets.map((b) => ({ t: b.created_at, html: `Bet <b>${b.stake} pts</b> on ${esc(outName(s, b.pick))}, pays ${n0(b.stake * b.odds)} if right` }))].sort((a, b) => a.t.localeCompare(b.t));
   const opt = (sel, skip) => outs.filter((k) => k !== skip).map((k) => `<option value="${k}"${sel === k ? " selected" : ""}>${esc(outName(s, k))}</option>`).join("");
   const bo = d.bpick ? s.sportsbet?.odds?.[d.bpick] : null;
-  return `<section class="d-sec" ${s.slug === "statewide" ? "" : 'id="pick-sec"'}><h3>Your call: ${esc(outName(s, p.pick))}</h3>
+  return `<section class="d-sec" id="pick-sec"><h3>2. Pick the seats: ${esc(outName(s, p.pick))}</h3>
     <ol class="trail">${events.map((e) => `<li><span class="dim">${when(e.t)}</span> ${e.html}</li>`).join("")}</ol>
-    <details class="pickmore" ${S.more?.[s.slug] === "change" ? "open" : ""}><summary>Change your call</summary>
+    <details class="pickmore" ${S.more?.[s.slug] === "change" ? "open" : ""}><summary>Change your pick</summary>
       <div class="pick-form"><label>New call<select class="pick" data-slug="${s.slug}" data-f="cpick"><option value="">Choose…</option>${opt(d.cpick, p.pick)}</select></label></div>
       <div class="why"><label for="cwhy-${s.slug}">What changed? <span class="dim">Required; shown with your call trail after the count</span></label>
         <textarea id="cwhy-${s.slug}" data-slug="${s.slug}" data-f="cwhy" rows="2" maxlength="1000" placeholder="e.g. Nominations closed and the independent didn't stand.">${esc(d.cwhy || "")}</textarea>
         ${dictateBar(`cwhy-${s.slug}`, `<button class="btn" type="button" data-change="${s.slug}">Change call</button>`)}<span class="row-err" data-err-c="${s.slug}"></span></div>
     </details>
-    <details class="pickmore" ${S.more?.[s.slug] === "bet" ? "open" : ""}><summary>Add a bet</summary>
+    <details class="pickmore" ${S.more?.[s.slug] === "bet" ? "open" : ""}><summary>3. Back your picks: add a bet</summary>
       <div class="pick-form"><label>On<select class="pick" data-slug="${s.slug}" data-f="bpick">${opt(d.bpick || p.pick)}</select></label>
         <label>Points<input class="stake" data-slug="${s.slug}" data-f="bstake" inputmode="numeric" placeholder="0" value="${d.bstake ?? ""}"><span class="pays" data-bpays="${s.slug}">${bo && d.bstake ? `pays ${n0(d.bstake * bo)} if right` : ""}</span></label>
         <button class="btn" type="button" data-addbet="${s.slug}">Add bet</button></div><span class="row-err" data-err-b="${s.slug}"></span>
@@ -543,10 +550,11 @@ function renderDrawer() {
         <p>${s.margin ? `Margin ${s.margin.value}% v ${PARTY[s.margin.vs] || s.margin.vs} (2022)` : ""}${p ? ` · <b>Your pick: ${esc(outName(s, p.pick))}</b>` : ` · <button class="linkish" type="button" data-act="to-pick">Make your pick ↓</button>`}</p></div>
       <button class="close back" type="button" data-act="close" aria-label="Back to the chamber">← Chamber</button>
     </div>
-    ${placeHTML(s, locatorSVG(S.geo, s.slug), PARTY)}
+    ${placeHTML(s, locatorSVG(S.geo, s.slug), PARTY, S.D.seats)}
     ${resultsHTML(s, PARTY)}
     ${insideShell(s.slug)}
     ${changesHTML(s, PARTY)}
+    ${pollsSec(s)}
     ${newsSec(s)}
     ${sbSec(s)}
     ${pickSec(s)}`;
@@ -608,6 +616,7 @@ function onClick(e) {
   const l = t.closest("[data-lock]"); if (l) lock(l.dataset.lock);
 }
 function onInput(e) {
+  if (e.target.id === "poll-sel") { S.pollSel = e.target.value; renderBig(); return; }
   if (e.target.dataset?.vote) { const t = e.target; t.value = t.value.replace(/[^0-9.]/g, ""); (S.draft.vote ||= {})[t.dataset.vote] = t.value;
     const tot = VOTE_KEYS.reduce((a, k) => a + Number(S.draft.vote[k] || 0), 0), el = $("#vote-tot"), ok = Math.abs(tot - 100) < 0.05;
     el.textContent = `Total ${tot.toFixed(1)}${ok ? " ✓" : " (needs 100)"}`; el.classList.toggle("ok", ok); return; }
@@ -620,7 +629,7 @@ function onInput(e) {
   if (t.dataset.f === "cpick" || t.dataset.f === "bpick") { d[t.dataset.f] = t.value; return; }
   d.pick = t.value; refreshRow(slug);
 }
-function refreshRow(slug) { if (slug === "statewide") return renderBig(); renderTable(); if (S.seat === slug) renderDrawer(); }
+function refreshRow(slug) { renderTable(); if (S.seat === slug) renderDrawer(); }
 async function lock(slug) {
   const d = S.draft[slug] || {}, stake = Number(d.stake || 0), s = seatBy(slug);
   const err = (m) => document.querySelectorAll(`[data-err="${slug}"]`).forEach((x) => (x.textContent = m));
