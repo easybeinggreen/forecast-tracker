@@ -77,6 +77,7 @@ def relevance(title, s, towns, region):
 
 def main():
     F = json.loads((SITE / "forecast.json").read_text())
+    F_raw = json.loads((ROOT / "data" / "vic2026" / "forecast.json").read_text())
     sb = json.loads((SITE / "sportsbet.json").read_text())
     news = json.loads((SITE / "news.json").read_text()) if (SITE / "news.json").exists() else {"seats": {}}
 
@@ -96,6 +97,10 @@ def main():
             d = sb["seats"][s["slug"]]
             row["sportsbet"] = {"as_of": latest["as_of"], "odds": latest["odds"], "fair": latest.get("fair"),
                                 "names": d.get("names", {}), "history": [{"t": h["t"], "odds": h["odds"]} for h in d.get("history", [])]}
+        src = next((x for x in F_raw["seats"] if x["slug"] == s["slug"]), None)
+        if src and src.get("margin_2022") is not None:  # the 2022 result itself (the margin field is today's pendulum)
+            m = src["margin_2022"]
+            row["tcp_2022"] = {"a": src["winner_2022"]["party"], "av": round(50 + m, 1), "b": src["runner_up_2022"]["party"], "bv": round(50 - m, 1)}
         bp = SITE / "booths" / f"{s['slug']}.json"
         towns = towns_of(json.loads(bp.read_text())) if bp.exists() else []
         region = regions.get(s["slug"])

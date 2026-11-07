@@ -141,10 +141,13 @@ function renderApp() {
         <p class="caption" id="chamber-desc"></p>
         <ul class="legend" id="legend"></ul>
       </div>
-      <div class="outcome-panel"><div class="panel-head"><h2>Your challenge</h2></div><div class="ledger-grid stats2" id="stats"></div><p class="caption" id="stats-note"></p></div>
+      <div class="outcome-panel"><div class="panel-head"><h2>Your challenge</h2></div><div class="chal" id="stats"></div><p class="caption" id="stats-note"></p></div>
     </section>
 
+    <h2 class="band">Statewide <span>Challenge 1: Call the vote</span></h2>
     <section class="overall" id="big" aria-labelledby="big-title"></section>
+
+    <h2 class="band">Seat by seat <span>Challenges 2 and 3: Pick the seats, Back your picks</span></h2>
 
     <details class="maps" id="maps"><summary><div class="panel-head"><h2>Constituency map</h2><span class="more"></span></div></summary>
       <div class="panel-head" style="justify-content:flex-start">${viewSeg("mapview", S.mapView)}</div>
@@ -208,15 +211,16 @@ function rulesHTML() {
 }
 
 function renderTop() {
-  const P = seatPicks(), bets = S.bets || [];
+  const P = seatPicks(), bets = S.bets || [], myVote = (S.votes || []).at(-1);
   const days = Math.max(0, Math.ceil((CLOSE - Date.now()) / 864e5));
   $("#countdown").textContent = `Picks close in ${days} day${days === 1 ? "" : "s"}`;
-  $("#stats").innerHTML = `
-    <div><div class="v">${P.length}</div><div class="l">Seats called · ${88 - P.length ? `${88 - P.length} to go` : "all 88 done"}</div></div>
-    <div><div class="v">${n0(BANKROLL - staked())}</div><div class="l">Points left to bet, of ${n0(BANKROLL)}</div></div>
-    <div><div class="v">${bets.length}</div><div class="l">Bets placed · ${n0(bets.reduce((a, b) => a + b.stake * b.odds, 0))} back if all win</div></div>
-    <div><div class="v">${P.filter((p) => p.pick !== sbFair(seatBy(p.seat))?.[0][0]).length}</div><div class="l">Picks against Sportsbet's favourite</div></div>`;
-  $("#stats-note").textContent = P.length ? `Picks close 6pm Friday 27 November. Locked picks are final.` : "Nothing locked yet. Choose a winner in the table below, or click a seat in the chamber.";
+  const against = P.filter((p) => p.pick !== sbFair(seatBy(p.seat))?.[0][0]).length;
+  const tile = (n, name, go, v, sub) => `<a class="chal-t" href="#${go}"><span class="chal-n">${n}. ${name}</span><b>${v}</b><span class="dim">${sub}</span></a>`;
+  $("#stats").innerHTML =
+    tile(1, "Call the vote", "vote-sec", myVote ? "Set ✓" : "Not set", myVote ? `last set ${when(myVote.created_at)}` : "your statewide vote forecast") +
+    tile(2, "Pick the seats", "seats-title", `${P.length} of 88`, P.length ? `${against} against Sportsbet's favourite` : "seats picked") +
+    tile(3, "Back your picks", "seats-title", `${n0(BANKROLL - staked())} left`, bets.length ? `${bets.length} bet${bets.length === 1 ? "" : "s"} · ${n0(bets.reduce((a, b) => a + b.stake * b.odds, 0))} back if all win` : `of ${n0(BANKROLL)} points, optional`);
+  $("#stats-note").textContent = `Picks close 6pm Friday 27 November (Melbourne time).`;
 }
 
 // ---------------------------------------------------------------- what each view says about a seat
@@ -264,7 +268,7 @@ function sureOf(s, v = S.listView) {
   if (v === "mine") { const p = S.picks[s.slug]; return p ? s.sportsbet?.fair?.[p.pick] ?? 0 : -1; }
   const f = fed2025(s); if (!f) return 0.5; return f.tpp ? f.tppv / 100 : f.top[0][1] / (f.top[0][1] + f.top[1][1]);
 }
-const tpp22 = (s) => (s.margin ? { a: s.held_2022, av: 50 + s.margin.value, b: s.margin.vs, bv: 50 - s.margin.value } : null);
+const tpp22 = (s) => s.tcp_2022 || (s.margin ? { a: s.held_2022, av: 50 + s.margin.value, b: s.margin.vs, bv: 50 - s.margin.value } : null);
 
 function tipHTML(slug, view = S.view) {
   const s = seatBy(slug), p = S.picks[slug], ph = photo(s.mp.name);
@@ -330,8 +334,9 @@ function tallyOf(fn) { const t = {}; for (const s of S.D.seats) { const k = fn(s
 const COAL = (k) => (k === "LIB" || k === "NAT" ? "LNP" : k);
 function stackRow(entries, total, label) {
   const list = entries.filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);
-  return `<div class="bigbar"><span class="stack wide" aria-hidden="true">${list.map(([k, v]) => `<i style="width:${(100 * v) / total}%;background:${col(k)}"></i>`).join("")}${label === "seats" ? '<b class="maj45" title="45 seats to govern"></b>' : ""}</span>
-    <span class="bigtxt">${list.map(([k, v]) => `<span><span class="sw" style="background:${col(k)}"></span>${SHORT[k] || k} <b>${label === "seats" ? v : v.toFixed(0)}</b></span>`).join("")}</span></div>`;
+  const nm = (k) => VOTE_NAMES[k] || PARTY[k] || k, ex = (k, v) => (label === "seats" ? `${nm(k)}: ${v} seat${v === 1 ? "" : "s"}` : `${nm(k)}: ${Number(v).toFixed(1)}%`);
+  return `<div class="bigbar"><span class="stack wide">${list.map(([k, v]) => `<i style="width:${(100 * v) / total}%;background:${col(k)}" title="${esc(ex(k, v))}"></i>`).join("")}${label === "seats" ? '<b class="maj45" title="45 seats to govern"></b>' : ""}</span>
+    <span class="bigtxt">${list.map(([k, v]) => `<span title="${esc(ex(k, v))}"><span class="sw" style="background:${col(k)}"></span>${SHORT[k] || k} <b>${label === "seats" ? v : v.toFixed(0)}</b></span>`).join("")}</span></div>`;
 }
 const POLLSTER = (k) => ({ "roy-morgan": "Roy Morgan", "newspoll": "Newspoll", "redbridge": "RedBridge", "resolve": "Resolve", "yougov": "YouGov", "ucomms": "uComms", "demos-au": "DemosAU", "freshwater": "Freshwater", "essential": "Essential" }[k] || k.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()));
 const fmtDay = (d) => new Date(d).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
@@ -348,18 +353,18 @@ function renderBig() {
   const pc = pollChoice(W);
   const s22 = tallyOf((s) => COAL(s.held_2022)), s25 = tallyOf((s) => COAL(fed2025(s)?.k)), ssb = tallyOf((s) => COAL(sbFair(s)?.[0][0])), smine = tallyOf((s) => COAL(S.picks[s.slug]?.pick));
   const n = seatPicks().length;
-  const row = (lab, sub, vote, seats) => `<tr><th scope="row">${lab}<span class="dim">${sub}</span></th><td>${vote ? stackRow(vote, 100, "vote") : '<span class="dim">—</span>'}</td><td>${seats}</td></tr>`;
+  const row = (lab, sub, vote, seats, none = "—") => `<tr><th scope="row">${lab}<span class="dim">${sub}</span></th><td>${vote ? stackRow(vote, 100, "vote") : `<span class="dim">${none}</span>`}</td><td>${seats}</td></tr>`;
   const myVote = (S.votes || []).at(-1);
   const pollSel = `<select class="poll-sel" id="poll-sel" aria-label="Which poll"><option value="avg"${(S.pollSel ?? "avg") === "avg" ? " selected" : ""}>Average of all polls</option>${W.polls.list.map((x, i) => `<option value="${i}"${String(S.pollSel) === String(i) ? " selected" : ""}>${esc(POLLSTER(x.pollster))}, ${fmtDay(x.fieldwork_end)}</option>`).join("")}</select>`;
   const lead = Object.entries(smine).sort((a, b) => b[1] - a[1])[0];
   const outcome = n === 88 && lead ? (lead[1] >= 45 ? `${VOTE_NAMES[lead[0]] || PARTY[lead[0]] || lead[0]} majority (${lead[1]} seats)` : `Hung parliament: ${VOTE_NAMES[lead[0]] || PARTY[lead[0]] || lead[0]} largest on ${lead[1]}`) : "";
-  $("#big").innerHTML = `<div class="panel-head"><div><h2 id="big-title">The overall result</h2><p class="sub-hint">Share of the vote on the left, seats won on the right. They differ: in 2022 Labor won 37% of the vote but 56 of 88 seats. Polls aren't published seat by seat, so they show the vote only.</p></div></div>
-    <div class="table-wrap"><table class="sheet bigt"><thead><tr><th></th><th>Statewide primary vote (%)</th><th>Seats won (45 to govern)</th></tr></thead><tbody>
+  $("#big").innerHTML = `<div class="panel-head"><div><h2 id="big-title">The statewide result</h2><p class="sub-hint">Votes and seats differ: in 2022 Labor won 37% of the vote but 56 of 88 seats. Hover a bar for exact figures.</p></div></div>
+    <div class="table-wrap"><table class="sheet bigt"><thead><tr><th></th><th>Primary vote (%)</th><th>Seats won (45 to govern)</th></tr></thead><tbody>
       ${row("2022 result", "Victorian election", vote22, stackRow(Object.entries(s22), 88, "seats"))}
       ${row("2025 federal", "Victorian booths", vote25, stackRow(Object.entries(s25), 88, "seats"))}
       ${row(`2026 polls ${pollSel}`, `${esc(pc.sub)}${pc.url ? ` · <a href="${esc(pc.url)}" target="_blank" rel="noopener">source</a>` : ""}`, Object.entries(pc.vote), '<span class="dim">Not published seat by seat</span>')}
-      ${row("2026 Sportsbet", "favourite in each seat", null, stackRow(Object.entries(ssb), 88, "seats"))}
-      ${row("Mine", `1. your vote · 2. ${n} of 88 seats picked${outcome ? ` · <b>${esc(outcome)}</b>` : ""}`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No picks yet</span>')}
+      ${row("2026 Sportsbet", "favourite in each seat", null, stackRow(Object.entries(ssb), 88, "seats"), "No vote market")}
+      ${row("2026 My forecast", `${n} of 88 seats picked${outcome ? ` · <b>${esc(outcome)}</b>` : ""}`, myVote ? Object.entries(myVote.vote).map(([k, v]) => [k, Number(v)]) : null, n ? stackRow(Object.entries(smine), 88, "seats") : '<span class="dim">No seats picked yet</span>', "Not set: Call the vote below")}
     </tbody></table></div>
     ${voteForm(myVote)}`;
 }
@@ -367,7 +372,7 @@ function renderBig() {
 function voteForm(myVote) {
   const dv = (S.draft.vote ||= myVote ? { ...myVote.vote } : {}), tot = VOTE_KEYS.reduce((a, k) => a + Number(dv[k] || 0), 0), pp = S.D.statewide.polls.primaries;
   const poll = { ALP: pp.alp, LNP: pp.lnp, ON: pp.onp, GRN: pp.grn, OTHERS: pp.others };
-  return `<div class="gov vote-f"><h3>1. Call the vote</h3>
+  return `<div class="gov vote-f" id="vote-sec"><h3>1. Call the vote</h3>
     <p class="hint">Your forecast of each group's share of the statewide primary vote, adding to 100. Your score is your average miss in points across the five groups (over or under counts the same); lower is better. Beat the pollsters by missing by less than the final poll average. ${myVote ? `You can update it until close; the latest counts. Last set ${when(myVote.created_at)}.` : ""}</p>
     <div class="vote-grid">${VOTE_KEYS.map((k) => `<label><span><span class="sw" style="background:${col(k)}"></span>${VOTE_NAMES[k]}</span><input class="stake" data-vote="${k}" inputmode="decimal" value="${dv[k] ?? ""}" placeholder="${poll[k]}"><span class="dim">poll average ${poll[k]}</span></label>`).join("")}
       <div class="vote-tot ${Math.abs(tot - 100) < 0.05 ? "ok" : ""}" id="vote-tot">Total ${tot.toFixed(1)}${Math.abs(tot - 100) < 0.05 ? " ✓" : " (needs 100)"}</div></div>
@@ -606,6 +611,7 @@ function onClick(e) {
   const o = t.closest("[data-open]") || t.closest("#chamber .seat") || t.closest(".district"); if (o) { openSeat(o.dataset.open || o.dataset.slug); return; }
   if (t.closest("[data-act=close]")) { closeSeat(); return; }
   if (t.closest("[data-act=show-on-map]")) { showOnMap(S.seat); return; }
+  const go = t.closest(".chal-t"); if (go) { e.preventDefault(); document.getElementById(go.getAttribute("href").slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   if (t.closest("[data-act=to-pick]")) { $("#pick-sec")?.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   const w = t.closest("[data-why]"); if (w) { openSeat(w.dataset.why); setTimeout(() => { $("#pick-sec")?.scrollIntoView({ block: "start" }); $(`#why-${w.dataset.why}`)?.focus(); }, 50); return; }
   const mo = t.closest("[data-more]"); if (mo) { S.more = { [mo.dataset.more]: mo.dataset.mode }; openSeat(mo.dataset.more); setTimeout(() => $("#pick-sec")?.scrollIntoView({ block: "start" }), 50); return; }
